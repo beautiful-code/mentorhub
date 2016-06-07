@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+["Sashank","Rushil"].each do |user_name|
+  user = User.create(name: user_name)
+  mentoring_track = user.mentoring_tracks.create(name: "Mentoring Track for #{user_name}")
+  track = mentoring_track.track_instances.create(name: "Mentoring Track for #{user_name}")
+  5.times {|t| track.section_interactions.create(title: "Section #{t + 1}") }
+end
