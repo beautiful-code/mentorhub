@@ -4,6 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+.env
 # Ignore bundler config.
 /.bundle
 
@@ -12,6 +13,37 @@
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/log/*
-!/log/.keep
+/log/*.log
 /tmp
+.idea
+log
+
+# vim swap files
+*.swp
+*.swo
+
+.capistrano
+
+#dotenv
+.env
+.env*
+config/.env.*
+
+config/sojern-*.json
+
+*pems
+
+discovery.cache
+/.sass-cache
+
+config/app_config.yml.example
+
+# Ignore precompiled assets
+public/assets*
+public/system*
+*.DS_Store
+
+# Ctags
+tags
+.byebug_history
+*.env
