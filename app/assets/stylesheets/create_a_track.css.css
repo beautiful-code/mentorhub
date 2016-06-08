@@ -1,0 +1,127 @@
+body .cover_photo {
+  position: relative; }
+  body .cover_photo .bread_crumbs {
+    position: absolute;
+    left: 20%;
+    top: 6px; }
+    body .cover_photo .bread_crumbs ul li {
+      display: inline-block;
+      font-size: 12px;
+      color: #056ab2; }
+    body .cover_photo .bread_crumbs ul li:after {
+      content: ">";
+      margin-left: 4px;
+      color: #056ab2; }
+    body .cover_photo .bread_crumbs ul li:last-child {
+      color: black; }
+    body .cover_photo .bread_crumbs ul li:last-child:after {
+      display: none; }
+  body .cover_photo .logo_add_area {
+    display: inline-block;
+    width: 20%;
+    position: relative; }
+    body .cover_photo .logo_add_area .logo_add {
+      cursor: pointer;
+      width: 90px;
+      height: 90px;
+      text-align: center;
+      margin: 24px auto; }
+      body .cover_photo .logo_add_area .logo_add i {
+        font-size: 36px; }
+      body .cover_photo .logo_add_area .logo_add p {
+        font-size: 14px; }
+  body .cover_photo .track {
+    vertical-align: bottom;
+    margin-left: -4px;
+    margin-bottom: 14px;
+    display: inline-block;
+    width: 60%; }
+    body .cover_photo .track h2 {
+      font-weight: 500; }
+    body .cover_photo .track .progress_bar {
+      margin-top: 10px;
+      width: 100%;
+      height: 12px;
+      background-color: #888888;
+      border-radius: 2px; }
+body .track_nav {
+  width: 100%;
+  height: 36px;
+  background-color: white;
+  vertical-align: middle; }
+  body .track_nav ul {
+    margin-left: 20%; }
+    body .track_nav ul li {
+      font-weight: 600;
+      line-height: 24px;
+      margin: 6px 0;
+      border-bottom: 4px solid #056ab2;
+      padding-bottom: 2px;
+      display: inline-block; }
+body .add_exercise, body .add_track {
+  position: relative;
+  width: 60%;
+  margin: auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid #c5c7c9;
+  margin-top: 12px;
+  color: #888888;
+  box-sizing: border-box;
+  padding: 16px;
+  border-radius: 3px;
+  padding-bottom: 60px; }
+  body .add_exercise .add_exercise_link, body .add_track .add_exercise_link {
+    cursor: pointer;
+    text-decoration: none;
+    color: #888888; }
+    body .add_exercise .add_exercise_link span, body .add_track .add_exercise_link span {
+      padding-right: 10px;
+      font-size: 20px;
+      color: #056ab2; }
+  body .add_exercise h4, body .add_track h4 {
+    margin: 0 0 6px 0;
+    font-weight: 200;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: #888888; }
+  body .add_exercise input:not(.btn_right), body .add_track input:not(.btn_right) {
+    margin-bottom: 8px;
+    height: 24px;
+    box-sizing: border-box;
+    padding: 0 16px;
+    background-color: white;
+    border: 1px solid #c5c7c9;
+    border-radius: 3px;
+    width: 100%; }
+  body .add_exercise .res_field, body .add_track .res_field {
+    width: 40% !important; }
+  body .add_exercise .resources, body .add_track .resources {
+    box-sizing: border-box;
+    border: 1px solid #c5c7c9;
+    padding: 16px;
+    border-left: 2px solid #056ab2; }
+    body .add_exercise .resources .add_resource_btn, body .add_track .resources .add_resource_btn {
+      cursor: pointer;
+      position: relative;
+      height: 24px;
+      border: 1px solid #056ab2;
+      border-radius: 3px;
+      color: #056ab2;
+      background-color: white;
+      padding: 0 10px; }
+  body .add_exercise .btn_right, body .add_track .btn_right {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    height: 30px;
+    background-color: #056ab2;
+    color: white;
+    padding: 0 10px;
+    border: none;
+    font-size: 14px;
+    border-radius: 3px; }
+body .add_exercise_btn {
+  padding: 6px 16px;
+  background-color: white; }
+
+/*# sourceMappingURL=create_a_track.css.css.map */

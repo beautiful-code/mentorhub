@@ -85,3 +85,32 @@ p{
   background: #056AB2;
   color: white;
 }
+.bread_crumbs{
+  vertical-align:top;
+  width:60%;
+  display: block;
+  margin: 0 auto;
+  height:20px;
+  ol{
+      margin:0;
+    li{
+      line-height:20px;
+      display: inline-block;
+      font-size: 12px;
+      color: $primary;
+    }
+    li:after{
+      content: ">" ;
+      margin: 4px;
+      color: $primary;
+    }
+    li:last-child{
+      color: black;
+      font-weight:600;
+    }
+    li:last-child:after{
+      display:none;
+    }
+  }
+}
+

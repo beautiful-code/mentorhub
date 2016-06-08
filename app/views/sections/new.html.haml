@@ -5,13 +5,12 @@
         - @section.errors.full_messages.each do |error|
           %li= error
 .cover_photo
-  .logo_add_area
-    .logo_add
-      =image_tag @track.image
-  .track
-    %h2= @track.name
+  .logo_track
+    %img(src="" )
+  .content_cover
+    %h3
+      Track Name
     .progress_bar
-.track_nav
-  %ul
-    %li= @track.track_type
+.sub_nav
+  %h4.selected Exercises
 =render 'form'
