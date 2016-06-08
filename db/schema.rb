@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160606084446) do
+ActiveRecord::Schema.define(version: 20160607091150) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "mentoring_tracks", force: :cascade do |t|
     t.string   "name"
@@ -22,11 +25,22 @@ ActiveRecord::Schema.define(version: 20160606084446) do
 
   create_table "section_interactions", force: :cascade do |t|
     t.string   "title"
-    t.string   "subtitle"
+    t.string   "goal"
     t.text     "content"
     t.string   "code_url"
     t.string   "resources"
     t.integer  "track_instance_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string   "title"
+    t.string   "goal"
+    t.text     "content"
+    t.string   "code_url"
+    t.string   "resources"
+    t.integer  "track_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,8 +54,16 @@ ActiveRecord::Schema.define(version: 20160606084446) do
 
   create_table "track_instances", force: :cascade do |t|
     t.string   "name"
+    t.string   "track_type"
     t.integer  "mentor_id"
     t.integer  "mentoring_track_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tracks", force: :cascade do |t|
+    t.string   "name"
+    t.string   "track_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -7,6 +7,7 @@ class CreateSection < ActiveRecord::Migration
       t.string :code_url
       t.string :resources
 
+      t.integer :track_id
       t.timestamps
     end
   end
