@@ -1,0 +1,6 @@
+.form-inline
+  = text_field_tag 'resources[name][]', name,class:"form-control", placeholder: "Field name",id:"field-name"
+  = text_field_tag 'resources[value][]', url,class:"form-control", placeholder: "Field value", id:"field-value"
+
+  %button.remove.btn.btn-danger{:type => "button"}
+    %span.glyphicon.glyphicon-remove

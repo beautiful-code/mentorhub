@@ -1,0 +1,15 @@
+.container-fluid
+  %h4=link_to "new Section", new_track_section_path
+
+  - @sections.each do |section|
+    .row
+      .col-md-6.col-md-offset-3.well
+        %h3= link_to section.title,"#"
+        %h4= section.goal
+
+        - if section.resources.present?
+          %h5 Resources
+          - section.resources.each do |resource|
+            .container-fluid
+              .row
+                = link_to resource[0], "//#{resource[1]}", target: "_blank"

@@ -2,7 +2,7 @@ class CreateTrack < ActiveRecord::Migration
   def change
     create_table :tracks do |t|
       t.string :name
-      t.string :type
+      t.string :track_type
 
       t.timestamps
     end

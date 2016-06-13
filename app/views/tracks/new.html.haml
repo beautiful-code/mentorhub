@@ -1,0 +1,10 @@
+- if @track.errors.any?
+  .row
+    .alert.alert-danger.col-md-8.col-md-offset-2
+      %ul
+        - @track.errors.full_messages.each do |error|
+          %li= error
+.container
+  .col-md-6.col-md-offset-3
+    %h2 New Track
+    =render 'form'

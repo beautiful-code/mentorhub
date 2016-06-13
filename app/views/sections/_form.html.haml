@@ -1,0 +1,25 @@
+=form_for [@track, @section] do |f|
+  .form-group
+    =f.label :title
+    =f.text_field :title, class: "form-control"
+  .form-group
+    =f.label :goal
+    =f.text_field :goal, class: "form-control"
+  .form-group
+    =f.label :content
+    =f.text_area :content, class: "form-control", rows: "5"
+  .form-group
+    =f.label :resources
+    #resources
+  .form-group
+    - if @section.resources.present?
+      - @section.resources.each do |name, url|
+        /%p= "#{name}, #{url}"
+        = render 'resource_field', name: name, url: url
+
+    %a#add_field.btn.btn-primary{:href => "javascript:;"}
+      %span.glyphicon.glyphicon-plus
+  .form-group
+    =f.submit "Add Section", class: "btn btn-primary"
+.hide#new_resource_field
+  = render 'resource_field', name: nil, url: nil

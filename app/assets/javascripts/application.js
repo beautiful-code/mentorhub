@@ -11,6 +11,20 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require turbolinks
 //= require_tree .
+
+
+$(document).ready(function(){
+  $("#add_field").click(function(){
+    $("#resources").append($("#new_resource_field").html());
+  });
+
+  $("div#resources").on('click', '.remove', function(){
+    $(this).closest('.form-inline').remove();
+  });
+});
+
