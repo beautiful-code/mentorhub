@@ -1,0 +1,14 @@
+%h2 #{@track_instance.name} Customization
+
+- @track_instance.section_interactions.each do |si|
+  .section_interactions
+    %p= si.title
+    %p= si.goal
+    %p= si.content
+    %p= si.code_url
+    Resources:
+    - si.resources.each do |name,value|
+      = link_to name, value
+      %br
+    = link_to "Edit", "#"
+    %br
