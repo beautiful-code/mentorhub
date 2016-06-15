@@ -1,7 +1,0 @@
--if flash.present?
-  .row
-    .col-md-10.col-md-offset-1
-      - flash.each do |message_type,message|
-        %div{:class => "alert alert-#{message_type}"}
-          = message
-          %a.close{"data-dismiss" => "alert"} ×
