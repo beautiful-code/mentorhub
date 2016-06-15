@@ -1,0 +1,32 @@
+!!!
+%html
+  %head
+    %link(rel="stylesheet" type="text/css" href="login.css")
+    %link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css")
+  %body
+    %nav
+      %img.logo(src= "assets/mentorhub_logo.png" alt="mentorhub_logo")
+      %ul
+        %li
+          %a.selected.login_link_signup(href="login.html") login
+        %li
+          .selected.selected_signup Sign up
+
+    .form_style
+      %h2 Create an account
+      %form
+        %button.google_login.btn
+          %i.fa.fa-google-plus-official(aria-hidden="true")
+          Sign up with Google
+        %p or
+        %input(type="text" placeholder="FIRST NAME")
+        %input(type="text" placeholder="LAST NAME")
+        %input(type="email" placeholder="EMAIL ADDRESS")
+        %input(type="password" placeholder="PASSWORD")
+        %button.btn.action_btn
+          Create an account
+      %hr
+      %h2 I have an account
+      %a(href="#") Log in
+
+
