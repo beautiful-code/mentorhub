@@ -10,6 +10,7 @@ gem 'jquery-rails'
 gem 'omniauth-google-oauth2'
 gem 'pg'
 gem 'rails', '4.2.6'
+gem 'gretel'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 

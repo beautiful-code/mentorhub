@@ -1,4 +1,5 @@
 .container-fluid
+  -breadcrumb :track, @track
   %h4=link_to "new Section", new_track_section_path
 
   - @sections.each do |section|

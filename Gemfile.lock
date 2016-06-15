@@ -83,6 +83,8 @@ GEM
       multipart-post (>= 1.2, < 3)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    gretel (3.0.8)
+      rails (>= 3.2.0)
     haml (4.0.7)
       tilt
     hashie (3.4.4)
@@ -225,6 +227,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_girl_rails (~> 4.0)
+  gretel
   haml
   html2haml
   jquery-rails

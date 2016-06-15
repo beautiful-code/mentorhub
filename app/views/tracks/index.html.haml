@@ -1,7 +1,7 @@
-.container-fluid
-  %h3=link_to "Track new", new_track_path
-  -@tracks.each do |track|
-    .row
-      .col-md-8.col-md-offset-2.well
-        %h3= link_to track.name,track_sections_path(track)
-        %h3= track.track_type
+-breadcrumb :tracks, @tracks, class: "breadcrumb"
+%h3=link_to "Track new", new_track_path
+-@tracks.each do |track|
+  .row
+    .col-md-8.col-md-offset-2.well
+      %h3= link_to track.name,track_sections_path(track)
+      %h3= track.track_type

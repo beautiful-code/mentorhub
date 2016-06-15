@@ -1,18 +1,34 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-[data-role="dynamic-fields"] > .form-inline + .form-inline {
-    margin-top: 0.5em;
+body{
+margin-top: 55px;
 }
 
+.breadcrumb{
+}
+
+[data-role="dynamic-fields"] > .form-inline + .form-inline {
+  margin-top: 0.5em;
+}
+
+#logo{
+  line-height: 50px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.4em;
+  font-weight: 700;
+}
+
+
 /*[data-role="dynamic-fields"] > .form-inline [data-role="add"] {*/
-    /*display: none;*/
+/*display: none;*/
 /*}*/
 
 /*[data-role="dynamic-fields"] > .form-inline:last-child [data-role="add"] {*/
-    /*display: inline-block;*/
+/*display: inline-block;*/
 /*}*/
 
 /*[data-role="dynamic-fields"] > .form-inline:last-child [data-role="remove"] {*/
-    /*display: none;*/
+/*display: none;*/
 /*}*/
