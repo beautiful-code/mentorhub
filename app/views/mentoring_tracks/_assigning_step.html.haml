@@ -1,0 +1,7 @@
+%h2 Assigning
+= f.label "select a mentee"
+= f.select "mentee", options_from_collection_for_select(User.all, 'id', 'email')
+%br
+%br
+= f.label "select a track"
+= f.select "name", options_from_collection_for_select(Track.all, 'id', 'name')

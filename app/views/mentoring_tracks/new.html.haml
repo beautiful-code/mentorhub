@@ -1,0 +1,6 @@
+= form_for @mentoring_track do |f|
+  = render "#{@mentoring_track.current_step}_step", :f => f
+  = f.submit "Next"
+  = f.submit "Prev", :name => "back_button" unless @mentoring_track.first_step?
+ 
+
