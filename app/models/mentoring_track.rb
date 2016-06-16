@@ -1,6 +1,7 @@
 class MentoringTrack < ActiveRecord::Base
   has_many :track_instances
   belongs_to :mentee, class_name: 'User', foreign_key: :mentee_id
+  validates :mentee_id, presence: true
   attr_writer :current_step
 
   def current_step
