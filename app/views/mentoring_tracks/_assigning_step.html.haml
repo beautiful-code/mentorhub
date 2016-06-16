@@ -4,4 +4,4 @@
 %br
 %br
 = f.label "select a track"
-= f.select "name", options_from_collection_for_select(Track.all, 'id', 'name')
+= f.select "id", options_from_collection_for_select(Track.all, 'id', 'name')

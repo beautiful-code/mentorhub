@@ -1,13 +1,6 @@
 %h2 Customizing
--@mentoring_track.mentee_id = params[:mentoring_track][:mentee]
 
--@track_id = params[:mentoring_track][:name]
--@t = Track.find(@track_id)
--@track_dup = @t.dup
--@ti = TrackInstance.create(@track_dup.attributes)
--@ti.mentor_id = current_user.id
-
--@t.sections.each do |section|
+-@track.sections.each do |section|
   -section_dup = section.dup
   -section_interaction = SectionInteraction.create{section_dup}
   -section_interaction.title = section_dup.title
