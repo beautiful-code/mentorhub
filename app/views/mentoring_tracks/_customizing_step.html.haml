@@ -1,0 +1,32 @@
+%h2 Customizing
+-@mentoring_track.mentee_id = params[:mentoring_track][:mentee]
+
+-@track_id = params[:mentoring_track][:name]
+-@t = Track.find(@track_id)
+-@track_dup = @t.dup
+-@ti = TrackInstance.create(@track_dup.attributes)
+-@ti.mentor_id = current_user.id
+
+-@t.sections.each do |section|
+  -section_dup = section.dup
+  -section_interaction = SectionInteraction.create{section_dup}
+  -section_interaction.title = section_dup.title
+  %br
+  =section_interaction.title
+  %br
+  -section_interaction.goal = section_dup.goal
+  =section_interaction.goal
+  %br
+  -section_interaction.content = section_dup.content
+  =section_interaction.content
+  %br
+  -section_interaction.code_url = section_dup.code_url
+  =section_interaction.code_url
+  -section_interaction.resources = section_dup.resources
+  =link_to section_interaction.resources if section_interaction.resources.present?
+  %br
+  -section_interaction.save!
+
+
+
+
