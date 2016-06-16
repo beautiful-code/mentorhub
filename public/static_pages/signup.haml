@@ -19,15 +19,19 @@
           %i.fa.fa-google-plus-official(aria-hidden="true")
           Sign up with Google
         %p or
-        %input(type="text" placeholder="FIRST NAME")
-        %input(type="text" placeholder="LAST NAME")
-        %input(type="email" placeholder="EMAIL ADDRESS")
-        %input(type="password" placeholder="PASSWORD")
+        %label(for="first_name")
+          %input(id="first_name" type="text" placeholder="FIRST NAME")
+        %label(for="last_name")
+          %input(id="last_name" type="text" placeholder="LAST NAME")
+        %label(for="email_signup")
+          %input(id="email_signup" type="email" placeholder="EMAIL ADDRESS")
+        %label(for="password_signup")
+          %input(id="password_signup" type="password" placeholder="PASSWORD")
         %button.btn.action_btn
           Create an account
       %hr
       %h2 I have an account
-      
+
       %a(href="#") Log in
 
 

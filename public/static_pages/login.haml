@@ -21,8 +21,10 @@
           %i.fa.fa-google-plus-official(aria-hidden="true")
           Log in with Google
         %p or
-        %input(type="email" placeholder="EMAIL ADDRESS")
-        %input(type="password" placeholder="PASSWORD" )
+        %label(for="email_login")
+          %input(id="email_login" type="email" placeholder="EMAIL ADDRESS")
+        %label( for="password_login")
+          %input(id="password_login" type="password" placeholder="PASSWORD" )
         %button.btn.action_btn
           Log in
       %a(href="#" ) Forgot password?

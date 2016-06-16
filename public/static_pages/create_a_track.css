@@ -122,8 +122,7 @@ body {
     color: #888888;
     box-sizing: border-box;
     padding: 16px;
-    border-radius: 3px;
-    padding-bottom: 60px; }
+    border-radius: 3px; }
     body .add_exercise .add_exercise_link {
       cursor: pointer;
       text-decoration: none;
@@ -162,16 +161,18 @@ body {
         background-color: white;
         padding: 0 10px; }
     body .add_exercise .btn_right {
-      position: absolute;
-      bottom: 16px;
-      right: 16px;
-      height: 30px;
-      background-color: #056ab2;
-      color: white;
-      padding: 0 10px;
-      border: none;
-      font-size: 14px;
-      border-radius: 3px; }
+      padding-top: 16px;
+      text-align: right; }
+      body .add_exercise .btn_right button {
+        margin-right: 16px;
+        text-align: right;
+        height: 30px;
+        background-color: #056ab2;
+        color: white;
+        padding: 0 10px;
+        border: none;
+        font-size: 14px;
+        border-radius: 3px; }
   body .add_exercise_btn {
     padding: 6px 16px;
     background-color: white; }
