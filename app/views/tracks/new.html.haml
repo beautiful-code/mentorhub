@@ -5,6 +5,5 @@
         - @track.errors.full_messages.each do |error|
           %li= error
 .container
-  .col-md-6.col-md-offset-3
-    %h2 New Track
-    =render 'form'
+  -breadcrumb :new_track
+  =render 'form'

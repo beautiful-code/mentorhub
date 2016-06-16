@@ -7,8 +7,18 @@ crumb :tracks do
 end
 
 crumb :track do |track|
-  link track.name, track
+  link track.name, track_sections_path(track)
   parent :tracks
+end
+
+crumb :new_track do |track|
+  link "Creating a track"
+  parent :root
+end
+
+crumb :new_section do |track|
+  link "Creating a section"
+  parent :track, track
 end
 # crumb :projects do
 #   link "Projects", projects_path

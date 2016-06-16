@@ -1,17 +1,17 @@
-%header.navbar.navbar-fixed-top.navbar-inverse
-  .container
-    = link_to "MENTOR-HUB", root_path, id: "logo"
-    %ul.nav.navbar-nav.navbar-right
-      - if user_signed_in?
-        %p.navbar-text= current_user.email
-        %li
-          %a{:href => tracks_path}All Tracks
-        %li.dropdown
-          %a.dropdown-toggle{:href => "#", "aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", "role" => "button"}
-            =current_user.name
-            %span.caret
-          %ul.dropdown-menu
-            %li= link_to "Edit My Profile", edit_user_registration_path
-            %li= link_to "My Tracks", "#"
-            %li.divider
-            %li= link_to 'Logout', destroy_user_session_path, method: :delete
+%nav
+  =link_to root_path do
+    =image_tag "mentorhub_logo.png",class:"logo"
+  - if !user_signed_in?
+    %ul.log_nav
+      %li= link_to "Login", new_session_path(resource_name), class:"selected login_link_signup"
+      %li= link_to "Sign Up", new_registration_path(resource_name), class:"selected selected_signup"
+  - else
+    %ul.primary_nav
+      %li= link_to "Your Board", "#"
+      %li= link_to "My Learning Tracks", "#"
+      %li= link_to "My Mentees Tracks", "#"
+      %li= link_to "Tracks", tracks_path, class:"selected"
+    %ul.profile
+      %li= image_tag "profile_dp.jpg"
+      %li.profile_name
+        =current_user.name

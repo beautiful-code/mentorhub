@@ -13,6 +13,7 @@ gem 'rails', '4.2.6'
 gem 'gretel'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
+gem 'font-awesome-rails', '~> 4.6', '>= 4.6.3.0'
 
 group :development, :test do
   gem 'rspec-rails'

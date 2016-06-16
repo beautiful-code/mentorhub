@@ -1,25 +1,20 @@
-=form_for [@track, @section] do |f|
-  .form-group
-    =f.label :title
-    =f.text_field :title, class: "form-control"
-  .form-group
-    =f.label :goal
-    =f.text_field :goal, class: "form-control"
-  .form-group
-    =f.label :content
-    =f.text_area :content, class: "form-control", rows: "5"
-  .form-group
-    =f.label :resources
-    #resources
-  .form-group
-    - if @section.resources.present?
-      - @section.resources.each do |name, url|
-        /%p= "#{name}, #{url}"
-        = render 'resource_field', name: name, url: url
-
-    %a#add_field.btn.btn-primary{:href => "javascript:;"}
-      %span.glyphicon.glyphicon-plus
-  .form-group
-    =f.submit "Add Section", class: "btn btn-primary"
-.hide#new_resource_field
-  = render 'resource_field', name: nil, url: nil
+.add_exercise
+  -breadcrumb :new_section, @track
+  =form_for [@track, @section] do |f|
+    %h4 Exercise
+    =f.text_field :title, class: "", placeholder: "EXERCISE NAME"
+    =f.text_field :goal, class: "",placeholder: "EXERCISE GOAL"
+    =f.text_field :content, class: "",placeholder: "EXERCISE DESCRIPTION"
+    .resources
+      %h4 Resources
+      #resources
+      - if @section.resources.present?
+        - @section.resources.each do |name, url|
+          = render 'resource_field', name: name, url: url
+      %button.add_resource_btn#add_field{:href => "javascript:;", type: "button"}
+        %span +
+        Add A Resource
+    .form-group
+      =f.submit "Add Section", class: "btn_right"
+  .hide#new_resource_field
+    = render 'resource_field', name: nil, url: nil
