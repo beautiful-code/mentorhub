@@ -1,15 +1,17 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-body{
-margin-top: 55px;
+$bg: #e9ebee;
+$border: #c5c7c9;
+$primary: #056ab2;
+$text: #333333;
+$secondary: #888888;
+
+p{
+	margin:0;
 }
 
 .breadcrumb{
-}
-
-[data-role="dynamic-fields"] > .form-inline + .form-inline {
-  margin-top: 0.5em;
 }
 
 #logo{
@@ -20,15 +22,12 @@ margin-top: 55px;
   font-weight: 700;
 }
 
-
-/*[data-role="dynamic-fields"] > .form-inline [data-role="add"] {*/
-/*display: none;*/
-/*}*/
-
-/*[data-role="dynamic-fields"] > .form-inline:last-child [data-role="add"] {*/
-/*display: inline-block;*/
-/*}*/
-
-/*[data-role="dynamic-fields"] > .form-inline:last-child [data-role="remove"] {*/
-/*display: none;*/
-/*}*/
+html,
+body {
+  font-size: 1em;
+  font-family: "Open Sans";
+  background-color: $bg;
+}
+.breadcrumb > li + li:before {
+    content: ">" !important;
+}

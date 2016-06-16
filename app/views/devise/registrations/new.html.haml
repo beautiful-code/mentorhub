@@ -1,21 +1,19 @@
-%h2 Sign up
-= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-  = devise_error_messages!
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true
-  .field
-    = f.label :password
-    - if @minimum_password_length
-      %em
-        (#{@minimum_password_length} characters minimum)
-    %br/
-    = f.password_field :password, autocomplete: "off"
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "off"
-  .actions
-    = f.submit "Sign up"
-= render "devise/shared/links"
+.form_style
+  %h2 Create an account
+  =link_to user_omniauth_authorize_path(:google_oauth2),class:"google_login btn" do
+    %i.fa.fa-google-plus-official(aria-hidden="true")
+    Sign up with Google
+  %p or
+  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = devise_error_messages!
+    .field
+      = f.email_field :email, autofocus: true, placeholder: "EMAIL ADDRESS"
+    .field
+      = f.password_field :password, autocomplete: "off", placeholder: "PASSWORD"
+    .field
+      = f.password_field :password_confirmation, autocomplete: "off", placeholder: "PASSWORD CONFIRMATION"
+    .actions
+      = f.submit "Create an account", class:"btn action_btn"
+  %hr
+    %h2 I have an account
+  = link_to "Log in", new_session_path(resource_name)

@@ -1,9 +1,8 @@
-=form_for @track do |f|
-  .form-group
-    =f.label :name
-    =f.text_field :name, class: "form-control"
-  .form-group
-    =f.label :type
-    =f.select :track_type, options_for_types,{} ,class: "form-control"
-
-  =f.submit "Add Track", class: "btn btn-default"
+.add_track
+  =form_for @track do |f|
+    .form-group
+      =f.text_field :name, class: "", placeholder: "TRACK NAME"
+    .form-group
+      =f.select :track_type, options_for_types,{},class: "form-control" 
+    .form-group
+      =f.submit "Add Track", class: "btn_right"

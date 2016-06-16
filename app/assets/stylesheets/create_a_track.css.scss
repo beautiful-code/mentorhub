@@ -1,0 +1,162 @@
+$bg: #e9ebee;
+$border: #c5c7c9;
+$primary: #056ab2;
+$text: #333333;
+$secondary: #888888;
+
+body {
+  .cover_photo{
+    position: relative;
+    .bread_crumbs{
+      position: absolute;
+      left: 20%;
+      top: 6px;
+      ul{
+        li{
+          display: inline-block;
+          font-size: 12px;
+          color: $primary;
+        }
+        li:after{
+          content: ">" ;
+          margin-left: 4px;
+          color: $primary;
+        }
+        li:last-child{
+          color: black;
+        }
+        li:last-child:after{
+          display:none;
+        }
+      }
+    }
+    .logo_add_area{
+      display: inline-block;
+      width: 20%;
+      position: relative;
+      .logo_add{
+        cursor: pointer;
+        width: 90px;
+        height: 90px;
+        text-align: center;
+        margin: 24px auto;
+        i{
+          font-size: 36px;
+        }
+        p{
+          font-size: 14px;
+        }
+      }
+    }
+    .track{
+      vertical-align: bottom;
+      margin-left: -4px;
+      margin-bottom: 14px;
+      display: inline-block;
+      width: 60%;
+      h2{
+      font-weight: 500;
+      }
+      .progress_bar{
+        margin-top: 10px;
+        width:100%;
+        height:12px;
+        background-color: $secondary;
+        border-radius: 2px;
+      }
+    }
+  }
+  .track_nav{
+    width: 100%;
+    height: 36px;
+    background-color: white;
+    vertical-align: middle;
+    ul{
+      margin-left: 20%;
+      li{
+        font-weight: 600;
+        line-height: 24px;
+        margin: 6px 0;
+        border-bottom: 4px solid $primary;
+        padding-bottom: 2px;
+        display: inline-block;
+      }
+    }
+  }
+  .add_exercise,.add_track{
+    position: relative;
+    width: 60%;
+    margin: auto;
+    background-color: rgba(255,255,255,0.8);
+    border: 1px solid $border;
+    margin-top: 12px;
+    color: $secondary;
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 3px;
+    padding-bottom: 60px;
+
+    .add_exercise_link{
+      cursor: pointer;
+      text-decoration: none;
+      color: $secondary;
+      span{
+        padding-right: 10px;
+        font-size: 20px;
+        color: $primary;
+      }
+    }
+    h4{
+      margin:0 0 6px 0;
+      font-weight: 200;
+      text-transform: uppercase;
+      font-size: 10px;
+      color: $secondary;
+    }
+    input:not(.btn_right){
+      margin-bottom: 8px;
+      height: 24px;
+      box-sizing: border-box;
+      padding: 0 16px;
+      background-color: white;
+      border: 1px solid $border;
+      border-radius: 3px;
+      width: 100%;
+    }
+    .res_field{
+      width: 40% !important;
+    }
+    .resources{
+      box-sizing: border-box;
+      border: 1px solid $border;
+      padding: 16px;
+      border-left: 2px solid $primary;
+      .add_resource_btn{
+        cursor: pointer;
+        position: relative;
+        height: 24px;
+        border: 1px solid $primary;
+        border-radius: 3px;
+        color: $primary;
+        background-color: white;
+        padding: 0 10px;
+      }
+    }
+    .btn_right{
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      height: 30px;
+      background-color: $primary;
+      color: white;
+      padding: 0 10px;
+      border: none;
+      font-size: 14px;
+      border-radius: 3px;
+    }
+  }
+  .add_exercise_btn{
+    padding: 6px 16px;
+    background-color: white;
+  }
+}
