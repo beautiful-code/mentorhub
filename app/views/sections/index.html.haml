@@ -1,7 +1,6 @@
 .container-fluid
   -breadcrumb :track, @track
   = link_to "Create Section", new_track_section_path, class: "btn-primary btn", type: "button"
-  -#%h4=link_to "new Section", new_track_section_path
 
   - @sections.each do |section|
     .row
