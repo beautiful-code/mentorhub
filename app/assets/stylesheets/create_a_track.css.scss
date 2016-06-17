@@ -11,7 +11,7 @@ body {
       position: absolute;
       left: 20%;
       top: 6px;
-      ul{
+      ol{
         li{
           display: inline-block;
           font-size: 12px;
@@ -113,9 +113,9 @@ body {
       font-size: 10px;
       color: $secondary;
     }
-    input:not(.btn_right){
+    input:not(.btn_right),textarea{
+      /*height: 24px;*/
       margin-bottom: 8px;
-      height: 24px;
       box-sizing: border-box;
       padding: 0 16px;
       background-color: white;

@@ -4,6 +4,16 @@
       %ul
         - @section.errors.full_messages.each do |error|
           %li= error
-
-
+.cover_photo
+  .logo_add_area
+    .logo_add
+      %i +
+      %p add a logo
+  .track
+    %h2 Track
+    .progress_bar
+.track_nav
+  %ul
+    %li
+      Exercises          
 =render 'form'

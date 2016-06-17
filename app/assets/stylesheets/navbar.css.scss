@@ -19,14 +19,16 @@ body{
 	 	.primary_nav {
       position: absolute;
       top:0;
-      margin: 1em 2em;
-      margin-left: 20%;
+      margin: 0 0 0 20%;
+      height:100%;
       li {
         line-height: 28px;
         font-size: 14px;
         display: inline-block;
         margin: 0 1em;
         a{
+          padding:1em 0;
+          display:inline-block;
           text-decoration: none;
           color: $text;
         }
@@ -40,6 +42,51 @@ body{
       }
       li:first-child{
         margin-left:0 ;
+      }
+    }
+
+
+    .log_nav{
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: 1em 2em;
+      li{
+        line-height: 28px;
+        font-size: 14px;
+        display: inline-block;
+        margin: 0 1em;
+
+        .selected{
+          text-decoration: none;
+          color: $primary;
+          border-bottom: 4px solid $primary;
+          text-transform: uppercase;
+          font-weight: 500;
+          padding-bottom: 10px;
+        }
+        .login_link_signup{
+          border: none;
+          color: $text;
+        }
+        .selected_signup{
+          margin: 0 10px;
+        }
+        button{
+          cursor: pointer;
+          height: 2em;
+          font-size: 14px;
+          text-transform: uppercase;
+          padding: 0 10px ;
+          font-weight: 400;
+          background-color: $primary;
+          border: none;
+          color: white;
+          a{
+            text-decoration: none;
+            color: white;
+          }
+        }
       }
     }
 
