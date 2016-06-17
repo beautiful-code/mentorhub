@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(:email => data["email"]).first
-    byebug
     unless user
       user = User.create(name: data["name"],
                          email: data["email"],

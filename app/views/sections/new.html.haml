@@ -7,13 +7,11 @@
 .cover_photo
   .logo_add_area
     .logo_add
-      %i +
-      %p add a logo
+      =image_tag @track.image
   .track
-    %h2 Track
+    %h2= @track.name
     .progress_bar
 .track_nav
   %ul
-    %li
-      Exercises          
+    %li= @track.track_type
 =render 'form'

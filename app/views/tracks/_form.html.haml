@@ -1,8 +1,10 @@
 .add_track
-  =form_for @track do |f|
+  =form_for @track, :html => {:multipart => true}  do |f|
     .form-group
       =f.text_field :name, class: "", placeholder: "TRACK NAME"
     .form-group
-      =f.select :track_type, options_for_types,{},class: "form-control" 
+      =f.select :track_type, options_for_types,{},class: "form-control"
+    .form-group
+      =f.file_field :image
     .form-group
       =f.submit "Add Track", class: "btn_right"

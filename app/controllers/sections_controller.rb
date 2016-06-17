@@ -38,7 +38,7 @@ class SectionsController < ApplicationController
 
     def build_resources
       if params[:resources].present?
-        @section.resources = Hash[params[:resources][:name].zip params[:resources][:value]].delete_if{ |key, value| value.blank?}
+        @section.resources = Hash[params[:resources][:name].zip params[:resources][:value]].delete_if{ |key, value| key.blank?}
       end
     end
 end
