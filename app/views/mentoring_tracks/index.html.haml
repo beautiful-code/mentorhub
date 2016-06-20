@@ -1,4 +1,9 @@
--@mentoring_tracks.each do |m_track|
-  =m_track.name
+.tracks
+  -@mentoring_tracks.each do |m_track|
+    .mentoring_tracks
+      %p.track_name= m_track.name
+      Mentee:
+      = m_track.mentee.try(:name)
 
-=link_to "Add a mentee track", new_mentoring_track_path
+.add_button
+  =link_to "Add a mentee track", new_mentoring_track_path, class: "adding_track"

@@ -3,5 +3,5 @@
 = f.select "mentee_id", options_from_collection_for_select(User.all, 'id', 'email')
 %br
 %br
-= f.label "select a track"
-= f.select "id", options_from_collection_for_select(Track.all, 'id', 'name')
+=label_tag "select a track"
+=select_tag "mentoring_track[track_id]", options_from_collection_for_select(Track.all, 'id', 'name')

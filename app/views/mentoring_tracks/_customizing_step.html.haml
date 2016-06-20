@@ -1,27 +1,13 @@
-%h2 Customization
+%h2 #{@track_instance.name} Customization
 
--@track.sections.each do |section|
-  -section_dup = section.dup
-  -section_interaction = SectionInteraction.create{section_dup}
-  -section_interaction.title = section_dup.title
-  =section_interaction.title
-  %br
-  -section_interaction.goal = section_dup.goal
-  =section_interaction.goal
-  %br
-  -section_interaction.content = section_dup.content
-  =section_interaction.content
-  %br
-  -section_interaction.code_url = section_dup.code_url
-  =section_interaction.code_url
-  -section_interaction.resources = section_dup.resources
-  Resources:
-  %br
-  -section_interaction.resources.each do |name,value|
-    =link_to name, value 
+- @track_instance.section_interactions.each do |si|
+  .section_interactions
+    %p= si.title
+    %p= si.goal
+    %p= si.content
+    %p= si.code_url
+    Resources:
+    - si.resources.each do |name,value|
+      = link_to name, value 
+      %br
     %br
-  %br
-  -section_interaction.track_instance_id = @track_instance.id
-  -section_interaction.save!
-= f.hidden_field :id, :value => session[:mtrack_params][:track_id]
-= f.hidden_field :mentee_id, :value => session[:mtrack_params][:mentee_id]
