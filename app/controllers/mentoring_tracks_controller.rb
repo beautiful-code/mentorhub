@@ -20,7 +20,7 @@ class MentoringTracksController < ApplicationController
         options = section.dup.attributes.except("track_id").merge({"track_instance_id" => track_instance.id})
         @section_interaction = SectionInteraction.create(options)
       end
-      session[:track_instance_id] = track_instance.id
+        session[:track_instance_id] = track_instance.id
     end
 
     @track_instance = TrackInstance.find(session[:track_instance_id])

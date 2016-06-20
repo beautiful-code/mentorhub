@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   end
 
   resources :mentoring_tracks
-
   root :to => 'static_pages#view'
 
   devise_for :users,  :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
