@@ -42,7 +42,12 @@ class MentoringTracksController < ApplicationController
     else
       flash[:success] = "#{@track_instance.name} track was added to #{@mentoring_track.mentee.name}"
       session[:mentoring_track_step] = session[:mtrack_params] = nil
-      redirect_to root_path
+      redirect_to mentoring_tracks_path
     end
   end
+
+  def index
+    @mentoring_tracks = MentoringTrack.all
+  end
+
 end
