@@ -1,9 +1,14 @@
 = form_for @mentoring_track do |f|
   = render "#{@mentoring_track.current_step}_step", :f => f
+<<<<<<< HEAD
   %br
   - if ["assigning", "customizing"].include? @mentoring_track.current_step
     = f.submit "Next", class: "btn btn-default"
   - else
     = f.submit "Confirm", class: "btn btn-default"
   = f.submit "Prev", :name => "back_button", class: "btn btn-default" unless @mentoring_track.first_step?
+=======
+  = f.submit "Next"
+  = f.submit "Prev", :name => "back_button" unless @mentoring_track.first_step?
+>>>>>>> 47b723ebdb6816c4f1d999ed01bb77c32696d082
 
