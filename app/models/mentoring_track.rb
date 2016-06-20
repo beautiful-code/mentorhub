@@ -22,4 +22,9 @@ class MentoringTrack < ActiveRecord::Base
   def first_step?
     current_step == steps.first
   end
+
+  def last_step?
+    current_step == steps.last
+  end
+
 end
