@@ -35,7 +35,10 @@ class MentoringTracksController < ApplicationController
       session[:mentoring_track_step] = session[:mtrack_params] = nil
       redirect_to root_path
     end
+  end
 
+  def index
+    @mentoring_tracks = MentoringTrack.all
   end
 
   private
