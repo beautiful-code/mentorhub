@@ -24,6 +24,7 @@ class MentoringTracksController < ApplicationController
     end
 
     @track_instance = TrackInstance.find(session[:track_instance_id])
+
     if params[:back_button]
       @mentoring_track.previous_step
     elsif @mentoring_track.last_step?
@@ -33,6 +34,7 @@ class MentoringTracksController < ApplicationController
     else
       @mentoring_track.next_step
     end
+
     session[:mentoring_track_step] = @mentoring_track.current_step
 
     if @mentoring_track.new_record?
