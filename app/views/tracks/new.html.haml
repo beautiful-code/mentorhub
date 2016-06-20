@@ -4,6 +4,5 @@
       %ul
         - @track.errors.full_messages.each do |error|
           %li= error
-.container
-  -breadcrumb :new_track
-  =render 'form'
+-breadcrumb :new_track
+=render 'form'

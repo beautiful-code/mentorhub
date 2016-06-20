@@ -8,8 +8,8 @@
     = csrf_meta_tags
   %body
     = render 'layouts/header'
-    .container
-      =breadcrumbs style: :bootstrap     
-      - flash.each do |message_type, message|
-        %div{:class => "alert alert-#{message_type}"}= message
-      = yield
+    .bread_crumbs
+      =breadcrumbs style: :bootstrap,class:""
+    - flash.each do |message_type, message|
+      %div{:class => "alert alert-#{message_type}"}= message
+    = yield

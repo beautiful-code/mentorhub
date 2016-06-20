@@ -7,11 +7,20 @@ $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
 
-p{
-	margin:0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-.breadcrumb{
+html,
+body {
+  font-size: 1em;
+  font-family: "Open Sans";
+  background-color: $bg;
+}
+
+p{
+	margin:0;
 }
 
 #logo{
@@ -22,12 +31,6 @@ p{
   font-weight: 700;
 }
 
-html,
-body {
-  font-size: 1em;
-  font-family: "Open Sans";
-  background-color: $bg;
-}
 .breadcrumb > li + li:before {
     content: ">" !important;
 }

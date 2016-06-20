@@ -12,6 +12,6 @@
       %li= link_to "My Mentees Tracks", "#"
       %li= link_to "Tracks", tracks_path, class:"selected"
     %ul.profile
-      %li= image_tag "profile_dp.jpg"
+      %li= image_tag current_user.image
       %li.profile_name
         =current_user.name
