@@ -1,0 +1,11 @@
+-breadcrumb :mentoring_tracks, @mentoring_track
+.tracks
+  -@mentoring_tracks.each do |m_track|
+    .mentoring_tracks
+      -m_track.track_instances.each do |ti|
+        %p.track_name=ti.name
+      Mentee:
+      = m_track.mentee.name
+
+.add_button
+  =link_to "Add a mentee track", new_mentoring_track_path, class: "adding_track"
