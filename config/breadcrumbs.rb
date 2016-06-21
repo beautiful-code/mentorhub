@@ -20,6 +20,16 @@ crumb :new_section do |track|
   link "Creating a section"
   parent :track, track
 end
+
+crumb :mentoring_tracks do |mentoring_track|
+  link "My Mentees Tracks", mentoring_tracks_path
+  parent :root
+end
+
+crumb :add_mentoring_track do |add_mtrack|
+  link "Add a mentee track",new_mentoring_track_path
+  parent :mentoring_tracks
+end
 # crumb :projects do
 #   link "Projects", projects_path
 # end

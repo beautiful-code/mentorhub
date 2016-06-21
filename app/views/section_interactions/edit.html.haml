@@ -1,0 +1,26 @@
+= form_for @section_interaction do |f|
+  = f.label :title
+  = f.text_field :title, placeholder: "EXERCISE NAME"
+
+  = f.label :goal
+  = f.text_field :goal, placeholder: "EXERCISE GOAL"
+
+  = f.label :content
+  = f.text_field :content, placeholder: "EXERCISE CONTENT"
+
+  = f.label :code_url
+  = f.text_field :code_url, placeholder: "CODE_URL"
+
+  .resources
+    %h4 Resources
+    #resources
+    - if @section_interaction.resources.present?
+      - @section_interaction.resources.each do |name, url|
+        = render 'resource_field', name: name, url: url
+    %button.add_resource_btn#add_field{:href => "javascript:;", type: "button"}
+      %span +
+      Add A Resource
+  .form-group
+    =f.submit "Update", class: "btn_right"
+.hide#new_resource_field
+  = render 'resource_field', name: nil, url: nil
