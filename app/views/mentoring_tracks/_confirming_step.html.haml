@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 %h2 #{@track_instance.name} Confirmation
 
 - @track_instance.section_interactions.each do |si|
@@ -12,33 +11,4 @@
       = link_to name, value 
       %br
     %br
-=======
-%h2 Confirming
 
--@track = Track.find(session[:mtrack_params][:track_id])
--@track.sections.each do |section|
-  -section_dup = section.dup
-  -section_interaction = SectionInteraction.create{section_dup}
-  -section_interaction.title = section_dup.title
-  =section_interaction.title
-  %br
-  -section_interaction.goal = section_dup.goal
-  =section_interaction.goal
-  %br
-  -section_interaction.content = section_dup.content
-  =section_interaction.content
-  %br
-  -section_interaction.code_url = section_dup.code_url
-  =section_interaction.code_url
-  -section_interaction.resources = section_dup.resources
-  Resources:
-  %br
-  -section_interaction.resources.each do |name,value|
-    =link_to name, value 
-    %br
-  %br
-  -section_interaction.track_instance_id = @track_instance.id
-  -section_interaction.save!
-= f.hidden_field :id, :value => @track.id
-= f.hidden_field :mentee_id, :value => session[:mtrack_params][:mentee_id]
->>>>>>> 47b723ebdb6816c4f1d999ed01bb77c32696d082
