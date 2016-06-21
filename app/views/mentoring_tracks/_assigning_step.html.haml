@@ -2,6 +2,7 @@
 
 = f.label "select a user"
 = f.select "mentee_id", options_from_collection_for_select(User.all, 'id', 'email')
-
-= label_tag "select a track"
-= select_tag "mentoring_track[track_id]", options_from_collection_for_select(Track.all, 'id', 'name')
+%br
+%br
+=label_tag "select a track"
+=select_tag "mentoring_track[track_id]", options_from_collection_for_select(Track.all, 'id', 'name')

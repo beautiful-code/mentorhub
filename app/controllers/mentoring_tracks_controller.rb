@@ -36,7 +36,6 @@ class MentoringTracksController < ApplicationController
     end
 
     session[:mentoring_track_step] = @mentoring_track.current_step
-
     if @mentoring_track.new_record?
       render 'new'
     else
@@ -49,5 +48,4 @@ class MentoringTracksController < ApplicationController
   def index
     @mentoring_tracks = MentoringTrack.all
   end
-
 end
