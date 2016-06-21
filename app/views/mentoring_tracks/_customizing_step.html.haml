@@ -1,4 +1,5 @@
 %h2 #{@track_instance.name} Customization
+
 - @track_instance.section_interactions.each do |si|
   .section_interactions
     %p= si.title
@@ -11,3 +12,4 @@
       %br
     = link_to "Edit", "#"
     %br
+

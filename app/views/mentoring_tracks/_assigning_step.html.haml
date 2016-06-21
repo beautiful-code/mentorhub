@@ -1,6 +1,6 @@
 %h2 Assigning
 
-= f.label "select a user"
+= f.label "select a mentee"
 = f.select "mentee_id", options_from_collection_for_select(User.all, 'id', 'email')
 %br
 %br
