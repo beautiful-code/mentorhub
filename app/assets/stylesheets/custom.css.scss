@@ -32,5 +32,40 @@ p{
 }
 
 .breadcrumb > li + li:before {
-    content: ">" !important;
+  content: ">" !important;
+}
+
+.mentoring_tracks{
+  border: 1px solid #D5D6D9;
+  padding: 20px;
+  background-color: #FFFFFF;
+  border-radius: 3px;
+  margin:30px;
+}
+
+.tracks, .add_button{
+  display: inline-block;
+}
+
+
+.add_button {
+  margin:30px;
+}
+
+.tracks{
+  width: 90%;
+}
+
+.track_name{
+  color: #495056;
+  font-size: 25px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.adding_track{
+  padding: 8px;
+  border: 1px solid #D5D6D9;
+  background: #056AB2;
+  color: white;
 }
