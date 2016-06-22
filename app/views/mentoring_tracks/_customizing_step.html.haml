@@ -1,14 +1,31 @@
-%h2 #{@track_instance.name} Customization
 
-- @track_instance.section_interactions.each do |si|
-  .section_interactions
-    %p= si.title
-    %p= si.goal
-    %p= si.content
-    %p= si.code_url
-    Resources:
-    - si.resources.each do |name,value|
-      = link_to name, value
-      %br
-    = link_to "Edit", "#"
-    %br
+%h4
+  Add a Mentee Track
+.heading
+  %ul
+    %li.completed
+      Select mentee and track
+    %li.active
+      Customize the track
+    %li
+      Confirm
+#customise_exercises      
+  - @track_instance.section_interactions.each do |si|
+    .exercise
+      %header
+        .crud_elements
+          %i.fa.fa-pencil-square-o(arian-hidden="true")= link_to "Edit", "#"
+          .toggle
+            %input.tgl(type="checkbox" checked id="cb#{si.id}")
+            %label.tgl-btn(for="cb#{si.id}")
+      %h5 Exercise
+      %h3= si.title
+      %p= si.content
+      .resources
+        %h5 Resources
+        - si.resources.each do |name,value|
+          = link_to name, value
+    
+
+    
+   

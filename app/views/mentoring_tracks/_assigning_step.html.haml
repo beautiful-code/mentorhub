@@ -1,7 +1,27 @@
-%h2 Assigning
-= f.label "select a mentee"
-= f.select "mentee_id", options_from_collection_for_select(User.all, 'id', 'email')
-%br
-%br
-=label_tag "select a track"
-=select_tag "mentoring_track[track_id]", options_from_collection_for_select(Track.all, 'id', 'name')
+%h4
+  Add a Mentee Track
+.heading
+  %ul
+    %li.active
+      Select mentee and track
+    %li
+      Customize the track
+    %li
+      Confirm 
+#select_box
+  .select_a_mentee
+    = f.label "select a mentee"
+    = f.select "mentee_id", options_from_collection_for_select(User.all, 'id', 'email')
+  .select_a_track  
+    =label_tag "select a track"
+    =select_tag "mentoring_track[track_id]", options_from_collection_for_select(Track.all, 'id', 'name') 
+  
+                  
+  
+  
+  
+
+      
+
+      
+        
