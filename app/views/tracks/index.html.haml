@@ -1,8 +1,16 @@
--breadcrumb :tracks, @tracks
-= link_to "Create Track", new_track_path, class: "btn-primary btn", type: "button"
+= link_to "Create a Track", new_track_path, class: "btn-primary btn", id:"create_track_btn", type: "button"
 .container-fluid
   -@tracks.each do |track|
     .row
-      .col-md-8.col-md-offset-2.well
-        %h3= link_to track.name,track_sections_path(track)
-        %h3= track.track_type
+      #track_list
+        .track_card
+          .logo_track
+            =image_tag "https://mentorhub-development.s3.amazonaws.com/uploads/track/image/4/html.png"
+            -#=image_tag track.image
+          .content_track
+            %h3= link_to track.name,track_sections_path(track)
+            %p
+              Description
+            %h4
+              %span= track.sections.count
+              Exercises
