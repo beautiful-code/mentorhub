@@ -1,9 +1,10 @@
 -breadcrumb :add_mentoring_track, @add_mtrack
-= form_for @mentoring_track do |f|
-  = render "#{@mentoring_track.current_step}_step", :f => f
-  %br
-  - if ["assigning", "customizing"].include? @mentoring_track.current_step
-    = f.submit "Next", class: "btn btn-default"
-  - else
-    = f.submit "Confirm", class: "btn btn-default"
-  = f.submit "Prev", :name => "back_button", class: "btn btn-default" unless @mentoring_track.first_step?
+#add_mentee_track
+  = form_for @mentoring_track do |f|
+    = render "#{@mentoring_track.current_step}_step", :f => f
+    .buttons
+      - if ["assigning", "customizing"].include? @mentoring_track.current_step
+        = f.submit "Next", class: "btn-primary_action "
+      - else
+        = f.submit "confirm", class: " btn-primary_action "
+      = f.submit "back", :name => "back_button", class: " btn-secondary_action " unless @mentoring_track.first_step?
