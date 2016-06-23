@@ -1,16 +1,15 @@
-= link_to "Create a Track", new_track_path, class: "btn-primary btn", id:"create_track_btn", type: "button"
+= link_to "Create a Track", new_track_path, class: "btn-primary_action track_list_btn", type: "button"
 .container-fluid
   -@tracks.each do |track|
-    .row
-      #track_list
-        .track_card
-          .logo_track
-            =image_tag "https://mentorhub-development.s3.amazonaws.com/uploads/track/image/4/html.png"
-            -#=image_tag track.image
-          .content_track
-            %h3= link_to track.name,track_sections_path(track)
-            %p
-              Description
-            %h4
-              %span= track.sections.count
-              Exercises
+    .track_list
+      .track_card
+        .logo_track
+          =image_tag "https://mentorhub-development.s3.amazonaws.com/uploads/track/image/4/html.png"
+          -#=image_tag track.image
+        .content_track
+          %h3= link_to track.name,track_sections_path(track)
+          %p
+            Description
+          %h4.exercise_bottom
+            %span= track.sections.count
+            Exercises

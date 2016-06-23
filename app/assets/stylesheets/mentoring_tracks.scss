@@ -117,30 +117,7 @@ $green: #598d09;
     margin-top: 16px;
     text-align: right;
     padding: 0 20px;
- .btn-primary_action{
-        
-        vertical-align: top;
-        height: 30px;
-        border: none;
-        line-height: 15px;
-        padding: 6px 10px;
-        border-radius: 3px;
-        color: white;
-        font-size: 14px;
-        background-color: $primary; 
-      }
-      .btn-secondary_action{
-        float: left;
-        vertical-align: top;
-        height: 30px;
-        line-height: 15px;
-        padding: 6px 10px;
-        border: 2px solid $primary;
-        border-radius: 3px;
-        color: $primary;
-        font-size: 14px;
-        background-color: white;
-      }
+
     }
 #select_box{
   border: 1px solid $border;

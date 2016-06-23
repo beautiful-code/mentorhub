@@ -8,12 +8,14 @@
   - else
     %ul.primary_nav
       %li= link_to "Your Board", "#"
-      %li= link_to "My Learning Tracks", "#"
-      %li= link_to "My Mentees Tracks", mentoring_tracks_path
+      %li= link_to "Learning Tracks", "#"
+      %li= link_to "Mentees Tracks", mentoring_tracks_path
       %li= link_to "Tracks", tracks_path, class:"selected"
     %ul.profile
       %li= image_tag current_user.image
       %li.profile_name
         =current_user.name
-      %li
-        %i.fa.fa-caret-down.profile_dropd(aria-hidden="true")
+      %li.dropdown
+        %i.fa.fa-caret-down.dropdown-toggle( data-toggle="dropdown" aria-hidden="true")
+        %ul.dropdown-menu.pull-right
+          %li= link_to "logout", "users/signout"

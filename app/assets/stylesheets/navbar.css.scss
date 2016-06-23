@@ -109,6 +109,13 @@ body{
         line-height: 28px;
         font-size: 14px;
       }
+      .dropdown-menu{
+        min-width: 100px;
+        padding: 6px 10px;
+        border-radius: 3px;
+        top:72%;
+        border:1px solid $border;
+      }
     }
 
 
