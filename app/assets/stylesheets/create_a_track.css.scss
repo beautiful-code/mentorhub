@@ -7,9 +7,6 @@ $secondary: #888888;
   margin:0;
   padding:0;
 }
-body {
-
-
   .cover_photo{
     position: relative;
     .logo_add_area{
@@ -91,19 +88,24 @@ body {
       font-size: 10px;
       color: $secondary;
     }
-    input:not(.btn_right),textarea{
+    input[type="text"],textarea{
       /*height: 24px;*/
       margin-bottom: 8px;
       box-sizing: border-box;
-      padding: 0 16px;
+      padding: 8px 16px;
       background-color: white;
       border: 1px solid $border;
       border-radius: 3px;
+      font-size: 12px;
       width: 100%;
     }
+
     .res_field{
       width: 40% !important;
     }
+   input:focus + .test1{
+      display: none;
+   }
     textarea{
       width: 100%;
       height: 60px;
@@ -128,20 +130,24 @@ body {
         color: $primary;
         background-color: white;
         padding: 0 10px;
+        font-size: 12px;
       }
     }
-    .btn_right{
-      padding-top: 16px;
+    .btn_save{
+      width: 100%;
+      margin-top: 10px;
       text-align: right;
-      button{
+
+      input{
         margin-right: 16px;
-        text-align: right;
+        padding: 6px 10px;
         height: 30px;
+        box-sizing: border-box;
+        display: inline-block;
         background-color: $primary;
         color: white;
-        padding: 0 10px;
-        border: none;
         font-size: 14px;
+        border: none;
         border-radius: 3px;
       }
     }
@@ -150,5 +156,5 @@ body {
     padding: 6px 16px;
     background-color: white;
   }
-}
+
 

@@ -2,9 +2,10 @@
   =link_to root_path do
     =image_tag "mentorhub_logo.png",class:"logo"
   - if !user_signed_in?
-    %ul.log_nav
-      %li= link_to "Login", new_session_path(resource_name), class:"selected login_link_signup"
-      %li= link_to "Sign Up", new_registration_path(resource_name), class:"selected selected_signup"
+    %ul#log_nav
+      %li= link_to "Login", new_session_path(resource_name)
+      %li
+        %button= link_to "Sign Up", new_registration_path(resource_name) 
   - else
     %ul.primary_nav
       %li= link_to "Your Board", "#"
