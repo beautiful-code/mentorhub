@@ -6,10 +6,10 @@
           %li= error
 .cover_photo
   .logo_track
-    %img(src="" )
+    = image_tag @track.image
   .content_cover
     %h3
-      Track Name
+      = @track.name
     .progress_bar
 .sub_nav
   %h4.selected Exercises

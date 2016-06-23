@@ -4,112 +4,111 @@ $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
 .cover_photo{
-	height:120px;
-	 .logo_track{
+  height:120px;
+  .logo_track{
     background-color: transparent;
     display:inline-block;
     width:20%;
     height:120px;
     img{
-    display:block;
-    width:90px;
-    height:90px;
-    margin: 5px auto;
+      display:block;
+      width:90px;
+      height:90px;
+      margin: 5px auto;
     }
   }
-	.content_cover{
+  .content_cover{
+    vertical-align:top;
+    margin-top: 42px;
+    margin-left:-4px;
+    display:inline-block;
 
-	vertical-align:top;
-	margin-top: 42px;
-	margin-left:-4px;
-	display:inline-block;
+    width:60%;
+    h3{
+      margin: 0;
+      font-size:30px;
+      margin-bottom:16px;
+    }
+    .progress_bar{
+      width: 100%;
+      padding: 0;
 
-	width:60%;
-	h3{
-		margin: 0;
-	font-size:30px;
-	margin-bottom:16px;
-	}
-	.progress_bar{
-		width: 100%;
-		padding: 0;
-	
-	}
-	}
+    }
+  }
 
 }
 .sub_nav{
-	background-color:white;
-	height:36px;
-	h4{
-	display:inline-block;
-	line-height:32px;
-	font-size:14px;
-	margin:0;
-	margin-left:20%;
-	border-bottom: 4px solid $primary;	
-	}
+  background-color:white;
+  height:36px;
+  h4{
+    display:inline-block;
+    line-height:32px;
+    font-size:14px;
+    margin:0;
+    margin-left:20%;
+    border-bottom: 4px solid $primary;
+  }
 }
 #section{
-	.section_each{
-	display:block;
-	margin:0 auto;
-	margin-top:10px;
-	width:60%;
-	background-color:white;
-	border:1px solid $border;
-	border-radius: 3px;
-	padding:16px;
-	h5{
-	text-transform:uppercase;
-	margin:0;
-	margin-bottom:10px;
-	font-size:10px;
-	color:$secondary;
-	}
-	.exercise_name{
-	margin:0;
-	font-size:24px;
-	margin-bottom:10px;
-	i{
-	display:inline-block;
-	color:$secondary;
-	}
-	h3{
-	margin:0;
-	display:inline-block;
-	}
-	a{
-	color:$text;
-	}
+  .section_each{
+    display:block;
+    margin:0 auto;
+    margin-top:10px;
+    width:60%;
+    background-color:white;
+    border:1px solid $border;
+    border-radius: 3px;
+    padding:16px;
+    h5{
+      text-transform:uppercase;
+      margin:0;
+      margin-bottom:10px;
+      font-size:10px;
+      color:$secondary;
+    }
+    .exercise_name{
+      margin:0;
+      font-size:24px;
+      margin-bottom:10px;
+      i{
+        display:inline-block;
+        color:$secondary;
+      }
+      h3{
+        margin:0;
+        display:inline-block;
+      }
+      a{
+        color:$text;
+      }
 
-	}
-	.exercise_description{
-	font-size:14px;
-	margin:0;
-	margin-bottom:10px;
-	}
-	.section_resources{
-		border:1px solid $border;
-		border-radius: 3px;
-		padding:10px;
-		border-left:2px solid $primary;
-		a{
-		color: $primary;
-		}
-	}
-	}
-	.add_exercise{
-	display:block;
+    }
+    .exercise_description{
+      font-size:14px;
+      margin:0;
+      margin-bottom:10px;
+    }
+    .section_resources{
+      border:1px solid $border;
+      border-radius: 3px;
+      padding:10px;
+      border-left:4px solid $primary;
+      a{
+        color: $primary;
+      }
+    }
+  }
+  .add_exercise{
+    display:block;
     width: 60%;
     margin: auto;
     background-color: white;
-    border: 1px solid $border;
+    border:1px solid $border;
     margin-top: 10px;
     color: $secondary;
     box-sizing: border-box;
     padding: 8px 16px;
     border-radius: 3px;
     margin-bottom:20px;
-	}
+  }
 }
