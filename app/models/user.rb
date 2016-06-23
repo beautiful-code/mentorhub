@@ -7,6 +7,10 @@ class User < ActiveRecord::Base
   has_many :mentoring_tracks, foreign_key: :mentee_id
   has_many :track_instances, foreign_key: :mentor_id
 
+
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.where(:email => data["email"]).first
