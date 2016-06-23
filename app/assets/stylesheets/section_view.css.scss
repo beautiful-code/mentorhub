@@ -19,19 +19,21 @@ $secondary: #888888;
   }
 	.content_cover{
 
-	vertical-align:bottom;
+	vertical-align:top;
+	margin-top: 42px;
 	margin-left:-4px;
 	display:inline-block;
+
 	width:60%;
 	h3{
+		margin: 0;
 	font-size:30px;
-	margin-bottom:10px;
+	margin-bottom:16px;
 	}
 	.progress_bar{
-	height:12px;
-	background-color:$secondary;
-	border-radius:3px;
-	margin-bottom:10px;
+		width: 100%;
+		padding: 0;
+	
 	}
 	}
 
