@@ -17,20 +17,17 @@
         %i.fa.fa-check-circle-o(aria-hidden="true")
         %h3= link_to section.title,"#"
       %p.exercise_description
-        This is exercise description
+        = section.content
       .section_resources
-        %h5 Resources
-        %p.resource
-          %a This is resource link
-      / - if section.resources.present?
-      /     %h5 Resources
-      /     - section.resources.each do |resource|
-      /       .container-fluid
-      /         .row
-      /           -if resource[1].present?
-      /             = link_to resource[0], "//#{resource[1]}", target: "_blank"
-      /           -else
-      /             %p= resource[0]
+        - if section.resources.present?
+          %h5 Resources
+          - section.resources.each do |resource|
+            .container-fluid
+              .row
+                -if resource[1].present?
+                  = link_to resource[0], "//#{resource[1]}", target: "_blank"
+                -else
+                  %p= resource[0]
   .add_exercise.add_exercise_btn
     =link_to new_track_section_path, class: "add_exercise_link" do
       %span +

@@ -1,21 +1,8 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-
-=begin
-["Sashank","Rushil"].each do |user_name|
-  user = User.create(name: user_name)
-  mentoring_track = user.mentoring_tracks.create(name: "Mentoring Track for #{user_name}")
-  track = mentoring_track.track_instances.create(name: "Mentoring Track for #{user_name}")
-  5.times {|t| track.section_interactions.create(title: "Section #{t + 1}") }
-end
-=end
-
-["Rails","Ruby","Html"].each do |track|
-  track = Track.create(name: track, track_type: "Web")
-  5.times {|t| track.sections.create(title: "Section #{t+1}")}
-end
+Section.create!([
+  {title: "HTML-E1: Build your first webpage", goal: "", content: "Create your first webpage.", code_url: nil, resources: {"Html fundamentals"=>"www.google.com"}, track_id: 1}
+])
+Track.create!([
+  {name: "Html5", track_type: nil, image: "html.png", desc: "Understand the working of html by creating webpages"},
+  {name: "Css3", track_type: nil, image: "css.png", desc: "Learn to Code HTML & CSS in a simple and comprehensive way by working on exercises covering  various topics."},
+  {name: "Javascript", track_type: nil, image: "javascript_logo.png", desc: "Learn the programming language of web by working on exercises and under the guidance of  mentors"}
+])

@@ -18,6 +18,7 @@ gem 'carrierwave'
 gem 'fog-aws'
 
 group :development, :test do
+  gem 'seed_dump'
   gem 'rspec-rails'
   gem 'byebug'
   gem 'better_errors'
