@@ -1,7 +1,8 @@
 .add_exercise
   -breadcrumb :new_section, @track
   =form_for [@track, @section] do |f|
-    =f.text_field :title, class: "", placeholder: "EXERCISE NAME"
+    =f.text_field :title, id: 'exercise_name'
+    =label_tag 'exercise_name'
     =f.hidden_field :goal, class: "",placeholder: "EXERCISE GOAL"
     =f.text_area :content, class: "",placeholder: "EXERCISE DESCRIPTION", rows: "5"
     .resources
