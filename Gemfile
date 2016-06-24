@@ -16,9 +16,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'font-awesome-rails', '~> 4.6', '>= 4.6.3.0'
 gem 'carrierwave'
 gem 'fog-aws'
-gem 'seed_dump'
 
 group :development, :test do
+  gem 'seed_dump'
   gem 'rspec-rails'
   gem 'byebug'
   gem 'better_errors'
