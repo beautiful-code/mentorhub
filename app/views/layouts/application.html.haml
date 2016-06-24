@@ -9,8 +9,11 @@
     %link{:href => "//fonts.googleapis.com/css?family=Open+Sans", :rel => "stylesheet", :type => "text/css"}/
   %body
     = render 'layouts/header'
-    .bread_crumbs
-      =breadcrumbs style: :bootstrap,class:""
+    
+    - if breadcrumbs.present?
+      .bread_crumbs
+        = breadcrumbs style: :bootstrap,class:""
+
     - flash.each do |message_type, message|
       %div{:class => "alert alert-#{message_type}"}= message
     = yield

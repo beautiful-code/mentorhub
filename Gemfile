@@ -25,6 +25,7 @@ group :development, :test do
   gem 'binding_of_caller'
   gem 'spring'
   gem "factory_girl_rails", "~> 4.0"
+  gem "quiet_assets"
 end
 
 group :production do
