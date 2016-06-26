@@ -1,0 +1,189 @@
+$bg: #e9ebee;
+$border: #c5c7c9;
+$primary: #056ab2;
+$text: #333333;
+$secondary: #888888;
+$red: #F28379;
+$green: #598D09;
+$yellow: #F0AD4E;
+#board{
+  .nav-tabs{
+    border-bottom: 1px solid $border;
+
+  }
+  .nav-tabs > li.active >a{
+    border: 1px solid $border;
+    border-bottom-color: transparent;
+  }
+  width: 60%;
+  display: block;
+  margin: 10px auto;
+    .user_exercise_style{
+    background-color: white;
+    border: 1px solid $border;
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+    padding: 16px;
+    padding-top: 4px;
+    .user_tracks-subnav{
+      margin-bottom: 4px;
+      li{
+        height: 20px;
+        opacity: 0.4;
+        line-height: 20px;
+        font-size: 12px;
+        display: inline-block;
+        list-style: none;
+        margin: 0 6px;
+        a{
+          color: $text;
+        }
+        img{
+          vertical-align: top;
+          margin-top: 4px;
+          width: 12px;
+          height: 12px;
+        }
+      }
+      .active{
+        opacity: 1;
+      }
+    }
+    .track_header{
+      border: 1px solid $border;
+      border-radius: 3px;
+      padding: 10px;
+      margin-bottom: 10px;
+      .track_details{
+          display: flex;
+          height: 30px;
+          margin-bottom: 10px;
+          h5{
+            margin: 0;
+          }
+          .item{
+            flex-grow:1;
+          }
+          .logo_n_name{
+            text-align: left;
+            img{
+              width: 24px;
+              height: 24px;
+              vertical-align: top;
+              margin-top:3px; 
+              display: inline-block;
+            }
+            h3{
+
+              display: inline-block;
+            }
+          }  
+          .track_deadline{
+            text-align: center;
+            #date{
+              position: relative;
+              right: 18px;
+            }
+          }
+          .track_mentor{
+            text-align: right;
+          }
+          h3{
+            margin: 0;
+          }
+          
+      } 
+    }
+    .section_each{
+        position: relative;
+        h5{
+         margin-top: 6px;
+         margin-bottom: 4px;
+        }
+        .exercise_name{
+          margin-bottom: 4px;
+        }
+      .exercise_purpose{
+        width: 100%;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        text-align: center;
+        height: 20px;
+        background-color: rgba(242,131,121,0.2);
+        p{
+          font-size: 14px;
+          line-height: 20px;
+        }
+      }
+      .user_answers{
+        p{
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+        input[type="text"]{
+          height: 30px;
+          border: 1px solid $border;
+          border-radius: 3px;
+          width: 80%;
+        }
+        .btn-primary_action{
+          margin-left: -2px;
+        }
+
+      }
+      .exercise-tasks_to_do{
+        h4{
+          font-weight: 600;
+          margin-bottom: 4px;
+        }
+        ul{
+          margin-bottom: 0;
+          li{
+            list-style: none;
+          }
+          i{
+          color: $red; 
+          }
+        }
+      }
+    }
+  }
+  #user_exercises{
+   
+  }
+  #user_mentee_exercises{
+     display: none;
+    .exercise_purpose{
+      background-color: rgba(240,173,78,0.2);
+    }
+    .exercise-tasks_to_do{
+      .add_a_task{
+        margin-top: 4px;
+        span{
+          position: absolute;
+          display: inline-block;
+          width: 16px;
+          height: 20px;
+          font-size: 14px;
+          line-height: 20px;
+          color: $primary;
+          padding: 0 4px;
+        }
+        input[type="text"]{
+          vertical-align: top;
+          width: 80%;
+          height: 20px;
+          border: 1px solid $border;
+          border-radius: 3px;
+          padding-left: 16px;
+          font-size: 12px; 
+        }
+
+       
+      }
+    }
+  }
+
+
+}
