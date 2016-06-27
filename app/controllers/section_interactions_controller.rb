@@ -2,14 +2,12 @@ class SectionInteractionsController < ApplicationController
 
   def edit
     @section_interaction = SectionInteraction.find(params[:id])
-    session[:return_to] = request.referer
   end
 
   def update
     @section_interaction = SectionInteraction.find(params[:id])
-    if @section_interaction.update(section_interaction_params)
-      redirect_to session.delete(:return_to)
-    else
+
+    unless @section_interaction.update(section_interaction_params)
       render 'edit'
     end
   end

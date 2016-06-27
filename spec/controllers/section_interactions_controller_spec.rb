@@ -1,5 +1,5 @@
-require 'rails_helper'
+#require 'rails_helper'
 
-RSpec.describe SectionInteractionsController, type: :controller do
+RSpec.describe "SectionInteractionsController", type: :controller do
 
 end

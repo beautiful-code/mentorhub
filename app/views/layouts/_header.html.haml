@@ -9,16 +9,16 @@
   - else
     %ul.primary_nav
       %li= link_to "Your Board", board_path, class: active_class(c: ['board'])
-      %li= link_to "Learning Tracks", "#"
+      %li= link_to "My Learning Tracks", learning_tracks_path
       %li= link_to "Mentees Tracks", mentoring_tracks_path, class: active_class(c:  ['mentoring_tracks'])
       %li= link_to "Tracks", tracks_path, class: active_class(c: ['sections','tracks'])
     %ul.profile
       -if current_user.image.present?
         %li= image_tag current_user.image
       -else
-        %li= gravatar_for current_user   
+        %li= gravatar_for current_user
       %li.dropdown.dropdown-toggle(data-toggle="dropdown" )
-        = current_user.first_name 
+        = current_user.first_name
         %i.fa.fa-caret-down(aria-hidden="true")
       %ul.dropdown-menu.pull-right
         %i.fa.fa-caret-up

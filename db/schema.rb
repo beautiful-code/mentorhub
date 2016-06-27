@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623075926) do
+ActiveRecord::Schema.define(version: 20160630061042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,11 +27,12 @@ ActiveRecord::Schema.define(version: 20160623075926) do
     t.string   "title"
     t.string   "goal"
     t.text     "content"
-    t.string   "code_url"
     t.string   "resources"
     t.integer  "track_instance_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state"
+    t.text     "mentee_comment"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -50,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160623075926) do
     t.integer  "section_interaction_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "state"
   end
 
   create_table "track_instances", force: :cascade do |t|

@@ -1,8 +1,8 @@
 class Section < ActiveRecord::Base
+  belongs_to :track
+
   validates :title, presence: true
   validates :content, presence: true
-
-  belongs_to :track
 
   serialize :resources, Array
 end
