@@ -17,6 +17,9 @@
 
 
 $(document).ready(function(){
+
+  $('#add_exercise_form').hide();
+
   $("#add_field").click(function(){
     $("#resources").append($("#new_resource_field").html());
   });
@@ -24,5 +27,14 @@ $(document).ready(function(){
   $("div#resources").on('click', '.remove', function(){
     $(this).closest('.form-inline').remove();
   });
+
+  $(".add_exercise_btn").click(function(){
+    $("#add_exercise_form").show();
+  });
+
+  $('.delete_form').click(function(){
+    document.getElementById("section_form").reset();
+    $('#add_exercise_form').hide();
+  })
 });
 
