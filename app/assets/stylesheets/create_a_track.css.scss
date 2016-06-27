@@ -70,6 +70,31 @@ $secondary: #888888;
   box-sizing: border-box;
   padding: 16px;
   border-radius: 3px;
+  .input_box{
+    position: relative;
+    .label_transition{
+      z-index: 10;
+      display: inline-block;
+    position: absolute;
+   
+    text-transform: uppercase;
+    color: #C7C7CD; 
+    font-size: 12px;
+    top: 10px;
+    left: 16px;
+    transition-property: all;
+    transition-duration: 0.2s;
+    transition-timing-function: linear;
+  }  
+    input:focus ~ label, textarea:focus ~ label{
+      padding: 0 2px;
+      font-size: 8px;
+      background-color: white;
+      top: -5px;
+      
+    }
+  }
+  
 
   .add_exercise_link{
     cursor: pointer;

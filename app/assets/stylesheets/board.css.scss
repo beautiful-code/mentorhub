@@ -6,7 +6,7 @@ $secondary: #888888;
 $red: #F28379;
 $green: #598D09;
 $yellow: #F0AD4E;
-#board{
+#board{ 
   .nav-tabs{
     border-bottom: 1px solid $border;
 
@@ -14,6 +14,22 @@ $yellow: #F0AD4E;
   .nav-tabs > li.active >a{
     border: 1px solid $border;
     border-bottom-color: transparent;
+  }
+  .board_subnav{
+    .inactive{
+      background-color: $primary;
+      border-radius: 3px 3px 0 0;
+      a{
+        color: white;
+        background-color: transparent;
+      }
+    }
+    .inactive > a:hover{
+      border: 1px solid $primary;  
+      background-color: $primary;
+
+    }
+
   }
   width: 60%;
   display: block;
@@ -149,11 +165,8 @@ $yellow: #F0AD4E;
       }
     }
   }
-  #user_exercises{
-   
-  }
+  
   #user_mentee_exercises{
-     display: none;
     .exercise_purpose{
       background-color: rgba(240,173,78,0.2);
     }

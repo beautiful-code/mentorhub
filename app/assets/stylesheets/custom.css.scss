@@ -12,11 +12,9 @@ body {
   font-family: "Open Sans";
   background-color: $bg;
   position: relative;
+
 }
 
-p{
-	margin:0;
-}
 
 #logo{
   line-height: 50px;
@@ -26,9 +24,7 @@ p{
   font-weight: 700;
 }
 
-.breadcrumb > li + li:before {
-  content: ">" !important;
-}
+
 
 
 h5{
@@ -73,7 +69,7 @@ h5{
   color: white;
 }
 .bread_crumbs{
-  vertical-align:top;
+  padding-top: 8px; 
   width:60%;
   display: block;
   margin: 0 auto;
@@ -233,7 +229,7 @@ h5{
       }
 
     }
-    p.exercise_description{
+    .exercise_description{
       font-size:14px;
       margin:0;
       margin-bottom:10px;
@@ -247,4 +243,16 @@ h5{
         color: $primary;
       }
     }
+  }
+  .alert{
+       
+    text-align: center;
+    margin: 0 auto;
+    width: 360px;
+    margin-top: 10px;
+    font-size: 14px;
+    background-color: #cde1ef;
+    color: $primary;
+    border: 1px solid rgba(5,106,178,0.6);
+    border-radius: 3px;
   }
