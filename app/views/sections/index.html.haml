@@ -1,37 +1,28 @@
--breadcrumb :track, @track
-.cover_photo
-  .logo_track
-    =image_tag "https://mentorhub-development.s3.amazonaws.com/uploads/track/image/4/html.png"
-    -#=image_tag @track.image
-  .content_cover
-    %h3
-      =@track.name
-    .progress_bar
-.sub_nav
-  %h4.selected Exercises
-#section
-  - @sections.each do |section|
-    .section_each
-      = link_to [@track,section], method: :delete ,data: {confirm: "You sure?"} do
-        %i.glyphicon.glyphicon-trash
-      %h5 Exercise
-      .exercise_name
-        %i.fa.fa-check-circle-o(aria-hidden="true")
-        %h3= link_to section.title,"#"
-      %p.exercise_description
-        = section.content
-      .section_resources
-        - if section.resources.present?
-          %h5 Resources
-          - section.resources.each do |resource|
-            .container-fluid
-              .row
-                -if resource[1].present?
-                  = link_to resource[0], "//#{resource[1]}", target: "_blank"
-                -else
-                  %p= resource[0]
-  =render 'form'
+- breadcrumb :track, @track
+
+#section_index
+  .cover_photo
+    .logo_track
+      = image_tag @track.image
+    .content_cover
+      %h3
+        = @track.name
+      .progress_bar
+
+  .sub_nav
+    %h4.selected Exercises
+
+  #section
+    = render 'templates'
+
   .add_exercise.add_exercise_btn
     %a.add_exercise_link
       %span +
       Add an exercise
+
+  :javascript
+    var PageConfig = {
+      track: #{@track.to_json}
+    };
+
+    PageConfig.track.sections = #{@sections.to_json};
