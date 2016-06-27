@@ -1,0 +1,22 @@
+- @sections.each do |section|
+  .section_each
+    = link_to [@track,section], method: :delete ,data: {confirm: "You sure?"} do
+      %i.glyphicon.glyphicon-trash
+    = link_to [@track,section] do
+      %i.glyphicon.glyphicon-pencil
+    %h5 Exercise
+    .exercise_name
+      %i.fa.fa-check-circle-o(aria-hidden="true")
+      %h3= link_to section.title,"#"
+    %p.exercise_description
+      = section.content
+    .section_resources
+      - if section.resources.present?
+        %h5 Resources
+        - section.resources.each do |resource|
+          .container-fluid
+            .row
+              - if resource[1].present?
+                = link_to resource[0], "//#{resource[1]}", target: "_blank"
+              - else
+                %p= resource[0]

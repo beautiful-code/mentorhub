@@ -6,5 +6,5 @@ class Section < ActiveRecord::Base
 
   belongs_to :track
 
-  serialize :resources, Hash
+  serialize :resources, Array
 end
