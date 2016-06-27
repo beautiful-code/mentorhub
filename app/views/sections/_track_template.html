@@ -1,0 +1,55 @@
+<script class="hidden" type="text/x-handlebars-template" id="show_track_data">
+  {{#if editable}}
+  <form class="edit_track" enctype="multipart/form-data">
+  {{else}}
+  {{/if}}
+  <div class="cover_photo">
+
+    <div class="logo_track">
+      <img src="{{image.url}}" alt="{{name}} logo">
+      {{#if editable}}
+      <input type="file" id="image" class="form-control">
+      {{/if}}
+    </div>
+    <div class="content_cover">
+      {{#if editable}}
+        {{#if newRecord}}
+        <input type="button" class="create-track btn-primary_action" value="create">
+        {{else}}
+        <input type="button" class="update-track btn-primary_action" value="Update">
+        {{/if}}
+        <input type="button" class="cancel-edit btn-secondary_action" value="Cancel">
+      {{/if}}
+      <div>
+      {{#if editable}}
+        <div class="track-name">
+        <input placeholder="Track Name" value="{{name}}" class="form-control" type="text" id="name">
+        <span class="help-block"></span>
+        </div>
+        {{else}}
+        <div class="edit-track">
+          <input type="button" class="edit-track-btn btn-primary_action" value="Edit Track">
+        </div>
+        <div >
+          <h3>
+            {{name}}
+          </h3>
+        </div>
+
+        {{/if}}
+        <div>
+          {{#if editable}}
+          <input placeholder="Track description" value="{{desc}}" class="form-control" type="text" id="desc">
+           <span class="help-block"></span>
+          {{else}}
+          {{desc}}
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="progress_bar"></div>
+
+    </div>
+  </div>
+  </form>
+</script>

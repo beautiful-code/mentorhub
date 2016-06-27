@@ -13,16 +13,4 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require_tree .
-
-
-$(document).ready(function(){
-  $("#add_field").click(function(){
-    $("#resources").append($("#new_resource_field").html());
-  });
-
-  $("div#resources").on('click', '.remove', function(){
-    $(this).closest('.form-inline').remove();
-  });
-});
-
+//= require tracks
