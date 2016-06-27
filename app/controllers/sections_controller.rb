@@ -5,6 +5,7 @@ class SectionsController < ApplicationController
 
   def index
     @sections = @track.sections.order("id")
+    @section = @track.sections.new
   end
 
   def create
@@ -21,6 +22,12 @@ class SectionsController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @section.destroy
+    flash[:success] = "Section deleted"
+    redirect_to track_sections_path
   end
 
   private

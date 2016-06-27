@@ -6,15 +6,23 @@ $border: #c5c7c9;
 $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html,
 body {
   font-size: 1em;
   font-family: "Open Sans";
   background-color: $bg;
   position: relative;
-
 }
 
+p{
+  margin:0;
+}
 
 #logo{
   line-height: 50px;
@@ -24,16 +32,18 @@ body {
   font-weight: 700;
 }
 
-
-
+.breadcrumb > li + li:before {
+  content: ">" !important;
+}
 
 h5{
-      text-transform:uppercase;
-      margin:0;
-      margin-bottom:10px;
-      font-size:10px;
-      color:$secondary;
-    }
+  text-transform:uppercase;
+  margin:0;
+  margin-bottom:10px;
+  font-size:10px;
+  color:$secondary;
+}
+
 .mentoring_tracks{
   border: 1px solid #D5D6D9;
   padding: 20px;
@@ -68,191 +78,206 @@ h5{
   background: #056AB2;
   color: white;
 }
+
 .bread_crumbs{
-  padding-top: 8px; 
+  padding-top: 8px;
   width:60%;
   display: block;
   margin: 0 auto;
   height:20px;
+
   ol{
-      margin:0;
+    margin:0;
+
     li{
       line-height:20px;
       display: inline-block;
       font-size: 12px;
       color: $primary;
-    }
-    li:after{
-      content: ">" ;
-      margin: 4px;
-      color: $primary;
-    }
-    li:last-child{
-      color: black;
-      font-weight:600;
-    }
-    li:last-child:after{
-      display:none;
-    }
-  }
-}
-.track_list{
 
-.track_card{
-  position:relative;
-  width:60%;
-  margin:0 20%;
-  border:1px solid $border;
-  border-radius:3px;
-  background-color:white;
-  height:180px;
-  margin-top:10px;
-  .logo_track{
-    background-color: rgba(5,106,176,0.1);
-    display:inline-block;
-    width:180px;
-    height:180px;
-    img{
-    width:90px;
-    height:90px;
-    margin: 45px;
-    }
-  }
-  .content_track{
-  position:relative;
-    vertical-align:top;
-    padding:16px;
-   display:inline-block;
-   width: calc( 100% - 181px);
-   height:180px;
-   margin-left: -4px;
-    color:$text;
-   box-sizing: border-box;
-   h3{
-   margin:0;
-   font-size:30px;
-   }
-   p{
-   margin-top:10px;
-   font-size:14px;
-   }
-   h4{
-    margin: 0;
-   text-transform: uppercase;
-   font-size:10px;
-   color: $secondary;
-   }
-   .exercise_bottom{
-    position:absolute;
-  bottom:16px;
-  left:16px;
-   }
-   .details{
-    margin-top:24px; 
-    display: block;
-    margin-bottom: 24px;
-    .mentee_name, .mentee_deadline{
+      &:after{
+        content: ">" ;
+        margin: 4px;
+        color: $primary;
+      }
 
-      display: inline-block;
-      p{
-        margin-top: 2px;
+      &:last-child{
+        color: black;
+        font-weight:600;
+      }
+
+      &:last-child:after{
+        display:none;
       }
     }
-    .mentee_name{
-      float: right;
-    }
-   }
-   } 
+
+  }
 }
+
+.track_list{
+  .track_card{
+    position:relative;
+    width:60%;
+    margin:0 20%;
+    border:1px solid $border;
+    border-radius:3px;
+    background-color:white;
+    height:180px;
+    margin-top:10px;
+    .logo_track{
+      background-color: rgba(5,106,176,0.1);
+      display:inline-block;
+      width:180px;
+      height:180px;
+      img{
+        width:90px;
+        height:90px;
+        margin: 45px;
+      }
+    }
+    .content_track{
+      position:relative;
+      vertical-align:top;
+      padding:16px;
+      display:inline-block;
+      width: calc( 100% - 181px);
+      height:180px;
+      margin-left: -4px;
+      color:$text;
+      box-sizing: border-box;
+      h3{
+        margin:0;
+        font-size:30px;
+      }
+      p{
+        margin-top:10px;
+        font-size:14px;
+      }
+      h4{
+        margin: 0;
+        text-transform: uppercase;
+        font-size:10px;
+        color: $secondary;
+      }
+      .exercise_bottom{
+        position:absolute;
+        bottom:16px;
+        left:16px;
+      }
+      .details{
+        margin-top:24px;
+        display: block;
+        margin-bottom: 24px;
+        .mentee_name, .mentee_deadline{
+
+          display: inline-block;
+          p{
+            margin-top: 2px;
+          }
+        }
+        .mentee_name{
+          float: right;
+        }
+      }
+    }
+  }
 }
 .track_list_btn{
   float: right;
   margin-top: 10px;
   margin-right: 52px;
-  
+
 }
-  .progress_bar{
+
+.progress_bar{
   height:12px;
   background-color:$secondary;
   border-radius:3px;
-  
+}
+
+.btn-primary_action{
+  vertical-align: top;
+  height: 30px;
+  border: none;
+  line-height: 15px;
+  padding: 6px 10px;
+  border-radius: 3px;
+  color: white;
+  font-size: 14px;
+  background-color: $primary;
+
+  a{
+    color: white;
+    font-size: 14px;
   }
- .btn-primary_action{
-        vertical-align: top;
-        height: 30px;
-        border: none;
-        line-height: 15px;
-        padding: 6px 10px;
-        border-radius: 3px;
-        color: white;
-        font-size: 14px;
-        background-color: $primary;
-        a{
-          color: white;
-          font-size: 14px;
-        } 
-      }
-      .btn-secondary_action{
-        float: left;
-        vertical-align: top;
-        height: 30px;
-        line-height: 15px;
-        padding: 6px 10px;
-        border: 2px solid $primary;
-        border-radius: 3px;
-        color: $primary;
-        font-size: 14px;
-        background-color: white;
-      }
- .section_each{
-    display:block;
-    margin:0 auto;
-    margin-top:10px;  
-    background-color:white;
+}
+
+.btn-secondary_action{
+  float: left;
+  vertical-align: top;
+  height: 30px;
+  line-height: 15px;
+  padding: 6px 10px;
+  border: 2px solid $primary;
+  border-radius: 3px;
+  color: $primary;
+  font-size: 14px;
+  background-color: white;
+}
+
+.section_each{
+  display:block;
+  margin:0 auto;
+  margin-top:10px;
+  background-color:white;
+  border:1px solid $border;
+  border-radius: 3px;
+  padding:16px;
+  .exercise_name{
+    margin:0;
+    font-size:24px;
+    margin-bottom:10px;
+
+    i{
+      display:inline-block;
+      color:$secondary;
+    }
+
+    h3{
+      margin:0;
+      display:inline-block;
+    }
+
+    a{
+      color:$text;
+    }
+  }
+
+  .exercise_description{
+    font-size:14px;
+    margin:0;
+    margin-bottom:10px;
+  }
+
+  .section_resources{
     border:1px solid $border;
     border-radius: 3px;
-    padding:16px;   
-    .exercise_name{
-      margin:0;
-      font-size:24px;
-      margin-bottom:10px;
-      i{
-        display:inline-block;
-        color:$secondary;
-      }
-      h3{
-        margin:0;
-        display:inline-block;
-      }
-      a{
-        color:$text;
-      }
+    padding:10px;
+    border-left:4px solid $primary;
+    a{
+      color: $primary;
+    }
+  }
+}
 
-    }
-    .exercise_description{
-      font-size:14px;
-      margin:0;
-      margin-bottom:10px;
-    }
-    .section_resources{
-      border:1px solid $border;
-      border-radius: 3px;
-      padding:10px;
-      border-left:4px solid $primary;
-      a{
-        color: $primary;
-      }
-    }
-  }
-  .alert{
-       
-    text-align: center;
-    margin: 0 auto;
-    width: 360px;
-    margin-top: 10px;
-    font-size: 14px;
-    background-color: #cde1ef;
-    color: $primary;
-    border: 1px solid rgba(5,106,178,0.6);
-    border-radius: 3px;
-  }
+.alert{
+  text-align: center;
+  margin: 0 auto;
+  width: 360px;
+  margin-top: 10px;
+  font-size: 14px;
+  background-color: #cde1ef;
+  color: $primary;
+  border: 1px solid rgba(5,106,178,0.6);
+  border-radius: 3px;
+}
