@@ -5,14 +5,13 @@ class SectionsController < ApplicationController
 
   def index
     @sections = @track.sections.order("id")
-    @section = @track.sections.new
   end
 
   def create
     if @section.save
-      redirect_to track_sections_path, success:"Section created"
+      render json: {msg: "success", section: @section}, status: 200
     else
-      render 'new'
+      render json: {msg: "error", errors: @section.errors, section: @section}, status: 422
     end
   end
 
@@ -32,7 +31,7 @@ class SectionsController < ApplicationController
 
   private
     def section_params
-      params.fetch(:section, {}).permit(:title, :goal, :content, :code_url)
+      params.fetch(:section, {}).permit(:title, :content)
     end
 
     def set_track
@@ -44,8 +43,6 @@ class SectionsController < ApplicationController
     end
 
     def build_resources
-      if params[:resources].present?
-        @section.resources = Hash[params[:resources][:name].zip params[:resources][:value]].delete_if{ |key, value| key.blank?}
-      end
+      @section.resources = params[:section].delete(:resources).collect {|_,v| v } if params[:section][:resources].present?
     end
 end
