@@ -1,15 +1,12 @@
 class TracksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_track, except: [:index]
 
   def index
     @tracks = Track.all
   end
 
-  def new
-    @track = Track.new
-  end
-
   def create
-    @track = Track.new(track_params)
     if @track.save
       redirect_to tracks_path, success: "Track created"
     else
@@ -17,12 +14,7 @@ class TracksController < ApplicationController
     end
   end
 
-  def edit
-    @track = Track.find(params[:id])
-  end
-
   def update
-    @track = Track.find(params[:id])
     if @track.update(track_params)
       redirect_to tracks_path, success: "Track updated"
     else
@@ -30,9 +22,12 @@ class TracksController < ApplicationController
     end
   end
 
-
   private
-  def track_params
-    params.require(:track).permit(:name, :track_type, :image, :desc)
-  end
+    def track_params
+      params.fetch(:track, {}).permit(:name, :image, :desc)
+    end
+
+    def set_track
+      @track = (params[:id].present?)? Track.find(params[:id]) : Track.new(track_params)
+    end
 end
