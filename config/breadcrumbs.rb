@@ -13,7 +13,7 @@ end
 
 crumb :new_track do |track|
   link "Creating a track"
-  parent :root
+  parent :tracks
 end
 
 crumb :new_section do |track|

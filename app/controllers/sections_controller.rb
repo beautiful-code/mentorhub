@@ -1,13 +1,9 @@
 class SectionsController < ApplicationController
   #TODO: Add auth token to ajax requests
-  before_action :authenticate_user!, except: [:update, :create]
+  before_action :authenticate_user!, except: [:update, :create, :destroy]
   before_action :set_track
   before_action :set_section, except: [:index]
   before_action :build_resources, only: [:create, :update]
-
-  def index
-    @sections = @track.sections.order("id")
-  end
 
   def create
     if @section.save
@@ -26,9 +22,11 @@ class SectionsController < ApplicationController
   end
 
   def destroy
-    @section.destroy
-    flash[:success] = "Section deleted"
-    redirect_to track_sections_path
+    if @section.destroy
+      render json: {msg: "success"}, status: 200
+    else
+      render json: {msg: "error"}, status: 422
+    end
   end
 
   private
