@@ -34,18 +34,18 @@
 <script class="hidden" type="text/x-handlebars-template" id="section_form">
   <div class="add_exercise" id="add_exercise_form" data-section-id="{{id}}">
     <form class="new_section">
-      <input id="section_name" placeholder="EXERCISE NAME" type="text" name="title">
-      <textarea class="" placeholder="EXERCISE DESCRIPTION" rows="5" name="content" id="section_content"></textarea>
+      <input id="section_name" placeholder="EXERCISE NAME" type="text" name="title" value="{{title}}">
+      <textarea class="" placeholder="EXERCISE DESCRIPTION" rows="5" name="content" id="section_content">{{content}}</textarea>
       <div class="resources">
         <h4>Resources</h4>
 
         {{#each resources}}
         <div id="resources">
           <div class="form-inline">
-            <input placeholder="Text" type="text" class="text" value="{{text}}">
-            <input placeholder="URL" type="text" class="url" value="{{url}}">
+            <input placeholder="Text" type="text" class="text res_field" value="{{text}}">
+            <input placeholder="URL" type="text" class="url res_field" value="{{url}}">
 
-            <button class="remove" type="button">
+            <button class="remove add_resource_btn" type="button">
               <i class="glyphicon glyphicon-trash"></i>
             </button>
           </div>
@@ -58,7 +58,11 @@
         </button>
       </div>
       <div class="btn_save">
-        <input type="button" value="Save">
+        {{#if newTrack}}
+        <input type="button" value="Create">
+        {{else}}
+        <input type="button" value="Update">
+        {{/if}}
       </div>
     </form>
   </div>
@@ -66,10 +70,10 @@
 
 <script class="hidden" type="text/x-handlebars-template" id="resource_form">
   <div class="form-inline">
-    <input placeholder="Text" type="text" class="text" value="{{name}}">
-    <input placeholder="URL" type="text" class="url" value="{{url}}">
+    <input placeholder="Text" type="text" class="text res_field" value="{{name}}">
+    <input placeholder="URL" type="text" class="url res_field" value="{{url}}">
 
-    <button class="remove" type="button">
+    <button class="remove add_resource_btn" type="button">
       <i class="glyphicon glyphicon-trash"></i>
     </button>
   </div>

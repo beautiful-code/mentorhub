@@ -1,4 +1,6 @@
 class SectionsController < ApplicationController
+  #TODO: Add auth token to ajax requests
+  before_action :authenticate_user!, except: [:update, :create]
   before_action :set_track
   before_action :set_section, except: [:index]
   before_action :build_resources, only: [:create, :update]
@@ -17,9 +19,9 @@ class SectionsController < ApplicationController
 
   def update
     if @section.update(section_params)
-      redirect_to track_sections_path, success: "Section updated"
+      render json: {msg: "success", section: @section}, status: 200
     else
-      render 'edit'
+      render json: {msg: "error", errors: @section.errors, section: @section}, status: 422
     end
   end
 

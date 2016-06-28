@@ -20,40 +20,74 @@ $(function() {
 
         $element.find(".add_resource_btn").click(function(e) {
           e.preventDefault();
-          $element.find(".resources").append(self.resourceFormTemplate({}));
+          $(self.resourceFormTemplate({})).insertBefore($element.find(".resources #add_field"));
           return false;
         });
       };
 
       self.getSection = function(sectionId) {
-        $.each(PageConfig.track.sections, function(i, section) {
-          if (section.id === sectionId ) { return section; }
-        });
+        return (
+          self.sections.find(function(section) {
+            return section.id == sectionId;
+          })
+        );
+      };
+
+      self.getSectionElement = function(sectionId) {
+        return (
+          self.sectionContainer.find("div[data-section-id]").toArray().find(
+            function(element) {
+              return element.getAttribute("data-section-id") == sectionId;
+            }
+          )
+        );
       };
 
       //TODO: Rushil to write the functionality
       self.deleteSection = function() {
       };
 
-      self.createSection = function(params, $element) {
-        var url = "/tracks/" + params.track_id + "/sections";
+      self.updateSection = function(params, $element) {
+        self.sectionAjax({
+          type: "PUT",
+          url: "/tracks/" + self.track.id + "/sections/" + params.section.id,
+          params: params
+        }, $element);
+      };
 
-        $.ajax({
+      self.createSection = function(params, $element) {
+        self.sectionAjax({
           type: "POST",
-          url: url,
-          data: params
+          url: "/tracks/" + self.track.id + "/sections",
+          params: params
+        }, $element);
+      };
+
+      self.sectionAjax = function(request, $element) {
+        $.ajax({
+          type: request.type,
+          url: request.url,
+          data: request.params
         }).success(function(response) {
           $element.remove()
-          self.sections.push(section);
-          self.sectionContainer.append(self.sectionTemplate(response.section));
-          self.registerEditEventListener(lastForm);
+          self.sections.push(response.section);
+
+          if (request.type == "POST") {
+            self.sectionContainer.append(self.sectionTemplate(response.section));
+          } else {
+            $element.replaceWith(self.sectionFormTemplate(response.section));
+          }
+
+          var newElement = self.getSectionElement(response.section.id);
+          self.registerEditEventListener(newElement);
         }).error(function(response) {
           //TODO
         });
       };
 
-      self.registerSubmitEventListener = function(element) {
+      self.registerSubmitEventListener = function(element, newSection) {
         var $element = $(element);
+        newSection = newSection || false;
 
         $element.find(".btn_save input").click(function(e) {
           e.preventDefault();
@@ -74,10 +108,12 @@ $(function() {
             });
           });
 
-          self.createSection({
-            section: params,
-            track_id: self.track.id
-          }, $element);
+          if (newSection) {
+            self.createSection({section: params}, $element);
+          } else {
+            params.id = parseInt($element.attr("data-section-id"));
+            self.updateSection({section: params}, $element);
+          }
 
           return false;
         });
@@ -90,7 +126,10 @@ $(function() {
           e.preventDefault();
           var thisSection = self.getSection(parseInt($element.attr("data-section-id")));
           $element.replaceWith(self.sectionFormTemplate(thisSection));
-          self.registerAddResourceListener($element.find(".add_exercise"));
+
+          var newElement = self.getSectionElement(thisSection.id);
+          self.registerAddResourceListener(newElement);
+          self.registerSubmitEventListener(newElement);
 
           return false;
         });
@@ -108,14 +147,14 @@ $(function() {
 
       $("#section_index .add_exercise_btn a").click(function(e) {
         e.preventDefault();
-        self.sectionContainer.append(self.sectionFormTemplate({}));
+        self.sectionContainer.append(self.sectionFormTemplate({newTrack: true}));
 
         var addExerciseForms = self.sectionContainer.find(".add_exercise");
         var noOfForms = addExerciseForms.length;
         var lastForm = addExerciseForms[noOfForms - 1];
 
         self.registerAddResourceListener(lastForm);
-        self.registerSubmitEventListener(lastForm);
+        self.registerSubmitEventListener(lastForm, true);
 
         return false;
       });
