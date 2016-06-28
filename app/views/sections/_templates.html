@@ -1,6 +1,6 @@
 <script class="hidden" type="text/x-handlebars-template" id="show_section">
   <div class="section_each" data-section-id="{{id}}">
-    <a data-confirm="Are you sure you want to delte this section?" rel="nofollow" data-method="delete" href="/tracks/{{track_id}}/sections/{{id}}">
+    <a class="delete-section">
       <i class="glyphicon glyphicon-trash"></i>
     </a>
     <a class="edit-section">
@@ -16,6 +16,7 @@
     </p>
     <div class="section_resources">
       <h5>Resources</h5>
+      {{#if resources}}
       {{#each resources}}
       <div class="container-fluid">
         <div class="row">
@@ -27,6 +28,13 @@
         </div>
       </div>
       {{/each}}
+      {{else}}
+      <div class="container-fluid">
+        <div class="row">
+          <p>No Resources</p>
+        </div>
+      </div>
+      {{/if}}
     </div>
   </div>
 </script>
@@ -39,8 +47,8 @@
       <div class="resources">
         <h4>Resources</h4>
 
-        {{#each resources}}
         <div id="resources">
+        {{#each resources}}
           <div class="form-inline">
             <input placeholder="Text" type="text" class="text res_field" value="{{text}}">
             <input placeholder="URL" type="text" class="url res_field" value="{{url}}">
@@ -49,8 +57,8 @@
               <i class="glyphicon glyphicon-trash"></i>
             </button>
           </div>
-        </div>
         {{/each}}
+        </div>
 
         <button class="add_resource_btn" id="add_field" type="button">
           <span>+</span>
@@ -61,8 +69,9 @@
         {{#if newTrack}}
         <input type="button" value="Create">
         {{else}}
-        <input type="button" value="Update">
+        <input type="button" class="submit" value="Update">
         {{/if}}
+        <input type="button" class="cancel" value="Cancel">
       </div>
     </form>
   </div>

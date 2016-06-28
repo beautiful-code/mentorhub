@@ -6,7 +6,7 @@
         .logo_track
           =image_tag track.image
         .content_track
-          %h3= link_to track.name,track_sections_path(track)
+          %h3= link_to track.name,track_path(track)
           %p
             = track.desc
           %h4.exercise_bottom

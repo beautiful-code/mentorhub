@@ -1,24 +1,35 @@
 class TracksController < ApplicationController
-  before_action :authenticate_user!
+  #TODO: Ajax auth token
+  before_action :authenticate_user!, except: [:create, :update, :destroy]
   before_action :set_track, except: [:index]
 
   def index
     @tracks = Track.all
   end
 
+  def new
+    render "sections/index"
+  end
+
+  def show
+    @sections = @track.sections.order("id")
+    render "sections/index"
+  end
+
   def create
     if @track.save
-      redirect_to tracks_path, success: "Track created"
+      render json: {msg: "success", track: @track}, status: 200
     else
-      render 'new'
+      render json: {msg: "error", errors: @track.errors, track: @track}, status: 422
     end
   end
 
   def update
+    byebug
     if @track.update(track_params)
-      redirect_to tracks_path, success: "Track updated"
+      render json: {msg: "success", track: @track}, status: 200
     else
-      render 'edit'
+      render json: {msg: "error", errors: @track.errors, track: @track}, status: 422
     end
   end
 

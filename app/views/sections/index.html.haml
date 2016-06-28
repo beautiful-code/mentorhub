@@ -1,19 +1,17 @@
-- breadcrumb :track, @track
+- if @track.new_record?
+  - breadcrumb :new_track
+- else
+  - breadcrumb :track, @track
 
 #section_index
-  .cover_photo
-    .logo_track
-      = image_tag @track.image
-    .content_cover
-      %h3
-        = @track.name
-      .progress_bar
+  .track_info
+    = render "sections/track_template"
 
   .sub_nav
     %h4.selected Exercises
 
   #section
-    = render 'templates'
+    = render 'sections/templates'
 
   .add_exercise.add_exercise_btn
     %a.add_exercise_link
@@ -26,3 +24,5 @@
     };
 
     PageConfig.track.sections = #{@sections.to_json};
+    PageConfig.track.editable = #{@track.new_record?};
+    PageConfig.track.newRecord = #{@track.new_record?};
