@@ -69,14 +69,8 @@ $(function() {
           url: request.url,
           data: request.params
         }).success(function(response) {
-          $element.remove()
           self.sections.push(response.section);
-
-          if (request.type == "POST") {
-            self.sectionContainer.append(self.sectionTemplate(response.section));
-          } else {
-            $element.replaceWith(self.sectionFormTemplate(response.section));
-          }
+          $element.replaceWith(self.sectionTemplate(response.section));
 
           var newElement = self.getSectionElement(response.section.id);
           self.registerEditEventListener(newElement);
