@@ -1,11 +1,13 @@
 <script class="hidden" type="text/x-handlebars-template" id="show_section">
   <div class="section_each" data-section-id="{{id}}">
-    <a class="delete-section">
-      <i class="glyphicon glyphicon-trash"></i>
-    </a>
-    <a class="edit-section">
-      <i class="glyphicon glyphicon-pencil"></i>
-    </a>
+    <div class="crud_elements">
+      <a class="edit-section">
+        <i class="glyphicon glyphicon-pencil"></i>
+      </a>
+      <a class="delete-section">
+        <i class="glyphicon glyphicon-trash"></i>
+      </a>
+    </div>
     <h5>Exercise</h5>
     <div class="exercise_name">
       <i aria-hidden="true" class="fa fa-check-circle-o"></i>
@@ -42,8 +44,17 @@
 <script class="hidden" type="text/x-handlebars-template" id="section_form">
   <div class="add_exercise" id="add_exercise_form" data-section-id="{{id}}">
     <form class="new_section">
-      <input id="section_name" placeholder="EXERCISE NAME" type="text" name="title" value="{{title}}">
-      <textarea class="" placeholder="EXERCISE DESCRIPTION" rows="5" name="content" id="section_content">{{content}}</textarea>
+      <div class="input-box">
+        <input id="section_name"  type="text" name="title" value="{{title}}">
+        {{#if title}}
+        {{else}}
+        <label for="section_name">Exercise Name</label>
+        {{/if}}
+      </div>
+      <div class="input-box">
+        <textarea  rows="5" name="content" id="section_content">{{content}}</textarea>
+        <label for="section_content">Exercise Description</label>
+      </div>
       <div class="resources">
         <h4>Resources</h4>
 
@@ -67,11 +78,11 @@
       </div>
       <div class="btn_save">
         {{#if newTrack}}
-        <input type="button" class="submit" value="Create">
+        <input type="button" class="btn-primary_action" value="Create">
         {{else}}
-        <input type="button" class="submit" value="Update">
+        <input type="button" class="btn-primary_action" value="Update">
         {{/if}}
-        <input type="button" class="cancel" value="Cancel">
+        <input type="button" class="btn-secondary_action" value="Cancel">
       </div>
     </form>
   </div>

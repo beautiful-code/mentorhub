@@ -1,10 +1,11 @@
 - @sections.each do |section|
   .section_each
-    = link_to [@track,section], method: :delete ,data: {confirm: "You sure?"} do
-      %i.glyphicon.glyphicon-trash
-    = link_to [@track,section] do
-      %i.glyphicon.glyphicon-pencil
-    %h5 Exercise
+    .crud_elements
+      = link_to [@track,section], method: :delete ,data: {confirm: "You sure?"} do
+        %i.glyphicon.glyphicon-trash
+      = link_to [@track,section] do
+        %i.glyphicon.glyphicon-pencil
+    %h5.crud_elements Exercise
     .exercise_name
       %i.fa.fa-check-circle-o(aria-hidden="true")
       %h3= link_to section.title,"#"

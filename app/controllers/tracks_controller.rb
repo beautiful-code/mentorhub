@@ -25,7 +25,7 @@ class TracksController < ApplicationController
   end
 
   def update
-    byebug
+ 
     if @track.update(track_params)
       render json: {msg: "success", track: @track}, status: 200
     else
