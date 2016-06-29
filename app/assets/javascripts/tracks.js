@@ -269,11 +269,18 @@ $(function() {
         });
       };
 
+      setTimeout(function() {
+        self.trackContainer.find(".loading-track").hide("slow");
+      }, 220);
+
       self.trackContainer.append(self.trackTemplate(self.track));
 
       // Display the persisted sections
       $.each(PageConfig.track.sections, function(i, section) {
         var sectionHtml = self.sectionTemplate(section);
+        setTimeout(function() {
+          self.sectionContainer.find(".loading-sections").hide("slow");
+        }, 620);
         self.sectionContainer.append(sectionHtml);
       });
 

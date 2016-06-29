@@ -5,14 +5,52 @@ $text: #333333;
 $secondary: #888888;
 $red: #F3776B;
 
-.cover_photo{
-  height:120px;
+.cover_photo,
+.track_info {
+  height:115px;
+}
 
+#section {
+  .loading-sections {
+    position: absolute;
+    bottom: 0;
+    top: 232px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 1111;
+    background: $bg;
+
+    i {
+      font-size: 3em;
+      margin-top: 10%;
+    }
+  }
+}
+
+.track_info {
+  .loading-track {
+    background: $bg;
+    height: 115px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1111;
+    text-align: center;
+
+    i {
+      margin: 35px;
+      font-size: 2.5em;
+    }
+  }
+}
+
+.cover_photo {
   .logo_track{
     background-color: transparent;
     display:inline-block;
-    width:20%;
-    height:120px;
+    width: 20%;
+    height:115px;
 
     img{
       display:block;
@@ -37,11 +75,10 @@ $red: #F3776B;
   .content_cover{
     position: relative;
     vertical-align:top;
-    margin-top: 10px;
     margin-left:-4px;
     display:inline-block;
     width:60%;
-    height: 120px;
+    height: 115px;
 
     h3{
       margin: 4px 0;
@@ -128,15 +165,23 @@ $red: #F3776B;
     .crud_elements{
       display: inline-block;
       float: right;
-      a{
-        font-size: 12px;
+
+      a {
+        font-size: 16px;
         color: $secondary;
         vertical-align: top;
         margin-left: 4px;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+          color: $primary;
+        }
       }
-      // .glyphicon-trash{
-      //   color: $red;
-      // }
+
+      .glyphicon-trash:hover {
+        color: $red;
+      }
 
     }
     h5{
