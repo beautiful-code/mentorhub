@@ -98,15 +98,27 @@ $(function() {
           cache: false,
           contentType: false,
           processData: false,
-        }).success(function(response) {
+        }).done(function(response) {
           if (request.type == "POST") {
             window.history.pushState({},"", response.track.id);
           }
 
           self.track = response.track;
           self.trackContainer.html(self.trackTemplate(response.track));
-        }).error(function(response) {
-          //TODO
+        }).complete(function(response) {
+          if (response.status == 422) {
+            if(response.responseJSON.errors) {
+              var $form = self.trackContainer.find("form");
+
+              for (errorField in response.responseJSON.errors) {
+                var $parent = $form.find("#" + errorField).parent();
+                $parent.addClass("has-error");
+                $parent.find(".help-block").html(
+                  response.responseJSON.errors[errorField].join(", ")
+                );
+              }
+            }
+          }
         });
       };
 
