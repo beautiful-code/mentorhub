@@ -3,14 +3,14 @@
     =image_tag "mentorhub_logo.png",class:"logo"
   - if !user_signed_in?
     %ul#log_nav
-      %li= link_to "Login", new_session_path(resource_name)
+      %li= link_to "Login", new_user_session_path
       %li
-        %button= link_to "Sign Up", new_registration_path(resource_name)
+        %button= link_to "Sign Up", new_user_registration_path
   - else
     %ul.primary_nav
-      %li= link_to "Your Board", "#"
+      %li= link_to "Your Board", board_path, class: active_class(c: ['board'])
       %li= link_to "Learning Tracks", "#"
-      %li= link_to "Mentees Tracks", mentoring_tracks_path, class: active_class(c: ['mentoring_tracks'])
+      %li= link_to "Mentees Tracks", mentoring_tracks_path, class: active_class(c:  ['mentoring_tracks'])
       %li= link_to "Tracks", tracks_path, class: active_class(c: ['sections','tracks'])
     %ul.profile
       -if current_user.image.present?
@@ -22,4 +22,5 @@
       %li.dropdown
         %i.fa.fa-caret-down.dropdown-toggle( data-toggle="dropdown" aria-hidden="true")
         %ul.dropdown-menu.pull-right
+          %i.fa.fa-caret-up
           %li= link_to "Log out", destroy_user_session_path, method: :delete 

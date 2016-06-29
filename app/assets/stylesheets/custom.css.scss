@@ -6,23 +6,15 @@ $border: #c5c7c9;
 $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
-
-* {
-  margin: 0;
-  padding: 0;
-}
-
 html,
 body {
   font-size: 1em;
   font-family: "Open Sans";
   background-color: $bg;
   position: relative;
+
 }
 
-p{
-	margin:0;
-}
 
 #logo{
   line-height: 50px;
@@ -32,26 +24,16 @@ p{
   font-weight: 700;
 }
 
-.breadcrumb > li + li:before {
-  content: ">" !important;
-}
 
-p{
-	margin:0;
-}
 
-#logo{
-  line-height: 50px;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 1.4em;
-  font-weight: 700;
-}
 
-.breadcrumb > li + li:before {
-  content: ">" !important;
-}
-
+h5{
+      text-transform:uppercase;
+      margin:0;
+      margin-bottom:10px;
+      font-size:10px;
+      color:$secondary;
+    }
 .mentoring_tracks{
   border: 1px solid #D5D6D9;
   padding: 20px;
@@ -87,7 +69,7 @@ p{
   color: white;
 }
 .bread_crumbs{
-  vertical-align:top;
+  padding-top: 8px; 
   width:60%;
   display: block;
   margin: 0 auto;
@@ -222,3 +204,55 @@ p{
         font-size: 14px;
         background-color: white;
       }
+ .section_each{
+    display:block;
+    margin:0 auto;
+    margin-top:10px;  
+    background-color:white;
+    border:1px solid $border;
+    border-radius: 3px;
+    padding:16px;   
+    .exercise_name{
+      margin:0;
+      font-size:24px;
+      margin-bottom:10px;
+      i{
+        display:inline-block;
+        color:$secondary;
+      }
+      h3{
+        margin:0;
+        display:inline-block;
+      }
+      a{
+        color:$text;
+      }
+
+    }
+    .exercise_description{
+      font-size:14px;
+      margin:0;
+      margin-bottom:10px;
+    }
+    .section_resources{
+      border:1px solid $border;
+      border-radius: 3px;
+      padding:10px;
+      border-left:4px solid $primary;
+      a{
+        color: $primary;
+      }
+    }
+  }
+  .alert{
+       
+    text-align: center;
+    margin: 0 auto;
+    width: 360px;
+    margin-top: 10px;
+    font-size: 14px;
+    background-color: #cde1ef;
+    color: $primary;
+    border: 1px solid rgba(5,106,178,0.6);
+    border-radius: 3px;
+  }

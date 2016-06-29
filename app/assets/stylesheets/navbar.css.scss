@@ -71,8 +71,16 @@ nav{
         min-width: 100px;
         padding: 6px 10px;
         border-radius: 3px;
-        top:72%;
-        border:1px solid $border;
+        top:47px;
+        right: -14px;
+        border:1px solid transparent;
+        i{
+          position: absolute;
+          color: white;
+          right: 14px;
+          top: -11px;
+          font-size: 16px;
+        }
       }
     }
 

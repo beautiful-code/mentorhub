@@ -1,0 +1,34 @@
+.board
+  %ul.board_subnav
+    %li
+      Your Exercises
+    %li
+      Your Mentee Exercises
+  .user_exercises
+    %ul.user_tracks-subnav
+      %li All
+      %li Html
+      %li Css3
+      %li JavaScript
+    .track_header
+      .track_details
+        .logo_n_name
+          %img(src="")
+          %h2
+        .track_deadline
+          %h4
+          %p
+        .track_mentor
+          %h4
+          %p 
+      .progress_bar
+    .track_exercise
+      %h5 Exercise
+      %h2 Exercise name
+      %p exercise description
+      .resources
+        %ul
+          %li
+      .user_answers    
+        %p checkout my code      
+        = text_field_tag 'user_answer', placeholder: 'input your answer',  size:80  
