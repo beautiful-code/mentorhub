@@ -200,7 +200,7 @@ $(function() {
         newSection = newSection || false;
         var sectionId = newSection ? null : parseInt($element.attr("data-section-id"));
 
-        $element.find(".btn_save input.cancel").click(function(e) {
+        $element.find(".btn_save input.cancel-edit").click(function(e) {
           e.preventDefault();
 
           if(newSection) {
@@ -212,7 +212,7 @@ $(function() {
           return false;
         });
 
-        $element.find(".btn_save input.submit").click(function(e) {
+        $element.find(".btn_save input.track-post").click(function(e) {
           e.preventDefault();
 
           var $form = $element.find("form");

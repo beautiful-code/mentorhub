@@ -20,15 +20,15 @@ body {
   position: relative;
 }
 
-
-
-h5{
-  text-transform:uppercase;
-  margin:0;
-  margin-bottom:10px;
-  font-size:10px;
-  color:$secondary;
-}
+/*
+ *h5{
+ *  text-transform:uppercase;
+ *  margin:0;
+ *  margin-bottom:10px;
+ *  font-size:10px;
+ *  color:$secondary;
+ *}
+ */
 
 .mentoring_tracks{
   border: 1px solid #D5D6D9;
@@ -41,7 +41,6 @@ h5{
 .tracks, .add_button{
   display: inline-block;
 }
-
 
 .add_button {
   margin:30px;
