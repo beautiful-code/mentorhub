@@ -19,11 +19,13 @@
         <input type="button" class="update-track btn-primary_action" value="Update">
         {{/if}}
         <input type="button" class="cancel-edit btn-secondary_action" value="Cancel">
-        </form>
       {{/if}}
       <div>
       {{#if editable}}
+        <div class="track-name">
         <input placeholder="Track Name" value="{{name}}" class="form-control" type="text" id="name">
+        <span class="help-block"></span>
+        </div>
         {{else}}
         <div class="edit-track">
           <input type="button" class="edit-track-btn btn-primary_action" value="Edit Track">
@@ -33,19 +35,21 @@
             {{name}}
           </h3>
         </div>
-        
+
         {{/if}}
-        <p>
+        <div>
           {{#if editable}}
           <input placeholder="Track description" value="{{desc}}" class="form-control" type="text" id="desc">
+           <span class="help-block"></span>
           {{else}}
           {{desc}}
           {{/if}}
-        </p>
+        </div>
       </div>
-      
+
       <div class="progress_bar"></div>
-      
+
     </div>
   </div>
+  </form>
 </script>
