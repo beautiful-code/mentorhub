@@ -14,27 +14,13 @@ $secondary: #888888;
 
 html,
 body {
-  font-size: 1em;
+  font-size: 14px;
   font-family: "Open Sans";
   background-color: $bg;
   position: relative;
 }
 
-p{
-  margin:0;
-}
 
-#logo{
-  line-height: 50px;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 1.4em;
-  font-weight: 700;
-}
-
-.breadcrumb > li + li:before {
-  content: ">" !important;
-}
 
 h5{
   text-transform:uppercase;
@@ -213,12 +199,12 @@ h5{
 }
 
 .btn-secondary_action{
-  float: left;
+
   vertical-align: top;
   height: 30px;
   line-height: 15px;
   padding: 6px 10px;
-  border: 2px solid $primary;
+  border: 1px solid $primary;
   border-radius: 3px;
   color: $primary;
   font-size: 14px;
