@@ -1,5 +1,5 @@
 Section.create!([
-  {title: "HTML-E1: Build your first webpage", goal: "", content: "Create your first webpage.", code_url: nil, resources: {"Html fundamentals"=>"www.google.com"}, track_id: 1}
+  {title: "HTML-E1: Build your first webpage", goal: "", content: "Create your first webpage.", code_url: nil, resources: [{text: "Html fundamentals", url: "www.google.com"}], track_id: 1}
 ])
 Track.create!([
   {name: "Html5", track_type: nil, image: "html.png", desc: "Understand the working of html by creating webpages"},

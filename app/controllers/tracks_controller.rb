@@ -1,38 +1,44 @@
 class TracksController < ApplicationController
+  #TODO: Ajax auth token
+  before_action :authenticate_user!, except: [:create, :update, :destroy]
+  before_action :set_track, except: [:index]
 
   def index
     @tracks = Track.all
   end
 
   def new
-    @track = Track.new
+    render "sections/index"
+  end
+
+  def show
+    @sections = @track.sections.order("id")
+    render "sections/index"
   end
 
   def create
-    @track = Track.new(track_params)
     if @track.save
-      redirect_to tracks_path, success: "Track created"
+      render json: {msg: "success", track: @track}, status: 200
     else
-      render 'new'
+      render json: {msg: "error", errors: @track.errors, track: @track}, status: 422
     end
-  end
-
-  def edit
-    @track = Track.find(params[:id])
   end
 
   def update
-    @track = Track.find(params[:id])
+ 
     if @track.update(track_params)
-      redirect_to tracks_path, success: "Track updated"
+      render json: {msg: "success", track: @track}, status: 200
     else
-      render 'edit'
+      render json: {msg: "error", errors: @track.errors, track: @track}, status: 422
     end
   end
 
-
   private
-  def track_params
-    params.require(:track).permit(:name, :track_type, :image, :desc)
-  end
+    def track_params
+      params.fetch(:track, {}).permit(:name, :image, :desc)
+    end
+
+    def set_track
+      @track = (params[:id].present?)? Track.find(params[:id]) : Track.new(track_params)
+    end
 end

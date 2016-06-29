@@ -1,0 +1,100 @@
+<script class="hidden" type="text/x-handlebars-template" id="show_section">
+  <div class="section_each" data-section-id="{{id}}">
+    <div class="crud_elements">
+      <a class="edit-section">
+        <i class="glyphicon glyphicon-pencil"></i>
+      </a>
+      <a class="delete-section">
+        <i class="glyphicon glyphicon-trash"></i>
+      </a>
+    </div>
+    <h5>Exercise</h5>
+    <div class="exercise_name">
+      <i aria-hidden="true" class="fa fa-check-circle-o"></i>
+      <h3><a href="#">{{title}}</a></h3>
+    </div>
+    <p class="exercise_description">
+      {{content}}
+    </p>
+    <div class="section_resources">
+      <h5>Resources</h5>
+      {{#if resources}}
+      {{#each resources}}
+      <div class="container-fluid">
+        <div class="row">
+          {{#if url}}
+          <a target="_blank" href="//{{url}}">{{text}}</a>
+          {{else}}
+          <p>{{text}}</p>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+      {{else}}
+      <div class="container-fluid">
+        <div class="row">
+          <p>No Resources</p>
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+</script>
+
+<script class="hidden" type="text/x-handlebars-template" id="section_form">
+  <div class="add_exercise" id="add_exercise_form" data-section-id="{{id}}">
+    <form class="new_section">
+      <div class="input-box">
+        <input id="section_name"  type="text" name="title" value="{{title}}">
+        {{#if title}}
+        {{else}}
+        <label for="section_name">Exercise Name</label>
+        {{/if}}
+      </div>
+      <div class="input-box">
+        <textarea  rows="5" name="content" id="section_content">{{content}}</textarea>
+        <label for="section_content">Exercise Description</label>
+      </div>
+      <div class="resources">
+        <h4>Resources</h4>
+
+        <div id="resources">
+        {{#each resources}}
+          <div class="form-inline">
+            <input placeholder="Text" type="text" class="text res_field" value="{{text}}">
+            <input placeholder="URL" type="text" class="url res_field" value="{{url}}">
+
+            <button class="remove add_resource_btn" type="button">
+              <i class="glyphicon glyphicon-trash"></i>
+            </button>
+          </div>
+        {{/each}}
+        </div>
+
+        <button class="add_resource_btn" id="add_field" type="button">
+          <span>+</span>
+          Add A Resource
+        </button>
+      </div>
+      <div class="btn_save">
+        {{#if newTrack}}
+        <input type="button" class="btn-primary_action" value="Create">
+        {{else}}
+        <input type="button" class="btn-primary_action" value="Update">
+        {{/if}}
+        <input type="button" class="btn-secondary_action" value="Cancel">
+      </div>
+    </form>
+  </div>
+</script>
+
+<script class="hidden" type="text/x-handlebars-template" id="resource_form">
+  <div class="form-inline">
+    <input placeholder="Text" type="text" class="text res_field" value="{{name}}">
+    <input placeholder="URL" type="text" class="url res_field" value="{{url}}">
+
+    <button class="remove add_resource_btn" type="button">
+      <i class="glyphicon glyphicon-trash"></i>
+    </button>
+  </div>
+</script>
