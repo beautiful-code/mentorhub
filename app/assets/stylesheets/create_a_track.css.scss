@@ -74,7 +74,6 @@ $secondary: #888888;
   border-radius: 3px;
   .input_box{
     position: relative;
-
     .label_transition{
       z-index: 10;
       display: inline-block;
@@ -82,20 +81,12 @@ $secondary: #888888;
       text-transform: uppercase;
       color: #C7C7CD;
       font-size: 12px;
-      top: 10px;
-      left: 16px;
-      transition-property: all;
-      transition-duration: 0.2s;
-      transition-timing-function: linear;
-    }
-
-    input:focus ~ label, textarea:focus ~ label{
       padding: 0 2px;
       font-size: 8px;
       background-color: white;
-      top: -5px;
-
-    }
+      top: -6px;
+      left: 16px;
+      }
   }
 
 
@@ -134,6 +125,7 @@ $secondary: #888888;
 
   textarea{
     width: 100%;
+    max-width: 100%;
     margin-bottom: 10px;
     box-sizing: border-box;
     padding: 8px 16px;

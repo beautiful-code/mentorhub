@@ -16,11 +16,10 @@
       -if current_user.image.present?
         %li= image_tag current_user.image
       -else
-        %li= gravatar_for current_user
-      %li.profile_name
-        = current_user.first_name
-      %li.dropdown
-        %i.fa.fa-caret-down.dropdown-toggle(data-toggle="dropdown" aria-hidden="true")
-        %ul.dropdown-menu.pull-right
-          %i.fa.fa-caret-up
-          %li= link_to "Log out", destroy_user_session_path, method: :delete
+        %li= gravatar_for current_user   
+      %li.dropdown.dropdown-toggle(data-toggle="dropdown" )
+        = current_user.first_name 
+        %i.fa.fa-caret-down(aria-hidden="true")
+      %ul.dropdown-menu.pull-right
+        %i.fa.fa-caret-up
+        %li= link_to "Log out", destroy_user_session_path, method: :delete
