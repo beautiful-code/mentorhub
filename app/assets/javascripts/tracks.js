@@ -19,6 +19,12 @@ $(function() {
       self.sectionFormTemplate = Handlebars.compile(self.sectionFormHtml);
       self.resourceFormTemplate = Handlebars.compile(self.resourceFormHtml);
 
+      self.hideLoadingSectionsScreen = function(){
+        setTimeout(function() {
+          self.sectionContainer.find(".loading-sections").hide("slow");
+        }, 400);
+      }
+
       self.registerAddResourceListener = function(element) {
         var $element = $(element);
 
@@ -105,10 +111,7 @@ $(function() {
           self.track = response.track;
           self.trackContainer.html(self.trackTemplate(response.track));
 
-          setTimeout(function() {
-            self.sectionContainer.find(".loading-sections").hide("slow");
-          }, 620);
-
+          self.hideLoadingSectionsScreen();
         }).complete(function(response) {
           if (response.status == 422) {
             if(response.responseJSON.errors) {
@@ -302,21 +305,15 @@ $(function() {
       self.trackContainer.append(self.trackTemplate(self.track));
 
       // Display the persisted sections
-      if (PageConfig.track.id !== null) {
-        if (PageConfig.track.sections.length > 0) {
-          $.each(PageConfig.track.sections, function(i, section) {
-            var sectionHtml = self.sectionTemplate(section);
-            setTimeout(function() {
-              self.sectionContainer.find(".loading-sections").hide("slow");
-            }, 620);
-            self.sectionContainer.append(sectionHtml);
-          });
-        }
-        else {
-            setTimeout(function() {
-              self.sectionContainer.find(".loading-sections").hide("slow");
-            }, 620);
-        }
+      if (typeof PageConfig.track.sections == "undefined") {
+        self.hideLoadingSectionsScreen();
+      }
+      else {
+        $.each(PageConfig.track.sections, function(i, section) {
+          var sectionHtml = self.sectionTemplate(section);
+          self.hideLoadingSectionsScreen();
+          self.sectionContainer.append(sectionHtml);
+        });
       }
 
       // Runs only once
