@@ -107,8 +107,7 @@ $secondary: #888888;
     font-size: 10px;
     color: $secondary;
   }
-  input[type="text"]{
-
+  input{
     margin-bottom: 10px;
     box-sizing: border-box;
     padding: 8px 16px;
@@ -116,9 +115,8 @@ $secondary: #888888;
     border: 1px solid $border;
     border-radius: 3px;
     font-size: 12px;
-    width: 100%;
+    
   }
-
   .res_field{
     width: 40% !important;
   }
@@ -135,6 +133,7 @@ $secondary: #888888;
     border-radius: 3px;
   }
   .input-box{
+    display: block;
     position: relative;
     label{
       text-transform: uppercase;
@@ -173,7 +172,7 @@ $secondary: #888888;
       font-size: 12px;
     }
   }
-  .btn_save{
+  #btn_save{
     width: 100%;
     margin-top: 10px;
     text-align: right;

@@ -98,7 +98,39 @@ body {
 
   }
 }
-
+/* error-alert style starts here */
+.has-error .help-block{
+    color: #a94442;
+    border: 1px solid #a94442;
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    position: absolute;
+    left: -116px;
+    background-color:white;
+    top: 0;
+    margin: 0 10px;
+}
+.help-block:after{
+    content: "\25B6";
+    position: absolute;
+    right: -10px;
+}
+.help-block{
+  display: none;
+  margin-top: 4px !important;
+}
+.track-name .help-block{
+  left:40%;
+  top: 4px;
+}
+.track-name .help-block:after{
+    content: "\25C0";
+    position: absolute;
+    left: -10px;
+}
+/* error-alert style ends here */
 .track_list{
   .track_card{
     position:relative;
@@ -180,7 +212,7 @@ body {
   border-radius:3px;
 }
 
-.btn-primary_action{
+input[type="button"].btn-primary_action{
   vertical-align: top;
   height: 30px;
   border: none;
@@ -197,7 +229,7 @@ body {
   }
 }
 
-.btn-secondary_action{
+input[type="button"].btn-secondary_action{
 
   vertical-align: top;
   height: 30px;
