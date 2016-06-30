@@ -8,12 +8,12 @@ $secondary: #888888;
 nav{
 	  position: relative;
     width: 100%;
-    height: 3.6em;
+    height: 4em;
     background-color: white;
     .logo{
       height: 1.2em;
-      margin-top:1.2em;
-      margin-left: 2em;
+      margin-top:1.4em;
+      margin-left: 1.4em;
 	 	}
 
 	 	.primary_nav {
@@ -37,7 +37,7 @@ nav{
           color: $primary;
           border-bottom: 4px solid $primary;
           font-weight: 500;
-          padding-bottom: 12px;
+          padding-bottom: 10px;
         }
       }
       li:first-child{
@@ -49,6 +49,7 @@ nav{
 
 
     .profile{
+      cursor: pointer;
       position: absolute;
       top:0;
       right: 0;
@@ -79,6 +80,7 @@ nav{
           color: white;
           right: 14px;
           top: -11px;
+          margin-left: 2px;
           font-size: 16px;
         }
       }

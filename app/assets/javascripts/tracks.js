@@ -158,9 +158,9 @@ $(function() {
         $.ajax({
           type: "DELETE",
           url: "/tracks/" + self.track.id + "/sections/" + sectionId,
-        }).success(function(response) {
+        }).done(function(response) {
           $element.remove();
-        }).error(function(response) {
+        }).complete(function(response) {
           //TODO
         });
       };
@@ -186,16 +186,26 @@ $(function() {
           type: request.type,
           url: request.url,
           data: request.params
-        }).success(function(response) {
+        }).done(function(response) {
           if (request.type == "POST") {
             self.sections.push(response.section);
           } else {
             self.updateSectionData(response.section);
           }
-
           self.showSectionCardAndRegisterListeners(response.section.id, $element);
-        }).error(function(response) {
-          //TODO
+        }).complete(function(response) {
+          if (response.status == 422) {
+            if(response.responseJSON.errors) {
+              var $form = $element.find("form");
+              for (errorField in response.responseJSON.errors) {
+                var $parent = $form.find("#" + errorField).parent();
+                $parent.addClass("has-error");
+                $parent.find(".help-block").html(
+                  response.responseJSON.errors[errorField].join(", ")
+                );
+              }
+            }
+          }
         });
       };
 
@@ -229,8 +239,8 @@ $(function() {
 
           var $form = $element.find("form");
           var params = {
-            title: $form.find("#section_name").val(),
-            content: $form.find("#section_content").val(),
+            title: $form.find("#title").val(),
+            content: $form.find("#content").val(),
             resources: []
           };
 
