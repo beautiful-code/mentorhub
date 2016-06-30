@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :tracks do
-    resources :sections
+  resources :tracks, except: [:edit] do
+    resources :sections, except: [:index, :edit, :new]
   end
 
   resources :mentoring_tracks, :only=> [:new ,:create, :index]

@@ -1,31 +1,37 @@
 class SectionsController < ApplicationController
+  #TODO: Add auth token to ajax requests
+  before_action :authenticate_user!, except: [:update, :create, :destroy]
   before_action :set_track
   before_action :set_section, except: [:index]
   before_action :build_resources, only: [:create, :update]
 
-  def index
-    @sections = @track.sections.order("id")
-  end
-
   def create
     if @section.save
-      redirect_to track_sections_path, success:"Section created"
+      render json: {msg: "success", section: @section}, status: 200
     else
-      render 'new'
+      render json: {msg: "error", errors: @section.errors, section: @section}, status: 422
     end
   end
 
   def update
     if @section.update(section_params)
-      redirect_to track_sections_path, success: "Section updated"
+      render json: {msg: "success", section: @section}, status: 200
     else
-      render 'edit'
+      render json: {msg: "error", errors: @section.errors, section: @section}, status: 422
+    end
+  end
+
+  def destroy
+    if @section.destroy
+      render json: {msg: "success"}, status: 200
+    else
+      render json: {msg: "error"}, status: 422
     end
   end
 
   private
     def section_params
-      params.fetch(:section, {}).permit(:title, :goal, :content, :code_url)
+      params.fetch(:section, {}).permit(:title, :content)
     end
 
     def set_track
@@ -37,8 +43,6 @@ class SectionsController < ApplicationController
     end
 
     def build_resources
-      if params[:resources].present?
-        @section.resources = Hash[params[:resources][:name].zip params[:resources][:value]].delete_if{ |key, value| key.blank?}
-      end
+      @section.resources = params[:section].delete(:resources).collect {|_,v| v } if params[:section][:resources].present?
     end
 end
