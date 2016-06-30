@@ -45,15 +45,12 @@
   <div class="add_exercise" id="add_exercise_form" data-section-id="{{id}}">
     <form class="new_section">
       <div class="input-box">
-        <input id="title"  type="text" name="title" value="{{title}}">
-        {{#if title}}
-        {{else}}
+        <input id="title"  type="text" name="title" class="form-control" value="{{title}}">
         <label for="title">Exercise Name</label>
-        {{/if}}
         <span class="help-block"></span>
       </div>
       <div class="input-box">
-        <textarea  rows="5" name="content" id="content">{{content}}</textarea>
+        <textarea  rows="5" name="content" class="form-control"  id="content">{{content}}</textarea>
         <label for="content">Exercise Description</label>
         <span class="help-block"></span>
       </div>
@@ -78,7 +75,7 @@
           Add A Resource
         </button>
       </div>
-      <div class="btn_save">
+      <div class="btn_save" id="btn_save">
         {{#if newTrack}}
         <input type="button" class="track-post btn-primary_action" value="Create">
         {{else}}
