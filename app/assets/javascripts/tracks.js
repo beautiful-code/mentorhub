@@ -103,6 +103,10 @@ $(function() {
             window.history.pushState({},"", response.track.id);
           }
 
+          setTimeout(function() {
+            self.sectionContainer.find(".loading-sections").hide("slow");
+          }, 620);
+
           self.track = response.track;
           self.trackContainer.html(self.trackTemplate(response.track));
         }).complete(function(response) {
@@ -298,13 +302,20 @@ $(function() {
       self.trackContainer.append(self.trackTemplate(self.track));
 
       // Display the persisted sections
-      $.each(PageConfig.track.sections, function(i, section) {
-        var sectionHtml = self.sectionTemplate(section);
-        setTimeout(function() {
-          self.sectionContainer.find(".loading-sections").hide("slow");
-        }, 620);
-        self.sectionContainer.append(sectionHtml);
-      });
+      if (PageConfig.track.sections.length > 0) {
+        $.each(PageConfig.track.sections, function(i, section) {
+          var sectionHtml = self.sectionTemplate(section);
+          setTimeout(function() {
+            self.sectionContainer.find(".loading-sections").hide("slow");
+          }, 620);
+          self.sectionContainer.append(sectionHtml);
+        });
+      }
+      else {
+          setTimeout(function() {
+            self.sectionContainer.find(".loading-sections").hide("slow");
+          }, 620);
+      }
 
       // Runs only once
       $.each(self.sectionContainer.find(".section_each"), function(i, element) {
