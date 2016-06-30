@@ -1,14 +1,13 @@
-.add_exercise
+.add_exercise#add_exercise_form
   -breadcrumb :new_section, @track
-  =form_for [@track, @section] do |f|
-    .input_box
-      =f.text_field :title, id: 'ex_name'
-      =label_tag 'ex_name', 'Exercise name' ,class:"label_transition"
+  %a.delete_form
+    %i.glyphicon.glyphicon-trash
+  =form_for [@track, @section], html: {:id => "section_form" } do |f|
+    =f.text_field :title, id: 'exercise_name', placeholder: "EXERCISE NAME"
     =f.hidden_field :goal, class: "",placeholder: "EXERCISE GOAL"
     .input_box
       =f.text_area :content, id: "ex_description" , rows: "5"
       =label_tag 'ex_description', 'Exercise description' ,class:"label_transition"
-      
     .resources
       %h4 Resources
       #resources

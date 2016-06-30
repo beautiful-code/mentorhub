@@ -3,13 +3,13 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title MentorHub
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
     = csrf_meta_tags
     %link{:href => "//fonts.googleapis.com/css?family=Open+Sans", :rel => "stylesheet", :type => "text/css"}/
   %body
     = render 'layouts/header'
-    
+
     - if breadcrumbs.present?
       .bread_crumbs
         = breadcrumbs style: :bootstrap,class:""
@@ -17,3 +17,5 @@
     - flash.each do |message_type, message|
       %div{:class => "alert alert-#{message_type}"}= message
     = yield
+
+    = render 'layouts/scripts'
