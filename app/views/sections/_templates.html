@@ -45,15 +45,17 @@
   <div class="add_exercise" id="add_exercise_form" data-section-id="{{id}}">
     <form class="new_section">
       <div class="input-box">
-        <input id="section_name"  type="text" name="title" value="{{title}}">
+        <input id="title"  type="text" name="title" value="{{title}}">
         {{#if title}}
         {{else}}
-        <label for="section_name">Exercise Name</label>
+        <label for="title">Exercise Name</label>
         {{/if}}
+        <span class="help-block"></span>
       </div>
       <div class="input-box">
-        <textarea  rows="5" name="content" id="section_content">{{content}}</textarea>
-        <label for="section_content">Exercise Description</label>
+        <textarea  rows="5" name="content" id="content">{{content}}</textarea>
+        <label for="content">Exercise Description</label>
+        <span class="help-block"></span>
       </div>
       <div class="resources">
         <h4>Resources</h4>
