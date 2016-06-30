@@ -310,7 +310,7 @@ $(function() {
       self.trackContainer.append(self.trackTemplate(self.track));
 
       // Display the persisted sections
-      if (typeof PageConfig.track.sections == "undefined") {
+      if (PageConfig.track.sections == null) {
         self.hideLoadingSectionsScreen();
       }
       else {
