@@ -4,7 +4,7 @@ class TracksController < ApplicationController
   before_action :set_track, except: [:index]
 
   def index
-    @tracks = Track.all
+    @tracks = Track.all.order("created_at ASC")
   end
 
   def new
@@ -25,7 +25,7 @@ class TracksController < ApplicationController
   end
 
   def update
- 
+
     if @track.update(track_params)
       render json: {msg: "success", track: @track}, status: 200
     else
