@@ -102,11 +102,6 @@ $(function() {
           if (request.type == "POST") {
             window.history.pushState({},"", response.track.id);
           }
-
-          setTimeout(function() {
-            self.sectionContainer.find(".loading-sections").hide("slow");
-          }, 620);
-
           self.track = response.track;
           self.trackContainer.html(self.trackTemplate(response.track));
         }).complete(function(response) {
