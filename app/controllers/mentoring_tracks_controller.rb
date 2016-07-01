@@ -28,9 +28,8 @@ class MentoringTracksController < ApplicationController
     if params[:back_button]
       @mentoring_track.previous_step
     elsif @mentoring_track.last_step?
-      @mentoring_track.save
-      @track_instance.mentoring_track_id = @mentoring_track.id
-      @track_instance.save
+      @mentoring_track.save!
+      @track_instance.update_attribute(:mentoring_track_id, @mentoring_track.id)
     else
       @mentoring_track.next_step
     end

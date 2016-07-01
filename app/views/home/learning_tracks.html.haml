@@ -1,0 +1,7 @@
+-if @learning_tracks.present?
+  - @learning_tracks.each do |learning_track|
+    - learning_track.track_instances.each do |ti|
+      = link_to ti.name, "#"
+      %br
+-else
+  %p You currently do not have any learning tracks

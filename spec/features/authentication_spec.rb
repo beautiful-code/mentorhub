@@ -1,3 +1,4 @@
+=begin
 require 'spec_helper'
 # include Capybara::DSL
 
@@ -12,4 +13,4 @@ describe 'Sign out link' do
     # page.should_not have_content("Logged in")
   end
 end
-
+=end
