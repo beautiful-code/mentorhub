@@ -1,38 +1,33 @@
 - #breadcrumb :mentoring_tracks, @mentoring_track
 
-/%button.btn-primary_action.track_list_btn
-/  =link_to "Add a mentee track", new_mentoring_track_path
-/.track_list
-/  -@mentoring_tracks.each do |m_track|
-/    .track_card
-/      -m_track.track_instances.each do |ti|
-/        .logo_track
-/          =image_tag "https://mentorhub-development.s3.amazonaws.com/uploads/track/image/4/html.png"
-/          -#=image_tag track.image
-/       .content_track
-/          %h3= ti.name
-/          .details
-/            .mentee_deadline
-/              %h4 to be completed by
-/              %p 12th June
-/            .mentee_name
-/              %h4 Mentee
-/              %p= m_track.mentee.first_name
-/          .progress_bar
-/  - if current_user.track_instances.blank?
-/    %p You are not currently mentoring anyone. Click "Add a mentee track" to add mentees
+= link_to "Add a mentee Track",  new_mentoring_track_path, class: "track_list_btn btn btn-primary"
+.track_list
+  -@mentoring_tracks.each do |m_track|
+    .track_card
+      -m_track.track_instances.each do |ti|
+        .logo_track
+          =image_tag ti.image
+        .content_track
+          %h3= link_to ti.name,""
+          .details
+            .mentee_deadline
+              %h4 to be completed by
+              %p 12th June
+            .mentee_name
+              %h4 Mentee
+              %p= m_track.mentee.first_name
+          .progress_bar
 
+-# .tracks
+-#   - @mentoring_tracks.each do |m_track|
+-#     - m_track.track_instances.each do |ti|
+-#       - if ti.mentor_id == current_user.id
+-#         .mentoring_tracks
+-#           %p.track_name= ti.name
+-#           Mentee:
+-#           = m_track.mentee.name
+-#   - if current_user.track_instances.blank?
+-#     %p You are not currently mentoring anyone. Click "Add a mentee track" to add mentees
 
-.tracks
-  - @mentoring_tracks.each do |m_track|
-    - m_track.track_instances.each do |ti|
-      - if ti.mentor_id == current_user.id
-        .mentoring_tracks
-          %p.track_name= ti.name
-          Mentee:
-          = m_track.mentee.first_name
-  - if current_user.track_instances.blank?
-    %p You are not currently mentoring anyone. Click "Add a mentee track" to add mentees
-
-.add_button
-  =link_to "Add a mentee track", new_mentoring_track_path, class: "adding_track"
+-# .add_button
+-#   =link_to "Add a mentee track", new_mentoring_track_path, class: "adding_track"

@@ -3,8 +3,12 @@ class MentoringTracksController < ApplicationController
     session[:mtrack_params] ||= {}
     session[:mentoring_track_step] = nil
     @mentoring_track = MentoringTrack.new
+    @tracks = Track.all
+    @users = User.all
+    @index = Section.count
   end
 
+=begin
   def create
     session[:mtrack_params] = params[:mentoring_track] unless params[:mentoring_track].blank?
     @mentoring_track = MentoringTrack.new(mentee_id: session[:mtrack_params]['mentee_id'])
@@ -42,8 +46,44 @@ class MentoringTracksController < ApplicationController
       redirect_to mentoring_tracks_path
     end
   end
+=end
+
+  def create
+    # TODO
+    # 1.JSON.parse(params[:mentoring_track]) => {"track_id" => "1", "sections" => [{},{}]}
+    # 2. Create track_instance by copying the Track.find(track_id)
+
+
+    ActiveRecord::Base.transaction do
+      @mentoring_track = MentoringTrack.create(mentee_id: mentee_id)
+      track_instance_attr = Track.find(track_params['id']).dup.attributes.except("desc").merge(mentor_id: current_user.id)
+      track_instance_attr["image"] = Track.find(track_params['id']).image
+      track_instance = @mentoring_track.track_instances.create(track_instance_attr)
+
+      # 3. Create track_instance.section_interactions.create()
+      sections.each do |section|
+        track_instance.section_interactions.create(section.except('id','code_url','track_id'))
+      end
+    end
+    # 4. Put all these statements in a transaction block
+    # 5. render json response with status
+    render json: {msg: "success"}, status: 200
+  end
 
   def index
     @mentoring_tracks = MentoringTrack.all
+  end
+
+  private
+  def sections
+    JSON.parse(params.require(:sections))
+  end
+
+  def track_params
+    params.require(:track).permit!
+  end
+
+  def mentee_id
+    params.require(:menteeId)
   end
 end

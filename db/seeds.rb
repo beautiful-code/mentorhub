@@ -30,6 +30,6 @@ Section.create!([
 ])
 Track.create!([
   {name: "GIT", track_type: nil, image: "Git.png", desc: "A free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency"},
-  {name: "Cascading Style Sheets (CSS)", track_type: nil, image: "css.png", desc: "CSS is a stylesheet language that describes the presentation of an HTML (or XML) document"},
-  {name: "HTML Fundamentals", track_type: nil, image: "HTML5.png", desc: "HTML, is the standard markup language used to create web pages"}
+  {name: "HTML Fundamentals", track_type: nil, image: "HTML5.png", desc: "HTML, is the standard markup language used to create web pages"},
+  {name: "Cascading Style Sheets (CSS)", track_type: nil, image: "css.png", desc: "CSS is a stylesheet language that describes the presentation of an HTML (or XML) document"}
 ])

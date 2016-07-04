@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160705214625) do
     t.datetime "updated_at"
     t.string   "state"
     t.text     "mentee_comment"
+    t.boolean  "enabled"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -44,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160705214625) do
     t.integer  "track_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "enabled",    default: true
   end
 
   create_table "todos", force: :cascade do |t|

@@ -1,10 +1,21 @@
 -breadcrumb :add_mentoring_track, @add_mtrack
+-# #add_mentee_track
+-#   = form_for @mentoring_track do |f|
+-#     = render "#{@mentoring_track.current_step}_step", :f => f
+-#     .buttons
+-#       - if ["assigning", "customizing"].include? @mentoring_track.current_step
+-#         = f.submit "Next", class: "btn-primary_action "
+-#       - else
+-#         = f.submit "confirm", class: " btn-primary_action "
+-#       = f.submit "back", :name => "back_button", class: " btn-secondary_action " unless @mentoring_track.first_step?
+
 #add_mentee_track
-  = form_for @mentoring_track do |f|
-    = render "#{@mentoring_track.current_step}_step", :f => f
-    .buttons
-      - if ["assigning", "customizing"].include? @mentoring_track.current_step
-        = f.submit "Next", class: "btn-primary_action "
-      - else
-        = f.submit "confirm", class: " btn-primary_action "
-      = f.submit "back", :name => "back_button", class: " btn-secondary_action " unless @mentoring_track.first_step?
+  =render 'templates'
+
+:javascript
+  var MentoringTrackConfig = {
+    tracks: #{@tracks.to_json},
+    sections: #{@sections.to_json},
+    users: #{@users.to_json},
+    index: #{@index.to_json}
+  };
