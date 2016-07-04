@@ -14,3 +14,4 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require tracks
+//= require mentoring_tracks

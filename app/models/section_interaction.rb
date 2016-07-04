@@ -5,7 +5,7 @@ class SectionInteraction < ActiveRecord::Base
   validates :title, presence: true
   validates :content, presence: true
 
-  serialize :resources, Hash
+  serialize :resources, Array
 
   STATES = %w[new section_submitted tasks_pending review_pending section_completed]
 
