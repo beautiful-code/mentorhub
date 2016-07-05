@@ -5,11 +5,11 @@ class SectionInteraction < ActiveRecord::Base
   validates :title, presence: true
   validates :content, presence: true
 
-  serialize :resources, Hash
+  serialize :resources, Array
 
   STATES = %w[new section_submitted tasks_pending review_pending section_completed]
 
-  validates :state, presence: true, inclusion: { in: STATES, if: lambda { state.present? }}
+  validates :state, presence: true, inclusion: { in: STATES, if: lambda { state.present? } }
 
   state_machine :state, initial: :new do
     event :submit_section do
@@ -25,12 +25,18 @@ class SectionInteraction < ActiveRecord::Base
     end
 
     event :complete_section do
-      transition :review_pending => :section_completed, if: lambda {|si| !si.pending_todos? }
+      transition :review_pending => :section_completed, if: lambda { |si| !si.pending_todos? }
     end
   end
 
   def pending_todos?
     todo_states = self.todos.pluck(:state).uniq
-    todo_states.include?("incomplete") || todo_states.include?("to_be_reviewed")
+    todo_states.include?('incomplete') || todo_states.include?('to_be_reviewed')
+  end
+
+  def serializable_hash(options)
+    super({
+      except: [:goal, :created_at, :updated_at]
+    }.merge(options))
   end
 end

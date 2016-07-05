@@ -1,5 +1,4 @@
 class MentoringTracksController < ApplicationController
-
   def new
     session[:mtrack_params] ||= {}
     session[:mentoring_track_step] = nil
@@ -8,16 +7,16 @@ class MentoringTracksController < ApplicationController
 
   def create
     session[:mtrack_params] = params[:mentoring_track] unless params[:mentoring_track].blank?
-    @mentoring_track = MentoringTrack.new(mentee_id: session[:mtrack_params]["mentee_id"])
+    @mentoring_track = MentoringTrack.new(mentee_id: session[:mtrack_params]['mentee_id'])
     @mentoring_track.current_step = session[:mentoring_track_step]
 
-    if @mentoring_track.current_step == "assigning"
+    if @mentoring_track.current_step == 'assigning'
       track = Track.find(params[:mentoring_track][:track_id])
-      ti_options = track.dup.attributes.merge({"mentor_id" => current_user.id})
+      ti_options = track.dup.attributes.except('desc').merge({ 'mentor_id' => current_user.id })
       track_instance = TrackInstance.create(ti_options)
 
       track.sections.each do |section|
-        options = section.dup.attributes.except("track_id").merge({"track_instance_id" => track_instance.id})
+        options = section.dup.attributes.except('track_id', 'code_url').merge({ 'track_instance_id' => track_instance.id })
         @section_interaction = SectionInteraction.create(options)
       end
       session[:track_instance_id] = track_instance.id
@@ -38,7 +37,7 @@ class MentoringTracksController < ApplicationController
     if @mentoring_track.new_record?
       render 'new'
     else
-      flash[:success] = "#{@track_instance.name} track was added to #{@mentoring_track.mentee.name}"
+      flash[:success] = "#{@track_instance.name} track was added to #{@mentoring_track.mentee.first_name}"
       session[:mentoring_track_step] = session[:mtrack_params] = nil
       redirect_to mentoring_tracks_path
     end

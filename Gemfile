@@ -17,16 +17,19 @@ gem 'font-awesome-rails', '~> 4.6', '>= 4.6.3.0'
 gem 'carrierwave'
 gem 'fog-aws'
 gem 'state_machines-activerecord'
+gem 'jbuilder'
 
 group :development, :test do
   gem 'seed_dump'
   gem 'rspec-rails'
+  gem 'rspec-collection_matchers'
   gem 'byebug'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'
   gem "factory_girl_rails", "~> 4.0"
   gem "quiet_assets"
+  gem "rubocop"
 end
 
 group :production do

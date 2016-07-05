@@ -1,0 +1,11 @@
+Rails:
+ Enabled: true
+AllCops:
+ TargetRubyVersion: 2.2.3
+Style/RedundantSelf:
+ Description: "Don't use self where it's not needed."
+ StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-self-unless-required'
+ Enabled: false
+Style/Documentation:
+ Description: 'Document classes and non-namespace modules.'
+ Enabled: false

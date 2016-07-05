@@ -1,15 +1,11 @@
 class SectionInteractionsController < ApplicationController
-
   def edit
     @section_interaction = SectionInteraction.find(params[:id])
   end
 
   def update
     @section_interaction = SectionInteraction.find(params[:id])
-
-    unless @section_interaction.update(section_interaction_params)
-      render 'edit'
-    end
+    render 'edit' unless @section_interaction.update(section_interaction_params)
   end
 
   private
