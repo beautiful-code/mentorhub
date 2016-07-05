@@ -13,9 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require angular/angular.min
-//= require angular-animate/angular-animate.min
-//= require angular-route/angular-route.min
-//= require Angular/app.js
 //= require tracks
 //= require mentoring_tracks
+//= require_tree ./angular
