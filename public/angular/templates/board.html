@@ -1,3 +1,174 @@
-<div>
-    Board Template
+<div id="board">
+    <ul class="board_subnav nav nav-tabs">
+        <li class="active">
+            <a href="#user_exercises" du-smooth-scroll du-scrollspy offset="30">Your Exercises</a>
+        </li>
+        <li class="inactive">
+            <a href="#user_mentee_exercises" du-smooth-scroll du-scrollspy offset="30">Your Mentee Exercises</a>
+        </li>
+    </ul>
+    <div class="user_exercise_style" id="user_exercises">
+        <ul class="user_tracks-subnav">
+            <li>
+                <a>All</a>
+            </li>
+            <li>
+                <a>
+                    <img/>
+                    Html
+                </a>
+            </li>
+            <li class="active">
+                <a>
+                    <img/>
+                    Css3
+                </a>
+            </li>
+            <li>
+                <a>
+                    <img/>
+                    JavaScript
+                </a>
+            </li>
+        </ul>
+        <div class="track_header">
+            <div class="track_details">
+                <div class="logo_n_name item">
+                    <img/>
+                    <h3>Css3</h3>
+                </div>
+                <div class="track_deadline item">
+                    <h5>to be completed by</h5>
+                    <p id="date">12th June</p>
+                </div>
+                <div class="track_mentor item">
+                    <h5>mentor</h5>
+                    <p>Bruce Willis</p>
+                </div>
+            </div>
+            <div class="progress_bar"></div>
+        </div>
+        <div class="section_each">
+            <div class="exercise_purpose">
+                <p>You have 3 tasks to do in this exercise</p>
+            </div>
+            <h5>Exercise</h5>
+            <div class="exercise_name">
+                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                <h3>Exercise name</h3>
+            </div>
+            <p class="exercise_description">
+                This is exercise description
+            </p>
+            <div class="section_resources">
+                <h5>Resources</h5>
+                <p>resource 1</p>
+                <p>resource 2</p>
+            </div>
+            <div class="user_answers">
+                <p>
+                    Checkout my code at
+                    <a>https://github.com/bradpitt/thisexercise</a>
+                </p>
+                <input type="text" class="form-control" placeholder="Answer">
+                <button class="btn btn-sm btn-primary" type="button">Submit</button>
+            </div>
+            <div class="exercise-tasks_to_do">
+                <h4>Tasks to do</h4>
+                <ul>
+                    <li>
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        first task
+                    </li>
+                    <li>
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        second task
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="user_exercise_style" id="user_mentee_exercises">
+        <ul class="user_tracks-subnav">
+            <li>
+                <a>All</a>
+            </li>
+            <li>
+                <a>
+                    <img/>
+                    Michael Ron
+                </a>
+            </li>
+            <li class="active">
+                <a>
+                    <img/>
+                    Brad Pitt
+                </a>
+            </li>
+            <li>
+                <a>
+                    <img/>
+                    David Cameron
+                </a>
+            </li>
+        </ul>
+        <div class="track_header">
+            <div class="track_details">
+                <div class="logo_n_name item">
+                    <img/>
+                    <h3>Css3</h3>
+                </div>
+                <div class="track_deadline item">
+                    <h5>to be completed by</h5>
+                    <p id="date">12th June</p>
+                </div>
+                <div class="track_mentor item">
+                    <h5>mentee</h5>
+                    <p>Brad Pitt</p>
+                </div>
+            </div>
+            <div class="progress_bar"></div>
+        </div>
+        <div class="section_each">
+            <div class="exercise_purpose">
+                <p>Your mentee Brad pitt has completed this exercise</p>
+            </div>
+            <h5>Exercise</h5>
+            <div class="exercise_name">
+                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                <h3>Exercise name</h3>
+            </div>
+            <p class="exercise_description">
+                This is exercise description
+            </p>
+            <div class="section_resources">
+                <h5>Resources</h5>
+                <p>resource 1</p>
+                <p>resource 2</p>
+            </div>
+            <div class="user_answers">
+                <p>
+                    Checkout my code at
+                    <a>https://github.com/bradpitt/thisexercise</a>
+                </p>
+            </div>
+            <div class="exercise-tasks_to_do">
+                <h4>Tasks to do</h4>
+                <ul>
+                    <li>
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        first task
+                    </li>
+                    <li>
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        second task
+                    </li>
+                    <li class="add_a_task">
+                        <span>+</span>
+                        <input type="text" placeholder="Add a task"></input>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>

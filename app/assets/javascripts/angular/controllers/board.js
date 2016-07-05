@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mentorhub.board', ['ngRoute'])
+angular.module('mentorhub.board', ['ngRoute', 'duScroll'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/board', {
