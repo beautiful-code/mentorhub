@@ -6,6 +6,27 @@ angular.module('mentorhub.root', [])
         $routeProvider.otherwise({redirectTo: '/board'});
     }])
 
+    .filter('capitalize', function() {
+        return function(input) {
+            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        }
+    })
+
+    .filter('date_filter', function () {
+        return function (input) {
+            return new Date(input)
+        }
+    })
+    
+    .factory('ApiUrls', function () {
+        var apiBaseUrl = '/';
+        var baseUrls = {
+            'boards': apiBaseUrl + 'board/mock'
+        };
+
+        return angular.extend(baseUrls, {});
+    })
+
     .run(['$rootScope', '$location', '$window', function ($rootScope, $location, $window) {
         $rootScope.header_navigations = {
             selected: '/board',

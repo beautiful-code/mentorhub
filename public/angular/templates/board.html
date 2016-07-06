@@ -13,85 +13,81 @@
     <div class="tab-content">
         <div class="tab-pane user_exercise_style" ng-class="{active: active_tab === 'user_exercises'}">
             <ul class="user_tracks-subnav">
-                <li>
+                <li class="active">
                     <a>All</a>
                 </li>
-                <li>
+                <li ng-repeat="(track, track_info) in boards.your_exercises">
                     <a>
-                        <img/>
-                        Html
-                    </a>
-                </li>
-                <li class="active">
-                    <a>
-                        <img/>
-                        Css3
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <img/>
-                        JavaScript
+                        <img ng-src="{{ track_info.img_src }}"/>
+                        {{ track | capitalize }}
                     </a>
                 </li>
             </ul>
-            <div class="track_header">
-                <div class="track_details">
-                    <div class="logo_n_name item">
-                        <img/>
-                        <h3>Css3</h3>
+
+            <div ng-repeat="(track, track_info) in boards.your_exercises">
+                <div class="track_header">
+                    <div class="track_details">
+                        <div class="logo_n_name item">
+                            <img ng-src="{{ track_info.img_src }}"/>
+                            <h3>{{ track | capitalize }}</h3>
+                        </div>
+                        <div class="track_deadline item">
+                            <h5>to be completed by</h5>
+                            <p>{{ track_info.deadline | date_filter | date: 'MMM dd' }}</p>
+                        </div>
+                        <div class="track_mentor item">
+                            <h5>mentor</h5>
+                            <p>{{ track_info.mentor }}</p>
+                        </div>
                     </div>
-                    <div class="track_deadline item">
-                        <h5>to be completed by</h5>
-                        <p id="date">12th June</p>
+                    <div class="progress_bar"></div>
+                </div>
+                <div class="section_each" ng-repeat="exercise in track_info.exercises">
+                    <div class="exercise_purpose">
+                        <small>You have {{ exercise.tasks.length }} task(s) to do in this exercise</small>
                     </div>
-                    <div class="track_mentor item">
-                        <h5>mentor</h5>
-                        <p>Bruce Willis</p>
+                    <br>
+                    <h5>Exercise</h5>
+                    <div class="exercise_name">
+                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                        <h3>{{ exercise.name }}</h3>
                     </div>
-                </div>
-                <div class="progress_bar"></div>
-            </div>
-            <div class="section_each">
-                <div class="exercise_purpose">
-                    <p>You have 3 tasks to do in this exercise</p>
-                </div>
-                <h5>Exercise</h5>
-                <div class="exercise_name">
-                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                    <h3>Exercise name</h3>
-                </div>
-                <p class="exercise_description">
-                    This is exercise description
-                </p>
-                <div class="section_resources">
-                    <h5>Resources</h5>
-                    <p>resource 1</p>
-                    <p>resource 2</p>
-                </div>
-                <div class="user_answers">
-                    <p>
-                        Checkout my code at
-                        <a>https://github.com/bradpitt/thisexercise</a>
+                    <p class="exercise_description">
+                        {{ exercise.description }}
                     </p>
-                    <input type="text" class="form-control" placeholder="Answer">
-                    <button class="btn btn-sm btn-primary" type="button">Submit</button>
-                </div>
-                <div class="exercise-tasks_to_do">
-                    <h4>Tasks to do</h4>
-                    <ul>
-                        <li>
-                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            first task
-                        </li>
-                        <li>
-                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            second task
-                        </li>
-                    </ul>
+                    <div class="section_resources">
+                        <h5>Resources</h5>
+                        <ul style="list-style-type: none;">
+                            <li ng-repeat="resource in exercise.resources">
+                                <a href="{{ resource.link }}" target="_blank">{{ resource.text }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="user_answers">
+                        <p ng-if="exercise.submission !== ''">
+                            Checkout my code at
+                            <a>https://github.com/bradpitt/thisexercise</a>
+                        </p>
+                        <div ng-if="exercise.submission === ''" class="col-lg-12" style="margin-top: 5px">
+                            <div class="row">
+                                <input type="text" class="form-control col-lg-6 pull-left" placeholder="Answer">
+                                <button class="btn btn-sm btn-primary col-lg-2" type="button">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="exercise-tasks_to_do" style="margin-top: 50px">
+                        <h4>Tasks Todo</h4>
+                        <ul>
+                            <li ng-repeat="task in exercise.tasks">
+                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                {{ task }}
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="tab-pane user_exercise_style" ng-class="{active: active_tab === 'user_mentee_exercises'}">
             <ul class="user_tracks-subnav">
                 <li>

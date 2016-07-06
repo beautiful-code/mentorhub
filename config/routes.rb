@@ -21,4 +21,6 @@ Rails.application.routes.draw do
   get 'board', to: 'board#index'
 
   get 'track/:id/sections', to: 'tracks#sections'
+
+  get 'board/mock', to: 'board#mock'
 end
