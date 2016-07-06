@@ -8,26 +8,34 @@ class BoardController < ApplicationController
 
   def mock
     options = {
-        your_exercises: {
-            html: {
-                deadline: '2016-10-01 00:00:00',
-                mentor: 'Gabbar Singh',
-                img_src: 'http://localhost:3000/angular/assets/images/html5.png',
-                exercises: [
+        'learning_tracks': {
+            'GIT': {
+                'id': 4,
+                'deadline': nil,
+                'image_url': 'http://localhost:3000/angular/assets/images/git.png',
+                'mentor': {
+                    'name': 'P G',
+                    'id': 1
+                },
+                'section_interactions': [
                     {
-                        name: 'Some Exercise',
-                        description: 'a long description of exercise',
-                        resources: [
+                        'id': 1,
+                        'title': 'Commit changes, history and gitignore',
+                        'content': "Add files and tracking changes.\nAdd files to do-not-track list using .gitignore",
+                        'resources': [
                             {
-                                link: 'https://www.google.com',
-                                text: 'Search on your own'
+                                'text': 'Video (3:33 to 8:35)',
+                                'url': 'https://www.youtube.com/watch?v=Y9XZQO1n_7c'
+                            },
+                            {
+                                'text': 'Exercise files',
+                                'url': 'https://drive.google.com/folderview?id=0B1PtuCWpbEdodnV1M3pTZUhHUWM&usp=sharing '
                             }
                         ],
-                        submission: '',
-                        tasks: [
-                            'Chill',
-                            'Cool off'
-                        ]
+                        'track_instance_id': 4,
+                        'state': 'new',
+                        'mentee_comment': nil,
+                        'todos': []
                     }
                 ]
             }

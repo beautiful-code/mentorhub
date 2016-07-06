@@ -16,19 +16,19 @@
                 <li class="active">
                     <a>All</a>
                 </li>
-                <li ng-repeat="(track, track_info) in boards.your_exercises">
+                <li ng-repeat="(track, track_info) in boards.learning_tracks">
                     <a>
-                        <img ng-src="{{ track_info.img_src }}"/>
+                        <img ng-src="{{ track_info.image_url }}"/>
                         {{ track | capitalize }}
                     </a>
                 </li>
             </ul>
 
-            <div ng-repeat="(track, track_info) in boards.your_exercises">
+            <div ng-repeat="(track, track_info) in boards.learning_tracks">
                 <div class="track_header">
                     <div class="track_details">
                         <div class="logo_n_name item">
-                            <img ng-src="{{ track_info.img_src }}"/>
+                            <img ng-src="{{ track_info.image_url }}"/>
                             <h3>{{ track | capitalize }}</h3>
                         </div>
                         <div class="track_deadline item">
@@ -37,38 +37,38 @@
                         </div>
                         <div class="track_mentor item">
                             <h5>mentor</h5>
-                            <p>{{ track_info.mentor }}</p>
+                            <p>{{ track_info.mentor.name }}</p>
                         </div>
                     </div>
                     <div class="progress_bar"></div>
                 </div>
-                <div class="section_each" ng-repeat="exercise in track_info.exercises">
+                <div class="section_each" ng-repeat="exercise in track_info.section_interactions">
                     <div class="exercise_purpose">
-                        <small>You have {{ exercise.tasks.length }} task(s) to do in this exercise</small>
+                        <small>You have {{ exercise.todos.length }} task(s) to do in this exercise</small>
                     </div>
                     <br>
                     <h5>Exercise</h5>
                     <div class="exercise_name">
                         <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                        <h3>{{ exercise.name }}</h3>
+                        <h3>{{ exercise.title }}</h3>
                     </div>
                     <p class="exercise_description">
-                        {{ exercise.description }}
+                        {{ exercise.content }}
                     </p>
                     <div class="section_resources">
                         <h5>Resources</h5>
                         <ul style="list-style-type: none;">
                             <li ng-repeat="resource in exercise.resources">
-                                <a href="{{ resource.link }}" target="_blank">{{ resource.text }}</a>
+                                <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
                             </li>
                         </ul>
                     </div>
                     <div class="user_answers">
-                        <p ng-if="exercise.submission !== ''">
+                        <p ng-if="exercise.mentee_comment !== null">
                             Checkout my code at
                             <a>https://github.com/bradpitt/thisexercise</a>
                         </p>
-                        <div ng-if="exercise.submission === ''" class="col-lg-12" style="margin-top: 5px">
+                        <div ng-if="exercise.mentee_comment === null" class="col-lg-12" style="margin-top: 5px">
                             <div class="row">
                                 <input type="text" class="form-control col-lg-6 pull-left" placeholder="Answer">
                                 <button class="btn btn-sm btn-primary col-lg-2" type="button">Submit</button>
@@ -78,9 +78,9 @@
                     <div class="exercise-tasks_to_do" style="margin-top: 50px">
                         <h4>Tasks Todo</h4>
                         <ul>
-                            <li ng-repeat="task in exercise.tasks">
+                            <li ng-repeat="todo in exercise.todos">
                                 <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                {{ task }}
+                                {{ todo }}
                             </li>
                         </ul>
                     </div>
