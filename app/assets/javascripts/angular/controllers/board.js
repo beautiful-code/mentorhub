@@ -9,6 +9,10 @@ angular.module('mentorhub.board', ['ngRoute', 'duScroll'])
         })
     }])
 
-    .controller('BoardController', function () {
-        
+    .controller('BoardController', function ($scope) {
+        var init = function () {
+            $scope.active_tab = '';
+        };
+
+        init();
     });
