@@ -16,7 +16,7 @@
                 <li class="active">
                     <a>All</a>
                 </li>
-                <li ng-repeat="(track, track_info) in boards.learning_tracks">
+                <li ng-repeat="(track, track_info) in learning_tracks">
                     <a>
                         <img ng-src="{{ track_info.image_url }}"/>
                         {{ track | capitalize }}
@@ -24,7 +24,7 @@
                 </li>
             </ul>
 
-            <div ng-repeat="(track, track_info) in boards.learning_tracks">
+            <div ng-repeat="(track, track_info) in learning_tracks" style="margin-top: 10px">
                 <div class="track_header">
                     <div class="track_details">
                         <div class="logo_n_name item">
@@ -79,8 +79,9 @@
                         <h4>Tasks Todo</h4>
                         <ul>
                             <li ng-repeat="todo in exercise.todos">
-                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                {{ todo }}
+                                <span>{{ todo.state }}</span>
+                                <i class="fa " ng-class="todo.state == 'complete'? 'fa-check-circle-o' : 'fa-times-circle-o'" aria-hidden="true"></i>
+                                {{ todo.content }}
                             </li>
                         </ul>
                     </div>
@@ -90,84 +91,76 @@
 
         <div class="tab-pane user_exercise_style" ng-class="{active: active_tab === 'user_mentee_exercises'}">
             <ul class="user_tracks-subnav">
-                <li>
+                <li class="active">
                     <a>All</a>
                 </li>
-                <li>
+                <li ng-repeat="(id, mentee) in mentoring_tracks">
                     <a>
-                        <img/>
-                        Michael Ron
-                    </a>
-                </li>
-                <li class="active">
-                    <a>
-                        <img/>
-                        Brad Pitt
-                    </a>
-                </li>
-                <li>
-                    <a>
-                        <img/>
-                        David Cameron
+                        <img ng-src="{{ mentee.avatar_url }}">
+                        {{ mentee.name | capitalize }}
                     </a>
                 </li>
             </ul>
-            <div class="track_header">
-                <div class="track_details">
-                    <div class="logo_n_name item">
-                        <img/>
-                        <h3>Css3</h3>
+
+            <div ng-repeat="(id, mentee) in mentoring_tracks" style="margin-top: 10px">
+                <div ng-repeat="track in mentee.learning_tracks">
+                    <div class="track_header">
+                        <div class="track_details">
+                            <div class="logo_n_name item">
+                                <img ng-src="{{ track.image_url }}"/>
+                                <h3>{{ track.name }}</h3>
+                            </div>
+                            <div class="track_deadline item">
+                                <h5>to be completed by</h5>
+                                <p>{{ track.deadline | date_filter | date: 'MMM dd' }}</p>
+                            </div>
+                            <div class="track_mentor item">
+                                <h5>mentee</h5>
+                                <p>{{ mentee.name }}</p>
+                            </div>
+                        </div>
+                        <div class="progress_bar"></div>
                     </div>
-                    <div class="track_deadline item">
-                        <h5>to be completed by</h5>
-                        <p id="date">12th June</p>
-                    </div>
-                    <div class="track_mentor item">
-                        <h5>mentee</h5>
-                        <p>Brad Pitt</p>
-                    </div>
-                </div>
-                <div class="progress_bar"></div>
-            </div>
-            <div class="section_each">
-                <div class="exercise_purpose">
-                    <p>Your mentee Brad pitt has completed this exercise</p>
-                </div>
-                <h5>Exercise</h5>
-                <div class="exercise_name">
-                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                    <h3>Exercise name</h3>
-                </div>
-                <p class="exercise_description">
-                    This is exercise description
-                </p>
-                <div class="section_resources">
-                    <h5>Resources</h5>
-                    <p>resource 1</p>
-                    <p>resource 2</p>
-                </div>
-                <div class="user_answers">
-                    <p>
-                        Checkout my code at
-                        <a>https://github.com/bradpitt/thisexercise</a>
-                    </p>
-                </div>
-                <div class="exercise-tasks_to_do">
-                    <h4>Tasks to do</h4>
-                    <ul>
-                        <li>
+                    <div class="section_each" ng-repeat="exercise in track.section_interactions">
+                        <div class="exercise_purpose" ng-if="checkTodosStatus(id, track, exercise)">
+                            <small>Your mentee {{ mentee.name | capitalize }} has completed this exercise</small>
+                        </div>
+                        <div class="exercise_purpose" ng-if="!checkTodosStatus(id, track, exercise)">
+                            <small>Your mentee {{ mentee.name | capitalize }} has incomplete tasks in this exercise</small>
+                        </div>
+
+                        <h5>Exercise</h5>
+                        <div class="exercise_name">
                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            first task
-                        </li>
-                        <li>
-                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                            second task
-                        </li>
-                        <li class="add_a_task">
-                            <span>+</span>
-                            <input type="text" class="form-control input-sm" placeholder="Add a task"/>
-                        </li>
-                    </ul>
+                            <h3>{{ exercise.title }}</h3>
+                        </div>
+                        <p class="exercise_description">
+                            {{ exercise.content }}
+                        </p>
+                        <div class="section_resources">
+                            <h5>Resources</h5>
+                            <ul style="list-style-type: none;">
+                                <li ng-repeat="resource in exercise.resources">
+                                    <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="user_answers">
+                            <p>
+                                Checkout my code at
+                                <a>https://github.com/bradpitt/thisexercise</a>
+                            </p>
+                        </div>
+                        <div class="exercise-tasks_to_do">
+                            <h4>Tasks Todo</h4>
+                            <ul>
+                                <li ng-repeat="todo in exercise.todos">
+                                    <i class="fa " ng-class="todo.state == 'complete'? 'fa-check-circle-o' : 'fa-times-circle-o'" aria-hidden="true"></i>
+                                    {{ todo.content }}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

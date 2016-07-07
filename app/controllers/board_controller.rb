@@ -8,36 +8,81 @@ class BoardController < ApplicationController
 
   def mock
     options = {
-        'learning_tracks': {
-            'GIT': {
-                'id': 4,
-                'deadline': nil,
-                'image_url': 'http://localhost:3000/angular/assets/images/git.png',
-                'mentor': {
-                    'name': 'P G',
-                    'id': 1
-                },
-                'section_interactions': [
+        mentoring_tracks: {
+            '1': {
+                name: "John",
+                avatar_url: "https://lh3.googleusercontent.com/-jWnHlYI_jV4/AAAAAAAAAAI/AAAAAAAAABU/pxgexOgcX80/photo.jpg",
+                learning_tracks: [
                     {
-                        'id': 1,
-                        'title': 'Commit changes, history and gitignore',
-                        'content': "Add files and tracking changes.\nAdd files to do-not-track list using .gitignore",
-                        'resources': [
+                        name: "HTML Fundamentals",
+                        deadline: "2016-07-01 10:41:47",
+                        image_url: "https://mentorhub-development.s3.amazonaws.com/uploads/track/image/4/HTML5_Badge_512.png",
+                        section_interactions: [
                             {
-                                'text': 'Video (3:33 to 8:35)',
-                                'url': 'https://www.youtube.com/watch?v=Y9XZQO1n_7c'
-                            },
-                            {
-                                'text': 'Exercise files',
-                                'url': 'https://drive.google.com/folderview?id=0B1PtuCWpbEdodnV1M3pTZUhHUWM&usp=sharing '
+                                id: 11,
+                                title: "CSS Basics",
+                                content: "Go through the links below and understand the concepts. Getting to know CSS -Types of selectors -Selectors precedence -Combining selectors -Common property values ",
+                                resources: [
+                                    {
+                                        text: "CSS Tutorials #1 - Introduction to CSS and Adding a CSS File to Your HTML",
+                                        url: "http://www.youtube.com/watch?v=x9HmYfSN4Gk"
+                                    }
+                                ],
+                                track_instance_id: 5,
+                                state: "review_pending",
+                                mentee_comment: nil,
+                                todos: [
+                                    {
+                                        id: 1,
+                                        content: "This is a task",
+                                        section_interaction_id: 11,
+                                        state: "incomplete"
+                                    },
+                                    {
+                                        id: 2,
+                                        content: "This is another task",
+                                        section_interaction_id: 11,
+                                        state: "incomplete"
+                                    }
+                                ]
                             }
-                        ],
-                        'track_instance_id': 4,
-                        'state': 'new',
-                        'mentee_comment': nil,
-                        'todos': []
+                        ]
                     }
                 ]
+            }
+        },
+        learning_tracks: {
+            'GIT': {
+                deadline: "2016-07-01 10:41:47",
+                image_url: "https://mentorhub-development.s3.amazonaws.com/uploads/track/image/4/HTML5_Badge_512.png",
+                section_interactions: [
+                    {
+                        id: 1,
+                        title: "Commit changes, history and gitignore",
+                        content: "Add files and tracking changes. Add files to do-not-track list using .gitignore",
+                        resources: [
+                            {
+                                text: "This is just a text",
+                                url: nil
+                            },
+                            {
+                                text: "Exercise files",
+                                url: "http://drive.google.com/folderview?id=0B1PtuCWpbEdodnV1M3pTZUhHUWM&usp=sharing "
+                            }
+                        ],
+                        track_instance_id: 4,
+                        state: "new",
+                        mentee_comment: nil,
+                        todos: [
+
+                        ]
+                    }
+                ],
+                mentor: {
+                    name: "Jane",
+                    id: 1,
+                    avatar_url: "https://lh3.googleusercontent.com/-jWnHlYI_jV4/AAAAAAAAAAI/AAAAAAAAABU/pxgexOgcX80/photo.jpg",
+                }
             }
         }
     }
