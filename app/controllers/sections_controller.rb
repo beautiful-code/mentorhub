@@ -9,7 +9,8 @@ class SectionsController < ApplicationController
     if @section.save
       render json: { msg: 'success', section: @section }, status: 200
     else
-      render json: { msg: 'error', errors: @section.errors, section: @section }, status: 422
+      render json: { msg: 'error', errors: @section.errors,
+                     section: @section }, status: 422
     end
   end
 
@@ -17,7 +18,8 @@ class SectionsController < ApplicationController
     if @section.update(section_params)
       render json: { msg: 'success', section: @section }, status: 200
     else
-      render json: { msg: 'error', errors: @section.errors, section: @section }, status: 422
+      render json: { msg: 'error', errors: @section.errors,
+                     section: @section }, status: 422
     end
   end
 
@@ -40,10 +42,17 @@ class SectionsController < ApplicationController
   end
 
   def set_section
-    @section = params[:id].present? ? @track.sections.find(params[:id]) : @track.sections.new(section_params)
+    @section = if params[:id].present?
+                 @track.sections.find(params[:id])
+               else
+                 @track.sections.new(section_params)
+               end
   end
 
   def build_resources
-    @section.resources = params[:section].delete(:resources).collect { |_, v| v } if params[:section][:resources].present?
+    @section.resources = params[:section].delete(:resources)
+                                         .collect do |_, v|
+      v
+    end if params[:section][:resources].present?
   end
 end

@@ -7,13 +7,16 @@ class SectionInteraction < ActiveRecord::Base
 
   serialize :resources, Array
 
-  STATES = %w[new section_submitted tasks_pending review_pending section_completed]
+  STATES =
+    %w(new section_submitted tasks_pending
+       review_pending section_completed).freeze
 
-  validates :state, presence: true, inclusion: { in: STATES, if: lambda { state.present? } }
+  validates :state, presence: true,
+    inclusion: { in: STATES, if: -> { state.present? } }
 
   state_machine :state, initial: :new do
     event :submit_section do
-      transition :new => :section_submitted
+      transition new: :section_submitted
     end
 
     event :pending_review do
@@ -21,11 +24,12 @@ class SectionInteraction < ActiveRecord::Base
     end
 
     event :pending_tasks do
-      transition :review_pending => :tasks_pending
+      transition review_pending: :tasks_pending
     end
 
     event :complete_section do
-      transition :review_pending => :section_completed, if: lambda { |si| !si.pending_todos? }
+      transition review_pending: :section_completed,
+        if: ->(si) { !si.pending_todos? }
     end
   end
 

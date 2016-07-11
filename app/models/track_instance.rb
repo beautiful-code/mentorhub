@@ -15,17 +15,15 @@ class TrackInstance < ActiveRecord::Base
 
   def recent_incomplete_section_interactions
     ret = []
-    sis = self.section_interactions.where("state != ?", "section_completed").order('created_at ASC')
+    sis = self.section_interactions.where('state != ?', 'section_completed')
+              .order('created_at ASC')
     return [] if sis.blank?
 
     sis.each_with_index do |si, i|
-      (ret << si; next;) if i.zero?
+      (ret << si
+       next) if i.zero?
 
-      if ret.last.state == "new"
-        break;
-      else
-        ret << si
-      end
+      ret.last.state == 'new' ? break : ret << si
     end
 
     ret

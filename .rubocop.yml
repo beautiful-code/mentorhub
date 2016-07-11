@@ -1,11 +1,29 @@
 Rails:
- Enabled: true
+  Enabled: true
 AllCops:
- TargetRubyVersion: 2.2.3
+  Exclude:
+    - 'Rakefile'
+    - 'config/environments/*'
+    - 'config/application.rb'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'test/test_helper.rb'
+    - 'config/initializers/devise.rb'
+    - 'config/initializers/wrap_parameters.rb'
+    - 'config/initializers/backtrace_silencers.rb'
+    - 'config/initializers/assets.rb'
+    - 'app/helpers/application_helper.rb'
+    - 'db/**/*'
+    - 'bin/*'
+  TargetRubyVersion: 2.2.3
 Style/RedundantSelf:
- Description: "Don't use self where it's not needed."
- StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-self-unless-required'
- Enabled: false
+  Description: "Don't use self where it's not needed."
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-self-unless-required'
+  Enabled: false
 Style/Documentation:
- Description: 'Document classes and non-namespace modules.'
- Enabled: false
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: false
+Style/AlignHash:
+  Enabled: false
+Metrics/AbcSize:
+  Max: 20

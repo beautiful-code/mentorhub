@@ -8,7 +8,7 @@ class MentoringTrack < ActiveRecord::Base
   end
 
   def steps
-    %w[assigning customizing confirming]
+    %w(assigning customizing confirming)
   end
 
   def next_step
