@@ -1,6 +1,6 @@
 class TracksController < ApplicationController
-  # TODO: Ajax auth token
-  before_action :authenticate_user!, except: [:create, :update, :destroy]
+  #TODO: Ajax auth token
+  before_action :authenticate_user!, except: [:create, :update, :destroy, :sections]
   before_action :set_track, except: [:index]
 
   def index
@@ -15,6 +15,22 @@ class TracksController < ApplicationController
   def show
     @sections = @track.sections.order('id')
     render 'sections/index'
+  end
+
+  def sections
+    render json: {
+      track: @track,
+      sections: @track.sections,
+      current_user: current_user
+    }
+  end
+
+  def sections
+    render json: {
+      track: @track,
+      sections: @track.sections,
+      current_user: current_user
+    }
   end
 
   def create

@@ -329,7 +329,7 @@ $(function() {
       // Add a new section button
       $("#section_index .add_exercise_btn a").click(function(e) {
         e.preventDefault();
-        self.sectionContainer.append(self.sectionFormTemplate({newTrack: true}));
+        self.sectionContainer.append(self.sectionFormTemplate({newSection: true}));
 
         var addExerciseForms = self.sectionContainer.find(".add_exercise");
         var noOfForms = addExerciseForms.length;
