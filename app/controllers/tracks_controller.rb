@@ -25,6 +25,14 @@ class TracksController < ApplicationController
     }
   end
 
+  def sections
+    render json: {
+      track: @track,
+      sections: @track.sections,
+      current_user: current_user
+    }
+  end
+
   def create
     if @track.save
       render json: { msg: 'success', track: @track }, status: 200
