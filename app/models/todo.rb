@@ -6,10 +6,9 @@ class Todo < ActiveRecord::Base
 
   STATES = %w[incomplete to_be_reviewed completed]
 
-  validates :state, presence: true, inclusion: { in: STATES, if: lambda { state.present? }}
+  validates :state, presence: true, inclusion: { in: STATES, if: lambda { state.present? } }
 
   state_machine :state, initial: :incomplete do
-
     event :review_todo do
       transition :incomplete => :to_be_reviewed
     end
@@ -21,5 +20,11 @@ class Todo < ActiveRecord::Base
     event :complete_todo do
       transition :to_be_reviewed => :completed
     end
+  end
+
+  def serializable_hash(options)
+    super({
+      except: [:created_at, :updated_at]
+    }.merge(options))
   end
 end

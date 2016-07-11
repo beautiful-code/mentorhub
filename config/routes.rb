@@ -3,12 +3,13 @@ Rails.application.routes.draw do
     resources :sections, except: [:index, :edit, :new]
   end
 
+  resources :section_interactions, only: [:edit, :update] do
+     resources :todos, only: [:new, :create, :update, :index]
+  end
   root :to => 'board#index'
   resources :mentoring_tracks, only: [:new, :create, :index]
-  resources :section_interactions, only: [:edit, :update]
-  get "home/learning_tracks", to: "home#learning_tracks", as: :learning_tracks
 
-  resources :todos, only: [:create]
+  get "learning_tracks", to: "home#learning_tracks"
 
   devise_for :users,  :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",registrations: 'registrations'  }
 
