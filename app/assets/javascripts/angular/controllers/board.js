@@ -9,6 +9,32 @@ angular.module('mentorhub.board', ['ngRoute', 'duScroll'])
         })
     }])
 
+    .directive('selectSubnav', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr) {
+                $(element).on('click', function () {
+                    $(element).parent().children().removeClass('active');
+                    $(element).addClass('active');
+
+                    var sections = {};
+                    switch (attr.selectSubnav) {
+                        case 'All':
+                            sections = scope[scope.active_tab];
+                            break;
+                        default:
+                            sections[attr.selectSubnav] = scope[scope.active_tab][attr.selectSubnav];
+                            break;
+                    }
+
+                    scope.$apply(function () {
+                        $parse('sections.data').assign(scope, sections);
+                    });
+                });
+            }
+        }
+    })
+    
     .factory('BoardServices', function ($http, ApiUrls) {
         return {
             'boards': function () {
@@ -23,18 +49,29 @@ angular.module('mentorhub.board', ['ngRoute', 'duScroll'])
 
             BoardServices.boards()
                 .success(function (response) {
-                    $scope.mentoring_tracks = response.mentoring_tracks;
-                    $scope.learning_tracks = response.learning_tracks;
+                    $scope.user_mentee_exercises = response.mentoring_tracks;
+                    $scope.user_exercises = response.learning_tracks;
+                    
+                    $scope.sections = { data: $scope.user_exercises };
                 })
                 .error(function (error) {
                     console.log(error);
                 })
         };
+        
+        $scope.change_tab = function (tab) {
+            $scope.active_tab = tab;
+            $scope.sections.data = $scope[tab];
+
+            var subnav_element = $(".user_tracks-subnav");
+            subnav_element.children().removeClass('active');
+            subnav_element.children().find("a:contains('All')").parent().addClass('active');
+        };
 
         $scope.checkTodosStatus = function(mentee_id, track, exercise) {
-            var track_id = $scope.mentoring_tracks[mentee_id].learning_tracks.indexOf(track);
-            var exercise_id = $scope.mentoring_tracks[mentee_id].learning_tracks[track_id].section_interactions.indexOf(exercise);
-            var todos = $scope.mentoring_tracks[mentee_id].learning_tracks[track_id].section_interactions[exercise_id].todos;
+            var track_id = $scope.user_mentee_exercises[mentee_id].learning_tracks.indexOf(track);
+            var exercise_id = $scope.user_mentee_exercises[mentee_id].learning_tracks[track_id].section_interactions.indexOf(exercise);
+            var todos = $scope.user_mentee_exercises[mentee_id].learning_tracks[track_id].section_interactions[exercise_id].todos;
 
             var counter = 0;
             for(var i = 0; i < todos.length; ++i) {

@@ -8,8 +8,8 @@
       %button= link_to "Sign Up", new_user_registration_path
 
   %ul.primary_nav{'ng-if' => 'login_status'}
-    %li{ 'ng-repeat' => "(route, route_info) in header_navigations.options", 'ng-click' => "$rootScope.header_navigations.selected = route" }
-      %a{ :href => "{{ '#' + route }}", 'ng-class' => "{selected: header_navigations.selected === route}" } {{ route_info.label }}
+    %li(ng-cloak){ 'ng-repeat' => "(route, route_info) in header_navigations.options", 'ng-click' => "$rootScope.header_navigations.selected = route" }
+      %a{ :href => "{{ '#' + route }}", 'ng-class' => "{selected: header_navigations.selected === route}"} {{ route_info.label }}
 
   -#%li= link_to "Your Board", board_path, class: active_class(c: ['board'])
   -#%li= link_to "My Learning Tracks", learning_tracks_path
