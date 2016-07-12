@@ -1,6 +1,6 @@
 class TracksController < ApplicationController
-  #TODO: Ajax auth token
-  before_action :authenticate_user!, except: [:create, :update, :destroy, :sections]
+  # TODO: Ajax auth token
+  # before_action :authenticate_user!
   before_action :set_track, except: [:index]
 
   def index
@@ -25,19 +25,12 @@ class TracksController < ApplicationController
     }
   end
 
-  def sections
-    render json: {
-      track: @track,
-      sections: @track.sections,
-      current_user: current_user
-    }
-  end
-
   def create
     if @track.save
       render json: { msg: 'success', track: @track }, status: 200
     else
-      render json: { msg: 'error', errors: @track.errors, track: @track }, status: 422
+      render json: { msg: 'error', errors: @track.errors,
+                     track: @track }, status: 422
     end
   end
 
@@ -45,7 +38,8 @@ class TracksController < ApplicationController
     if @track.update(track_params)
       render json: { msg: 'success', track: @track }, status: 200
     else
-      render json: { msg: 'error', errors: @track.errors, track: @track }, status: 422
+      render json: { msg: 'error', errors: @track.errors,
+                     track: @track }, status: 422
     end
   end
 
@@ -56,6 +50,10 @@ class TracksController < ApplicationController
   end
 
   def set_track
-    @track = params[:id].present? ? Track.find(params[:id]) : Track.new(track_params)
+    @track = if params[:id].present?
+               Track.find(params[:id])
+             else
+               Track.new(track_params)
+             end
   end
 end

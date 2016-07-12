@@ -10,7 +10,9 @@ RSpec.describe TodosController, type: :controller do
   describe 'GET #index' do
     before(:each) do
       @section_interaction = FactoryGirl.create :section_interaction
-      4.times { FactoryGirl.create :todo, section_interaction: @section_interaction }
+      4.times do
+        FactoryGirl.create :todo, section_interaction: @section_interaction
+      end
       get :index, section_interaction_id: @section_interaction.id
     end
 
@@ -29,10 +31,14 @@ RSpec.describe TodosController, type: :controller do
       before(:each) do
         section_interaction = FactoryGirl.create :section_interaction
         @todo_attributes = FactoryGirl.attributes_for :todo
-        post :create, section_interaction_id: section_interaction.id, todo: @todo_attributes
+        post(
+          :create,
+          section_interaction_id: section_interaction.id, todo: @todo_attributes
+        )
       end
 
-      it 'renders the json representation for the product record just created' do
+      it 'renders the json representation for the
+      product record just created' do
         todo_response = JSON.parse(response.body, symbolize_names: true)
         expect(todo_response[:todo][:content]).to eq(@todo_attributes[:content])
       end
@@ -46,7 +52,8 @@ RSpec.describe TodosController, type: :controller do
       before(:each) do
         section_interaction = FactoryGirl.create :section_interaction
         @invalid_todo_attributes = { content: '' }
-        post :create, section_interaction_id: section_interaction.id, todo: @invalid_todo_attributes
+        post :create, section_interaction_id: section_interaction.id,
+          todo: @invalid_todo_attributes
       end
 
       it 'renders an errors json' do
@@ -68,15 +75,18 @@ RSpec.describe TodosController, type: :controller do
   describe 'PUT/PATCH #update' do
     before(:each) do
       @section_interaction = FactoryGirl.create(:section_interaction)
-      @todo = FactoryGirl.create(:todo, section_interaction: @section_interaction)
+      @todo = FactoryGirl.create(:todo,
+                                 section_interaction: @section_interaction)
     end
 
     context 'when is successfully updated' do
       before(:each) do
-        patch :update, section_interaction_id: @section_interaction.id, id: @todo.id, todo: { content: 'Todo content' }
+        patch :update, section_interaction_id: @section_interaction.id,
+          id: @todo.id, todo: { content: 'Todo content' }
       end
 
-      it 'renders the json representation for the updated section_interaction' do
+      it 'renders the json representation for
+      the updated section_interaction' do
         todo_response = JSON.parse(response.body, symbolize_names: true)
         expect(todo_response[:todo][:content]).to eq('Todo content')
       end
@@ -88,7 +98,8 @@ RSpec.describe TodosController, type: :controller do
 
     context 'when is not updated' do
       before(:each) do
-        patch :update, section_interaction_id: @section_interaction.id, id: @todo.id, todo: { section_interaction_id: '' }
+        patch :update, section_interaction_id: @section_interaction.id,
+          id: @todo.id, todo: { section_interaction_id: '' }
       end
 
       it 'renders an errors json' do
@@ -96,9 +107,11 @@ RSpec.describe TodosController, type: :controller do
         expect(todo_response).to have_key(:errors)
       end
 
-      it 'renders the json errors on why the section_interaction could not be created' do
+      it 'renders the json errors on why the
+      section_interaction could not be created' do
         todo_response = JSON.parse(response.body, symbolize_names: true)
-        expect(todo_response[:errors][:section_interaction_id]).to include "can't be blank"
+        expect(todo_response[:errors][:section_interaction_id]).to include
+        "can't be blank"
       end
 
       it 'has a 422 status code' do

@@ -1,16 +1,24 @@
 sudo: false
-cache: bundler
+cache:
+  bundler: true
 language: ruby
 rvm:
  - 2.2.3
 matrix:
   fast_finish: true
+env:
+  - DB=postgresql
+script:
+  - bundle exec rubocop
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rspec spec/
+before_script:
+  - psql -c 'CREATE DATABASE mentorhub_test;' -U postgres
+  - psql -c "CREATE USER root WITH PASSWORD '';" -U postgres
+bundler_args: --without development
 before_install: gem update --remote bundler
 install:
-- bundle install --retry=3
-script:
-- bundle exec rubocop
-- bundle exec rspec
+  - bundle install --retry 3
 notifications:
   email: false
   slack:

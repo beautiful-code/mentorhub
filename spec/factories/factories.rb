@@ -30,5 +30,4 @@ FactoryGirl.define do
   factory :track_instance, class: TrackInstance do
     name 'HTML'
   end
-
 end

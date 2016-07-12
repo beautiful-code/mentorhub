@@ -5,7 +5,8 @@ class TodosController < ApplicationController
 
   def index
     todo_list = @section_interaction.todos.all
-    render json: { si_title: @section_interaction.title.to_s, todos: todo_list }, status: 200
+    render json: { si_title: @section_interaction.title.to_s,
+                   todos: todo_list }, status: 200
   end
 
   def create
@@ -31,10 +32,15 @@ class TodosController < ApplicationController
   end
 
   def set_section_interaction
-    @section_interaction = SectionInteraction.find(params[:section_interaction_id])
+    @section_interaction =
+      SectionInteraction.find(params[:section_interaction_id])
   end
 
   def set_todos
-    @todo = params[:id].present? ? @section_interaction.todos.find(params[:id]) : @section_interaction.todos.new(todo_params)
+    @todo = if params[:id].present?
+              @section_interaction.todos.find(params[:id])
+            else
+              @section_interaction.todos.new(todo_params)
+            end
   end
 end

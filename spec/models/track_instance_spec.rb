@@ -15,7 +15,7 @@ describe TrackInstance, type: :model do
       expect(ret).to have_exactly(1).items
     end
 
-    it 'should return first 2 section interactions if the state of the second one is new ' do
+    it "should return first 2 si's if the state of the second si is new" do
       ret = []
 
       si1 = double('SectionInteraction')
@@ -31,7 +31,7 @@ describe TrackInstance, type: :model do
       expect(ret).to have_exactly(2).items
     end
 
-    it 'should return the first three section interactions if the state of the third one is new' do
+    it "should return the first three si's if third si state is new" do
       ret = []
 
       si1 = double('SectionInteraction')
@@ -52,7 +52,7 @@ describe TrackInstance, type: :model do
       expect(ret).to have_exactly(3).items
     end
 
-    it 'should return the first three section interactions if the third and fourth section interaction states are new' do
+    it "should return the first three si's if 3rd and 4th si states are new" do
       ret = []
 
       si1 = double('SectionInteraction')
