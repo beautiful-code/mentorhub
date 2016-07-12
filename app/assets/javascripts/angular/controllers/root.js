@@ -21,7 +21,8 @@ angular.module('mentorhub.root', [])
     .factory('ApiUrls', function () {
         var apiBaseUrl = '/';
         var baseUrls = {
-            'boards': apiBaseUrl + 'board/mock'
+            'boards': apiBaseUrl + 'board/mock',
+            'create_todo': apiBaseUrl + 'section_interactions/{section_id}/todos'
         };
 
         return angular.extend(baseUrls, {});

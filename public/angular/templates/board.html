@@ -158,6 +158,14 @@
                                     <i class="fa " ng-class="todo.state == 'complete'? 'fa-check-circle-o' : 'fa-times-circle-o'" aria-hidden="true"></i>
                                     {{ todo.content }}
                                 </li>
+                                <li class="add_a_task">
+                                    <div class="input-group input-group-sm col-lg-5">
+                                        <input type="text" class="form-control" ng-model="todo.content">
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-primary" type="button" ng-click="add_task(exercise, todo)">Add task</button>
+                                        </span>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>

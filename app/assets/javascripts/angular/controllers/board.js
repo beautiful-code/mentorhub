@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('mentorhub.board', ['ngRoute', 'duScroll'])
+angular.module('mentorhub.board', [])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/board', {
@@ -8,6 +8,17 @@ angular.module('mentorhub.board', ['ngRoute', 'duScroll'])
             controller: 'BoardController'
         })
     }])
+
+    .factory('BoardServices', function ($http, ApiUrls) {
+        return {
+            'boards': function () {
+                return $http.get(ApiUrls.boards);
+            },
+            'create_todo': function (section_interaction_id, payload) {
+                return $http.post(ApiUrls.create_todo.replace('{section_id}', section_interaction_id), payload);
+            }
+        }
+    })
 
     .directive('selectSubnav', function ($parse) {
         return {
@@ -34,14 +45,6 @@ angular.module('mentorhub.board', ['ngRoute', 'duScroll'])
             }
         }
     })
-    
-    .factory('BoardServices', function ($http, ApiUrls) {
-        return {
-            'boards': function () {
-                return $http.get(ApiUrls.boards);
-            }
-        }
-    })
 
     .controller('BoardController', function ($scope, BoardServices) {
         var init = function () {
@@ -58,7 +61,19 @@ angular.module('mentorhub.board', ['ngRoute', 'duScroll'])
                     console.log(error);
                 })
         };
-        
+
+        $scope.add_task = function (exercise, todo) {
+            BoardServices.create_todo(exercise.id, todo)
+                .success(function (response) {
+                    exercise.todos.push(response['todo']);
+
+                    todo.content = undefined;
+                })
+                .error(function (error) {
+                    console.log(error)
+                })
+        };
+
         $scope.change_tab = function (tab) {
             $scope.active_tab = tab;
             $scope.sections.data = $scope[tab];
