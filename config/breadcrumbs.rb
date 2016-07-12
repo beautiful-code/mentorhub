@@ -2,23 +2,23 @@ crumb :root do
   link 'Home', root_path
 end
 
-crumb :tracks do
-  link 'All tracks', tracks_path
+crumb :track_templates do
+  link 'All track_templates', track_templates_path
 end
 
-crumb :track do |track|
-  link track.name, track_sections_path(track)
-  parent :tracks
+crumb :track_template do |track_template|
+  link track_template.name, track_template_path(track_template)
+  parent :track_templates
 end
 
-crumb :new_track do
-  link 'Creating a track'
-  parent :tracks
+crumb :new_track_template do
+  link 'Creating a track_template'
+  parent :track_templates
 end
 
-crumb :new_section do |track|
+crumb :new_section do |track_template|
   link 'Creating a section'
-  parent :track, track
+  parent :track_template, track_template
 end
 
 crumb :mentoring_tracks do

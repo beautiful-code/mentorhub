@@ -5,12 +5,11 @@ $(function(){
       self.tracks = MentoringTrackConfig.tracks;
       self.users = MentoringTrackConfig.users;
 
-      self.sections = (localStorage.getItem('Sections')===null) ? null : JSON.parse(localStorage.getItem('Sections'));
+      self.sections = (localStorage.getItem('Sections')===null) ? [] : JSON.parse(localStorage.getItem('Sections'));
       self.menteeId = (localStorage.getItem('MenteeId')===null) ? null : JSON.parse(localStorage.getItem('MenteeId'));
       self.track = (localStorage.getItem('Track')===null) ? null : JSON.parse(localStorage.getItem('Track'));
       self.step = (localStorage.getItem('Step')===null) ? 1 : parseInt(localStorage.getItem('Step'));
-      self.index = (localStorage.getItem('Index')===null) ? MentoringTrackConfig.index : parseInt(localStorage.getItem('Index'));
-
+      self.index = (localStorage.getItem('Index')===null) ? self.sections.length : parseInt(localStorage.getItem('Index'));
 
       self.mentoringTrackAssigningForm = $("script#assigning_step_form").html();
       self.mentoringTrackAssigningTemplate = Handlebars.compile(self.mentoringTrackAssigningForm);
@@ -31,8 +30,6 @@ $(function(){
 
       self.resourceFormHtml = $("script#resource_form").html();
       self.resourceFormTemplate = Handlebars.compile(self.resourceFormHtml);
-
-
 
       self.getSection = function(sectionId) {
         return (
@@ -57,7 +54,6 @@ $(function(){
         return $.grep(self.sections,function(resource, i){return resource.enabled})
       };
 
-
       self.registerEditEventListener = function(element) {
         var $element = $(element);
         $element.find(".edit-section").click(function(e) {
@@ -78,11 +74,9 @@ $(function(){
         $element.find(".tgl").change(function(e){
           section = self.getSection(parseInt($(this).closest(".exercise").attr("data-section-id")));
           ($(this).is(":checked")) ? (section.enabled = true) : (section.enabled = false)
-          self.updateLocalStorage(self.sections,self.track, self.step, self.menteeId, self.index);
+          self.updateLocalStorage();
         });
       };
-
-
 
       self.registerAddResourceListener = function(element) {
         var $element = $(element);
@@ -169,7 +163,7 @@ $(function(){
         $.extend(self.sections.find(function(sec) {
           return sec.id == section.id;
         }),section);
-        self.updateLocalStorage(self.sections,self.track, self.step, self.menteeId, self.index);
+        self.updateLocalStorage();
         self.showSectionCardAndRegisterListeners(sectionId, $element);
       };
 
@@ -178,17 +172,17 @@ $(function(){
         newObj.id = parseInt($element.attr('data-section-id'));
 
         self.sections.push(newObj);
-        self.updateLocalStorage(self.sections,self.track, self.step, self.menteeId, self.index);
+        self.updateLocalStorage();
 
         self.showSectionCardAndRegisterListeners(newObj.id, $element);
       };
 
-      self.updateLocalStorage = function(sections, track, step, menteeId, index){
-        localStorage.setItem('Sections', JSON.stringify(sections));
-        localStorage.setItem('Track', JSON.stringify(track));
-        localStorage.setItem('Step', JSON.stringify(step));
-        localStorage.setItem('MenteeId', JSON.stringify(menteeId));
-        localStorage.setItem('Index', JSON.stringify(index));
+      self.updateLocalStorage = function(){
+        localStorage.setItem('Sections', JSON.stringify(self.sections));
+        localStorage.setItem('Track', JSON.stringify(self.track));
+        localStorage.setItem('Step', JSON.stringify(self.step));
+        localStorage.setItem('MenteeId', JSON.stringify(self.menteeId));
+        localStorage.setItem('Index', JSON.stringify(self.index));
       };
       self.clearLocalStorage = function(){
         localStorage.clear();
@@ -221,13 +215,13 @@ $(function(){
 
         //Get track sections
         $.ajax({
-          url: "/track/"+ trackId +"/sections",
+          url: "/track_templates/"+ trackId +"/section_templates",
           success: function(response){
             self.sections = response.sections;
-            self.track = response.track;
-            self.index = (localStorage.getItem('Index')===null) ? MentoringTrackConfig.index : parseInt(localStorage.getItem('Index'));
+            self.track = response.track_template;
+            self.index = (localStorage.getItem('Index')===null) ? response.sections.length : parseInt(localStorage.getItem('Index'));
             self.step++;
-            self.updateLocalStorage(self.sections,self.track, self.step, self.menteeId, self.index);
+            self.updateLocalStorage();
             $(".assign_next").closest(".assign_form").replaceWith(self.mentoringTrackCustomizingTemplate({sections: self.sections}))
 
             self.mentoringTrackContainer.find(".exercise").each(function(i,element){
@@ -258,7 +252,7 @@ $(function(){
       self.mentoringTrackContainer.on("click",".back", function(e) {
         e.preventDefault();
         self.step--;
-        self.updateLocalStorage(self.sections,self.track, self.step, self.menteeId, self.index);
+        self.updateLocalStorage();
         window.location.href= "/mentoring_tracks/new";
       });
 
@@ -277,7 +271,7 @@ $(function(){
             thisSection = self.getSection(sectionId);
             $.extend(thisSection,{enabled:true})
             self.setSection(thisSection);
-            self.updateLocalStorage(self.sections,self.track, self.step, self.menteeId, self.index);
+            self.updateLocalStorage();
           }
         });
 
@@ -286,7 +280,7 @@ $(function(){
           }))
         $("html, body").animate({ scrollTop: 0 });
         self.step++;
-        self.updateLocalStorage(self.sections,self.track, self.step, self.menteeId, self.index);
+        self.updateLocalStorage();
         return false;
       });
 

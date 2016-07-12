@@ -11,41 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160707123733) do
+ActiveRecord::Schema.define(version: 20160713130429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "mentoring_tracks", force: :cascade do |t|
-    t.string   "name"
-    t.integer  "mentee_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "section_interactions", force: :cascade do |t|
     t.string   "title"
-    t.string   "goal"
     t.text     "content"
-    t.string   "resources"
-    t.integer  "track_instance_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "state"
-    t.text     "mentee_comment"
-    t.boolean  "enabled"
-  end
-
-  create_table "sections", force: :cascade do |t|
-    t.string   "title"
     t.string   "goal"
-    t.text     "content"
-    t.string   "code_url"
-    t.string   "resources"
+    t.text     "resources"
     t.integer  "track_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "enabled",    default: true
+    t.string   "state"
+    t.text     "mentee_notes"
+    t.boolean  "enabled"
+    t.string   "type"
+  end
+
+  create_table "section_templates", force: :cascade do |t|
+    t.string   "title"
+    t.string   "goal"
+    t.text     "content"
+    t.text     "resources"
+    t.integer  "track_template_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
   end
 
   create_table "todos", force: :cascade do |t|
@@ -56,24 +49,25 @@ ActiveRecord::Schema.define(version: 20160707123733) do
     t.string   "state"
   end
 
-  create_table "track_instances", force: :cascade do |t|
+  create_table "track_templates", force: :cascade do |t|
     t.string   "name"
-    t.string   "track_type"
-    t.integer  "mentor_id"
-    t.integer  "mentoring_track_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "image"
-    t.datetime "deadline"
-  end
-
-  create_table "tracks", force: :cascade do |t|
-    t.string   "name"
-    t.string   "track_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
     t.string   "desc"
+    t.string   "type"
+  end
+
+  create_table "tracks", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "mentor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image"
+    t.datetime "deadline"
+    t.string   "type"
+    t.integer  "mentee_id"
+    t.text     "desc"
   end
 
   create_table "users", force: :cascade do |t|
@@ -95,7 +89,7 @@ ActiveRecord::Schema.define(version: 20160707123733) do
     t.string   "image"
     t.string   "first_name"
     t.string   "last_name"
-    t.boolean  "mentor"
+    t.boolean  "admin"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
