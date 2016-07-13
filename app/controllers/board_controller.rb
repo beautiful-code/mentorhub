@@ -19,7 +19,7 @@ class BoardController < ApplicationController
                         image_url: "https://mentorhub-development.s3.amazonaws.com/uploads/track/image/4/HTML5_Badge_512.png",
                         section_interactions: [
                             {
-                                id: 11,
+                                id: 1,
                                 title: "CSS Basics",
                                 content: "Go through the links below and understand the concepts. Getting to know CSS -Types of selectors -Selectors precedence -Combining selectors -Common property values ",
                                 resources: [
@@ -60,7 +60,7 @@ class BoardController < ApplicationController
                         image_url: "https://mentorhub-development.s3.amazonaws.com/uploads/track/image/4/HTML5_Badge_512.png",
                         section_interactions: [
                             {
-                                id: 11,
+                                id: 1,
                                 title: "CSS Basics",
                                 content: "Go through the links below and understand the concepts. Getting to know CSS -Types of selectors -Selectors precedence -Combining selectors -Common property values ",
                                 resources: [

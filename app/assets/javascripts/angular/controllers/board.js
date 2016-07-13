@@ -66,7 +66,6 @@ angular.module('mentorhub.board', [])
             BoardServices.create_todo(exercise.id, todo)
                 .success(function (response) {
                     exercise.todos.push(response['todo']);
-
                     todo.content = undefined;
                 })
                 .error(function (error) {

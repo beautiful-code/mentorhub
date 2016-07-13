@@ -8,5 +8,4 @@ dependency_group :dependencies  do
   asset "angular"
   asset "angular-animate"
   asset "angular-route"
-  asset "angular-scroll"
 end
