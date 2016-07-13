@@ -18,6 +18,7 @@ gem 'carrierwave'
 gem 'fog-aws'
 gem 'state_machines-activerecord'
 gem 'jbuilder'
+gem 'bower-rails', '~> 0.10.0'
 
 group :development, :test do
   gem 'seed_dump'

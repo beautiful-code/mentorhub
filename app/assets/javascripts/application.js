@@ -15,3 +15,6 @@
 //= require bootstrap-sprockets
 //= require tracks
 //= require mentoring_tracks
+//= require angular/angular.min
+//= require angular-route/angular-route.min
+//= require_tree ./angular

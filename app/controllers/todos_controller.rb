@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_section_interaction
   before_action :set_todos, except: [:index]
 

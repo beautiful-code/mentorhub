@@ -1,5 +1,5 @@
 !!!
-%html
+%html{:lang => 'en', 'ng-app' => 'mentorhub', :class => 'no-js'}
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title MentorHub
@@ -7,7 +7,7 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
     %link{:href => "//fonts.googleapis.com/css?family=Open+Sans", :rel => "stylesheet", :type => "text/css"}/
-  %body
+  %body{'ng-controller' => 'RootController'}
     = render 'layouts/header'
 
     - if breadcrumbs.present?
@@ -16,6 +16,6 @@
 
     - flash.each do |message_type, message|
       %div{:class => "alert alert-#{message_type}"}= message
-    = yield
+    <div ng-view></div>
 
     = render 'layouts/scripts'
