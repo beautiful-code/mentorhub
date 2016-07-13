@@ -10,8 +10,11 @@ class Track < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   def serializable_hash(options)
+    options ||= {}
+
     super({
-      except: [:created_at, :updated_at, :type]
+      except: [:created_at, :updated_at, :type, :image],
+      methods: [:image_url, :recent_incomplete_section_interactions]
     }.merge(options))
   end
 
@@ -35,4 +38,9 @@ class Track < ActiveRecord::Base
 
     ret
   end
+
+  def image_url
+    image.try(:url) || image.try(:image).try(:url)
+  end
+
 end

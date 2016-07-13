@@ -1,121 +1,207 @@
-#board
-  %ul.board_subnav.nav.nav-tabs
-    %li.active
-      %a(href="#user_exercises") Your Exercises
-    %li.inactive
-      %a(href="#user_mentee_exercises") Your Mentee Exercises
-  #user_exercises.user_exercise_style
-    %ul.user_tracks-subnav
-      %li
-        %a All
-      %li
-        %a
-          %img(src="/assets/html5.png")
-          Html
-      %li.active
-        %a
-          %img(src="/assets/css3.png")
-          Css3
-      %li
-        %a
-          %img(src="/assets/javascript.png")
-          JavaScript
-    .track_header
-      .track_details
-        .logo_n_name.item
-          %img(src="/assets/css3.png")
-          %h3 Css3
-        .track_deadline.item
-          %h5 to be completed by
-          %p#date 12th June
-        .track_mentor.item
-          %h5 mentor
-          %p Bruce Willis
-      .progress_bar
-    .section_each
-      .exercise_purpose
-        %p You have 3 tasks to do in this exercise
-      %h5 Exercise
-      .exercise_name
-        %i.fa.fa-check-circle-o(aria-hidden="true")
-        %h3 Exercise name
-      %p.exercise_description
-        This is exercise description
-      .section_resources
-        %h5 Resources
-        %p resource 1
-        %p resource 2
-      .user_answers
-        %p
-          Checkout my code at
-          %a https://github.com/bradpitt/thisexercise
-        .user-input_field
-          = text_field_tag 'user_answer'
-          = submit_tag 'submit' , class: 'btn-primary_action'
-      .exercise-tasks_to_do
-        %h4 Tasks to do
-        %ul
-          %li
-            %i.fa.fa-check-circle-o(aria-hidden="true")
-            first task
-          %li
-            %i.fa.fa-check-circle-o(aria-hidden="true")
-            second task
-  #user_mentee_exercises.user_exercise_style
-    %ul.user_tracks-subnav
-      %li
-        %a All
-      %li
-        %a
-          %img(src="/assets/html5.png")
-          Michael Ron
-      %li.active
-        %a
-          %img(src="/assets/css3.png")
-          Brad Pitt
-      %li
-        %a
-          %img(src="/assets/javascript.png")
-          David Cameron
-    .track_header
-      .track_details
-        .logo_n_name.item
-          %img(src="/assets/css3.png")
-          %h3 Css3
-        .track_deadline.item
-          %h5 to be completed by
-          %p#date 12th June
-        .track_mentor.item
-          %h5 mentee
-          %p Brad Pitt
-      .progress_bar
-    .section_each
-      .exercise_purpose
-        %p Your mentee Brad pitt has completed this exercise
-      %h5 Exercise
-      .exercise_name
-        %i.fa.fa-check-circle-o(aria-hidden="true")
-        %h3 Exercise name
-      %p.exercise_description
-        This is exercise description
-      .section_resources
-        %h5 Resources
-        %p resource 1
-        %p resource 2
-      .user_answers
-        %p
-          Checkout my code at
-          %a https://github.com/bradpitt/thisexercise
-      .exercise-tasks_to_do
-        %h4 Tasks to do
-        %ul
-          %li
-            %i.fa.fa-check-circle-o(aria-hidden="true")
-            first task
-          %li
-            %i.fa.fa-check-circle-o(aria-hidden="true")
-            second task
-          %li.add_a_task
-            %span +
-            %input(type="text" placeholder="Add a task")
+:plain
+  <div id="board" ng-controller="BoardController">
+      <ul class="board_subnav nav nav-tabs" ng-model="active_tab" ng-init="active_tab = 'user_exercises'">
+          <li ng-class="active_tab == 'user_exercises' ? 'active': 'inactive' "
+              ng-click="change_tab('user_exercises')">
+              <a href="">Your Exercises</a>
+          </li>
+          <li ng-class="active_tab == 'user_mentee_exercises' ? 'active': 'inactive' "
+              ng-click="change_tab('user_mentee_exercises')">
+              <a href="">Your Mentee Exercises</a>
+          </li>
+      </ul>
 
+      <div class="tab-content">
+          <div class="tab-pane user_exercise_style" ng-class="{active: active_tab === 'user_exercises'}">
+              <ul class="user_tracks-subnav">
+                  <li class="active" select-subnav="All">
+                      <a style="cursor: pointer">All</a>
+                  </li>
+                  <li ng-repeat="(track, track_info) in user_exercises" select-subnav="{{ track }}">
+                      <a style="cursor: pointer">
+                          <img ng-src="{{ track_info.image_url }}"/>
+                          {{ track | capitalize }}
+                      </a>
+                  </li>
+              </ul>
+
+              <div ng-repeat="(track, track_info) in sections.data" style="margin-top: 10px">
+                  <div class="track_header">
+                      <div class="track_details">
+                          <div class="logo_n_name item">
+                              <img ng-src="{{ track_info.image_url }}"/>
+                              <h3>{{ track | capitalize }}</h3>
+                          </div>
+                          <div class="track_deadline item">
+                              <h5>to be completed by</h5>
+                              <p>{{ track_info.deadline | date_filter | date: 'MMM dd' }}</p>
+                          </div>
+                          <div class="track_mentor item">
+                              <h5>mentor</h5>
+                              <p>{{ track_info.mentor.name }}</p>
+                          </div>
+                      </div>
+                      <div class="progress_bar"></div>
+                  </div>
+                  <div class="section_each" ng-repeat="exercise in track_info.recent_incomplete_section_interactions">
+                      <div class="exercise_purpose">
+                          <small>You have {{ exercise.todos.length }} task(s) to do in this exercise</small>
+                      </div>
+                      <br>
+                      <h5>Exercise</h5>
+                      <div class="exercise_name">
+                          <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                          <h3>{{ exercise.title }}</h3>
+                      </div>
+                      <p class="exercise_description">
+                          {{ exercise.content }}
+                      </p>
+                      <div class="section_resources">
+                          <h5>Resources</h5>
+                          <ul style="list-style-type: none;">
+                              <li ng-repeat="resource in exercise.resources">
+                                  <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
+                              </li>
+                          </ul>
+                      </div>
+                      <div class="user_answers" ng-init="note.edit = false">
+                          <p ng-if="exercise.mentee_notes !== null" style="margin-bottom: 10px;">
+                              {{ exercise.mentee_notes }}
+                              <a ng-click="note.edit = !note.edit; note.mentee_notes = exercise.mentee_notes;" class="col-lg-offset-2 btn btn-xs btn-default">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                              </a>
+                          </p>
+                          <div ng-if="exercise.mentee_notes === null || note.edit == true" class="col-lg-12" style="margin-bottom: 10px">
+                              <div class="row">
+                                  <input type="text" ng-model="note.mentee_notes" class="form-control col-lg-6 pull-left" placeholder="Answer">
+                                  <button class="btn btn-sm btn-primary col-lg-1" ng-click="add_mentee_notes(exercise, note)" type="button">Submit</button>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="exercise-tasks_to_do">
+                          <h4>Tasks Todo</h4>
+                          <ul>
+                              <li ng-repeat="todo in exercise.todos">
+                                  <i class="fa " ng-click="update_my_todo(exercise, todo)" ng-class="todo.state == 'completed' || todo.state == 'to_be_reviewed'? 'fa-check-circle' : 'fa-check-circle-o'" aria-hidden="true"></i>
+                                  {{ todo.content }}
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="tab-pane user_exercise_style" ng-class="{active: active_tab === 'user_mentee_exercises'}">
+              <ul class="user_tracks-subnav">
+                  <li class="active" select-subnav="All">
+                      <a style="cursor: pointer">All</a>
+                  </li>
+                  <li ng-repeat="(id, mentee) in user_mentee_exercises" select-subnav="{{ id }}">
+                      <a style="cursor: pointer">
+                          <img ng-src="{{ mentee.avatar_url }}">
+                          {{ mentee.name | capitalize }}
+                      </a>
+                  </li>
+              </ul>
+
+              <div ng-repeat="(id, mentee) in sections.data" style="margin-top: 10px">
+                  <div ng-repeat="track in mentee.learning_tracks">
+                      <div class="track_header">
+                          <div class="track_details">
+                              <div class="logo_n_name item">
+                                  <img ng-src="{{ track.image_url }}"/>
+                                  <h3>{{ track.name }}</h3>
+                              </div>
+                              <div class="track_deadline item">
+                                  <h5>to be completed by</h5>
+                                  <p>{{ track.deadline | date_filter | date: 'MMM dd' }}</p>
+                              </div>
+                              <div class="track_mentor item">
+                                  <h5>mentee</h5>
+                                  <p>{{ mentee.name }}</p>
+                              </div>
+                          </div>
+                          <div class="progress_bar"></div>
+                      </div>
+                      <div class="section_each" ng-repeat="exercise in track.recent_incomplete_section_interactions">
+                          <div class="exercise_purpose" ng-if="checkTodosStatus(id, track, exercise)">
+                              <small>Your mentee {{ mentee.name | capitalize }} has completed this exercise</small>
+                          </div>
+                          <div class="exercise_purpose" ng-if="!checkTodosStatus(id, track, exercise)">
+                              <small>Your mentee {{ mentee.name | capitalize }} has incomplete tasks in this exercise</small>
+                          </div>
+
+                          <h5>Exercise</h5>
+                          <div class="exercise_name">
+                              <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                              <h3>{{ exercise.title }}</h3>
+                          </div>
+                          <p class="exercise_description">
+                              {{ exercise.content }}
+                          </p>
+                          <div class="section_resources">
+                              <h5>Resources</h5>
+                              <ul style="list-style-type: none;">
+                                  <li ng-repeat="resource in exercise.resources">
+                                      <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
+                                  </li>
+                              </ul>
+                          </div>
+                          <div class="user_answers" ng-if="exercise.mentee_notes != null">
+                              <p>
+                                {{ exercise.mentee_notes }}
+                              </p>
+                          </div>
+                          <div class="exercise-tasks_to_do" style="margin-bottom: 10px;">
+                              <h4>Tasks Todo</h4>
+                              <ul>
+                                  <li ng-repeat="todo in exercise.todos" style="margin-bottom: 5px;">
+                                    <div class="row">
+                                      <div class="col-lg-10 col-sm-10">
+                                        <div ng-if="!todo.edit">
+                                          <i class="fa " ng-click="update_mentees_todo(exercise, todo)" ng-class="todo.state == 'completed' ? 'fa-check-circle' : 'fa-check-circle-o'" aria-hidden="true"></i>
+                                          <i class="fa fa-times-circle-o" ng-click="update_mentees_todo(exercise, todo, true)"  ng-if="todo.state == 'to_be_reviewed'"></i>
+                                          {{ todo.content }}
+                                        </div>
+                                        <input ng-if="todo.edit" class="form-control input-sm" ng-model="todo.content" value="{{ todo.content }}">
+                                      </div>
+                                      <div class="col-lg-1 col-sm-2">
+                                        <div ng-if="!todo.edit">
+                                          <a class="btn btn-xs btn-default pull-left" ng-click="todo.edit = true;">
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                          </a>
+                                          <a class="btn btn-xs btn-default pull-right" ng-click="delete_task(exercise, todo)">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                          </a>
+                                        </div>
+                                        <div ng-if="todo.edit">
+                                          <a class="btn btn-xs btn-default pull-left" ng-click="todo.edit = false;">
+                                            <i class="fa fa-times" aria-hidden="true"></i>
+                                          </a>
+                                          <a class="btn btn-xs btn-default pull-right" ng-click="update_task(exercise, todo)">
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                          </a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="input-group input-group-sm col-lg-8 col-sm-8">
+                                        <input type="text" class="form-control" ng-model="todo.content">
+                                        <span class="input-group-btn">
+                                          <button class="btn btn-primary" type="button" ng-click="add_task(exercise, todo)">Add task</button>
+                                        </span>
+                                    </div>
+                                  </li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+:javascript
+    PageConfig.currentUser = #{current_user.to_json};
+    PageConfig.boardJson = #{@board_data.to_json};

@@ -18,7 +18,7 @@ class SectionInteractionsController < ApplicationController
 
   def update
     @section_interaction = SectionInteraction.find(params[:id])
-
+    
     if @section_interaction.update(section_interaction_params)
       render json: { msg: 'success',
                      section_interaction: @section_interaction }, status: 200
@@ -31,6 +31,6 @@ class SectionInteractionsController < ApplicationController
   private
 
   def section_interaction_params
-    JSON.parse(params.fetch(:section_interaction, '{}'))
+    JSON.parse(params.fetch(:section_interaction, '{}').to_json)
   end
 end
