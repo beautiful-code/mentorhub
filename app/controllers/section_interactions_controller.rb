@@ -31,6 +31,6 @@ class SectionInteractionsController < ApplicationController
   private
 
   def section_interaction_params
-    JSON.parse(params.fetch(:section_interaction, '{}'))
+    JSON.parse(params.fetch(:section_interaction, '{}').to_json)
   end
 end

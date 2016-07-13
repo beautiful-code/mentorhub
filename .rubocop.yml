@@ -9,6 +9,7 @@ AllCops:
     - 'spec/rails_helper.rb'
     - 'test/test_helper.rb'
     - 'config/initializers/devise.rb'
+    - 'config/initializers/bower_rails.rb'
     - 'config/initializers/wrap_parameters.rb'
     - 'config/initializers/backtrace_silencers.rb'
     - 'config/initializers/assets.rb'

@@ -10,8 +10,11 @@ class Track < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   def serializable_hash(options)
+    options ||= {}
+
     super({
-      except: [:created_at, :updated_at, :type]
+      except: [:created_at, :updated_at, :type, :image],
+      methods: [:image_url, :recent_incomplete_section_interactions, :progress]
     }.merge(options))
   end
 
@@ -34,5 +37,16 @@ class Track < ActiveRecord::Base
     end
 
     ret
+  end
+
+  def image_url
+    image.try(:url) || image.try(:image).try(:url)
+  end
+
+  def progress
+    no_of_s = section_interactions.count
+    no_of_s_done = section_interactions.where(state: 'section_completed').count
+    res = ((no_of_s_done.to_f / no_of_s.to_f) * 100).round(2)
+    (!res.nan? && res.finite?) ? res : 0
   end
 end
