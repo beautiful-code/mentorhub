@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :mentoring_tracks, only: [:new, :create, :index]
+  resources :mentoring_tracks, only: [:new, :create, :index, :show]
 
   get 'users/auth/failure', to: redirect('/')
   get 'board', to: 'board#index'

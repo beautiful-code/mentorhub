@@ -22,7 +22,7 @@ $(function(){
 
       self.mentoringTrackContainer = $("#add_mentee_track");
 
-      self.sectionShowHtml = $("script#show_section_interaction").html();
+      self.sectionShowHtml = $("script#show_section_interactions").html();
       self.sectionTemplate = Handlebars.compile(self.sectionShowHtml);
 
       self.sectionFormHtml = $("script#section_form").html();

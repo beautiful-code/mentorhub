@@ -1,4 +1,7 @@
 class MentoringTracksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_track, only: [:show]
+
   def index
     @mentoring_tracks = current_user.mentoring_tracks
   end
@@ -15,7 +18,7 @@ class MentoringTracksController < ApplicationController
       options = track_template.dup.attributes.except('type')
       options.merge!(
         mentor_id: current_user.id,
-        image: track_template.image_url,
+        remote_image_url: track_template.image_url,
         mentee_id: params[:menteeId],
         type: track_template.type.gsub('Template', '')
       )
@@ -28,8 +31,7 @@ class MentoringTracksController < ApplicationController
   end
 
   def show
-    @mentoring_track = MentoringTrack.find(params[:id]);
-    @section_interactions = @mentoring_track.track_instances.first.section_interactions.preload(:todos)
+    @section_interactions = @track.section_interactions.preload(:todos)
   end
 
   def get_todos
@@ -40,6 +42,10 @@ class MentoringTracksController < ApplicationController
   end
 
   private
+
+  def set_track
+    @track = params[:id].present? ? Track.find(params[:id]) : Track.new(track_params)
+  end
 
   def sections_params
     JSON.parse(params.require(:sections))

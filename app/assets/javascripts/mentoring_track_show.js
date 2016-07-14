@@ -2,9 +2,8 @@ $(function(){
   if (typeof MentoringTrackShowConfig !== "undefined") {
     if (typeof MentoringTrackShowConfig.track !== "undefined") {
       var self = this;
-
+      self.track = MentoringTrackShowConfig.track;
       self.section_interactions = MentoringTrackShowConfig.sections;
-
       self.mentoringTrackSectionsContainer = $("#show_track_sections");
 
       self.mentoringTrackSectionShowHtml = $("script#section_interaction_template").html();
@@ -96,7 +95,7 @@ $(function(){
       self.createTodo = function(todo, sectionInteractionId, $element){
         self.todoAjax({
           type: "POST",
-          url: "/section_interactions/"+ sectionInteractionId +"/todos" ,
+          url: "/tracks/" + self.track.id + "/section_interactions/"+ sectionInteractionId +"/todos" ,
           data: todo
         }, $element);
       };
