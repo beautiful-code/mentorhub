@@ -5,10 +5,6 @@ class SectionTemplate < ActiveRecord::Base
 
   serialize :resources, Array
 
-  def self.types
-    %w(CourseSectionTemplate ExerciseSectionTemplate)
-  end
-
   def enabled
     true
   end

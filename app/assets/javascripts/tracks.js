@@ -91,7 +91,7 @@ $(function() {
       self.updateTrack = function(params) {
         self.trackAjax({
           type: "PUT",
-          url: "/tracks_templates/" + self.track.id,
+          url: "/track_templates/" + self.track.id,
           params: params
         });
       };
@@ -106,15 +106,15 @@ $(function() {
           processData: false,
         }).done(function(response) {
           if (request.type == "POST") {
-            window.history.pushState({},"", response.track.id);
+            window.history.pushState({},"", response.track_template.id);
           }
 
           setTimeout(function() {
             self.sectionContainer.find(".loading-sections").hide("slow");
           }, 620);
 
-          self.track = response.track;
-          self.trackContainer.html(self.trackTemplate(response.track));
+          self.track = response.track_template;
+          self.trackContainer.html(self.trackTemplate(response.track_template));
 
           self.hideLoadingSectionsScreen();
         }).complete(function(response) {
