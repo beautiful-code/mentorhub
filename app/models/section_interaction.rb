@@ -2,7 +2,10 @@ class SectionInteraction < ActiveRecord::Base
   has_many :todos
   belongs_to :track
 
-  validates_presence_of :title, :content, :track, :type
+  validates :title, presence: true
+  validates :content, presence: true
+  validates :track, presence: true
+  validates :type, presence: true
 
   serialize :resources, Array
 

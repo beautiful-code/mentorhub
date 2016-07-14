@@ -10,13 +10,17 @@ RSpec.describe TodosController, type: :controller do
   describe 'GET #index' do
     before(:each) do
       @track = FactoryGirl.create :track
-      @section_interaction = FactoryGirl.create :section_interaction, track: @track
+      @section_interaction = FactoryGirl.create(
+        :section_interaction,
+        track: @track
+      )
 
       4.times do
         FactoryGirl.create :todo, section_interaction: @section_interaction
       end
 
-      get :index, track_id: @track.id, section_interaction_id: @section_interaction.id
+      get :index, track_id: @track.id,
+        section_interaction_id: @section_interaction.id
     end
 
     it 'returns 4 records from the database' do
@@ -33,7 +37,10 @@ RSpec.describe TodosController, type: :controller do
     context 'when is successfully created' do
       before(:each) do
         track = FactoryGirl.create :track
-        section_interaction = FactoryGirl.create :section_interaction, track: track
+        section_interaction = FactoryGirl.create(
+          :section_interaction,
+          track: track
+        )
         @todo_attributes = FactoryGirl.attributes_for :todo
         post(
           :create,
@@ -56,7 +63,10 @@ RSpec.describe TodosController, type: :controller do
     context 'when is not created' do
       before(:each) do
         track = FactoryGirl.create :track
-        section_interaction = FactoryGirl.create :section_interaction, track: track
+        section_interaction = FactoryGirl.create(
+          :section_interaction,
+          track: track
+        )
         @invalid_todo_attributes = { content: '' }
         post :create, section_interaction_id: section_interaction.id,
           todo: @invalid_todo_attributes, track_id: track.id
@@ -81,7 +91,8 @@ RSpec.describe TodosController, type: :controller do
   describe 'PUT/PATCH #update' do
     before(:each) do
       @track = FactoryGirl.create :track
-      @section_interaction = FactoryGirl.create :section_interaction, track: @track
+      @section_interaction = FactoryGirl.create(:section_interaction,
+                                                track: @track)
       @todo = FactoryGirl.create(:todo,
                                  section_interaction: @section_interaction)
     end
@@ -106,7 +117,8 @@ RSpec.describe TodosController, type: :controller do
     context 'when is not updated' do
       before(:each) do
         patch :update, section_interaction_id: @section_interaction.id,
-          id: @todo.id, todo: { section_interaction_id: '' }, track_id: @track.id
+          id: @todo.id, todo: { section_interaction_id: '' },
+          track_id: @track.id
       end
 
       it 'renders an errors json' do

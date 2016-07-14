@@ -13,8 +13,8 @@ describe TrackTemplate, type: :model do
       FactoryGirl.build(:track_template, desc: nil).should_not be_valid
     end
 
-    it 'should not be valid without a description' do
-      FactoryGirl.build(:track_template, desc: nil).should_not be_valid
+    it 'should not be valid without a type' do
+      FactoryGirl.build(:track_template, type: nil).should_not be_valid
     end
   end
 end

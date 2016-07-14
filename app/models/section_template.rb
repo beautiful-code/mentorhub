@@ -1,7 +1,10 @@
 class SectionTemplate < ActiveRecord::Base
   belongs_to :track_template
 
-  validates_presence_of :title, :content, :track_template, :type
+  validates :title, presence: true
+  validates :content, presence: true
+  validates :track_template, presence: true
+  validates :type, presence: true
 
   serialize :resources, Array
 

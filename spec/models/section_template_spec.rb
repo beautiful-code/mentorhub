@@ -13,17 +13,17 @@ describe SectionTemplate, type: :model do
       FactoryGirl.build(:section_template, content: nil).should_not be_valid
     end
 
-    context 'validating track_template for the seciton_template' do
-      it 'should not be valid without a track_template_id' do
-        FactoryGirl.build(:section_template, track_template_id: nil).should_not be_valid
-      end
-
-      it 'should be an integer' do
-        track_template_id.should_be_an(Integer)
-      end
+    it 'should not be valid without a track_template_id' do
+      FactoryGirl.build(:section_template, track_template_id: nil)
+                 .should_not be_valid
     end
+
     it 'should not be valid without a type' do
       FactoryGirl.build(:section_template, type: nil).should_not be_valid
+    end
+
+    it 'should give exercise_section_templates for exercise_track_template' do
+      t = double("ExerciseTrackTemplate")
     end
   end
 end

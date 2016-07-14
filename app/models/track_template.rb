@@ -1,5 +1,7 @@
 class TrackTemplate < ActiveRecord::Base
-  validates_presence_of :name, :desc, :type
+  validates :name, presence: true
+  validates :desc, presence: true
+  validates :type, presence: true
 
   has_many :section_templates
 
