@@ -288,14 +288,16 @@
             <h4>Tasks to review</h4>
             {{/if}}
             {{#todos}}
-              <div class="container-fluid">
+              <div class="container-fluid" todo-id="{{id}}">
                 <div class="task row">
+                <a>
+                <span><i class="fa fa-check-circle-o {{state}} todo-check"></i></span>
+                </a>
                 <p>
-                  <span><i class="fa fa-check-circle-o {{state}}"></i></span>
                   {{content}}
                 </p>
                 {{#if (ne ../state "section_completed")}}
-                <a class="delete-section">
+                <a class="todo-delete">
                   <i class="glyphicon glyphicon-trash"></i>
                 </a>
                 {{/if}}
@@ -327,23 +329,26 @@
 
 
 <script class="hidden" type="text/x-handlebars-template" id="todo_form">
-<form class="todo">
-  <input type="text" class="todo_text"/>
+<form class="todo add_a_task">
+  <span>+</span>
+  <input type="text" placeholder="Add a task" class="todo_text"/>
   <input type="button" value="Add" class="submit_todo"/>
 </form>
 </script>
 
 
 <script class="hidden" type="text/x-handlebars-template" id="show_todo">
-<div class="container-fluid">
-<div class="row task">
-  <p>
-    <span><i class="fa fa-check-circle-o {{state}}"></i></span>
-    {{content}}
-  </p>
-  <a class="delete-section">
-    <i class="glyphicon glyphicon-trash"></i>
-  </a>
-</div>
+<div class="container-fluid" todo-id="{{id}}">
+  <div class="row task">
+    <a >
+    <span><i class="fa fa-check-circle-o {{state}} todo-check"></i></span>
+    </a>
+    <p>
+      {{content}}
+    </p>
+    <a class="todo-delete">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
 </div>
 </script>
