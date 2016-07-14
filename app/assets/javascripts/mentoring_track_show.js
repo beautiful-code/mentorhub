@@ -63,6 +63,7 @@ $(function(){
           var newElement = self.getSectionElement(section.id);
           self.registerEditEventListener(newElement);
           self.registerEnableEventlistener(newElement);
+          self.registerStateEventListener(newElement);
         }
       };
 
@@ -87,27 +88,41 @@ $(function(){
         });
       };
 
-      self.createSection = function(trackInstanceId, params, $element) {
+      self.createSection = function(params, $element) {
         self.sectionInteractionAjax({
           type: "POST",
-          url: "/tracks/"+trackInstanceId+"/section_interactions",
-          params: {section_interaction: JSON.stringify(params)}
+          url: "/tracks/" + self.track.id + "/section_interactions",
+          params: params
         }, $element);
       };
 
-      //TODO
+      self.updateSectionData = function(sectionId, updatedSection) {
+        $.extend(self.sectionInteractions.find(function(sec) {
+          return sec.id == sectionId;
+        }), updatedSection);
+      };
+
+      self.updateSection = function(params, sectionId, $element){
+        self.sectionInteractionAjax({
+          type: "PUT",
+          url: "/tracks/" + self.track.id + "/section_interactions/" + sectionId,
+          params: params
+        }, $element);
+      };
+
       self.sectionInteractionAjax = function(request, $element) {
         $.ajax({
           type: request.type,
           url: request.url,
-          data: request.params
+          data: {section_interaction: JSON.stringify(request.params)}
         }).done(function(response) {
           if (request.type == "POST") {
             self.sectionInteractions.push(response.section_interaction);
-            self.showSectionInteractionCardAndRegisterListeners(response.section_interaction.id, $element, true);
           } else {
-            self.updateSectionData(response.section_interaction);
+            self.updateSectionData(response.section_interaction.id, response.section_interaction);
           }
+
+          self.showSectionInteractionCardAndRegisterListeners(response.section_interaction.id, $element, (request.type == true));
         });
       };
 
@@ -129,6 +144,7 @@ $(function(){
           url: request.url,
           data: request.data
         }).done(function(response) {
+          self.updateStateEventButton($element, "tasks_pending");
           self.showTodoCardAndRegisterListeners(request.data, $element);
         });
       };
@@ -145,10 +161,85 @@ $(function(){
         });
       };
 
+      self.sectionTodosPending = function(sectionId) {
+        var state = false;
+        var todo_states = [];
+
+        $.each(self.getSection(sectionId).todos, function(i, todo) { todo_states.push(todo.state) });
+
+        if (!(todo_states.indexOf('incomplete') == -1) || !(todo_states.indexOf('review_pending') == -1)) {
+          state = true;
+        }
+
+        return state;
+      }
+
+      self.determineNextStateForSection = function(sectionId, currentState) {
+        var section = self.getSection(sectionId);
+        var nextState = null;
+
+        switch(currentState) {
+          case "new":
+            break;
+          case "section_submitted":
+            if (section.todos.length < 1 || !self.sectionTodosPending(sectionId)) {
+              nextState = "section_completed";
+            }
+            break;
+          case "review_pending":
+            if (section.todos.length < 1 || !self.sectionTodosPending(sectionId)) {
+              nextState = "section_completed";
+            }
+            break;
+          case "tasks_pending":
+            if (!self.sectionTodosPending(sectionId)) {
+              nextState = "section_completed";
+            }
+            break;
+          case "section_completed":
+            break;
+        }
+
+        return nextState;
+      };
+
+      self.updateStateEventButton = function($element, state) {
+        $element.find(".section-state-event").attr("data-state", state);
+        $element.find(".section-state-event span").attr("class", state);
+
+        if (state == "section_completed") {
+          $element.find(".add_todo").remove();
+        }
+      }
+
+      self.registerStateEventListener = function(element) {
+        var $element = $(element);
+        var sectionInteractionId = parseInt($element.attr("data-section-id"));
+
+        $element.find(".section-state-event").click(function(e) {
+          e.preventDefault();
+
+          var currentState = $(this).attr("data-state");
+          var newState = self.determineNextStateForSection(sectionInteractionId, currentState);
+
+          if (newState != null && currentState != "new") {
+
+            $.ajax({
+              type: "PUT",
+              url: "/tracks/" + self.track.id + "/section_interactions/" + sectionInteractionId,
+              data: {section_interaction: JSON.stringify({state: newState})}
+            }).done(function(response) {
+              self.updateStateEventButton($element, response.section_interaction.state);
+            });
+          }
+
+          return false;
+        });
+      };
+
       self.registerSubmitEventListener = function(element, newSection) {
         var $element = $(element);
         var sectionInteractionId = parseInt($element.attr("data-section-id"));
-        var trackInstanceId = MentoringTrackShowConfig.track.id;
 
         $element.find(".btn_save input.cancel-edit").click(function(e) {
           e.preventDefault();
@@ -165,8 +256,6 @@ $(function(){
         $element.find(".btn_save input.track-post").click(function(e) {
           e.preventDefault();
 
-          var section = self.getSection(sectionInteractionId);
-
           var $form = $element.find("form");
           var params = {
             title: $form.find("#title").val(),
@@ -179,17 +268,14 @@ $(function(){
 
             params.resources.push({
               text: resource.find(".text").val(),
-              url: resource.find(".url").val(),
-              enabled: true
+              url: resource.find(".url").val()
             });
           });
 
           if (newSection) {
-            self.createSection(trackInstanceId, params, $element);
+            self.createSection(params, $element);
           } else {
-            params.id = sectionId;
-            $.extend(section,params);
-            self.updateSection(section, $element);
+            self.updateSection(params, sectionInteractionId, $element);
           }
           return false;
         });
@@ -214,15 +300,24 @@ $(function(){
       self.registerEnableEventlistener = function(element){
         var $element = $(element);
         $element.find(".tgl").change(function(e){
-          section = self.getSection(parseInt($(this).closest(".exercise").attr("data-section-id")));
-          ($(this).is(":checked")) ? (section.enabled = true) : (section.enabled = false)
+          var section = self.getSection(parseInt($(this).closest(".exercise").attr("data-section-id")));
+          var enabled = $(this).is(":checked") ? true : false
+
+          $.ajax({
+            type: "PATCH",
+            url: "/tracks/" + self.track.id + "/section_interactions/" + section.id,
+            data: {section_interaction: JSON.stringify({ enabled: enabled })}
+          }).done(function(response) {
+            section.enabled = enabled;
+          });
+
         });
       };
 
       self.mentoringTrackSectionsContainer.on("click",".add_exercise_btn", function(e) {
         e.preventDefault();
         $("#customise_exercises").append(self.sectionFormTemplate({newSection: true, id: ++self.index}))
-        newElement = $("#customise_exercises .add_exercise").last();
+        var newElement = $("#customise_exercises .add_exercise").last();
         self.registerAddResourceListener(newElement);
         self.registerRemoveResourceListener(newElement);
         self.registerSubmitEventListener(newElement,true);
@@ -242,6 +337,7 @@ $(function(){
 
       self.mentoringTrackSectionsContainer.find(".exercise").each(function(i,element){
         self.registerEditEventListener(element);
+        self.registerStateEventListener(element);
         self.registerEnableEventlistener(element);
       });
     }

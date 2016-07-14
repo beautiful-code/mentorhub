@@ -31,7 +31,7 @@ class MentoringTracksController < ApplicationController
   end
 
   def show
-    @section_interactions = @track.section_interactions.preload(:todos)
+    @section_interactions = @track.section_interactions.order(:id).preload(:todos)
   end
 
   private

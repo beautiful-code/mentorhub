@@ -11,6 +11,7 @@ class TodosController < ApplicationController
 
   def create
     if @todo.save
+      @section_interaction.pending_tasks
       render json: { msg: 'Todo created', todo: @todo }, status: 201
     else
       render json: { msg: 'error', errors: @todo.errors }, status: 422
