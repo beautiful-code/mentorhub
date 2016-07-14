@@ -59,9 +59,10 @@ class MentoringTracksController < ApplicationController
       track_instance_attr = Track.find(track_params['id']).dup.attributes.except("desc").merge(mentor_id: current_user.id)
       track_instance_attr["image"] = Track.find(track_params['id']).image
       track_instance = @mentoring_track.track_instances.create(track_instance_attr)
-
+      
       # 3. Create track_instance.section_interactions.create()
       sections.each do |section|
+        byebug
         track_instance.section_interactions.create(section.except('id','code_url','track_id'))
       end
     end

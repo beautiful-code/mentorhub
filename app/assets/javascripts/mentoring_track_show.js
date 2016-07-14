@@ -25,62 +25,6 @@ $(function(){
       self.todoShow= $("script#show_todo").html();
       self.todoShowTemplate = Handlebars.compile(self.todoShow);
 
-      /*
-       *self.combineSectionInteractionAndTodos = function (sectionInteractionId, todos){
-       *  console.log(todos);
-       *  if (todos.length != 0)
-       *  {
-       *    var newObj = $.grep(self.section_interactions, function(n,i) {return n.id == sectionInteractionId;});
-       *    $.extend(newObj[0],{ todos: todos });
-       *    $.each(self.section_interactions, function(i,value){
-       *      if(value.id == newObj.id){
-       *        value=newObj;
-       *      }
-       *    });
-       *  }
-       *};
-       */
-
-/*
- *      self.getTodos = function(sectionInteractionId){
- *        $.ajax({
- *          url: "section_interactions/"+sectionInteractionId+"/todos",
- *          dataType: "json",
- *          complete: function(data){
- *            var newObj = $.grep(self.section_interactions, function(n,i) {return n.id == sectionInteractionId;});
- *            $.extend(newObj[0],{ todos: JSON.parse(data.responseText).todos });
- *            $.each(self.section_interactions, function(i,value){
- *              if(value.id == newObj.id){
- *                value=newObj;
- *              }
- *            });
- *
- *            // self.combineSectionInteractionAndTodos(sectionInteractionId, JSON.parse(data.responseText).todos);
- *          }
- *        });
- *      };
- */
-
-      // self.todos = self.todos.sort(function(a, b){return a.id-b.id})
-
-      // self.generateSectionInteractionTodos = function (){
-
-
-        // self.combineSectionInteractionAndTodos();
-      // };
-
-      // self.combineSectionInteractionAndTodos = function (){
-      //   $.each(self.section_interactions, function(i,value){
-      //     var newObj = $.grep(self.todos, function(n,i) {return value.id==n.section_interaction_id;})
-      //     console.log(value);
-      //   });
-      // };
-
-
-      // $.when( self.generateSectionInteractionTodos() ).done(function() {
-      //  self.combineSectionInteractionAndTodos();
-      // });
-
       self.getSection = function(sectionId) {
         return (
           self.section_interactions.find(function(section) { return section.id == sectionId;})
@@ -96,13 +40,19 @@ $(function(){
           )
         );
       };
-      self.showSectionCardAndRegisterListeners = function(sectionId, $element) {
-        var section = self.getSection(sectionId);
-        $element.replaceWith(self.mentoringTrackSectionTemplate(section));
+      self.showSectionInteractionCardAndRegisterListeners = function(sectionId, $element, newSectionInteraction) {
+        if (newSectionInteraction == true) {
+          var section = self.getSection(sectionId);
 
-        var newElement = self.getSectionElement(section.id);
-        self.registerEditEventListener(newElement);
-        self.registerEnableEventlistener(newElement);
+        }
+        else{
+          var section = self.getSection(sectionId);
+          $element.replaceWith(self.mentoringTrackSectionTemplate(section));
+
+          var newElement = self.getSectionElement(section.id);
+          self.registerEditEventListener(newElement);
+          self.registerEnableEventlistener(newElement);
+        }
       };
 
       self.registerAddResourceListener = function(element) {
@@ -126,20 +76,11 @@ $(function(){
         });
       };
 
-      // self.createSection = function(params, $element) {
-      //   var newObj = params.section;
-
-      //   self.sections.push(newObj);
-      //   self.updateLocalStorage(self.sections,self.track, self.step, self.menteeId, self.index);
-
-      //   self.showSectionCardAndRegisterListeners(newObj.id, $element);
-      // };
-
-      self.createSection = function(params, $element) {
+      self.createSection = function(trackInstanceId, params, $element) {
         self.sectionInteractionAjax({
           type: "POST",
-          url: "",
-          params: params
+          url: "/track_instance/"+trackInstanceId+"/section_interactions",
+          params: {section_interaction: JSON.stringify(params)}
         }, $element);
       };
 
@@ -150,11 +91,10 @@ $(function(){
           data: request.params
         }).done(function(response) {
           if (request.type == "POST") {
-            self.sections.push(response.section);
-          } else {
-            self.updateSectionData(response.section);
+
+            console.log(response.sectionInteraction.id);
+            self.showSectionInteractionCardAndRegisterListeners(response.sectionInteraction.id, $element, true);
           }
-          self.showSectionCardAndRegisterListeners(response.section.id, $element);
         });
       };
 
@@ -194,7 +134,8 @@ $(function(){
 
       self.registerSubmitEventListener = function(element, newSection) {
         var $element = $(element);
-        var sectionId = parseInt($element.attr("data-section-id"));
+        var sectionInteractionId = parseInt($element.attr("data-section-id"));
+        var trackInstanceId = MentoringTrackShowConfig.track.id;
 
         $element.find(".btn_save input.cancel-edit").click(function(e) {
           e.preventDefault();
@@ -203,7 +144,7 @@ $(function(){
           if(newSection) {
             $element.remove();
           } else {
-            self.showSectionCardAndRegisterListeners(sectionId, $element);
+            self.showSectionInteractionCardAndRegisterListeners(sectionInteractionId, $element);
           }
           return false;
         });
@@ -211,7 +152,7 @@ $(function(){
         $element.find(".btn_save input.track-post").click(function(e) {
           e.preventDefault();
 
-          var section = self.getSection(sectionId);
+          var section = self.getSection(sectionInteractionId);
 
           var $form = $element.find("form");
           var params = {
@@ -230,7 +171,7 @@ $(function(){
           });
 
           if (newSection) {
-            self.createSection({section: params}, $element);
+            self.createSection(trackInstanceId, params, $element);
           } else {
             params.id = sectionId;
             $.extend(section,params);

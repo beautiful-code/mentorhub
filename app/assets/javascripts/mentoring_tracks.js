@@ -11,6 +11,10 @@ $(function(){
       self.step = (localStorage.getItem('Step')===null) ? 1 : parseInt(localStorage.getItem('Step'));
       self.index = (localStorage.getItem('Index')===null) ? MentoringTrackConfig.index : parseInt(localStorage.getItem('Index'));
 
+      self.mentoringTrackContainer = $("#add_mentee_track");
+
+      self.sectionFormHtml = $("script#section_form").html();
+      self.sectionFormTemplate = Handlebars.compile(self.sectionFormHtml);
 
       self.mentoringTrackAssigningForm = $("script#assigning_step_form").html();
       self.mentoringTrackAssigningTemplate = Handlebars.compile(self.mentoringTrackAssigningForm);
@@ -21,18 +25,13 @@ $(function(){
       self.mentoringTrackConfirmingForm = $("script#confirming_step_form").html();
       self.mentoringTrackConfirmingTemplate = Handlebars.compile(self.mentoringTrackConfirmingForm);
 
-      self.mentoringTrackContainer = $("#add_mentee_track");
 
-      self.sectionShowHtml = $("script#show_section_interaction").html();
+      self.sectionShowHtml = $("script#section_interaction_template").html();
       self.sectionTemplate = Handlebars.compile(self.sectionShowHtml);
 
-      self.sectionFormHtml = $("script#section_form").html();
-      self.sectionFormTemplate = Handlebars.compile(self.sectionFormHtml);
 
       self.resourceFormHtml = $("script#resource_form").html();
       self.resourceFormTemplate = Handlebars.compile(self.resourceFormHtml);
-
-
 
       self.getSection = function(sectionId) {
         return (
@@ -298,6 +297,7 @@ $(function(){
         return false;
       });
 
+      
       if(self.step == 1){
         self.mentoringTrackContainer.append(self.mentoringTrackAssigningTemplate({users: self.users, tracks: self.tracks}));
       }
