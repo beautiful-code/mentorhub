@@ -5,7 +5,7 @@ $text: #333333;
 $secondary: #888888;
 $green: #598d09;
 
-#add_mentee_track{
+#add_mentee_track, .show_track_instance{
       width: 60%;
       background-color: white;
       border: 1px solid $border;
@@ -228,6 +228,7 @@ $green: #598d09;
         }
       }
       h3 {
+        display: inline-block;
         font-size: 18px;
         font-weight: 600;
         margin: 6px 0;
@@ -255,9 +256,10 @@ $green: #598d09;
         }
       }
     }
-
-
 }
-// Place all the styles related to the mentoring_tracks controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.task{
+  p{
+    display: inline-block;
+    width: 50%;
+  }
+}

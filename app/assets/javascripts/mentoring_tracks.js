@@ -170,6 +170,7 @@ $(function(){
       self.createSection = function(params, $element) {
         var newObj = params.section;
         newObj.id = parseInt($element.attr('data-section-id'));
+        newObj.enabled = true;
 
         self.sections.push(newObj);
         self.updateLocalStorage();

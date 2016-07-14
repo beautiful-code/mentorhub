@@ -15,3 +15,4 @@
 //= require bootstrap-sprockets
 //= require tracks
 //= require mentoring_tracks
+//= require mentoring_track_show

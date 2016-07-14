@@ -27,6 +27,18 @@ class MentoringTracksController < ApplicationController
     render json: { msg: 'success' }, status: 200
   end
 
+  def show
+    @mentoring_track = MentoringTrack.find(params[:id]);
+    @section_interactions = @mentoring_track.track_instances.first.section_interactions.preload(:todos)
+  end
+
+  def get_todos
+    @section_interaction = SectionInteraction.find(params[:id]);
+    render json: {
+      todos: @section_interaction.todos
+    }
+  end
+
   private
 
   def sections_params
