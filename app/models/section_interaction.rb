@@ -36,7 +36,8 @@ class SectionInteraction < ActiveRecord::Base
 
   def serializable_hash(options)
     super({
-      except: [:goal, :created_at, :updated_at]
+      except: [:created_at, :updated_at],
+      include: [:todos]
     }.merge(options))
   end
 end

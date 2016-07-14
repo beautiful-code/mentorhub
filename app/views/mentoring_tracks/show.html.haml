@@ -1,0 +1,9 @@
+#show_track_sections.show_track_instance
+  =render "templates"
+
+:javascript
+  var MentoringTrackShowConfig = {
+    track: #{@mentoring_track.to_json},
+    sections: #{@section_interactions.to_json}
+  };
+
