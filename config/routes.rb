@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :tracks, only: [] do
-    resources :section_interactions, only: [:edit, :update] do
+    resources :section_interactions, only: [:create, :edit, :update] do
       resources :todos, only: [:new, :create, :update, :index]
     end
   end

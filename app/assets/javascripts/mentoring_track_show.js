@@ -3,13 +3,18 @@ $(function(){
     if (typeof MentoringTrackShowConfig.track !== "undefined") {
       var self = this;
       self.track = MentoringTrackShowConfig.track;
-      self.section_interactions = MentoringTrackShowConfig.sections;
+
+      self.trackContainer = $("#section_index .track_info");
+      self.trackShowHtml = $("script#show_track_data").html();
+      self.trackTemplate = Handlebars.compile(self.trackShowHtml);
+
+      self.sectionInteractions = MentoringTrackShowConfig.sections;
       self.mentoringTrackSectionsContainer = $("#show_track_sections");
 
       self.mentoringTrackSectionShowHtml = $("script#section_interaction_template").html();
       self.mentoringTrackSectionTemplate = Handlebars.compile(self.mentoringTrackSectionShowHtml);
 
-      self.mentoringTrackShow = $("script#show_section_interaction_template").html();
+      self.mentoringTrackShow = $("script#show_section_interactions").html();
       self.mentoringTrackShowTemplate = Handlebars.compile(self.mentoringTrackShow);
 
       self.sectionFormHtml = $("script#section_form").html();
@@ -26,9 +31,15 @@ $(function(){
 
       self.getSection = function(sectionId) {
         return (
-          self.section_interactions.find(function(section) { return section.id == sectionId;})
+          self.sectionInteractions.find(function(section) { return section.id == sectionId;})
         );
       };
+
+      setTimeout(function() {
+        self.trackContainer.find(".loading-track").hide("slow");
+      }, 220);
+      self.track.nonEditableTrack = true;
+      self.trackContainer.append(self.trackTemplate(self.track));
 
       self.getSectionElement = function(sectionId) {
         return (
@@ -43,7 +54,7 @@ $(function(){
       self.showSectionInteractionCardAndRegisterListeners = function(sectionId, $element, newSectionInteraction) {
         if (newSectionInteraction == true) {
           var section = self.getSection(sectionId);
-
+          $element.replaceWith(self.mentoringTrackSectionTemplate(section));
         }
         else{
           var section = self.getSection(sectionId);
@@ -79,7 +90,7 @@ $(function(){
       self.createSection = function(trackInstanceId, params, $element) {
         self.sectionInteractionAjax({
           type: "POST",
-          url: "/track_instance/"+trackInstanceId+"/section_interactions",
+          url: "/tracks/"+trackInstanceId+"/section_interactions",
           params: {section_interaction: JSON.stringify(params)}
         }, $element);
       };
@@ -92,10 +103,10 @@ $(function(){
           data: request.params
         }).done(function(response) {
           if (request.type == "POST") {
-            self.showSectionInteractionCardAndRegisterListeners(response.sectionInteraction.id, $element, true);
-            //self.sections.push(response.section);
+            self.sectionInteractions.push(response.section_interaction);
+            self.showSectionInteractionCardAndRegisterListeners(response.section_interaction.id, $element, true);
           } else {
-            self.updateSectionData(response.section);
+            self.updateSectionData(response.section_interaction);
           }
         });
       };
@@ -168,7 +179,8 @@ $(function(){
 
             params.resources.push({
               text: resource.find(".text").val(),
-              url: resource.find(".url").val()
+              url: resource.find(".url").val(),
+              enabled: true
             });
           });
 
@@ -198,12 +210,12 @@ $(function(){
           return false;
         });
       };
+
       self.registerEnableEventlistener = function(element){
         var $element = $(element);
         $element.find(".tgl").change(function(e){
           section = self.getSection(parseInt($(this).closest(".exercise").attr("data-section-id")));
           ($(this).is(":checked")) ? (section.enabled = true) : (section.enabled = false)
-          self.updateLocalStorage(self.sections,self.track, self.step, self.menteeId, self.index);
         });
       };
 
@@ -226,7 +238,7 @@ $(function(){
         return false;
       });
 
-      self.mentoringTrackSectionsContainer.append(self.mentoringTrackShowTemplate({sections: self.section_interactions}));
+      self.mentoringTrackSectionsContainer.append(self.mentoringTrackShowTemplate({sections: self.sectionInteractions}));
 
       self.mentoringTrackSectionsContainer.find(".exercise").each(function(i,element){
         self.registerEditEventListener(element);

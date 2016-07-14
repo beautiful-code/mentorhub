@@ -283,8 +283,14 @@
             <h4>Tasks to review</h4>
             {{#todos}}
               <div class="container-fluid">
-                <div class="row">
-                <p>{{content}}</p>
+                <div class="task row">
+                <p>
+                  <span><i class="fa fa-check-circle-o {{state}}"></i></span>
+                  {{content}}
+                </p>
+                <a class="delete-section">
+                  <i class="glyphicon glyphicon-trash"></i>
+                </a>
                 </div>
               </div>
             {{/todos}}
@@ -317,10 +323,15 @@
 
 
 <script class="hidden" type="text/x-handlebars-template" id="show_todo">
-<div class="task">
-  <p>-{{content}}</p>
+<div class="container-fluid">
+<div class="row task">
+  <p>
+    <span><i class="fa fa-check-circle-o {{state}}"></i></span>
+    {{content}}
+  </p>
   <a class="delete-section">
     <i class="glyphicon glyphicon-trash"></i>
   </a>
+</div>
 </div>
 </script>

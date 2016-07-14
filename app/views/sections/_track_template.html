@@ -26,9 +26,12 @@
         <span class="help-block"></span>
         </div>
         {{else}}
+        {{#if nonEditableTrack}}
+        {{else}}
         <div class="edit-track">
           <input type="button" class="edit-track-btn btn-primary_action" value="Edit Track">
         </div>
+        {{/if}}
         <div >
           <h3>
             {{name}}

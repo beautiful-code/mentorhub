@@ -2,11 +2,11 @@ class SectionInteractionsController < ApplicationController
   before_action :section_interaction_params, only:[:create]
 
   def create
-    @track_instance = TrackInstance.find(params[:id])
-    @section_interaction = @track_instance.section_interactions.new(section_interaction_params)
-    @section_interaction.enabled = true;
-    if @section_interaction.save
-      render json: {msg: "success", sectionInteraction: @section_interaction}, status: 200
+    track_instance = Track.find(params[:track_id])
+    section_interaction = track_instance.section_interactions.new(section_interaction_params)
+
+    if section_interaction.save
+      render json: {msg: "success", section_interaction: section_interaction}, status: 200
     end
   end
 
