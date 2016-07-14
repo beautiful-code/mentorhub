@@ -58,11 +58,11 @@ $(function() {
         var $form = self.trackContainer.find("form");
         var image = $form.find("#image")[0];
         var params = new FormData();
-        params.append('track[name]', $form.find("#name").val());
-        params.append('track[desc]', $form.find("#desc").val());
+        params.append('track_template[name]', $form.find("#name").val());
+        params.append('track_template[desc]', $form.find("#desc").val());
 
         if (image.files[0]) {
-          params.append('track[image]', image.files[0]);
+          params.append('track_template[image]', image.files[0]);
         }
 
         return params;
@@ -83,7 +83,7 @@ $(function() {
       self.createTrack = function(params) {
         self.trackAjax({
           type: "POST",
-          url: "/tracks",
+          url: "/track_templates",
           params: params
         });
       };
@@ -91,7 +91,7 @@ $(function() {
       self.updateTrack = function(params) {
         self.trackAjax({
           type: "PUT",
-          url: "/tracks/" + self.track.id,
+          url: "/track_templates/" + self.track.id,
           params: params
         });
       };
@@ -106,15 +106,15 @@ $(function() {
           processData: false,
         }).done(function(response) {
           if (request.type == "POST") {
-            window.history.pushState({},"", response.track.id);
+            window.history.pushState({},"", response.track_template.id);
           }
 
           setTimeout(function() {
             self.sectionContainer.find(".loading-sections").hide("slow");
           }, 620);
 
-          self.track = response.track;
-          self.trackContainer.html(self.trackTemplate(response.track));
+          self.track = response.track_template;
+          self.trackContainer.html(self.trackTemplate(response.track_template));
 
           self.hideLoadingSectionsScreen();
         }).complete(function(response) {
@@ -169,7 +169,7 @@ $(function() {
       self.deleteSection = function(sectionId, $element) {
         $.ajax({
           type: "DELETE",
-          url: "/tracks/" + self.track.id + "/sections/" + sectionId,
+          url: "/track_templates/" + self.track.id + "/section_templates/" + sectionId,
         }).done(function(response) {
           $element.remove();
         }).complete(function(response) {
@@ -180,7 +180,7 @@ $(function() {
       self.updateSection = function(params, $element) {
         self.sectionAjax({
           type: "PUT",
-          url: "/tracks/" + self.track.id + "/sections/" + params.section.id,
+          url: "/track_templates/" + self.track.id + "/section_templates/" + params.section.id,
           params: params
         }, $element);
       };
@@ -188,7 +188,7 @@ $(function() {
       self.createSection = function(params, $element) {
         self.sectionAjax({
           type: "POST",
-          url: "/tracks/" + self.track.id + "/sections",
+          url: "/track_templates/" + self.track.id + "/section_templates",
           params: params
         }, $element);
       };

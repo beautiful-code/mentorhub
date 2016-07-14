@@ -298,3 +298,19 @@ input[type="button"].btn-secondary_action{
   border: 1px solid rgba(5,106,178,0.6);
   border-radius: 3px;
 }
+
+.notice-board {
+  background: #fff;
+  height: 300px;
+  width: 60%;
+  border: 1px solid #c5c7c9;
+  border-radius: 3px;
+  margin: auto;
+  margin-top: 60px;
+  padding: 40px;
+  box-sizing: border-box;
+
+  h4 {
+    margin: 0;
+  }
+}

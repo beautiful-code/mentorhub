@@ -1,32 +1,32 @@
 crumb :root do
-  link "Home", root_path
+  link 'Home', root_path
 end
 
-crumb :tracks do
-  link "All tracks", tracks_path
+crumb :track_templates do
+  link 'All track_templates', track_templates_path
 end
 
-crumb :track do |track|
-  link track.name, track_sections_path(track)
-  parent :tracks
+crumb :track_template do |track_template|
+  link track_template.name, track_template_path(track_template)
+  parent :track_templates
 end
 
-crumb :new_track do |track|
-  link "Creating a track"
-  parent :tracks
+crumb :new_track_template do
+  link 'Creating a track_template'
+  parent :track_templates
 end
 
-crumb :new_section do |track|
-  link "Creating a section"
-  parent :track, track
+crumb :new_section do |track_template|
+  link 'Creating a section'
+  parent :track_template, track_template
 end
 
-crumb :mentoring_tracks do |mentoring_track|
-  link "My Mentees Tracks", mentoring_tracks_path
+crumb :mentoring_tracks do
+  link 'My Mentees Tracks', mentoring_tracks_path
   parent :root
 end
 
-crumb :add_mentoring_track do |add_mtrack|
-  link "Add a mentee track",new_mentoring_track_path
+crumb :add_mentoring_track do
+  link 'Add a mentee track', new_mentoring_track_path
   parent :mentoring_tracks
 end

@@ -24,14 +24,14 @@ describe Todo, type: :model do
     end
 
     context :review_todo do
-      it "should transition the state to 'to_be_reviewed' from 'incomplete' state" do
+      it "should transition from 'incomplete' to 'to_be_reviewed' state" do
         expect(todo.review_todo).to eq(true)
         expect(todo.state).to eq('to_be_reviewed')
       end
     end
 
     context :incomplete_todo do
-      it "should transition the state to 'incomplete' state from 'to_be_reviewed' state" do
+      it "should transition from 'to_be_reviewed' to 'incomplete' state" do
         todo.state = 'to_be_reviewed'
         expect(todo.incomplete_todo).to eq(true)
         expect(todo.state).to eq('incomplete')
@@ -39,7 +39,7 @@ describe Todo, type: :model do
     end
 
     context :complete_todo do
-      it "should transition the state to 'completed' state from 'to_be_reviewed' state" do
+      it "should transition from 'to_be_reviewed' to 'completed' state" do
         todo.state = 'to_be_reviewed'
         expect(todo.complete_todo).to eq(true)
         expect(todo.state).to eq('completed')

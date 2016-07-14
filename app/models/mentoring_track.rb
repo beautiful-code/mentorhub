@@ -1,5 +1,5 @@
 class MentoringTrack < ActiveRecord::Base
-  has_many :track_instances
+  has_many :tracks
   belongs_to :mentee, class_name: 'User', foreign_key: :mentee_id
   attr_writer :current_step
 
@@ -8,7 +8,7 @@ class MentoringTrack < ActiveRecord::Base
   end
 
   def steps
-    %w[assigning customizing confirming]
+    %w(assigning customizing confirming)
   end
 
   def next_step

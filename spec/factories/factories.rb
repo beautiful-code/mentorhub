@@ -10,6 +10,8 @@ FactoryGirl.define do
     title 'SI Title'
     content 'SI Content'
     state 'new'
+    type 'ExerciseSectionInteraction'
+    track
   end
 
   factory :todo, class: Todo do
@@ -17,18 +19,22 @@ FactoryGirl.define do
     section_interaction
   end
 
-  factory :section, class: Section do
+  factory :section_template, class: SectionTemplate do
     title 'Section Title'
     content 'Section Content'
+    type 'ExerciseSectionTemplate'
+    track_template
+  end
+
+  factory :track_template, class: TrackTemplate do
+    name 'Track Name'
+    desc 'Track Description'
+    type 'ExerciseTrackTemplate'
   end
 
   factory :track, class: Track do
-    name 'Track Name'
-    desc 'Track Description'
-  end
-
-  factory :track_instance, class: TrackInstance do
     name 'HTML'
+    desc 'Track Description'
+    type 'ExerciseTrack'
   end
-
 end

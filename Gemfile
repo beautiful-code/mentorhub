@@ -27,9 +27,9 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'
-  gem "factory_girl_rails", "~> 4.0"
-  gem "quiet_assets"
-  gem "rubocop"
+  gem 'factory_girl_rails', '~> 4.0'
+  gem 'quiet_assets'
+  gem 'rubocop'
 end
 
 group :production do

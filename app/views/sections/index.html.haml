@@ -1,7 +1,7 @@
-- if @track.new_record?
-  - breadcrumb :new_track
+- if @track_template.new_record?
+  - breadcrumb :new_track_template
 - else
-  - breadcrumb :track, @track
+  - breadcrumb :track_template, @track_template
 
 #section_index
   .track_info
@@ -24,9 +24,9 @@
 
   :javascript
     var PageConfig = {
-      track: #{@track.to_json}
+      track: #{@track_template.to_json}
     };
 
     PageConfig.track.sections = #{@sections.to_json};
-    PageConfig.track.editable = #{@track.new_record?};
-    PageConfig.track.newRecord = #{@track.new_record?};
+    PageConfig.track.editable = #{@track_template.new_record?};
+    PageConfig.track.newRecord = #{@track_template.new_record?};

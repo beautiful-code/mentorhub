@@ -1,33 +1,20 @@
-- #breadcrumb :mentoring_tracks, @mentoring_track
-
-= link_to "Add a mentee Track",  new_mentoring_track_path, class: "track_list_btn btn btn-primary"
+= link_to "New Mentee Track",  new_mentoring_track_path, class: "track_list_btn btn btn-primary"
 .track_list
-  -@mentoring_tracks.each do |m_track|
-    .track_card
-      -m_track.track_instances.each do |ti|
+  - if @mentoring_tracks.present?
+    - @mentoring_tracks.each do |track|
+      .track_card
         .logo_track
-          =image_tag ti.image
+          = image_tag track.image.url
         .content_track
-          %h3= link_to ti.name,mentoring_track_path(ti)
+          %h3= link_to track.name, mentoring_track_path(track)
           .details
             .mentee_deadline
               %h4 to be completed by
-              %p 12th June
+              %p= track.deadline ? track.deadline : "N/A"
             .mentee_name
               %h4 Mentee
-              %p= m_track.mentee.first_name
+              %p= track.mentee.first_name
           .progress_bar
-
--# .tracks
--#   - @mentoring_tracks.each do |m_track|
--#     - m_track.track_instances.each do |ti|
--#       - if ti.mentor_id == current_user.id
--#         .mentoring_tracks
--#           %p.track_name= ti.name
--#           Mentee:
--#           = m_track.mentee.name
--#   - if current_user.track_instances.blank?
--#     %p You are not currently mentoring anyone. Click "Add a mentee track" to add mentees
-
--# .add_button
--#   =link_to "Add a mentee track", new_mentoring_track_path, class: "adding_track"
+  - else
+    .notice-board
+      %h4 Currently, you are not mentoring anyone.

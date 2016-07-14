@@ -1,19 +1,21 @@
 class SectionInteraction < ActiveRecord::Base
   has_many :todos
-  belongs_to :track_instance
+  belongs_to :track
 
-  validates :title, presence: true
-  validates :content, presence: true
+  validates_presence_of :title, :content, :track, :type
 
   serialize :resources, Array
 
-  STATES = %w[new section_submitted tasks_pending review_pending section_completed]
+  STATES =
+    %w(new section_submitted tasks_pending
+       review_pending section_completed).freeze
 
-  validates :state, presence: true, inclusion: { in: STATES, if: lambda { state.present? } }
+  validates :state, presence: true,
+    inclusion: { in: STATES, if: -> { state.present? } }
 
   state_machine :state, initial: :new do
     event :submit_section do
-      transition :new => :section_submitted
+      transition new: :section_submitted
     end
 
     event :pending_review do
@@ -21,11 +23,12 @@ class SectionInteraction < ActiveRecord::Base
     end
 
     event :pending_tasks do
-      transition :review_pending => :tasks_pending
+      transition review_pending: :tasks_pending
     end
 
     event :complete_section do
-      transition :review_pending => :section_completed, if: lambda { |si| !si.pending_todos? }
+      transition review_pending: :section_completed,
+        if: ->(si) { !si.pending_todos? }
     end
   end
 
@@ -39,5 +42,9 @@ class SectionInteraction < ActiveRecord::Base
       except: [:created_at, :updated_at],
       include: [:todos]
     }.merge(options))
+  end
+
+  def self.types
+    %w(CourseSectionInteraction ExerciseSectionInteraction)
   end
 end

@@ -1,25 +1,25 @@
 Rails.application.routes.draw do
-  resources :tracks, except: [:edit] do
-    resources :sections, except: [:index, :edit, :new]
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    registrations: 'registrations'
+  }
+
+  resources :track_templates, except: [:edit] do
+    member do
+      get :section_templates
+    end
   end
 
-  resources :section_interactions, only: [:new, :edit, :update] do
-     resources :todos, only: [:new, :create, :update, :index]
+  resources :tracks, only: [] do
+    resources :section_interactions, only: [:edit, :update] do
+      resources :todos, only: [:new, :create, :update, :index]
+    end
   end
-  root :to => 'board#index'
+
   resources :mentoring_tracks, only: [:new, :create, :index, :show]
 
-  get "learning_tracks", to: "home#learning_tracks"
-
-  devise_for :users,  :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",registrations: 'registrations'  }
-
   get 'users/auth/failure', to: redirect('/')
-
   get 'board', to: 'board#index'
 
-  get 'track/:id/sections', to: "tracks#sections"
-
-  get 'mentoring_tracks/section_interactions/:id/todos', to: "mentoring_tracks#get_todos"
-
-  post '/track_instance/:id/section_interactions', to: "section_interactions#create"
+  root to: 'board#index'
 end
