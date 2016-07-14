@@ -27,3 +27,6 @@ Style/AlignHash:
   Enabled: false
 Metrics/AbcSize:
   Max: 20
+Metrics/MethodLength:
+  CountComments: false
+  Max: 15

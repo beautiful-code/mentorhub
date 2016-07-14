@@ -1,9 +1,8 @@
 class SectionInteraction < ActiveRecord::Base
   has_many :todos
-  belongs_to :track_instance
+  belongs_to :track
 
-  validates :title, presence: true
-  validates :content, presence: true
+  validates_presence_of :title, :content, :track, :type
 
   serialize :resources, Array
 
@@ -42,5 +41,9 @@ class SectionInteraction < ActiveRecord::Base
     super({
       except: [:goal, :created_at, :updated_at]
     }.merge(options))
+  end
+
+  def self.types
+    %w(CourseSectionInteraction ExerciseSectionInteraction)
   end
 end

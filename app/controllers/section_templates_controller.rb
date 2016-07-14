@@ -1,7 +1,7 @@
-class SectionsController < ApplicationController
+class SectionTemplatesController < ApplicationController
   # TODO: Add auth token to ajax requests
   before_action :authenticate_user!, except: [:update, :create, :destroy]
-  before_action :set_track
+  before_action :set_track_template
   before_action :set_section, except: [:index]
   before_action :build_resources, only: [:create, :update]
 
@@ -34,18 +34,18 @@ class SectionsController < ApplicationController
   private
 
   def section_params
-    params.fetch(:section, {}).permit(:title, :content)
+    params.fetch(:section, {}).permit(:id, :title, :content)
   end
 
-  def set_track
-    @track = Track.find(params[:track_id])
+  def set_track_template
+    @track_template = TrackTemplate.find(params[:track_template_id])
   end
 
   def set_section
     @section = if params[:id].present?
-                 @track.sections.find(params[:id])
+                 @track_template.section_templates.find(params[:id])
                else
-                 @track.sections.new(section_params)
+                 @track_template.section_templates.new(section_params)
                end
   end
 
