@@ -15,7 +15,7 @@ class MentoringTracksController < ApplicationController
     track_template = TrackTemplate.find(track_params['id'])
 
     ActiveRecord::Base.transaction do
-      options = track_template.dup.attributes.except('type')
+      options = track_template.dup.attributes.except('type','id')
       options.merge!(
         mentor_id: current_user.id,
         remote_image_url: track_template.image_url,
@@ -50,7 +50,7 @@ class MentoringTracksController < ApplicationController
 
   def create_section_interactions(track)
     sections_params.each do |section|
-      options = section.except('track_template_id')
+      options = section.except('track_template_id','id')
       options[:type] = "#{track.type.gsub('Track', '')}SectionInteraction"
       track.section_interactions.create(options)
     end

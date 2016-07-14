@@ -5,9 +5,7 @@ Rails.application.routes.draw do
   }
 
   resources :track_templates, except: [:edit] do
-    member do
-      get :section_templates
-    end
+    resources :section_templates
   end
 
   resources :tracks, only: [] do

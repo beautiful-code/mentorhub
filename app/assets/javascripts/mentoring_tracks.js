@@ -277,7 +277,8 @@ $(function(){
 
         $(".customize_next").closest(".customize_form").replaceWith(self.mentoringTrackConfirmingTemplate({
           sections: self.getEnabledSections()
-          }))
+        }));
+
         $("html, body").animate({ scrollTop: 0 });
         self.step++;
         self.updateLocalStorage();

@@ -9,7 +9,7 @@ $(function(){
       self.mentoringTrackSectionShowHtml = $("script#section_interaction_template").html();
       self.mentoringTrackSectionTemplate = Handlebars.compile(self.mentoringTrackSectionShowHtml);
 
-      self.mentoringTrackShow = $("script#show_section_interactions").html();
+      self.mentoringTrackShow = $("script#show_section_interaction_template").html();
       self.mentoringTrackShowTemplate = Handlebars.compile(self.mentoringTrackShow);
 
       self.sectionFormHtml = $("script#section_form").html();
