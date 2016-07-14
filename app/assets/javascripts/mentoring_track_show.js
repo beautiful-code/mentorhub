@@ -120,6 +120,7 @@ $(function(){
       };
 
       self.showTodoCardAndRegisterListeners = function(data, $element){
+        data.state = "incomplete";
         $element.replaceWith(self.todoShowTemplate(data));
       };
 
@@ -129,7 +130,7 @@ $(function(){
           url: request.url,
           data: request.data
         }).done(function(response) {
-          self.showTodoCardAndRegisterListeners(request.data, $element);
+          self.showTodoCardAndRegisterListeners(response.todo, $element);
         });
       };
 
@@ -235,6 +236,48 @@ $(function(){
         todos.append(self.todoFormTemplate());
         var newTodo = todos.find(".todo:last");
         self.registerTodoEventListener(newTodo);
+        return false;
+      });
+
+      self.todoStateUpdate = function(todoId, state, $element){
+        $.ajax({
+          type: "PUT",
+          url: "/todos/"+ todoId ,
+          data: {state: state}
+        }).done(function(response) {
+          $element.replaceWith(self.todoShowTemplate(response.todo));
+        });
+      };
+
+      self.todoDelete = function(todoId, $element){
+        $.ajax({
+          type: "DELETE",
+          url: "/todos/"+ todoId
+        }).done(function(){
+          $element.remove();
+        });
+      };
+
+      self.mentoringTrackSectionsContainer.on("click",".todo-check", function(e){
+        e.preventDefault();
+        state = $(this).attr("class").split(' ')[2];
+        $element = $(this).closest(".container-fluid");
+        todoId = parseInt($element.attr("todo-id"));
+        if(state == "incomplete")
+        {
+          state = "to_be_reviewed"
+        }else if (state == "to_be_reviewed"){
+          state = "completed"
+        }
+        self.todoStateUpdate(todoId, state, $element);
+        return false;
+      });
+
+      self.mentoringTrackSectionsContainer.on("click",".todo-delete", function(e){
+        e.preventDefault();
+        $element = $(this).closest(".container-fluid");
+        todoId = parseInt($element.attr("todo-id"));
+        self.todoDelete(todoId, $element);
         return false;
       });
 

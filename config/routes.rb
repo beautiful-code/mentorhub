@@ -19,5 +19,8 @@ Rails.application.routes.draw do
   get 'users/auth/failure', to: redirect('/')
   get 'board', to: 'board#index'
 
+  put 'todos/:todo_id', to: 'todos#update'
+  delete 'todos/:todo_id', to: 'todos#destroy'
+
   root to: 'board#index'
 end
