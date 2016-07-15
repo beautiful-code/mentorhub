@@ -231,15 +231,6 @@
         </div>
       {{/if}}
     </div>
-    <div>
-      <h4>Tasks to review</h4>
-    </div>
-    <div class="add_todo">
-      <a>
-        <span>+</span>
-        Add a todo
-      </a>
-    </div>
   </div>
 </script>
 
@@ -266,9 +257,12 @@
           </header>
           <h5>Exercise</h5>
           <div class="exercise_name">
-          <a>
-            <i aria-hidden="true" class="fa fa-check-circle-o fa-lg"></i>
-          </a>
+            <a class="section-state-event" data-state="{{state}}">
+              <span class="{{state}}">
+                <i aria-hidden="true" class="fa fa-check-circle-o fa-lg"></i>
+              </span>
+            </a>
+
             <h3>{{title}}</h3>
           </div>
           <p class="exercise_description">
@@ -288,22 +282,39 @@
               </div>
             {{/resources}}
           </div>
+          {{#if (ne state "new")}}
           <div class="tasks">
+            {{#if (or (present todos) (ne state "section_completed"))}}
             <h4>Tasks to review</h4>
+            {{/if}}
             {{#todos}}
-              <div class="container-fluid">
-                <div class="row">
-                <p>{{content}}</p>
+              <div class="container-fluid" todo-id="{{id}}">
+                <div class="task row">
+                <a>
+                <span><i class="fa fa-check-circle-o {{state}} todo-check"></i></span>
+                </a>
+                <p>
+                  {{content}}
+                </p>
+                {{#if (ne ../state "section_completed")}}
+                <a class="todo-delete">
+                  <i class="glyphicon glyphicon-trash"></i>
+                </a>
+                {{/if}}
                 </div>
               </div>
             {{/todos}}
           </div>
+          {{#if (eq state "section_completed")}}
+          {{else}}
           <div class="add_todo">
             <a>
               <span>+</span>
               Add a todo
             </a>
           </div>
+          {{/if}}
+          {{/if}}
         </div>
       {{/each}}
     {{/if}}
@@ -318,18 +329,26 @@
 
 
 <script class="hidden" type="text/x-handlebars-template" id="todo_form">
-<form class="todo">
-  <input type="text" class="todo_text"/>
+<form class="todo add_a_task">
+  <span>+</span>
+  <input type="text" placeholder="Add a task" class="todo_text"/>
   <input type="button" value="Add" class="submit_todo"/>
 </form>
 </script>
 
 
 <script class="hidden" type="text/x-handlebars-template" id="show_todo">
-<div class="task">
-  <p>-{{content}}</p>
-  <a class="delete-section">
-    <i class="glyphicon glyphicon-trash"></i>
-  </a>
+<div class="container-fluid" todo-id="{{id}}">
+  <div class="row task">
+    <a >
+    <span><i class="fa fa-check-circle-o {{state}} todo-check"></i></span>
+    </a>
+    <p>
+      {{content}}
+    </p>
+    <a class="todo-delete">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
 </div>
 </script>

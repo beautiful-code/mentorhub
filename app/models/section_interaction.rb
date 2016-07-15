@@ -26,7 +26,7 @@ class SectionInteraction < ActiveRecord::Base
     end
 
     event :pending_tasks do
-      transition review_pending: :tasks_pending
+      transition [:section_submitted, :review_pending] => :tasks_pending
     end
 
     event :complete_section do

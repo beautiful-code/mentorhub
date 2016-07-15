@@ -1,7 +1,7 @@
 class TodosController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_section_interaction
-  before_action :set_todos, except: [:index]
+  before_action :set_section_interaction, except: [:update, :destroy]
+  before_action :set_todos, except: [:index, :update, :destroy]
 
   def index
     todo_list = @section_interaction.todos.all
@@ -11,6 +11,7 @@ class TodosController < ApplicationController
 
   def create
     if @todo.save
+      @section_interaction.pending_tasks
       render json: { msg: 'Todo created', todo: @todo }, status: 201
     else
       render json: { msg: 'error', errors: @todo.errors }, status: 422
@@ -18,10 +19,20 @@ class TodosController < ApplicationController
   end
 
   def update
-    if @todo.update(todo_params)
-      render json: { msg: 'Todo updated', todo: @todo }, status: 200
+    todo = Todo.find(params[:id])
+    if todo.update(todo_params)
+      render json: { msg: 'Todo updated', todo: todo }, status: 200
     else
-      render json: { msg: 'error', errors: @todo.errors }, status: 422
+      render json: { msg: 'error', errors: todo.errors }, status: 422
+    end
+  end
+
+  def destroy
+    todo = Todo.find(params[:id])
+    if todo.destroy
+      render json: { msg: 'Todo deleted' }, status: 200
+    else
+      render json: { msg: 'error', errors: todo.errors }, status: 422
     end
   end
 
@@ -29,6 +40,7 @@ class TodosController < ApplicationController
 
   def todo_params
     params.fetch(:todo, {}).permit(:content)
+    # params.permit(:state, :content, :section_interaction_id)
   end
 
   def set_section_interaction

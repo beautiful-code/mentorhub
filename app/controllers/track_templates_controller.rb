@@ -17,14 +17,6 @@ class TrackTemplatesController < ApplicationController
     render 'sections/index'
   end
 
-  def section_templates
-    render json: {
-      track_template: @track_template,
-      sections: @track_template.section_templates,
-      current_user: current_user
-    }
-  end
-
   def create
     if @track_template.save
       render json: { msg: 'success',

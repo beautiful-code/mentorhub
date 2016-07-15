@@ -314,3 +314,54 @@ input[type="button"].btn-secondary_action{
     margin: 0;
   }
 }
+
+.section-state-event {
+  color: #ddd;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: #ddd;
+    text-decoration: none;
+  }
+
+  i {
+    font-size: 2em;
+    padding-right: 5px;
+  }
+
+  .new i {
+    color: #aeaeae;
+
+    &:hover {
+      color: #dedede;
+    }
+  }
+
+  .review_pending i,
+  .section_submitted i {
+    color: #d3c137;
+
+    &:hover {
+      color: #d3b137;
+    }
+  }
+
+  .tasks_pending i {
+    color: darkred;
+
+    &:hover {
+      color: red;
+    }
+  }
+
+
+
+  .section_completed {
+    color: darkgreen;
+
+    &:hover {
+      color: green;
+    }
+  }
+}
