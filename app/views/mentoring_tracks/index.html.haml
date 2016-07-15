@@ -6,7 +6,7 @@
         .logo_track
           = image_tag track.image.url
         .content_track
-          %h3= link_to track.name, ""
+          %h3= link_to track.name, mentoring_track_path(track)
           .details
             .mentee_deadline
               %h4 to be completed by

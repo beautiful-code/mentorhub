@@ -2,7 +2,10 @@ class SectionInteraction < ActiveRecord::Base
   has_many :todos
   belongs_to :track
 
-  validates_presence_of :title, :content, :track, :type
+  validates :title, presence: true
+  validates :content, presence: true
+  validates :track, presence: true
+  validates :type, presence: true
 
   serialize :resources, Array
 
@@ -23,7 +26,7 @@ class SectionInteraction < ActiveRecord::Base
     end
 
     event :pending_tasks do
-      transition review_pending: :tasks_pending
+      transition [:section_submitted, :review_pending] => :tasks_pending
     end
 
     event :complete_section do
@@ -39,7 +42,8 @@ class SectionInteraction < ActiveRecord::Base
 
   def serializable_hash(options)
     super({
-      except: [:goal, :created_at, :updated_at]
+      except: [:created_at, :updated_at],
+      include: [:todos]
     }.merge(options))
   end
 

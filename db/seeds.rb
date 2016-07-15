@@ -1,3 +1,9 @@
+TrackTemplate.create!([
+  {name: "GIT", type: "ExerciseTrackTemplate", image: "Git.png", desc: "A free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency"},
+  {name: "HTML Fundamentals", type: "ExerciseTrackTemplate", image: "HTML5.png", desc: "HTML, is the standard markup language used to create web pages"},
+  {name: "Cascading Style Sheets (CSS)", type: "ExerciseTrackTemplate", image: "css.png", desc: "CSS is a stylesheet language that describes the presentation of an HTML (or XML) document"}
+])
+
 ExerciseSectionTemplate.create!([
   {title: "Commit changes, history and gitignore", goal: nil, content: "Add files and tracking changes.\nAdd files to do-not-track list using .gitignore",  resources: [{"text"=>"Video (3:33 to 8:35)", "url"=>"www.youtube.com/watch?v=Y9XZQO1n_7c"}, {"text"=>"Exercise files", "url"=>"drive.google.com/folderview?id=0B1PtuCWpbEdodnV1M3pTZUhHUWM&usp=sharing "}], track_template_id: 1},
   {title: "Setting up a Git repository", goal: nil, content: "Turning a project/directory to Git repository",  resources: [{"text"=>"Video (till 3:33)", "url"=>"www.youtube.com/watch?v=Y9XZQO1n_7c"}, {"text"=>"Git init", "url"=>"www.atlassian.com/git/tutorials/setting-up-a-repository/git-init"}, {"text"=>"Follow the commands in the video and mail the zipped folder to goutham.pilla@beautifulcode.in   Filename: git_ex_2.zip", "url"=>""}], track_template_id: 1},
@@ -27,10 +33,4 @@ ExerciseSectionTemplate.create!([
   {title: "Introduction to HTML5", goal: nil, content: "Understand what’s new in HTML5\nCreating a simple web page with HTML5\nBasic structure of the web page with HTML5",  resources: [{"text"=>"What is HTML5?", "url"=>"www.youtube.com/watch?v=0aUtQPZcqxE"}, {"text"=>"Starting your first HTML5 site", "url"=>"www.youtube.com/watch?v=sfLBWj5lPgA"}, {"text"=>"Site Structure - Header, Section, Aside & Footer", "url"=>"www.youtube.com/watch?v=DR1upYr2UbA"}, {"text"=>"Creating a simple blog page.", "url"=>"www.youtube.com/watch?v=iPaZ3YJVpv4"}], track_template_id: 2},
   {title: "HTML Forms", goal: nil, content: "Be familiar with various form input types and it’s attributes",  resources: [{"text"=>"Go through the links to understand the concepts mentioned below", "url"=>""}, {"text"=>"Form input types such as number, range, date picker, color picker", "url"=>"www.youtube.com/watch?v=pbm7e-lPGl0"}, {"text"=>"More form input types such as input list, email, telephone, url & search", "url"=>"www.youtube.com/watch?v=9tbTunXSFh4"}], track_template_id: 2},
   {title: "Media elements", goal: nil, content: "Usage of media elements like audio, video and images",  resources: [{"text"=>"Go through the link", "url"=>"learn.shayhowe.com/html-css/adding-media/"}], track_template_id: 2}
-])
-
-TrackTemplate.create!([
-  {name: "GIT", type: "ExerciseTrackTemplate", image: "Git.png", desc: "A free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency"},
-  {name: "HTML Fundamentals", type: "ExerciseTrackTemplate", image: "HTML5.png", desc: "HTML, is the standard markup language used to create web pages"},
-  {name: "Cascading Style Sheets (CSS)", type: "ExerciseTrackTemplate", image: "css.png", desc: "CSS is a stylesheet language that describes the presentation of an HTML (or XML) document"}
 ])

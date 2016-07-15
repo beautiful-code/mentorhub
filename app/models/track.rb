@@ -3,7 +3,10 @@ class Track < ActiveRecord::Base
   belongs_to :mentor, foreign_key: :mentor_id, class_name: 'User'
   belongs_to :mentee, foreign_key: :mentee_id, class_name: 'User'
 
-  validates_presence_of :name, :desc, :type
+  validates :name, presence: true
+  validates :desc, presence: true
+  validates :type, presence: true
+
   mount_uploader :image, ImageUploader
 
   def serializable_hash(options)

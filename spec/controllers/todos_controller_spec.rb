@@ -10,13 +10,17 @@ RSpec.describe TodosController, type: :controller do
   describe 'GET #index' do
     before(:each) do
       @track = FactoryGirl.create :track
-      @section_interaction = FactoryGirl.create :section_interaction, track: @track
+      @section_interaction = FactoryGirl.create(
+        :section_interaction,
+        track: @track
+      )
 
       4.times do
         FactoryGirl.create :todo, section_interaction: @section_interaction
       end
 
-      get :index, track_id: @track.id, section_interaction_id: @section_interaction.id
+      get :index, track_id: @track.id,
+        section_interaction_id: @section_interaction.id
     end
 
     it 'returns 4 records from the database' do
@@ -33,19 +37,24 @@ RSpec.describe TodosController, type: :controller do
     context 'when is successfully created' do
       before(:each) do
         track = FactoryGirl.create :track
-        section_interaction = FactoryGirl.create :section_interaction, track: track
+        section_interaction = FactoryGirl.create(
+          :section_interaction,
+          track: track
+        )
         @todo_attributes = FactoryGirl.attributes_for :todo
         post(
           :create,
           track_id: track.id,
-          section_interaction_id: section_interaction.id, todo: @todo_attributes
+          section_interaction_id: section_interaction.id,
+          todo: @todo_attributes
         )
       end
 
       it 'renders the json representation for the
       product record just created' do
-        todo_response = JSON.parse(response.body, symbolize_names: true)
-        expect(todo_response[:todo][:content]).to eq(@todo_attributes[:content])
+        todos_response = JSON.parse(response.body, symbolize_names: true)
+        expect(todos_response[:todo][:content])
+          .to eq(@todo_attributes[:content])
       end
 
       it 'has a 201 status code' do
@@ -56,20 +65,23 @@ RSpec.describe TodosController, type: :controller do
     context 'when is not created' do
       before(:each) do
         track = FactoryGirl.create :track
-        section_interaction = FactoryGirl.create :section_interaction, track: track
+        section_interaction = FactoryGirl.create(
+          :section_interaction,
+          track: track
+        )
         @invalid_todo_attributes = { content: '' }
         post :create, section_interaction_id: section_interaction.id,
           todo: @invalid_todo_attributes, track_id: track.id
       end
 
       it 'renders an errors json' do
-        todo_response = JSON.parse(response.body, symbolize_names: true)
-        expect(todo_response).to have_key(:errors)
+        todos_response = JSON.parse(response.body, symbolize_names: true)
+        expect(todos_response).to have_key(:errors)
       end
 
       it 'renders the json errors on why the user could not be created' do
-        todo_response = JSON.parse(response.body, symbolize_names: true)
-        expect(todo_response[:errors][:content]).to include "can't be blank"
+        todos_response = JSON.parse(response.body, symbolize_names: true)
+        expect(todos_response[:errors][:content]).to include "can't be blank"
       end
 
       it 'has a 422 status code' do
@@ -79,23 +91,25 @@ RSpec.describe TodosController, type: :controller do
   end
 
   describe 'PUT/PATCH #update' do
-    before(:each) do
-      @track = FactoryGirl.create :track
-      @section_interaction = FactoryGirl.create :section_interaction, track: @track
-      @todo = FactoryGirl.create(:todo,
-                                 section_interaction: @section_interaction)
-    end
-
     context 'when is successfully updated' do
       before(:each) do
-        patch :update, section_interaction_id: @section_interaction.id,
-          id: @todo.id, todo: { content: 'Todo content' }, track_id: @track.id
+        track = FactoryGirl.create :track
+        section_interaction = FactoryGirl.create(
+          :section_interaction,
+          track: track
+        )
+        @todo_attributes = FactoryGirl.create(
+          :todo,
+          section_interaction: section_interaction
+        )
+        patch :update, section_interaction_id: section_interaction.id,
+          track_id: track.id, todo: { content: 'Todo' }, id: @todo_attributes.id
       end
 
       it 'renders the json representation for
       the updated section_interaction' do
-        todo_response = JSON.parse(response.body, symbolize_names: true)
-        expect(todo_response[:todo][:content]).to eq('Todo content')
+        todos_response = JSON.parse(response.body, symbolize_names: true)
+        expect(todos_response[:todo][:content]).to eq('Todo')
       end
 
       it 'has a 200 status code' do
@@ -105,19 +119,29 @@ RSpec.describe TodosController, type: :controller do
 
     context 'when is not updated' do
       before(:each) do
-        patch :update, section_interaction_id: @section_interaction.id,
-          id: @todo.id, todo: { section_interaction_id: '' }, track_id: @track.id
+        track = FactoryGirl.create :track
+        section_interaction = FactoryGirl.create(
+          :section_interaction,
+          track: track
+        )
+        @invalid_todo_attributes = FactoryGirl.create(
+          :todo,
+          section_interaction: section_interaction
+        )
+        patch :update, section_interaction_id: section_interaction.id,
+          track_id: track.id, todo: { content: '' },
+          id: @invalid_todo_attributes.id
       end
 
       it 'renders an errors json' do
-        todo_response = JSON.parse(response.body, symbolize_names: true)
-        expect(todo_response).to have_key(:errors)
+        todos_response = JSON.parse(response.body, symbolize_names: true)
+        expect(todos_response).to have_key(:errors)
       end
 
       it 'renders the json errors on why the
       section_interaction could not be created' do
-        todo_response = JSON.parse(response.body, symbolize_names: true)
-        expect(todo_response[:errors][:section_interaction_id]).to include
+        todos_response = JSON.parse(response.body, symbolize_names: true)
+        expect(todos_response[:errors][:content]).to include
         "can't be blank"
       end
 

@@ -1,0 +1,19 @@
+- breadcrumb :mentoring_tracks, @track
+
+#section_index
+  .track_info
+    .loading-track
+      %i.fa.fa-spinner.fa-pulse
+    = render "sections/track_template"
+
+  .sub_nav
+    %h4.selected Exercises
+
+  #show_track_sections.show_track_instance
+    = render "templates"
+
+:javascript
+  var MentoringTrackShowConfig = {
+    track: #{@track.to_json},
+    sections: #{@section_interactions.to_json}
+  };

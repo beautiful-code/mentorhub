@@ -11,6 +11,11 @@ $(function(){
       self.step = (localStorage.getItem('Step')===null) ? 1 : parseInt(localStorage.getItem('Step'));
       self.index = (localStorage.getItem('Index')===null) ? self.sections.length : parseInt(localStorage.getItem('Index'));
 
+      self.mentoringTrackContainer = $("#add_mentee_track");
+
+      self.sectionFormHtml = $("script#section_form").html();
+      self.sectionFormTemplate = Handlebars.compile(self.sectionFormHtml);
+
       self.mentoringTrackAssigningForm = $("script#assigning_step_form").html();
       self.mentoringTrackAssigningTemplate = Handlebars.compile(self.mentoringTrackAssigningForm);
 
@@ -20,13 +25,8 @@ $(function(){
       self.mentoringTrackConfirmingForm = $("script#confirming_step_form").html();
       self.mentoringTrackConfirmingTemplate = Handlebars.compile(self.mentoringTrackConfirmingForm);
 
-      self.mentoringTrackContainer = $("#add_mentee_track");
-
-      self.sectionShowHtml = $("script#show_section_interaction").html();
+      self.sectionShowHtml = $("script#section_interaction_template").html();
       self.sectionTemplate = Handlebars.compile(self.sectionShowHtml);
-
-      self.sectionFormHtml = $("script#section_form").html();
-      self.sectionFormTemplate = Handlebars.compile(self.sectionFormHtml);
 
       self.resourceFormHtml = $("script#resource_form").html();
       self.resourceFormTemplate = Handlebars.compile(self.resourceFormHtml);
@@ -170,6 +170,7 @@ $(function(){
       self.createSection = function(params, $element) {
         var newObj = params.section;
         newObj.id = parseInt($element.attr('data-section-id'));
+        newObj.enabled = true;
 
         self.sections.push(newObj);
         self.updateLocalStorage();
@@ -187,7 +188,6 @@ $(function(){
       self.clearLocalStorage = function(){
         localStorage.clear();
       }
-
 
       self.createMentoringTrack = function(){
         var sections = self.getEnabledSections();
@@ -277,7 +277,8 @@ $(function(){
 
         $(".customize_next").closest(".customize_form").replaceWith(self.mentoringTrackConfirmingTemplate({
           sections: self.getEnabledSections()
-          }))
+        }));
+
         $("html, body").animate({ scrollTop: 0 });
         self.step++;
         self.updateLocalStorage();

@@ -1,4 +1,7 @@
 class MentoringTracksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_track, only: [:show]
+
   def index
     @mentoring_tracks = current_user.mentoring_tracks
   end
@@ -12,10 +15,10 @@ class MentoringTracksController < ApplicationController
     track_template = TrackTemplate.find(track_params['id'])
 
     ActiveRecord::Base.transaction do
-      options = track_template.dup.attributes.except('type')
+      options = track_template.dup.attributes.except('type', 'id')
       options.merge!(
         mentor_id: current_user.id,
-        image: track_template.image_url,
+        remote_image_url: track_template.image_url,
         mentee_id: params[:menteeId],
         type: track_template.type.gsub('Template', '')
       )
@@ -27,7 +30,20 @@ class MentoringTracksController < ApplicationController
     render json: { msg: 'success' }, status: 200
   end
 
+  def show
+    @section_interactions = @track.section_interactions.order(:id)
+                                  .preload(:todos)
+  end
+
   private
+
+  def set_track
+    @track = if params[:id].present?
+               Track.find(params[:id])
+             else
+               Track.new(track_params)
+             end
+  end
 
   def sections_params
     JSON.parse(params.require(:sections))
@@ -39,7 +55,7 @@ class MentoringTracksController < ApplicationController
 
   def create_section_interactions(track)
     sections_params.each do |section|
-      options = section.except('track_template_id')
+      options = section.except('track_template_id', 'id')
       options[:type] = "#{track.type.gsub('Track', '')}SectionInteraction"
       track.section_interactions.create(options)
     end

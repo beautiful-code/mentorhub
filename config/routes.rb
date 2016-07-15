@@ -5,23 +5,22 @@ Rails.application.routes.draw do
   }
 
   resources :track_templates, except: [:edit] do
-    member do
-      get :section_templates
-    end
-
-    resources :section_templates, except: [:index, :edit, :new]
+    resources :section_templates
   end
 
   resources :tracks, only: [] do
-    resources :section_interactions, only: [:edit, :update] do
+    resources :section_interactions, only: [:create, :edit, :update] do
       resources :todos, only: [:new, :create, :update, :index]
     end
   end
 
-  resources :mentoring_tracks, only: [:new, :create, :index]
+  resources :mentoring_tracks, only: [:new, :create, :index, :show]
 
   get 'users/auth/failure', to: redirect('/')
   get 'board', to: 'board#index'
+
+  put 'todos/:todo_id', to: 'todos#update'
+  delete 'todos/:todo_id', to: 'todos#destroy'
 
   root to: 'board#index'
 end

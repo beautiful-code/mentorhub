@@ -1,4 +1,5 @@
 <%= render "sections/templates" %>
+
 <script class="hidden" type="text/x-handlebars-template" id="assigning_step_form">
 <form class="assign_form" >
   <h4>
@@ -84,7 +85,12 @@
             </div>
           </header>
           <h5>Exercise</h5>
-          <h3>{{title}} </h3>
+          <div class="exercise_name">
+            <a>
+              <i aria-hidden="true" class="fa fa-check-circle-o fa-lg"></i>
+            </a>
+            <h3>{{title}} </h3>
+          </div>
           <p> {{content}} </p>
           <div class="resources">
             <h5>Resources</h5>
@@ -118,7 +124,8 @@
 </form>
 </script>
 
-    <script class="hidden" type="text/x-handlebars-template" id="confirming_step_form">
+
+<script class="hidden" type="text/x-handlebars-template" id="confirming_step_form">
 <form class="confirm_form" >
   <h4>
     Add a Mentee Track
@@ -141,7 +148,12 @@
       {{#sections}}
         <div class="exercise" data-section-id="{{id}}">
           <h5>Exercise</h5>
-          <h3>{{title}} </h3>
+          <div class="exercise_name">
+            <a>
+              <i aria-hidden="true" class="fa fa-check-circle-o fa-lg"></i>
+            </a>
+            <h3>{{title}} </h3>
+          </div>
           <p> {{content}} </p>
           <div class="resources">
             <h5>Resources</h5>
@@ -167,28 +179,40 @@
     <input type="submit" value="Confirm" class="btn btn-primary confirming_next" >
   </div>
 </form>
-    </script>
+</script>
 
 
-    <script class="hidden" type="text/x-handlebars-template" id="show_section_interaction">
-<div class="exercise" data-section-id="{{id}}">
+<script class="hidden" type="text/x-handlebars-template" id="section_interaction_template">
+  <div class="exercise" data-section-id="{{id}}">
     <header>
       <div class="crud_elements">
         <a class="edit-section">
           <i class="fa fa-pencil-square-o"></i>
         </a>
         <div class="toggle">
+          {{#if enabled}}
           <input class="tgl" type="checkbox" checked id="cb{{id}}"></input>
+          {{else}}
+          <input class="tgl" type="checkbox" id="cb{{id}}"></input>
+          {{/if}}
           <label class="tgl-btn" for="cb{{id}}"></label>
         </div>
       </div>
     </header>
     <h5>Exercise</h5>
-    <h3>{{title}} </h3>
-    <p> {{content}} </p>
+    <div class="exercise_name">
+    <a>
+      <i aria-hidden="true" class="fa fa-check-circle-o fa-lg"></i>
+    </a>
+      <h3>{{title}}</h3>
+    </div>
+    <p class="exercise_description">
+      {{content}}
+    </p>
     <div class="resources">
       <h5>Resources</h5>
-      {{#resources}}
+      {{#if resources}}
+      {{#each resources}}
         <div class="container-fluid">
           <div class="row">
             {{#if url}}
@@ -198,7 +222,133 @@
             {{/if}}
           </div>
         </div>
-      {{/resources}}
+      {{/each}}
+      {{else}}
+        <div class="container-fluid">
+          <div class="row">
+            <p>No Resources</p>
+          </div>
+        </div>
+      {{/if}}
     </div>
   </div>
-    </script>
+</script>
+
+
+<script class="hidden" type="text/x-handlebars-template" id="show_section_interactions">
+  <div id="customise_exercises">
+    {{#if sections}}
+      {{#each sections}}
+        <div class="exercise" data-section-id="{{id}}">
+          <header>
+            <div class="crud_elements">
+              <a class="edit-section">
+                <i class="fa fa-pencil-square-o"></i>
+              </a>
+              <div class="toggle">
+                {{#if enabled}}
+                <input class="tgl" type="checkbox" checked id="cb{{id}}"></input>
+                {{else}}
+                <input class="tgl" type="checkbox" id="cb{{id}}"></input>
+                {{/if}}
+                <label class="tgl-btn" for="cb{{id}}"></label>
+              </div>
+            </div>
+          </header>
+          <h5>Exercise</h5>
+          <div class="exercise_name">
+            <a class="section-state-event" data-state="{{state}}">
+              <span class="{{state}}">
+                <i aria-hidden="true" class="fa fa-check-circle-o fa-lg"></i>
+              </span>
+            </a>
+
+            <h3>{{title}}</h3>
+          </div>
+          <p class="exercise_description">
+            {{content}}
+          </p>
+          <div class="resources">
+            <h5>Resources</h5>
+            {{#resources}}
+              <div class="container-fluid">
+                <div class="row">
+                {{#if url}}
+                <a target="_blank" href="//{{url}}">{{text}}</a>
+                {{else}}
+                <p>{{text}}</p>
+                {{/if}}
+                </div>
+              </div>
+            {{/resources}}
+          </div>
+          {{#if (ne state "new")}}
+          <div class="tasks">
+            {{#if (or (present todos) (ne state "section_completed"))}}
+            <h4>Tasks to review</h4>
+            {{/if}}
+            {{#todos}}
+              <div class="container-fluid" todo-id="{{id}}">
+                <div class="task row">
+                <a>
+                <span><i class="fa fa-check-circle-o {{state}} todo-check"></i></span>
+                </a>
+                <p>
+                  {{content}}
+                </p>
+                {{#if (ne ../state "section_completed")}}
+                <a class="todo-delete">
+                  <i class="glyphicon glyphicon-trash"></i>
+                </a>
+                {{/if}}
+                </div>
+              </div>
+            {{/todos}}
+          </div>
+          {{#if (eq state "section_completed")}}
+          {{else}}
+          <div class="add_todo">
+            <a>
+              <span>+</span>
+              Add a todo
+            </a>
+          </div>
+          {{/if}}
+          {{/if}}
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+  <div class="add_exercise add_exercise_btn">
+    <a class="add_exercise_link">
+      <span>+</span>
+      Add an exercise
+    </a>
+  </div>
+</script>
+
+
+<script class="hidden" type="text/x-handlebars-template" id="todo_form">
+<form class="todo add_a_task">
+  <span>+</span>
+  <input type="text" placeholder="Add a task" class="todo_text"/>
+  <input type="button" value="Add" class="submit_todo"/>
+</form>
+</script>
+
+
+<script class="hidden" type="text/x-handlebars-template" id="show_todo">
+<div class="container-fluid" todo-id="{{id}}">
+  <div class="row task">
+    <a >
+    <span><i class="fa fa-check-circle-o {{state}} todo-check"></i></span>
+    </a>
+    <p>
+      {{content}}
+    </p>
+    <a class="todo-delete">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+  </div>
+</div>
+</script>

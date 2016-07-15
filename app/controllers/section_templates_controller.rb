@@ -5,6 +5,14 @@ class SectionTemplatesController < ApplicationController
   before_action :set_section, except: [:index]
   before_action :build_resources, only: [:create, :update]
 
+  def index
+    render json: {
+      track_template: @track_template,
+      sections: @track_template.section_templates,
+      current_user: current_user
+    }
+  end
+
   def create
     if @section.save
       render json: { msg: 'success', section: @section }, status: 200

@@ -17,6 +17,14 @@ describe SectionInteraction, type: :model do
     it 'should not have an empty content' do
       FactoryGirl.build(:section_interaction, content: nil).should_not be_valid
     end
+
+    it 'should not be valid without a track_id' do
+      FactoryGirl.build(:section_interaction, track_id: nil).should_not be_valid
+    end
+
+    it 'should not be valid without a type' do
+      FactoryGirl.build(:section_interaction, type: nil).should_not be_valid
+    end
   end
 
   describe :pending_todos? do
