@@ -37,7 +37,11 @@ class MentoringTracksController < ApplicationController
   private
 
   def set_track
-    @track = params[:id].present? ? Track.find(params[:id]) : Track.new(track_params)
+    @track = if params[:id].present?
+               Track.find(params[:id])
+             else
+               Track.new(track_params)
+             end
   end
 
   def sections_params

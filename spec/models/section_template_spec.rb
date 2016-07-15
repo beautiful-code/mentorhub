@@ -21,9 +21,5 @@ describe SectionTemplate, type: :model do
     it 'should not be valid without a type' do
       FactoryGirl.build(:section_template, type: nil).should_not be_valid
     end
-
-    it 'should give exercise_section_templates for exercise_track_template' do
-      t = double("ExerciseTrackTemplate")
-    end
   end
 end
