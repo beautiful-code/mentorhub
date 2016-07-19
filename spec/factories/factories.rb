@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :user, class: User do |u|
     u.first_name 'robert'
     u.last_name 'junior'
-    u.email 'user@example.com'
+    u.email 'user@beautifulcode.in'
     u.password 'password'
   end
 
