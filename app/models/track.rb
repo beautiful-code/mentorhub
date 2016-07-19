@@ -20,7 +20,7 @@ class Track < ActiveRecord::Base
 
   def incomplete_section_interactions
     section_interactions.where('state != ?', 'section_completed')
-                        .order('created_at ASC')
+                        .order('id ASC')
   end
 
   def recent_incomplete_section_interactions
@@ -28,14 +28,24 @@ class Track < ActiveRecord::Base
     ret = []
 
     incomplete_section_interactions.each_with_index do |section_interaction, i|
-      if i.zero?
-        ret = [section_interaction]
-        next
+      if current_user == self.mentor
+        if i.zero? && section_interaction.new?
+          ret = []
+        elsif i.zero? && !section_interaction.new?
+          ret = [section_interaction]
+          next
+        end
+        section_interaction.new? ? break : (ret << section_interaction)
+
+      else
+        if i.zero?
+          ret = [section_interaction]
+          next
+        end
+
+        ret.last.new? ? break : (ret << section_interaction)
       end
-
-      ret.last.new? ? break : (ret << section_interaction)
     end
-
     ret
   end
 
