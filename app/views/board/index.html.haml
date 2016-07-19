@@ -13,7 +13,7 @@
 
       <div class="tab-content">
           <div class="tab-pane user_exercise_style" ng-class="{active: active_tab === 'user_exercises'}">
-              <ul class="user_tracks-subnav">
+              <ul class="user_tracks-subnav" ng-if="Helper.keys(user_exercises).length != 0">
                   <li class="active" select-subnav="All">
                       <a style="cursor: pointer">All</a>
                   </li>
@@ -24,8 +24,10 @@
                       </a>
                   </li>
               </ul>
-
-              <div ng-repeat="(track, track_info) in sections.data" style="margin-top: 10px">
+              <div ng-if="Helper.keys(user_exercises).length == 0" style="padding: 20px;" class="text-center">
+                <p>You are not assigned any task.</p>
+              </div>
+              <div ng-repeat="(track, track_info) in sections.data" style="margin-bottom: 20px">
                   <div class="track_header">
                       <div class="track_details">
                           <div class="logo_n_name item">
@@ -71,18 +73,18 @@
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                               </a>
                           </p>
-                          <div ng-if="exercise.mentee_notes === null || note.edit == true" class="col-lg-12" style="margin-bottom: 10px">
-                              <div class="row">
-                                  <input type="text" ng-model="note.mentee_notes" class="form-control col-lg-6 pull-left" placeholder="Answer">
+                          <div ng-if="exercise.mentee_notes === null || note.edit == true" class="row" style="margin-bottom: 10px">
+                              <div class="col-lg-12">
+                                  <input type="text" ng-model="note.mentee_notes" class="form-control col-lg-6 col-sm-6 pull-left" placeholder="Answer">
                                   <button class="btn btn-sm btn-primary col-lg-1" ng-click="add_mentee_notes(exercise, note)" type="button">Submit</button>
                               </div>
                           </div>
                       </div>
-                      <div class="exercise-tasks_to_do">
+                      <div class="exercise-tasks_to_do" ng-if="exercise.todos.length != 0">
                           <h4>Tasks Todo</h4>
                           <ul>
                               <li ng-repeat="todo in exercise.todos">
-                                  <i class="fa " ng-click="update_my_todo(exercise, todo)" ng-class="todo.state == 'completed' || todo.state == 'to_be_reviewed'? 'fa-check-circle' : 'fa-check-circle-o'" aria-hidden="true"></i>
+                                  <i class="fa fa-check-circle-o" ng-click="update_my_todo(exercise, todo)" ng-class="{ 'complete': todo.state == 'completed', 'to_be_reviewed': todo.state == 'to_be_reviewed', 'incomplete': todo.state == 'incomplete'}" aria-hidden="true"></i>
                                   {{ todo.content }}
                               </li>
                           </ul>
@@ -92,7 +94,7 @@
           </div>
 
           <div class="tab-pane user_exercise_style" ng-class="{active: active_tab === 'user_mentee_exercises'}">
-              <ul class="user_tracks-subnav">
+              <ul class="user_tracks-subnav" ng-if="Helper.keys(user_mentee_exercises).length != 0">
                   <li class="active" select-subnav="All">
                       <a style="cursor: pointer">All</a>
                   </li>
@@ -103,9 +105,12 @@
                       </a>
                   </li>
               </ul>
+              <div ng-if="Helper.keys(user_mentee_exercises).length == 0" style="padding: 20px;" class="text-center">
+                <p>You do not have any mentees.</p>
+              </div>
 
-              <div ng-repeat="(id, mentee) in sections.data" style="margin-top: 10px">
-                  <div ng-repeat="track in mentee.learning_tracks">
+              <div ng-repeat="(id, mentee) in sections.data">
+                  <div ng-repeat="track in mentee.learning_tracks" style="margin-bottom: 20px;">
                       <div class="track_header">
                           <div class="track_details">
                               <div class="logo_n_name item">
@@ -124,11 +129,14 @@
                           <div class="progress_bar"></div>
                       </div>
                       <div class="section_each" ng-repeat="exercise in track.recent_incomplete_section_interactions">
-                          <div class="exercise_purpose" ng-if="checkTodosStatus(id, track, exercise)">
+                          <div class="exercise_purpose" ng-if="exercise.todos.length != 0 && checkMenteeTodosStatus(id, track, exercise)">
                               <small>Your mentee {{ mentee.name | capitalize }} has completed this exercise</small>
                           </div>
-                          <div class="exercise_purpose" ng-if="!checkTodosStatus(id, track, exercise)">
+                          <div class="exercise_purpose" ng-if="!checkMenteeTodosStatus(id, track, exercise)">
                               <small>Your mentee {{ mentee.name | capitalize }} has incomplete tasks in this exercise</small>
+                          </div>
+                          <div class="exercise_purpose" ng-if="exercise.todos.length == 0">
+                              <small>No tasks assigned to {{ mentee.name | capitalize }}</small>
                           </div>
 
                           <h5>Exercise</h5>
@@ -159,7 +167,7 @@
                                     <div class="row">
                                       <div class="col-lg-10 col-sm-10">
                                         <div ng-if="!todo.edit">
-                                          <i class="fa " ng-click="update_mentees_todo(exercise, todo)" ng-class="todo.state == 'completed' ? 'fa-check-circle' : 'fa-check-circle-o'" aria-hidden="true"></i>
+                                          <i class="fa fa-check-circle-o" ng-click="update_mentees_todo(exercise, todo)" ng-class="{ 'complete': todo.state == 'completed', 'to_be_reviewed': todo.state == 'to_be_reviewed', 'incomplete': todo.state == 'incomplete' }" aria-hidden="true"></i>
                                           <i class="fa fa-times-circle-o" ng-click="update_mentees_todo(exercise, todo, true)"  ng-if="todo.state == 'to_be_reviewed'"></i>
                                           {{ todo.content }}
                                         </div>

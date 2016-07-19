@@ -4,13 +4,13 @@
 //
 
 .incomplete {
-  color: red;
+  color: red !important;
 }
 
 .to_be_reviewed {
-  color: yellow;
+  color: #d3c137 !important;
 }
 
 .complete {
-  color: green;
+  color: darkgreen !important;
 }

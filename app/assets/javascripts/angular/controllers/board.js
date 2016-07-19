@@ -196,16 +196,16 @@ angular.module('mentorhub.board', [])
                 });
         };
 
-        $scope.checkTodosStatus = function(mentee_id, track, exercise) {
-            var track_id = $scope.user_mentee_exercises[mentee_id].learning_tracks.indexOf(track);
-            var exercise_id = $scope.user_mentee_exercises[mentee_id].learning_tracks[track_id]
+        $scope.checkMenteeTodosStatus = function(id, track, exercise) {
+            var track_id = $scope.user_mentee_exercises[id].learning_tracks.indexOf(track);
+            var exercise_id = $scope.user_mentee_exercises[id].learning_tracks[track_id]
                 .recent_incomplete_section_interactions.indexOf(exercise);
-            var todos = $scope.user_mentee_exercises[mentee_id].learning_tracks[track_id]
+            var todos = $scope.user_mentee_exercises[id].learning_tracks[track_id]
                 .recent_incomplete_section_interactions[exercise_id].todos;
 
             var counter = 0;
             for(var i = 0; i < todos.length; ++i) {
-                if(todos[i] == 'completed') {
+                if(todos[i].state == 'completed') {
                     counter++;
                 }
             }
