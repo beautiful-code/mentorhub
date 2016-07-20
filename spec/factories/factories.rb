@@ -1,9 +1,13 @@
 FactoryGirl.define do
-  factory :user, class: User do |u|
-    u.first_name 'robert'
-    u.last_name 'junior'
-    u.email 'user@beautifulcode.in'
-    u.password 'password'
+  factory :user, class: User do
+    first_name 'robert'
+    last_name 'junior'
+    email 'user@beautifulcode.in'
+    password 'password'
+
+    trait :admin do
+      admin true
+    end
   end
 
   factory :section_interaction, class: SectionInteraction do

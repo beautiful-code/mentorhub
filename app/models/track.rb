@@ -24,28 +24,19 @@ class Track < ActiveRecord::Base
   end
 
   def recent_incomplete_section_interactions
-    return [] if incomplete_section_interactions.blank?
     ret = []
 
+    return ret if incomplete_section_interactions.blank?
+
     incomplete_section_interactions.each_with_index do |section_interaction, i|
-      if current_user == self.mentor
-        if i.zero? && section_interaction.new?
-          ret = []
-        elsif i.zero? && !section_interaction.new?
-          ret = [section_interaction]
-          next
-        end
-        section_interaction.new? ? break : (ret << section_interaction)
-
-      else
-        if i.zero?
-          ret = [section_interaction]
-          next
-        end
-
-        ret.last.new? ? break : (ret << section_interaction)
+      if i.zero?
+        ret = [section_interaction]
+        next
       end
+
+      ret.last.new? ? break : (ret << section_interaction)
     end
+
     ret
   end
 

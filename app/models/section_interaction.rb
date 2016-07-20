@@ -48,8 +48,4 @@ class SectionInteraction < ActiveRecord::Base
       include: [:todos]
     }.merge(options))
   end
-
-  def self.types
-    %w(CourseSectionInteraction ExerciseSectionInteraction)
-  end
 end
