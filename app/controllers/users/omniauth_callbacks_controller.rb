@@ -2,7 +2,6 @@ module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def google_oauth2
       @user = User.from_omniauth(request.env['omniauth.auth'])
-
       if @user.email.split('@')[1] == 'beautifulcode.in'
         if @user.persisted?
           signing_in

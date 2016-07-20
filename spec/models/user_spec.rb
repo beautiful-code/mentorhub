@@ -41,17 +41,17 @@ describe 'User', type: :model do
 
   describe 'valid email address' do
     describe 'all capital letters' do
-      before { user.email = 'SOMETING@GMAIL.COM' }
+      before { user.email = 'SOMETING@BEAUTIFULCODE.IN' }
       it { should be_valid }
     end
 
     describe 'camel case letters' do
-      before { user.email = 'SoMeThInG@GMaiL.COm' }
+      before { user.email = 'SoMeThInG@BEAUtifulCODE.IN' }
       it { should be_valid }
     end
 
     describe 'all small letters' do
-      before { user.email = 'something@exapmle.com' }
+      before { user.email = 'something@beautifulcode.in' }
       it { should be_valid }
     end
   end
