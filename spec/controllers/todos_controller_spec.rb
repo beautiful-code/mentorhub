@@ -149,5 +149,29 @@ RSpec.describe TodosController, type: :controller do
         expect(response.status).to eq(422)
       end
     end
+
+    context 'when is successfully deleted' do
+      before(:each) do
+        track = FactoryGirl.create :track
+        section_interaction = FactoryGirl.create(
+          :section_interaction,
+          track: track
+        )
+
+        todo = FactoryGirl.create(
+          :todo,
+          section_interaction: section_interaction
+        )
+
+        delete :destroy, track_id: track.id,
+          section_interaction_id: section_interaction.id,
+          id: todo.id
+      end
+
+      it 'has a 200 status' do
+        expect(response.status).to eq(200)
+      end
+    end
+
   end
 end

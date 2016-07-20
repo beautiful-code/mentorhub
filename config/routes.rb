@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   resources :tracks, only: [] do
     resources :section_interactions, only: [:create, :edit, :update] do
-      resources :todos, only: [:new, :create, :update, :index]
+      resources :todos, only: [:new, :create, :update, :index, :destroy]
     end
   end
 
@@ -18,9 +18,6 @@ Rails.application.routes.draw do
 
   get 'users/auth/failure', to: redirect('/')
   get 'board', to: 'board#index'
-
-  put 'todos/:todo_id', to: 'todos#update'
-  delete 'todos/:todo_id', to: 'todos#destroy'
 
   root to: 'board#index'
 end
