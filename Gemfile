@@ -18,6 +18,8 @@ gem 'carrierwave'
 gem 'fog-aws'
 gem 'state_machines-activerecord'
 gem 'jbuilder'
+gem 'bower-rails', '~> 0.10.0'
+gem 'material_design_lite-sass'
 
 group :development, :test do
   gem 'seed_dump'

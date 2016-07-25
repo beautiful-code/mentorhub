@@ -7,6 +7,8 @@ class SectionInteraction < ActiveRecord::Base
   validates :track, presence: true
   validates :type, presence: true
 
+  before_save :set_state_to_review_pending, if: -> { mentee_notes_changed? }
+
   serialize :resources, Array
 
   STATES =
@@ -26,7 +28,7 @@ class SectionInteraction < ActiveRecord::Base
     end
 
     event :pending_tasks do
-      transition [:section_submitted, :review_pending] => :tasks_pending
+      transition [:new, :section_submitted, :review_pending] => :tasks_pending
     end
 
     event :complete_section do
@@ -41,13 +43,27 @@ class SectionInteraction < ActiveRecord::Base
   end
 
   def serializable_hash(options)
+    options ||= {}
+
     super({
-      except: [:created_at, :updated_at],
+      except: [:goal, :created_at, :updated_at],
       include: [:todos]
     }.merge(options))
   end
 
-  def self.types
-    %w(CourseSectionInteraction ExerciseSectionInteraction)
+  def resources
+    super.map(&:symbolize_keys).collect do |res|
+      if res[:url].present?
+        (res[:url] = "http://#{res[:url]}" unless res[:url].include?('http'))
+      end
+
+      res
+    end
+  end
+
+  private
+
+  def set_state_to_review_pending
+    self.state = 'review_pending'
   end
 end

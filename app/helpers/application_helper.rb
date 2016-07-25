@@ -22,4 +22,5 @@ module ApplicationHelper
       (!options[:id] || (options[:id].to_s == params[:id]))
     active ? 'selected' : false
   end
+
 end

@@ -37,8 +37,7 @@ class TodosController < ApplicationController
   private
 
   def todo_params
-    params.fetch(:todo, {}).permit(:content)
-    # params.permit(:state, :content, :section_interaction_id)
+    params.fetch(:todo, {}).permit(:content, :state)
   end
 
   def set_section_interaction

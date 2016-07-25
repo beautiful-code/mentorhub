@@ -1,3 +1,4 @@
+@import 'material';
 $bg: #e9ebee;
 $border: #c5c7c9;
 $primary: #056ab2;
@@ -6,7 +7,7 @@ $secondary: #888888;
 $red: #F28379;
 $green: #598D09;
 $yellow: #F0AD4E;
-#board{ 
+#board{
   .nav-tabs{
     border-bottom: 1px solid $border;
 
@@ -25,7 +26,7 @@ $yellow: #F0AD4E;
       }
     }
     .inactive > a:hover{
-      border: 1px solid $primary;  
+      border: 1px solid $primary;
       background-color: $primary;
 
     }
@@ -75,6 +76,9 @@ $yellow: #F0AD4E;
           height: 30px;
           margin-bottom: 10px;
           h5{
+            text-transform: uppercase;
+            font-size: 10px;
+            color: $secondary;
             margin: 0;
           }
           .item{
@@ -86,19 +90,19 @@ $yellow: #F0AD4E;
               width: 24px;
               height: 24px;
               vertical-align: top;
-              margin-top:3px; 
+              margin-top:3px;
               display: inline-block;
             }
             h3{
 
               display: inline-block;
             }
-          }  
+          }
           .track_deadline{
             text-align: center;
             #date{
               position: relative;
-              right: 18px;
+              right: 33px;
             }
           }
           .track_mentor{
@@ -107,8 +111,8 @@ $yellow: #F0AD4E;
           h3{
             margin: 0;
           }
-          
-      } 
+
+      }
     }
     .section_each{
         position: relative;
@@ -116,8 +120,15 @@ $yellow: #F0AD4E;
          margin-top: 6px;
          margin-bottom: 4px;
         }
+
         .exercise_name{
-          margin-bottom: 4px;
+            i{
+              vertical-align: top;
+              margin-top: 5px;
+            }
+          h3{
+            line-height: 24px;
+          }
         }
       .exercise_purpose{
         width: 100%;
@@ -126,7 +137,24 @@ $yellow: #F0AD4E;
         right: 0px;
         text-align: center;
         height: 20px;
-        background-color: rgba(242,131,121,0.2);
+
+        &.section_completed {
+          background-color: $green;
+        }
+
+        &.section_submitted,
+        &.review_pending {
+          background-color: $yellow;
+        }
+
+        &.tasks_pending {
+          background-color: $red;
+        }
+
+        &.new {
+          background-color: $border;
+        }
+
         p{
           font-size: 14px;
           line-height: 20px;
@@ -159,13 +187,13 @@ $yellow: #F0AD4E;
             list-style: none;
           }
           i{
-          color: $red; 
+          color: $red;
           }
         }
       }
     }
   }
-  
+
   #user_mentee_exercises{
     .exercise_purpose{
       background-color: rgba(240,173,78,0.2);
@@ -190,10 +218,10 @@ $yellow: #F0AD4E;
           border: 1px solid $border;
           border-radius: 3px;
           padding-left: 16px;
-          font-size: 12px; 
+          font-size: 12px;
         }
 
-       
+
       }
     }
   }

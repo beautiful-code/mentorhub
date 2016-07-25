@@ -17,3 +17,7 @@
 //= require tracks
 //= require mentoring_tracks
 //= require mentoring_track_show
+//= require angular/angular.min
+//= require angular-animate/angular-animate.min
+//= require_tree ./angular
+//= require material

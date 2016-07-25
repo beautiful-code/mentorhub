@@ -6,6 +6,7 @@ $border: #c5c7c9;
 $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
+$green: #598D09;
 
 * {
   margin: 0;
@@ -206,9 +207,13 @@ body {
 
 }
 
-.progress_bar{
+.progress,
+.progress_bar {
   height:12px;
-  background-color:$secondary;
+}
+
+.progress_bar {
+  background-color: $green;
   border-radius:3px;
 }
 
@@ -280,6 +285,7 @@ input[type="button"].btn-secondary_action{
     border:1px solid $border;
     border-radius: 3px;
     padding:10px;
+    margin-bottom: 10px;
     border-left:4px solid $primary;
     a{
       color: $primary;
@@ -325,43 +331,47 @@ input[type="button"].btn-secondary_action{
     text-decoration: none;
   }
 
-  i {
+   i {
     font-size: 2em;
+  }
+}
+
+.board_sections,
+.section-state-event {
+  i {
     padding-right: 5px;
   }
 
   .new i {
-    color: #aeaeae;
-
-    &:hover {
-      color: #dedede;
-    }
+    color: #888888;
+    //cursor: pointer;
   }
 
   .review_pending i,
   .section_submitted i {
-    color: #d3c137;
+    color: #F0AD4E;
+    cursor: pointer;
 
     &:hover {
-      color: #d3b137;
+      color: #598D09;
     }
   }
 
   .tasks_pending i {
-    color: darkred;
+    color: #F28379;
+    cursor: pointer;
 
     &:hover {
-      color: red;
+      color: #598D09;
     }
   }
 
-
-
-  .section_completed {
-    color: darkgreen;
+  .section_completed i {
+    //cursor: pointer;
+    color: #598D09;
 
     &:hover {
-      color: green;
+      color: #598D09;
     }
   }
 }
