@@ -1,4 +1,4 @@
-class TrackTemplate < ActiveRecord::Base
+class TrackTemplate < ApplicationRecord
   validates :name, presence: true
   validates :desc, presence: true
   validates :type, presence: true

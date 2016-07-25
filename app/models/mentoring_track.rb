@@ -1,4 +1,4 @@
-class MentoringTrack < ActiveRecord::Base
+class MentoringTrack < ApplicationRecord
   has_many :tracks
   belongs_to :mentee, class_name: 'User', foreign_key: :mentee_id
   attr_writer :current_step

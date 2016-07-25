@@ -12,6 +12,7 @@ class TodosController < ApplicationController
   def create
     if @todo.save
       @section_interaction.pending_tasks
+      broadcast_cable(@todo, 'create')
       render json: { msg: 'Todo created', todo: @todo }, status: 201
     else
       render json: { msg: 'error', errors: @todo.errors }, status: 422
@@ -20,6 +21,7 @@ class TodosController < ApplicationController
 
   def update
     if @todo.update(todo_params)
+      broadcast_cable(@todo, 'update')
       render json: { msg: 'Todo updated', todo: @todo }, status: 200
     else
       render json: { msg: 'error', errors: @todo.errors }, status: 422
@@ -28,6 +30,7 @@ class TodosController < ApplicationController
 
   def destroy
     if @todo.destroy
+      broadcast_cable(@todo, 'destroy')
       render json: { msg: 'Todo deleted' }, status: 200
     else
       render json: { msg: 'error', errors: @todo.errors }, status: 422
@@ -35,6 +38,10 @@ class TodosController < ApplicationController
   end
 
   private
+
+  def broadcast_cable(data, action)
+    ActionCable.server.broadcast('todos', todo: data, action: action)
+  end
 
   def todo_params
     params.fetch(:todo, {}).permit(:content, :state)

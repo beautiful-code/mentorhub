@@ -1,7 +1,7 @@
 TrackTemplate.create!([
-  {name: "GIT", type: "ExerciseTrackTemplate", image: "Git.png", desc: "A free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency"},
-  {name: "HTML Fundamentals", type: "ExerciseTrackTemplate", image: "HTML5.png", desc: "HTML, is the standard markup language used to create web pages"},
-  {name: "Cascading Style Sheets (CSS)", type: "ExerciseTrackTemplate", image: "css.png", desc: "CSS is a stylesheet language that describes the presentation of an HTML (or XML) document"}
+  {name: "GIT", type: "ExerciseTrackTemplate", remote_image_url: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Git_icon.svg/1024px-Git_icon.svg.png", desc: "A free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency"},
+  {name: "HTML Fundamentals", type: "ExerciseTrackTemplate", remote_image_url: "https://www.w3.org/html/logo/downloads/HTML5_Logo_512.png", desc: "HTML, is the standard markup language used to create web pages"},
+  {name: "Cascading Style Sheets (CSS)", type: "ExerciseTrackTemplate", remote_image_url: "https://upload.wikimedia.org/wikipedia/commons/3/3d/CSS.3.svg", desc: "CSS is a stylesheet language that describes the presentation of an HTML (or XML) document"}
 ])
 
 ExerciseSectionTemplate.create!([
@@ -34,3 +34,9 @@ ExerciseSectionTemplate.create!([
   {title: "HTML Forms", goal: nil, content: "Be familiar with various form input types and it’s attributes",  resources: [{"text"=>"Go through the links to understand the concepts mentioned below", "url"=>""}, {"text"=>"Form input types such as number, range, date picker, color picker", "url"=>"www.youtube.com/watch?v=pbm7e-lPGl0"}, {"text"=>"More form input types such as input list, email, telephone, url & search", "url"=>"www.youtube.com/watch?v=9tbTunXSFh4"}], track_template_id: 2},
   {title: "Media elements", goal: nil, content: "Usage of media elements like audio, video and images",  resources: [{"text"=>"Go through the link", "url"=>"learn.shayhowe.com/html-css/adding-media/"}], track_template_id: 2}
 ])
+
+[
+  {first_name: "Bertram", last_name: "Wooster", email: "b.wooster@gmail.com", password: "password", password_confirmation: "password", image: "https://mundabor.files.wordpress.com/2012/05/bertie-wooster.jpg"},
+  {first_name: "Reginald", last_name: "Jeeves", email: "r.jeeves@gmail.com", password: "password", password_confirmation: "password", image: "https://s-media-cache-ak0.pinimg.com/236x/48/e8/be/48e8be292e27d572dbdf783ad3196c4a.jpg"},
+  {first_name: "Roderick", last_name: "Glossop", email: "r.glossop@gmail.com", password: "password", password_confirmation: "password", image: "https://s-media-cache-ak0.pinimg.com/564x/0e/98/cd/0e98cd1192ba7f2f122c71e1654883fd.jpg"},
+].each {|user_info| User.create(user_info) }

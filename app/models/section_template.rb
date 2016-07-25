@@ -1,4 +1,4 @@
-class SectionTemplate < ActiveRecord::Base
+class SectionTemplate < ApplicationRecord
   belongs_to :track_template
 
   validates :title, presence: true

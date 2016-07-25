@@ -111,6 +111,7 @@ angular.module('mentorhub.board', [])
             //             console.log(error);
             //         });
             // }, 40000);
+
         };
 
         $scope.add_task = function (exercise, todo) {
