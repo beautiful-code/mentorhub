@@ -14,7 +14,10 @@ class Track < ApplicationRecord
 
     super({
       except: [:created_at, :updated_at, :type, :image],
-      methods: [:image_url, :recent_incomplete_section_interactions, :progress]
+      methods: [
+        :image_url, :recent_incomplete_section_interactions,
+        :progress, :expected_progress
+      ]
     }.merge(options))
   end
 
@@ -48,5 +51,10 @@ class Track < ApplicationRecord
     no_of_s_done = section_interactions.where(state: 'section_completed').count
     res = ((no_of_s_done.to_f / no_of_s.to_f) * 100).round(2)
     !res.nan? && res.finite? ? res : 0
+  end
+
+  def expected_progress
+    # TODO
+    80
   end
 end
