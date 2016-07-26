@@ -1,8 +1,5 @@
-<ul class="user_tracks-subnav" ng-if="Helper.keys(user_exercises).length != 0">
-    <li class="active" select-subnav="All">
-        <a style="cursor: pointer">All</a>
-    </li>
-    <li ng-repeat="(track, track_info) in user_exercises" select-subnav="{{ track }}">
+<ul class="user_tracks-subnav" ng-if="Helper.keys(user_tracks).length != 0">
+    <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''">
         <a style="cursor: pointer">
             <img ng-src="{{ track_info.image_url }}"/>
             {{ track | capitalize }}
@@ -10,7 +7,7 @@
     </li>
 </ul>
 
-<div ng-if="Helper.keys(user_exercises).length == 0" style="padding: 20px;" class="text-center">
+<div ng-if="Helper.keys(user_tracks).length == 0" style="padding: 20px;" class="text-center">
     <p>You are not assigned any task.</p>
 </div>
 
