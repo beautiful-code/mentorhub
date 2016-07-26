@@ -10,14 +10,20 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// Vendor
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
+//= require material
+//= require angular/angular.min
+//= require angular-animate/angular-animate.min
+//
+// Custom
 //= require handlebars_helpers
 //= require tracks
 //= require mentoring_tracks
 //= require mentoring_track_show
-//= require angular/angular.min
-//= require angular-animate/angular-animate.min
 //= require_tree ./angular
-//= require material
+//
+// Channels
+//= require cable

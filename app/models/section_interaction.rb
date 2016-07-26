@@ -1,4 +1,4 @@
-class SectionInteraction < ActiveRecord::Base
+class SectionInteraction < ApplicationRecord
   has_many :todos
   belongs_to :track
 
@@ -10,6 +10,8 @@ class SectionInteraction < ActiveRecord::Base
   before_save :set_state_to_review_pending, if: -> { mentee_notes_changed? }
 
   serialize :resources, Array
+
+  after_update_commit { SectionInteractionBroadcastJob.perform_later self }
 
   STATES =
     %w(new section_submitted tasks_pending

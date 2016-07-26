@@ -18,9 +18,12 @@ class TrackTemplatesController < ApplicationController
   end
 
   def create
+    # TODO: Capture the track type from the form
+    @track_template.type = 'ExerciseTrackTemplate'
+
     if @track_template.save
       render json: { msg: 'success',
-                     track_template: @track_template }, status: 200
+                      track_template: @track_template }, status: 200
     else
       render json: {
         msg: 'error',

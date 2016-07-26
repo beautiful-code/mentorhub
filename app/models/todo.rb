@@ -1,4 +1,4 @@
-class Todo < ActiveRecord::Base
+class Todo < ApplicationRecord
   belongs_to :section_interaction
 
   validates :content, presence: true

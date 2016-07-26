@@ -1,6 +1,6 @@
 .form_style
   %h2 Create an account
-  =link_to user_omniauth_authorize_path(:google_oauth2),class:"google_login btn" do
+  =link_to user_google_oauth2_omniauth_authorize_path,class:"google_login btn" do
     %i.fa.fa-google-plus-official(aria-hidden="true")
     Sign up with Google
   %p or
