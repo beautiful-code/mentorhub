@@ -1,0 +1,26 @@
+sudo: false
+cache:
+  bundler: true
+  custom_install: true
+language: ruby
+rvm:
+ - 2.2.3
+matrix:
+  fast_finish: true
+env:
+  - DB=postgresql
+script:
+  - bundle exec rubocop
+  - RAILS_ENV=test bundle exec rake db:migrate --trace
+  - bundle exec rspec spec/
+before_script:
+  - psql -c 'CREATE DATABASE mentorhub_test;' -U postgres
+  - psql -c "CREATE USER root WITH PASSWORD '';" -U postgres
+bundler_args: --without development
+before_install: gem update --remote bundler
+install:
+  - bundle install --retry 3
+notifications:
+  email: false
+  slack:
+    secure: XEdsK26exdZiEf788n8yijj4a+HjG2QENlUeYcQ5spXZ8hC12WyWe+JT8g/FmYk6m6BuprJ855MzQ31vLzohrCMbfSCUsEG2ockA8YeSrJVfc+S0LbyxPVMaR9R/3lLYgyBqg5Z1nrBGQZQsxC/BH25GBHNBKbHsY+xvusyG6WYCZ/9Y/r8g+fCg3Q0Q89v4jqLF+zEzJJVKp6jCRTWDnPouKJ5L+Lx81JB5O5+vKoNHIF6br85fF89ocx5jASXolFA46yUWwxnsRjI93kMIE2Z/MtVXqMQnmPt2uWbCxVeXgQ5MGF3QIPAROuNbA9Pk8MV0z1zvVmABWPiXC/y9lBrG1TrDSA+ai10hXdQmfG1wb6+qdlf27BCIWy4JH4P/l1kZ79tntKXvIfd47FKzSZQ877CNsQRSHFzC3NYMqAZmDKEjy7zwiBnO/k/W4osO+MtX+C6SEMOQlmyAUKy4qqU+hHitrt5LtP/id8TpFd9MlmImRdCgmj5rjPgLBE8UGqh8mgbjgJ0JBBTrCbeTv28bAgcUqSX5RyHdQYncyUGeBJ2LqMdRCA++NkafxWlMmiBSTOewZZ3WEWubhDlwdV5v+Df1fMW3VJY7YJifr/PxYus3o04fjDyA+M4uBz6h4UKqkQNQf5PULRD6b9Z+9mL+ZQUhy+5wSIejX2cFO5M=

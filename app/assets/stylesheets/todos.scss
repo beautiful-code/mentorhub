@@ -1,3 +1,43 @@
 // Place all the styles related to the todos controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+//
+$bg: #e9ebee;
+$border: #c5c7c9;
+$primary: #056ab2;
+$text: #333333;
+$secondary: #888888;
+$red: #F28379;
+$green: #598D09;
+$yellow: #F0AD4E;
+.incomplete {
+  color: #F28379 !important;
+}
+
+.to_be_reviewed {
+  color: #F0AD4E !important;
+}
+
+.completed {
+  color: #598D09 !important;
+}
+.exercise-tasks_to_do{
+  i{
+    font-size: 14px;
+    margin-top: 5px;
+    vertical-align: top;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .edit-icons{
+    text-align: center;
+
+    i {
+      color: $secondary !important;
+      cursor:pointer;
+    }
+  }
+}

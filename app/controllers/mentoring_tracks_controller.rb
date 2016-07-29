@@ -1,50 +1,63 @@
 class MentoringTracksController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_track, only: [:show]
+
+  def index
+    @mentoring_tracks = current_user.mentoring_tracks
+  end
 
   def new
-    session[:mtrack_params] ||= {}
-    session[:mentoring_track_step] = nil
-    @mentoring_track = MentoringTrack.new
+    @tracks = TrackTemplate.all
+    @users = User.all - [current_user]
   end
 
   def create
-    session[:mtrack_params] = params[:mentoring_track] unless params[:mentoring_track].blank?
-    @mentoring_track = MentoringTrack.new(mentee_id: session[:mtrack_params]["mentee_id"])
-    @mentoring_track.current_step = session[:mentoring_track_step]
+    track_template = TrackTemplate.find(track_params['id'])
 
-    if @mentoring_track.current_step == "assigning"
-      track = Track.find(params[:mentoring_track][:track_id])
-      ti_options = track.dup.attributes.merge({"mentor_id" => current_user.id})
-      track_instance = TrackInstance.create(ti_options)
+    ActiveRecord::Base.transaction do
+      options = track_template.dup.attributes.except('type', 'id')
+      options.merge!(
+        mentor_id: current_user.id,
+        remote_image_url: track_template.image_url,
+        mentee_id: params[:menteeId],
+        type: track_template.type.gsub('Template', '')
+      )
 
-      track.sections.each do |section|
-        options = section.dup.attributes.except("track_id").merge({"track_instance_id" => track_instance.id})
-        @section_interaction = SectionInteraction.create(options)
-      end
-      session[:track_instance_id] = track_instance.id
+      track = Track.create(options)
+      create_section_interactions(track)
     end
 
-    @track_instance = TrackInstance.find(session[:track_instance_id])
-
-    if params[:back_button]
-      @mentoring_track.previous_step
-    elsif @mentoring_track.last_step?
-      @mentoring_track.save!
-      @track_instance.update_attribute(:mentoring_track_id, @mentoring_track.id)
-    else
-      @mentoring_track.next_step
-    end
-
-    session[:mentoring_track_step] = @mentoring_track.current_step
-    if @mentoring_track.new_record?
-      render 'new'
-    else
-      flash[:success] = "#{@track_instance.name} track was added to #{@mentoring_track.mentee.name}"
-      session[:mentoring_track_step] = session[:mtrack_params] = nil
-      redirect_to mentoring_tracks_path
-    end
+    render json: { msg: 'success' }, status: 200
   end
 
-  def index
-    @mentoring_tracks = MentoringTrack.all
+  def show
+    @section_interactions = @track.section_interactions.order(:id)
+                                  .preload(:todos)
+  end
+
+  private
+
+  def set_track
+    @track = if params[:id].present?
+               Track.find(params[:id])
+             else
+               Track.new(track_params)
+             end
+  end
+
+  def sections_params
+    JSON.parse(params.require(:sections))
+  end
+
+  def track_params
+    params.fetch(:track).permit!
+  end
+
+  def create_section_interactions(track)
+    sections_params.each do |section|
+      options = section.except('track_template_id', 'id')
+      options[:type] = "#{track.type.gsub('Track', '')}SectionInteraction"
+      track.section_interactions.create(options)
+    end
   end
 end

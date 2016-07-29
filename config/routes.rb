@@ -1,18 +1,26 @@
 Rails.application.routes.draw do
-  resources :tracks, except: [:edit] do
-    resources :sections, except: [:index, :edit, :new]
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/cable'
+
+  devise_for :users, controllers: {
+    omniauth_callbacks: 'users/omniauth_callbacks',
+    registrations: 'registrations'
+  }
+
+  resources :track_templates, except: [:edit] do
+    resources :section_templates
   end
 
-  root :to => 'board#index'
-  resources :mentoring_tracks, only: [:new, :create, :index]
-  resources :section_interactions, only: [:edit, :update]
-  get "home/learning_tracks", to: "home#learning_tracks", as: :learning_tracks
+  resources :tracks, only: [] do
+    resources :section_interactions, only: [:create, :edit, :update] do
+      resources :todos
+    end
+  end
 
-  resources :todos, only: [:create]
-
-  devise_for :users,  :controllers => { :omniauth_callbacks => "users/omniauth_callbacks",registrations: 'registrations'  }
+  resources :mentoring_tracks, only: [:new, :create, :index, :show]
 
   get 'users/auth/failure', to: redirect('/')
-
   get 'board', to: 'board#index'
+
+  root to: 'board#index'
 end

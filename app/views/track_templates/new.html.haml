@@ -1,0 +1,8 @@
+- if @track_template.errors.any?
+  .row
+    .alert.alert-danger.col-md-8.col-md-offset-2
+      %ul
+        - @track_template.errors.full_messages.each do |error|
+          %li= error
+-breadcrumb :new_track_template
+=render 'form'

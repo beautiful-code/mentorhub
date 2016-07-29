@@ -1,17 +1,32 @@
-class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  def google_oauth2
-    @user = User.from_omniauth(request.env["omniauth.auth"])
+module Users
+  class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+    def google_oauth2
+      @user = User.from_omniauth(request.env['omniauth.auth'])
 
-    if request.env["omniauth.auth"].info["email"].split("@")[1] == "beautifulcode.in"
-      if @user.persisted?
-        flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
-        sign_in_and_redirect @user, :event => :authentication
+      if @user.email.split('@')[1] == 'beautifulcode.in'
+        if @user.persisted?
+          signing_in
+        else
+          session_store
+        end
       else
-        session["devise.google_data"] = request.env["omniauth.auth"]
-        redirect_to new_user_registration_url
+        redirect_with_flash
       end
-    else
-      flash[:danger] =  "Sorry, but you need to have a beautiful-code account to log in"
+    end
+
+    def signing_in
+      flash[:notice] =
+        I18n.t 'devise.omniauth_callbacks.success', kind: 'Google'
+      sign_in_and_redirect @user, event: :authentication
+    end
+
+    def session_store
+      session['devise.google_data'] = request.env['omniauth.auth']
+      redirect_to new_user_registration_url
+    end
+
+    def redirect_with_flash
+      flash[:danger] = 'Log in with beautiful-code account'
       redirect_to new_user_session_path
     end
   end

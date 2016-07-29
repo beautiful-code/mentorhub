@@ -1,0 +1,119 @@
+<ul class="user_tracks-subnav" ng-if="Helper.keys(user_mentee_tracks).length != 0">
+    <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''">
+        <a style="cursor: pointer">
+            <img ng-src="{{ track.image_url }}">
+            {{ user_mentee_tracks[track.mentee_id].name | capitalize }}
+        </a>
+    </li>
+</ul>
+<div ng-if="Helper.keys(user_mentee_tracks).length == 0" style="padding: 20px;" class="text-center">
+    <p>You do not have any mentees.</p>
+</div>
+
+<div ng-repeat="track in sections.data" style="margin-bottom: 20px;">
+    <div class="track_header">
+        <div class="track_details">
+            <div class="logo_n_name item">
+                <img ng-src="{{ track.image_url }}"/>
+                <h3>{{ track.name }}</h3>
+            </div>
+            <div class="track_deadline item">
+                <h5 >to be completed by</h5>
+                <p id="date">{{ track.deadline | date_filter | date: 'MMM dd' }}</p>
+            </div>
+            <div class="track_mentor item">
+                <h5>mentee</h5>
+                <p>{{ user_mentee_tracks[track.mentee_id].name }}</p>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="progress_bar" style="width: {{track.progress}}%;"></div>
+        </div>
+    </div>
+    <div class="section_each" ng-repeat="exercise in track.recent_incomplete_section_interactions">
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.state == 'new'">
+            <small>{{ user_mentee_tracks[track.mentee_id].name | capitalize }} is yet to submit this exercise.</small>
+        </div>
+
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.todos.length != 0 && checkMenteeTodosStatus(exercise) && exercise.state != 'section_completed'">
+            <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed all the tasks</small>
+        </div>
+
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.state == 'section_completed'">
+            <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed this exercise</small>
+        </div>
+
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="!checkMenteeTodosStatus(exercise)">
+            <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has incomplete tasks in this exercise</small>
+        </div>
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.todos.length == 0 && exercise.state != 'new'">
+            <small>No tasks assigned to {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</small>
+        </div>
+
+        <h5>Exercise</h5>
+        <div class="exercise_name">
+            <div class="board_sections">
+                          <span ng-click="sectionStatus(id, track, exercise)" ng-class="exercise.state">
+                            <i class="material-icons">check_circle</i>
+                          </span>
+                <h3>{{ exercise.title }}</h3>
+            </div>
+        </div>
+        <p class="exercise_description">
+            {{ exercise.content }}
+        </p>
+        <div class="section_resources">
+            <h5>Resources</h5>
+            <ul style="list-style-type: none;">
+                <li ng-repeat="resource in exercise.resources">
+                    <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="user_answers" ng-if="exercise.mentee_notes != null">
+            <p>
+                {{ exercise.mentee_notes }}
+            </p>
+        </div>
+        <div ng-if="exercise.state != 'new'" class="exercise-tasks_to_do" style="margin-bottom: 10px;">
+            <h4>Tasks Todo</h4>
+            <ul>
+                <li ng-repeat="todo in exercise.todos" style="margin-bottom: 5px;">
+                    <div class="row">
+                        <div class="col-lg-10 col-sm-10">
+                            <div ng-if="!todo.edit">
+                                <i class="material-icons" ng-click="update_mentees_todo(exercise, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
+                                <i class="material-icons" ng-click="update_mentees_todo(exercise, todo, true)"  ng-if="todo.state == 'to_be_reviewed'">check_circle</i>
+                                {{ todo.content }}
+                            </div>
+                            <input ng-if="todo.edit" class="form-control input-sm" ng-model="todo.content" value="{{ todo.content }}">
+                        </div>
+                        <div class="col-lg-2 col-sm-2 edit-icons" ng-if="exercise.state != 'section_completed'">
+                            <div ng-if="!todo.edit">
+
+                                <i class="material-icons " ng-click="todo.edit = true;">mode_edit</i>
+                                <i class="material-icons edit-icons" ng-click="delete_task(exercise, todo)">delete</i>
+
+                            </div>
+                            <div ng-if="todo.edit">
+
+                                <i class="material-icons edit-icons" ng-click="todo.edit = false;">clear</i>
+
+                                <i class="material-icons edit-icons" ng-click="update_task(exercise, todo)">done</i>
+
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li ng-if="exercise.state != 'section_completed'">
+                    <div class="input-group input-group-sm col-lg-12 col-sm-12">
+                        <input type="text" class="form-control" ng-model="todo.content">
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="button" ng-click="add_task(exercise, todo)">Add task</button>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

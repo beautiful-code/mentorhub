@@ -4,9 +4,8 @@
   {{else}}
   {{/if}}
   <div class="cover_photo">
-
     <div class="logo_track">
-      <img src="{{image.url}}" alt="{{name}} logo">
+      <img src="{{image.image.url}}" alt="{{name}} logo">
       {{#if editable}}
       <input type="file" id="image" class="form-control">
       {{/if}}
@@ -27,15 +26,17 @@
         <span class="help-block"></span>
         </div>
         {{else}}
+        {{#if nonEditableTrack}}
+        {{else}}
         <div class="edit-track">
           <input type="button" class="edit-track-btn btn-primary_action" value="Edit Track">
         </div>
+        {{/if}}
         <div >
           <h3>
             {{name}}
           </h3>
         </div>
-
         {{/if}}
         <div>
           {{#if editable}}
@@ -46,9 +47,7 @@
           {{/if}}
         </div>
       </div>
-
       <div class="progress_bar"></div>
-
     </div>
   </div>
   </form>

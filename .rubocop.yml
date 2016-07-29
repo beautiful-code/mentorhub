@@ -1,0 +1,37 @@
+Rails:
+  Enabled: true
+AllCops:
+  Exclude:
+    - 'Rakefile'
+    - 'config/environments/*'
+    - 'config/application.rb'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
+    - 'test/test_helper.rb'
+    - 'config/puma.rb'
+    - 'config/initializers/devise.rb'
+    - 'config/initializers/bower_rails.rb'
+    - 'config/initializers/wrap_parameters.rb'
+    - 'config/initializers/backtrace_silencers.rb'
+    - 'config/initializers/assets.rb'
+    - 'config/initializers/new_framework_defaults.rb'
+    - 'app/helpers/application_helper.rb'
+    - 'db/**/*'
+    - 'bin/*'
+  TargetRubyVersion: 2.3
+Style/RedundantSelf:
+  Description: "Don't use self where it's not needed."
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-self-unless-required'
+  Enabled: false
+Style/Documentation:
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: false
+Style/AlignHash:
+  Enabled: false
+Metrics/AbcSize:
+  Max: 20
+Metrics/MethodLength:
+  CountComments: false
+  Max: 15
+Style/FrozenStringLiteralComment:
+  Enabled: false

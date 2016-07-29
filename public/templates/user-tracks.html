@@ -1,0 +1,89 @@
+<ul class="user_tracks-subnav" ng-if="Helper.keys(user_tracks).length != 0">
+    <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''">
+        <a style="cursor: pointer">
+            <img ng-src="{{ track_info.image_url }}"/>
+            {{ track | capitalize }}
+        </a>
+    </li>
+</ul>
+
+<div ng-if="Helper.keys(user_tracks).length == 0" style="padding: 20px;" class="text-center">
+    <p>You are not assigned any task.</p>
+</div>
+
+<div ng-repeat="(track, track_info) in sections.data" style="margin-bottom: 20px">
+    <div class="track_header">
+        <div class="track_details">
+            <div class="logo_n_name item">
+                <img ng-src="{{ track_info.image_url }}"/>
+                <h3>{{ track | capitalize }}</h3>
+            </div>
+            <div class="track_deadline item">
+                <h5>to be completed by</h5>
+                <p>{{ track_info.deadline | date_filter | date: 'MMM dd' }}</p>
+            </div>
+            <div class="track_mentor item">
+                <h5>mentor</h5>
+                <p>{{ track_info.mentor.name }}</p>
+            </div>
+        </div>
+        <div class="progress">
+            <div class="progress_bar" style="width: {{track_info.progress}}%;"></div>
+        </div>
+    </div>
+    <div class="section_each" ng-repeat="exercise in track_info.recent_incomplete_section_interactions">
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.mentee_notes === null">
+            <small>Go through the resources and submit your progress.</small>
+        </div>
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.todos.length == 0 && exercise.mentee_notes !== null">
+            <small>You do not have any tasks assigned to you.</small>
+        </div>
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.todos.length != 0 && checkMyTodosStatus(exercise)">
+            <small>{{ status.mytodo }}</small>
+        </div>
+        <br>
+        <h5>Exercise</h5>
+        <div class="exercise_name">
+            <div class="board_sections">
+                          <span ng-class="exercise.state">
+                            <i class="material-icons">check_circle</i>
+                          </span>
+                <h3>{{ exercise.title }}</h3>
+            </div>
+        </div>
+        <p class="exercise_description">
+            {{ exercise.content }}
+        </p>
+        <div class="section_resources">
+            <h5>Resources</h5>
+            <ul style="list-style-type: none;">
+                <li ng-repeat="resource in exercise.resources">
+                    <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="user_answers" ng-init="note.edit = false">
+            <p ng-if="exercise.mentee_notes !== null" style="margin-bottom: 10px;">
+                {{ exercise.mentee_notes }}
+                <a ng-click="note.edit = !note.edit; note.mentee_notes = exercise.mentee_notes;" class="col-lg-offset-2 btn btn-xs btn-default">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                </a>
+            </p>
+            <div ng-if="exercise.mentee_notes === null || note.edit == true" class="row" style="margin-bottom: 10px">
+                <div class="col-lg-12">
+                    <input type="text" ng-model="note.mentee_notes" class="form-control col-lg-6 col-sm-6 pull-left" placeholder="Answer">
+                    <button class="btn btn-sm btn-primary col-lg-1" ng-click="add_mentee_notes(exercise, note)" type="button">Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="exercise-tasks_to_do" ng-if="exercise.todos.length != 0">
+            <h4>Tasks Todo</h4>
+            <ul>
+                <li ng-repeat="todo in exercise.todos">
+                    <i class="fa fa-check-circle-o" ng-click="update_my_todo(exercise, todo)" ng-class="todo.state" aria-hidden="true"></i>
+                    {{ todo.content }}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
