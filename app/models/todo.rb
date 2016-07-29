@@ -40,7 +40,9 @@ class Todo < ApplicationRecord
 
   def update_section_interaction_state
     if section_interaction.pending_todos?
-      section_interaction.pending_tasks unless section_interaction.tasks_pending?
+      unless section_interaction.tasks_pending?
+        section_interaction.pending_tasks
+      end
     else
       section_interaction.pending_review
     end
