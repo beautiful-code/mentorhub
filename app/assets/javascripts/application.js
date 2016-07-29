@@ -18,6 +18,11 @@
 //= require angular/angular.min
 //= require angular-animate/angular-animate.min
 //
+// Channels
+//= require action_cable
+//= require_self
+//require_tree ./channels
+//
 // Custom
 //= require handlebars_helpers
 //= require tracks
@@ -25,5 +30,10 @@
 //= require mentoring_track_show
 //= require_tree ./angular
 //
-// Channels
-//= require cable
+
+(function() {
+  this.App || (this.App = {});
+
+  App.cable = ActionCable.createConsumer();
+
+}).call(this);

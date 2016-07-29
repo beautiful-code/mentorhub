@@ -32,8 +32,14 @@
         </div>
     </div>
     <div class="section_each" ng-repeat="exercise in track_info.recent_incomplete_section_interactions">
-        <div class="exercise_purpose" ng-class="exercise.state">
-            <small>You have {{ exercise.todos.length }} task(s) to do in this exercise</small>
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.mentee_notes === null">
+            <small>Go through the resources and submit your progress.</small>
+        </div>
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.todos.length == 0 && exercise.mentee_notes !== null">
+            <small>You do not have any tasks assigned to you.</small>
+        </div>
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.todos.length != 0 && checkMyTodosStatus(exercise)">
+            <small>{{ status.mytodo }}</small>
         </div>
         <br>
         <h5>Exercise</h5>

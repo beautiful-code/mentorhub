@@ -7,7 +7,9 @@ class SectionInteraction < ApplicationRecord
   validates :track, presence: true
   validates :type, presence: true
 
-  before_save :set_state_to_review_pending, if: -> { mentee_notes_changed? }
+  before_save :set_state_to_review_pending, if: lambda {
+    mentee_notes.present? && mentee_notes_changed?
+  }
 
   serialize :resources, Array
 

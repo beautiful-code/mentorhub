@@ -35,7 +35,7 @@
             <small>{{ user_mentee_tracks[track.mentee_id].name | capitalize }} is yet to submit this exercise.</small>
         </div>
 
-        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.todos.length != 0 && checkMenteeTodosStatus(id, track, exercise) && exercise.state != 'section_completed'">
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.todos.length != 0 && checkMenteeTodosStatus(exercise) && exercise.state != 'section_completed'">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed all the tasks</small>
         </div>
 
@@ -43,7 +43,7 @@
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed this exercise</small>
         </div>
 
-        <div class="exercise_purpose" ng-class="exercise.state" ng-if="!checkMenteeTodosStatus(id, track, exercise)">
+        <div class="exercise_purpose" ng-class="exercise.state" ng-if="!checkMenteeTodosStatus(exercise)">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has incomplete tasks in this exercise</small>
         </div>
         <div class="exercise_purpose" ng-class="exercise.state" ng-if="exercise.todos.length == 0 && exercise.state != 'new'">
@@ -75,7 +75,7 @@
                 {{ exercise.mentee_notes }}
             </p>
         </div>
-        <div ng-show="{{exercise.state != 'new'}}" class="exercise-tasks_to_do" style="margin-bottom: 10px;">
+        <div ng-if="exercise.state != 'new'" class="exercise-tasks_to_do" style="margin-bottom: 10px;">
             <h4>Tasks Todo</h4>
             <ul>
                 <li ng-repeat="todo in exercise.todos" style="margin-bottom: 5px;">
