@@ -4,11 +4,11 @@ angular.module('mentorhub', [
         'mentorhub.board'
     ])
 
-    .run(function ($rootScope) {
+    .run(['$rootScope', function ($rootScope) {
         $rootScope.Helper = {
             keys: Object.keys
         }
-    })
+    }])
 
     .filter('capitalize', function() {
         return function(input) {
