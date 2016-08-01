@@ -1,1 +1,19 @@
-MentorHub
+= MentorHub
+
+== Overview.
+
+The goal of MentorHub(MH) is to facilitate effective learning with the help of mentors.
+
+MH came out of practising learning within the context of our daily personal improvement at Beautiful Code. The central concept in MH is a mentored Learning Track. Mentees embark on a learning track and get a near real time feedback on their learning improvements. Generally speaking, we feel this is approach is the most effective way for quick and quality learning.
+
+== Learning Tracks.
+We want to implement the following learning tracks in MH.
+
+==== Exercise based learning track.
+In an exercise based learning track, the mentee undergoes learning by going through a series of exercises to be solved. The learning experience is designed to make the mentee learn the concepts by coming up with solutions for a series of exercise problems. Helpful material that aid the mentee to think about the problem and the solutions are provided. This methodology is better suited in cases where hands on application yields the best learning outcomes.
+
+==== Course based learning track.
+This is a traditional approach of learning where theory is presented first, followed by optional exercises to reinforce the learning. Coursera, the popular learning platform, is modelled on this approach.
+
+==== Open ended learning track.
+In this approach, the mentee has an unique personal learning goal that is best handled in an open ended (where a predetermined plan cannot be devised) is applicable. Example: I want to improve my communication skills so that I am able to better sell the services my company provide. A learning plan for a goal like this is dependent on the mentee’s personal attributes, expected outcomes of the mentoring experience, etc… In an open ended learning track, the mentee does a self-assessment of his current situation and puts forward the learning outcome and the mentor prepares a tailored learning plan.
