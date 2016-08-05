@@ -21,6 +21,18 @@ body {
   position: relative;
 }
 
+.flash_message {
+  position: fixed;
+  bottom: 3em;
+  right: 3em;
+  z-index: 999;
+}
+
+.badge {
+  background: rgba(5, 106, 178, 0.51);
+  font-size: 11px;
+}
+
 /*
  *h5{
  *  text-transform:uppercase;
@@ -295,8 +307,7 @@ input[type="button"].btn-secondary_action{
 
 .alert{
   text-align: center;
-  margin: 0 auto;
-  width: 360px;
+  width: 400px;
   margin-top: 10px;
   font-size: 14px;
   background-color: #cde1ef;
@@ -351,7 +362,9 @@ input[type="button"].btn-secondary_action{
   .section_submitted i {
     color: #F0AD4E;
     cursor: pointer;
+  }
 
+  .section_state i {
     &:hover {
       color: #598D09;
     }
@@ -360,10 +373,6 @@ input[type="button"].btn-secondary_action{
   .tasks_pending i {
     color: #F28379;
     cursor: pointer;
-
-    &:hover {
-      color: #598D09;
-    }
   }
 
   .section_completed i {
