@@ -10,6 +10,12 @@
     %link{:href => "//fonts.googleapis.com/css?family=Open+Sans", :rel => "stylesheet", :type => "text/css"}/
   %body
     :javascript
+      $(document).ready(function(){
+        setTimeout(function(){
+          $(".flash_message" ).fadeOut("slow");
+        }, 5000);
+      })
+
       var PageConfig = {};
 
     = render 'layouts/header'
@@ -19,7 +25,8 @@
         = breadcrumbs style: :bootstrap,class:""
 
     - flash.each do |message_type, message|
-      %div{:class => "alert alert-#{message_type}"}= message
+      %div{:class => "flash_message alert alert-#{message_type}"}= message
+
     = yield
 
     = render 'layouts/scripts'
