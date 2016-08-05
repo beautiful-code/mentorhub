@@ -9,8 +9,12 @@ class Todo < ApplicationRecord
   validates :state, presence: true,
     inclusion: { in: STATES, if: -> { state.present? } }
 
-  after_commit :broadcast_section_interaction, on: [:create, :update, :destroy]
+  after_commit :broadcast_track, on: [:create, :update, :destroy]
   after_commit :update_section_interaction_state, on: [:update, :destroy]
+
+  delegate :track, to: :section_interaction, allow_nil: true
+
+  default_scope { order('id') }
 
   state_machine :state, initial: :incomplete do
     event :review_todo do
@@ -34,8 +38,8 @@ class Todo < ApplicationRecord
 
   private
 
-  def broadcast_section_interaction
-    SectionInteractionBroadcastJob.perform_later(self.section_interaction)
+  def broadcast_track
+    TrackBroadcastJob.perform_later(self.track)
   end
 
   def update_section_interaction_state

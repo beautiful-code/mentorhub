@@ -1,14 +1,22 @@
-= link_to "New Track Template", new_track_template_path, class: "track_list_btn btn btn-primary"
-.container-fluid
-  .track_list
-    - @track_templates.each do |track_template|
-      .track_card
-        .logo_track
-          = image_tag track_template.image
-        .content_track
-          %h3= link_to track_template.name,track_template_path(track_template)
-          %p
-            = track_template.desc
-          %h4.exercise_bottom
-            %span= track_template.section_templates.count
-            Exercises
+:plain
+  <div ng-controller="TracksController">
+    <a class="track_list_btn btn btn-primary" href="/track_templates/new">New Track Template</a>
+    <div class="container-fluid">
+      <div class="track_list">
+        <div ng-repeat="trackTemplate in trackTemplates">
+          <div class="track_card">
+            <div class="logo_track">
+              <img ng-src="{{ trackTemplate.image.image.url }}" />
+            </div>
+            <div class="content_track">
+              <h3><a href="/track_templates/{{ trackTemplate.id }}">{{ trackTemplate.name }}</a></h3>
+              <p>{{ trackTemplate.desc }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+:javascript
+    PageConfig.trackTemplates = #{@track_templates.to_json};

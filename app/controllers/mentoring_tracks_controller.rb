@@ -3,7 +3,10 @@ class MentoringTracksController < ApplicationController
   before_action :set_track, only: [:show]
 
   def index
-    @mentoring_tracks = current_user.mentoring_tracks
+    @mentoring_tracks = JSON.parse(current_user.mentoring_tracks.to_json)
+    @mentoring_tracks.each do |track|
+      track['mentee'] = User.find_by_id(track['mentee_id'])
+    end
   end
 
   def new
@@ -12,27 +15,27 @@ class MentoringTracksController < ApplicationController
   end
 
   def create
-    track_template = TrackTemplate.find(track_params['id'])
+    track_template = TrackTemplate.find(params[:id])
 
     ActiveRecord::Base.transaction do
       options = track_template.dup.attributes.except('type', 'id')
       options.merge!(
         mentor_id: current_user.id,
         remote_image_url: track_template.image_url,
-        mentee_id: params[:menteeId],
+        mentee_id: params[:mentee][:id],
+        deadline: params[:deadline],
         type: track_template.type.gsub('Template', '')
       )
-
       track = Track.create(options)
       create_section_interactions(track)
     end
-
     render json: { msg: 'success' }, status: 200
   end
 
   def show
     @section_interactions = @track.section_interactions.order(:id)
                                   .preload(:todos)
+    @section_interaction_new = SectionInteraction.new
   end
 
   private
@@ -46,18 +49,18 @@ class MentoringTracksController < ApplicationController
   end
 
   def sections_params
-    JSON.parse(params.require(:sections))
-  end
-
-  def track_params
-    params.fetch(:track).permit!
+    params[:sections]
   end
 
   def create_section_interactions(track)
     sections_params.each do |section|
-      options = section.except('track_template_id', 'id')
+      options = section.except(
+        'track_template_id', 'id',
+        'editable', 'newRecord',
+        'newTrackSI'
+      )
       options[:type] = "#{track.type.gsub('Track', '')}SectionInteraction"
-      track.section_interactions.create(options)
+      track.section_interactions.create(options.permit!)
     end
   end
 end

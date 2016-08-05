@@ -17,7 +17,6 @@ class BoardController < ApplicationController
 
   def current_user_mentoring_tracks
     ret = {}
-
     current_user.mentees.each do |mentee|
       ret[mentee.id] = {
         name: mentee.name,
@@ -25,7 +24,6 @@ class BoardController < ApplicationController
         learning_tracks: mentee.learning_tracks
       }
     end
-
     ret
   end
 

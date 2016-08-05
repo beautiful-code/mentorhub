@@ -4,7 +4,7 @@ cache:
   custom_install: true
 language: ruby
 rvm:
- - 2.2.3
+ - 2.3.1
 matrix:
   fast_finish: true
 env:

@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   get 'users/auth/failure', to: redirect('/')
   get 'board', to: 'board#index'
+  get '/user/:mentee_id', to: 'mentoring_tracks#get_user_data'
 
   root to: 'board#index'
 end

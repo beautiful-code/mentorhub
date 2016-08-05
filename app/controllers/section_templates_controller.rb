@@ -3,7 +3,6 @@ class SectionTemplatesController < ApplicationController
   before_action :authenticate_user!, except: [:update, :create, :destroy]
   before_action :set_track_template
   before_action :set_section, except: [:index]
-  before_action :build_resources, only: [:create, :update]
 
   def index
     render json: {
@@ -42,7 +41,9 @@ class SectionTemplatesController < ApplicationController
   private
 
   def section_params
-    params.fetch(:section, {}).permit(:id, :title, :content)
+    params.fetch(:section_template, {}).permit(
+      :id, :title, :content, resources: [:text, :url]
+    )
   end
 
   def set_track_template
@@ -55,12 +56,5 @@ class SectionTemplatesController < ApplicationController
                else
                  @track_template.section_templates.new(section_params)
                end
-  end
-
-  def build_resources
-    @section.resources = params[:section].delete(:resources)
-                                         .collect do |_, v|
-      v
-    end if params[:section][:resources].present?
   end
 end
