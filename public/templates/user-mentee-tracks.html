@@ -82,8 +82,8 @@
                     <div class="row">
                         <div class="col-lg-10 col-sm-10">
                             <div ng-if="!todo.edit">
-                                <i class="material-icons" ng-click="update_mentees_todo(exercise, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
-                                <i class="material-icons" ng-click="update_mentees_todo(exercise, todo, true)"  ng-if="todo.state == 'to_be_reviewed'">cancel</i>
+                                <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(exercise, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
+                                <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(exercise, todo, true)"  ng-if="todo.state == 'to_be_reviewed'">cancel</i>
                                 {{ todo.content }}
                             </div>
                             <input ng-if="todo.edit" class="form-control input-sm" ng-model="todo.content" value="{{ todo.content }}">
@@ -92,14 +92,14 @@
                             <div ng-if="!todo.edit">
 
                                 <i class="material-icons " ng-click="todo.edit = true;">mode_edit</i>
-                                <i class="material-icons edit-icons" ng-click="delete_task(exercise, todo)">delete</i>
+                                <i class="material-icons edit-icons" ng-click="sectionInteractionServices.delete_task(exercise, todo)">delete</i>
 
                             </div>
                             <div ng-if="todo.edit">
 
                                 <i class="material-icons edit-icons" ng-click="todo.edit = false;">clear</i>
 
-                                <i class="material-icons edit-icons" ng-click="update_task(exercise, todo)">done</i>
+                                <i class="material-icons edit-icons" ng-click="sectionInteractionServices.update_task(exercise, todo)">done</i>
 
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                     <div class="input-group input-group-sm col-lg-12 col-sm-12">
                         <input type="text" class="form-control" ng-model="todo.content">
                         <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button" ng-click="add_task(exercise, todo)">Add task</button>
+                          <button class="btn btn-primary" type="button" ng-click="sectionInteractionServices.add_task(exercise, todo)">Add task</button>
                         </span>
                     </div>
                 </li>
