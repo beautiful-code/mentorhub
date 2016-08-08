@@ -107,10 +107,12 @@
                 </li>
                 <li ng-if="exercise.state != 'section_completed'">
                     <div class="input-group input-group-sm col-lg-12 col-sm-12">
-                        <input type="text" class="form-control" ng-model="todo.content">
-                        <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button" ng-click="sectionInteractionServices.add_task(exercise, todo)">Add task</button>
-                        </span>
+                        <input type="text" class="form-control" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(exercise, todo) : 0">
+                        <!--
+                           -<span class="input-group-btn">
+                           -  <button class="btn btn-primary" type="button" ng-click="sectionInteractionServices.add_task(exercise, todo)">Add task</button>
+                           -</span>
+                           -->
                     </div>
                 </li>
             </ul>

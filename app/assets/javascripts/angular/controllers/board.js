@@ -137,34 +137,38 @@ angular.module('mentorhub.board', [])
                 return data;
             };
 
-            var subscribeToInteraction = function (menteeId, mentorId) {
-                App.trackInteraction = App.cable.subscriptions.create(
+            var subscribeToTrack = function (track) {
+                App.trackChannel = App.cable.subscriptions.create(
                     {
-                        channel: 'InteractionChannel',
-                        mentee_id: menteeId,
-                        mentor_id: mentorId
+                        channel: 'TrackChannel',
+                        track_id: track.id
                     },
                     {
                         received: function (data) {
-                            data = JSON.parse(data);
-                            var updated_section = data.section_interaction;
-                            var updated_track = data.track;
-
-                            var section_index = updatable_interactions.all_sections.map(function (e) {
-                                return e.id
-                            }).indexOf(updated_section.id);
+                            var updated_track = JSON.parse(data);
 
                             var track_index = updatable_interactions.all_tracks.map(function (e) {
                                 return e.id
                             }).indexOf(updated_track.id);
 
-                            for (var k in updated_section) {
-                                updatable_interactions.all_sections[section_index][k] = updated_section[k];
-                            }
-
                             for (var k in updated_track) {
                                 updatable_interactions.all_tracks[track_index][k] = updated_track[k];
                             }
+
+                            updated_track.recent_incomplete_section_interactions.forEach(function(updated_section) {
+                              var section_index = updatable_interactions.all_sections.map(function (e) {
+                                  return e.id
+                              }).indexOf(updated_section.id);
+
+                              if (section_index == -1) {
+                                updatable_interactions.all_sections.push(updated_section);
+                              } else {
+                                for (var k in updated_section) {
+                                    updatable_interactions.all_sections[section_index][k] = updated_section[k];
+                                }
+                              }
+
+                            });
 
                             $scope.$apply();
                         }
@@ -179,8 +183,8 @@ angular.module('mentorhub.board', [])
 
                     updatable_interactions = PubSubServices.getAllSectionInteractions(PageConfig.boardJson);
 
-                    PubSubServices.getInteractions(PageConfig.boardJson).forEach(function (interaction) {
-                        subscribeToInteraction(interaction.menteeId, interaction.mentorId);
+                    updatable_interactions.all_tracks.forEach(function (track) {
+                        subscribeToTrack(track);
                     });
                 }
 
@@ -275,7 +279,7 @@ angular.module('mentorhub.board', [])
 
             $scope.sectionStatus = function (id, track, exercise) {
                 if (exercise.state != "new" && todoStatusHelper(exercise) == exercise.todos.length) {
-                    updateSectionInteractionState(exercise, 'section_completed');
+                    SectionInteractionServices.updateSectionInteractionState(exercise, 'section_completed');
                 }
             };
 

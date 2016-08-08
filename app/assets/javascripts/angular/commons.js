@@ -31,24 +31,24 @@ angular.module('mentorhub.commons', [])
             });
         };
 
-        _scope.add_task = function (section, todo) {
+        _scope.add_task = function (sectionInteraction, todo) {
             var route_params = {
-                '{track_id}': exercise.track_id,
-                '{section_id}': exercise.id
+                '{track_id}': sectionInteraction.track_id,
+                '{section_id}': sectionInteraction.id
             };
 
             BoardServices.create_todo(route_params, todo)
                 .success(function (response) {
-                    section.todos.push(response['todo']);
+                    sectionInteraction.todos.push(response['todo']);
                     todo.content = undefined;
-                    this.updateSectionInteractionState(section, "tasks_pending");
+                    this.updateSectionInteractionState(sectionInteraction, "tasks_pending");
                 })
                 .error(function (error) {
                     console.log(error)
                 })
         };
 
-        _scope.update_mentees_todo = function (section, todo, rejected) {
+        _scope.update_mentees_todo = function (sectionInteraction, todo, rejected) {
             var new_state;
 
             if (!rejected) {
@@ -69,8 +69,8 @@ angular.module('mentorhub.commons', [])
 
             if (todo.state != new_state) {
                 var route_params = {
-                    '{track_id}': section.track_id,
-                    '{section_id}': section.id,
+                    '{track_id}': sectionInteraction.track_id,
+                    '{section_id}': sectionInteraction.id,
                     '{todo_id}': todo.id
                 };
 
@@ -78,10 +78,10 @@ angular.module('mentorhub.commons', [])
             }
         };
 
-        _scope.update_task = function (section, todo) {
+        _scope.update_task = function (sectionInteraction, todo) {
             var route_params = {
-                '{track_id}': section.track_id,
-                '{section_id}': section.id,
+                '{track_id}': sectionInteraction.track_id,
+                '{section_id}': sectionInteraction.id,
                 '{todo_id}': todo.id
             };
 
@@ -96,22 +96,22 @@ angular.module('mentorhub.commons', [])
                 });
         };
 
-        _scope.delete_task = function (section, todo) {
+        _scope.delete_task = function (sectionInteraction, todo) {
             var route_params = {
-                '{track_id}': section.track_id,
-                '{section_id}': section.id,
+                '{track_id}': sectionInteraction.track_id,
+                '{section_id}': sectionInteraction.id,
                 '{todo_id}': todo.id
             };
 
             BoardServices.delete_todo(route_params, {todo: todo.id})
                 .success(function (response) {
-                    var index = section.todos.indexOf(todo);
-                    section.todos.splice(index, 1);
+                    var index = sectionInteraction.todos.indexOf(todo);
+                    sectionInteraction.todos.splice(index, 1);
 
-                    if (section.todos.length > 0) {
-                        section.state = "tasks_pending";
+                    if (sectionInteraction.todos.length > 0) {
+                        sectionInteraction.state = "tasks_pending";
                     } else {
-                        section.state = "review_pending";
+                        sectionInteraction.state = "review_pending";
                     }
                 })
                 .error(function (error) {
