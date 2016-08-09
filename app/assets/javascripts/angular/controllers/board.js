@@ -266,15 +266,19 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.checkMenteeTodosStatus = function (sectionInteraction) {
-                return todoStatusHelper(sectionInteraction) == sectionInteraction.todos.length;
+                if(sectionInteraction !== undefined) {
+                    return todoStatusHelper(sectionInteraction) == sectionInteraction.todos.length;
+                }
             };
 
             $scope.checkMyTodosStatus = function (sectionInteraction) {
-                $scope.status = {};
-                var completed_tasks = todoStatusHelper(sectionInteraction);
-                $scope.status.mytodo = "You have " + (sectionInteraction.todos.length - completed_tasks) + " task(s) left to do.";
+                if(sectionInteraction !== undefined) {
+                    $scope.status = {};
+                    var completed_tasks = todoStatusHelper(sectionInteraction);
+                    $scope.status.mytodo = "You have " + (sectionInteraction.todos.length - completed_tasks) + " task(s) left to do.";
 
-                return true;
+                    return true;
+                }
             };
 
             $scope.sectionStatus = function (id, track, sectionInteraction) {

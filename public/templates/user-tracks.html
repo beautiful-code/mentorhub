@@ -63,12 +63,14 @@
             </ul>
         </div>
         <div class="user_answers" ng-init="note.edit = false">
-            <p ng-if="sectionInteraction.mentee_notes !== null" style="margin-bottom: 10px;">
-                {{ sectionInteraction.mentee_notes }}
-                <a ng-click="note.edit = !note.edit; note.mentee_notes = sectionInteraction.mentee_notes;" class="col-lg-offset-2 btn btn-xs btn-default">
-                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                </a>
-            </p>
+            <div class="row" ng-if="sectionInteraction.mentee_notes !== null" style="margin-bottom: 10px;">
+                <div class="col-lg-10">
+                    {{ sectionInteraction.mentee_notes }}
+                </div>
+                <div class="col-lg-2">
+                    <i ng-click="note.edit = !note.edit; note.mentee_notes = sectionInteraction.mentee_notes;" class="material-icons ">mode_edit</i>
+                </div>
+            </div>
             <div ng-if="sectionInteraction.mentee_notes === null || note.edit == true" class="row" style="margin-bottom: 10px">
                 <div class="col-lg-12">
                     <input type="text" ng-model="note.mentee_notes" class="form-control col-lg-6 col-sm-6 pull-left" placeholder="Answer">
@@ -80,7 +82,7 @@
             <h4>Tasks Todo</h4>
             <ul>
                 <li ng-repeat="todo in sectionInteraction.todos">
-                    <i class="fa fa-check-circle-o" ng-click="update_my_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true"></i>
+                    <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
                     {{ todo.content }}
                 </li>
             </ul>
