@@ -220,18 +220,18 @@ angular.module('mentorhub.board', [])
                 subnav_element.children(":first-child").addClass('active');
             };
 
-            $scope.add_mentee_notes = function (exercise, note) {
+            $scope.add_mentee_notes = function (sectionInteraction, note) {
                 var route_params = {
-                    '{track_id}': exercise.track_id,
-                    '{section_id}': exercise.id
+                    '{track_id}': sectionInteraction.track_id,
+                    '{section_id}': sectionInteraction.id
                 };
 
                 BoardServices.update_section(route_params, {section_interaction: {mentee_notes: note.mentee_notes}})
                     .success(function (response) {
-                        exercise.mentee_notes = note.mentee_notes;
+                        sectionInteraction.mentee_notes = note.mentee_notes;
                         note.edit = false;
                         note.mentee_notes = null;
-                        SectionInteractionServices.updateSectionInteractionState(exercise, "review_pending");
+                        SectionInteractionServices.updateSectionInteractionState(sectionInteraction, "review_pending");
                     })
                     .error(function (error) {
                         console.log(error);
@@ -252,8 +252,8 @@ angular.module('mentorhub.board', [])
                 }
             };
 
-            var todoStatusHelper = function (exercise) {
-                var todos = exercise.todos;
+            var todoStatusHelper = function (sectionInteraction) {
+                var todos = sectionInteraction.todos;
 
                 var counter = 0;
                 for (var i = 0; i < todos.length; ++i) {
@@ -265,21 +265,21 @@ angular.module('mentorhub.board', [])
                 return counter;
             };
 
-            $scope.checkMenteeTodosStatus = function (exercise) {
-                return todoStatusHelper(exercise) == exercise.todos.length;
+            $scope.checkMenteeTodosStatus = function (sectionInteraction) {
+                return todoStatusHelper(sectionInteraction) == sectionInteraction.todos.length;
             };
 
-            $scope.checkMyTodosStatus = function (exercise) {
+            $scope.checkMyTodosStatus = function (sectionInteraction) {
                 $scope.status = {};
-                var completed_tasks = todoStatusHelper(exercise);
-                $scope.status.mytodo = "You have " + (exercise.todos.length - completed_tasks) + " task(s) left to do.";
+                var completed_tasks = todoStatusHelper(sectionInteraction);
+                $scope.status.mytodo = "You have " + (sectionInteraction.todos.length - completed_tasks) + " task(s) left to do.";
 
                 return true;
             };
 
-            $scope.sectionStatus = function (id, track, exercise) {
-                if (exercise.state != "new" && todoStatusHelper(exercise) == exercise.todos.length) {
-                    SectionInteractionServices.updateSectionInteractionState(exercise, 'section_completed');
+            $scope.sectionStatus = function (id, track, sectionInteraction) {
+                if (sectionInteraction.state != "new" && todoStatusHelper(sectionInteraction) == sectionInteraction.todos.length) {
+                    SectionInteractionServices.updateSectionInteractionState(sectionInteraction, 'section_completed');
                 }
             };
 
