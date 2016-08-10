@@ -13,7 +13,7 @@ class SectionInteraction < ApplicationRecord
 
   serialize :resources, Array
 
-  after_update_commit { SectionInteractionBroadcastJob.perform_later self }
+  after_update_commit { TrackBroadcastJob.perform_later(self.track) }
 
   STATES =
     %w(new section_submitted tasks_pending

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('mentorhub', [
-        'mentorhub.board'
+        'mentorhub.board',
+        'mentorhub.commons'
     ])
 
     .run(['$rootScope', function ($rootScope) {
