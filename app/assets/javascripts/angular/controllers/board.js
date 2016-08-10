@@ -255,10 +255,23 @@ angular.module('mentorhub.board', [])
             var todoStatusHelper = function (sectionInteraction) {
                 var todos = sectionInteraction.todos;
 
-                var counter = 0;
+                var counter = {
+                    incomplete: 0,
+                    completed: 0,
+                    to_review: 0
+                };
+
                 for (var i = 0; i < todos.length; ++i) {
-                    if (todos[i].state == 'completed') {
-                        counter++;
+                    switch(todos[i].state) {
+                        case 'completed':
+                            counter.completed++;
+                            break;
+                        case 'to_be_reviewed':
+                            counter.to_review++;
+                            break;
+                        default:
+                            counter.incomplete++;
+                            break;
                     }
                 }
 
@@ -267,22 +280,38 @@ angular.module('mentorhub.board', [])
 
             $scope.checkMenteeTodosStatus = function (sectionInteraction) {
                 if(sectionInteraction !== undefined) {
-                    return todoStatusHelper(sectionInteraction) == sectionInteraction.todos.length;
+                    return todoStatusHelper(sectionInteraction).completed == sectionInteraction.todos.length;
                 }
             };
 
             $scope.checkMyTodosStatus = function (sectionInteraction) {
                 if(sectionInteraction !== undefined) {
                     $scope.status = {};
-                    var completed_tasks = todoStatusHelper(sectionInteraction);
-                    $scope.status.mytodo = "You have " + (sectionInteraction.todos.length - completed_tasks) + " task(s) left to do.";
+                    var status = todoStatusHelper(sectionInteraction);
+
+                    switch (status.incomplete) {
+                        case 0:
+                            if (!status.to_review) {
+                                $scope.status.mytodo = "You have completed all the tasks.";
+                            } else {
+                                $scope.status.mytodo = "There are " +
+                                    (status.to_review > 1 ? 'are ' + status.to_review + ' tasks': 'is ' + status.to_review + ' task') +
+                                    " pending to be reviewed by your mentor";
+                            }
+                            break;
+                        default:
+                            $scope.status.mytodo = "You have " +
+                                (status.incomplete > 1 ? status.incomplete + ' tasks': status.incomplete + ' task') +
+                                " left to do.";
+                            break;
+                    }
 
                     return true;
                 }
             };
 
             $scope.sectionStatus = function (id, track, sectionInteraction) {
-                if (sectionInteraction.state != "new" && todoStatusHelper(sectionInteraction) == sectionInteraction.todos.length) {
+                if (sectionInteraction.state != "new" && todoStatusHelper(sectionInteraction).completed == sectionInteraction.todos.length) {
                     SectionInteractionServices.updateSectionInteractionState(sectionInteraction, 'section_completed');
                 }
             };

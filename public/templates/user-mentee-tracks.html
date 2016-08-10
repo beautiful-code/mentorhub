@@ -35,7 +35,7 @@
             <small>{{ user_mentee_tracks[track.mentee_id].name | capitalize }} is yet to submit this exercise.</small>
         </div>
 
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMenteeTodosStatus(exercise) && exercise.state != 'section_completed'">
+        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMenteeTodosStatus(sectionInteraction) && sectionInteraction.state != 'section_completed'">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed all the tasks</small>
         </div>
 
@@ -46,7 +46,7 @@
         <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="!checkMenteeTodosStatus(sectionInteraction)">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has incomplete tasks in this exercise</small>
         </div>
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && exercise.state != 'new'">
+        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.state != 'new'">
             <small>No tasks assigned to {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</small>
         </div>
 
