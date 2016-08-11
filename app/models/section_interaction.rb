@@ -8,12 +8,12 @@ class SectionInteraction < ApplicationRecord
   validates :type, presence: true
 
   before_save :set_state_to_review_pending, if: lambda {
-    mentee_notes.present? && mentee_notes_changed?
+    mentee_notes.present? && mentee_notes_changed? && !pending_todos?
   }
 
   serialize :resources, Array
 
-  after_update_commit { SectionInteractionBroadcastJob.perform_later self }
+  after_update_commit { TrackBroadcastJob.perform_later(self.track) }
 
   STATES =
     %w(new section_submitted tasks_pending

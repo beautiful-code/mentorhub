@@ -9,7 +9,7 @@ angular.module('mentorhub.board', [])
         return {
             update_section: function (route_params, payload) {
                 return $http.put(
-                    Utils.multi_replace(ApiUrls.update_section, route_params),
+                    Utils.multi_replace(ApiUrls.update_section_interaction, route_params),
                     payload
                 )
             },
@@ -119,11 +119,13 @@ angular.module('mentorhub.board', [])
         }
     }])
 
-    .controller('BoardController', ['$rootScope', '$scope', '$timeout', 'BoardServices', 'PubSubServices',
-        function ($rootScope, $scope, $timeout, BoardServices, PubSubServices) {
+    .controller('BoardController', ['$rootScope', '$scope', '$timeout', 'BoardServices', 'PubSubServices', 'SectionInteractionServices',
+        function ($rootScope, $scope, $timeout, BoardServices, PubSubServices, SectionInteractionServices) {
             $scope.active_tab = 'user_tracks';
             $scope.subnav = {};
             $scope.sections = {data: {}};
+            $scope.sectionInteractionServices = SectionInteractionServices;
+
             var updatable_interactions = {};
 
             var parse_mentee_tracks = function (data) {
@@ -135,50 +137,18 @@ angular.module('mentorhub.board', [])
                 return data;
             };
 
-            var subscribeToInteraction = function (menteeId, mentorId) {
-                App.trackInteraction = App.cable.subscriptions.create(
-                    {
-                        channel: 'InteractionChannel',
-                        mentee_id: menteeId,
-                        mentor_id: mentorId
-                    },
-                    {
-                        received: function (data) {
-                            data = JSON.parse(data);
-                            var updated_section = data.section_interaction;
-                            var updated_track = data.track;
-
-                            var section_index = updatable_interactions.all_sections.map(function (e) {
-                                return e.id
-                            }).indexOf(updated_section.id);
-
-                            var track_index = updatable_interactions.all_tracks.map(function (e) {
-                                return e.id
-                            }).indexOf(updated_track.id);
-
-                            for (var k in updated_section) {
-                                updatable_interactions.all_sections[section_index][k] = updated_section[k];
-                            }
-
-                            for (var k in updated_track) {
-                                updatable_interactions.all_tracks[track_index][k] = updated_track[k];
-                            }
-
-                            $scope.$apply();
-                        }
-                    }
-                );
-            };
+            $scope.$on('BoardController', function (event, data) {
+                $scope.$apply();
+            })
 
             var init = function () {
                 if (typeof PageConfig !== "undefined" && typeof PageConfig.boardJson !== "undefined") {
                     $scope.user_mentee_tracks = parse_mentee_tracks(PageConfig.boardJson.mentoring_tracks);
                     $scope.user_tracks = PageConfig.boardJson.learning_tracks;
 
-                    updatable_interactions = PubSubServices.getAllSectionInteractions(PageConfig.boardJson);
-
-                    PubSubServices.getInteractions(PageConfig.boardJson).forEach(function (interaction) {
-                        subscribeToInteraction(interaction.menteeId, interaction.mentorId);
+                    SectionInteractionServices.updatable_interactions = PubSubServices.getAllSectionInteractions(PageConfig.boardJson);
+                    SectionInteractionServices.updatable_interactions.all_tracks.forEach(function (track) {
+                        SectionInteractionServices.subscribeToTrack(track, 'BoardController');
                     });
                 }
 
@@ -186,23 +156,6 @@ angular.module('mentorhub.board', [])
                     $scope.subnav = {active: Object.keys($scope.user_tracks)[0]};
                     $scope.sections.data[$scope.subnav.active] = $scope[$scope.active_tab][$scope.subnav.active];
                 }
-            };
-
-            $scope.add_task = function (exercise, todo) {
-                var route_params = {
-                    '{track_id}': exercise.track_id,
-                    '{section_id}': exercise.id
-                };
-
-                BoardServices.create_todo(route_params, todo)
-                    .success(function (response) {
-                        exercise.todos.push(response['todo']);
-                        todo.content = undefined;
-                        updateSectionInteractionState(exercise, "tasks_pending");
-                    })
-                    .error(function (error) {
-                        console.log(error)
-                    })
             };
 
             $scope.change_tab = function (tab) {
@@ -231,45 +184,17 @@ angular.module('mentorhub.board', [])
                 subnav_element.children(":first-child").addClass('active');
             };
 
-            $scope.add_mentee_notes = function (exercise, note) {
+            $scope.add_mentee_notes = function (sectionInteraction, note) {
                 var route_params = {
-                    '{track_id}': exercise.track_id,
-                    '{section_id}': exercise.id
+                    '{track_id}': sectionInteraction.track_id,
+                    '{section_id}': sectionInteraction.id
                 };
 
                 BoardServices.update_section(route_params, {section_interaction: {mentee_notes: note.mentee_notes}})
                     .success(function (response) {
-                        exercise.mentee_notes = note.mentee_notes;
+                        sectionInteraction.mentee_notes = note.mentee_notes;
                         note.edit = false;
                         note.mentee_notes = null;
-                        updateSectionInteractionState(exercise, "review_pending");
-                    })
-                    .error(function (error) {
-                        console.log(error);
-                    });
-            };
-
-            var updateSectionInteractionState = function (sectionInteraction, newState) {
-                BoardServices.update_section(
-                    {
-                        '{track_id}': sectionInteraction.track_id,
-                        '{section_id}': sectionInteraction.id
-                    },
-                    {
-                        section_interaction: {state: newState}
-                    }
-                ).success(function (response) {
-                    sectionInteraction.state = newState;
-                }).error(function (error) {
-                    console.log(error);
-                });
-
-            };
-
-            var update_todo = function (route_params, payload, todo) {
-                BoardServices.update_todo(route_params, payload)
-                    .success(function (response) {
-                        todo.state = payload.todo.state;
                     })
                     .error(function (error) {
                         console.log(error);
@@ -286,109 +211,71 @@ angular.module('mentorhub.board', [])
                         '{todo_id}': todo.id
                     };
 
-                    update_todo(route_params, {todo: {state: new_state}}, todo);
+                    SectionInteractionServices.update_todo(route_params, {todo: {state: new_state}}, todo);
                 }
             };
 
-            $scope.update_mentees_todo = function (section, todo, rejected) {
-                var new_state;
+            var todoStatusHelper = function (sectionInteraction) {
+                var todos = sectionInteraction.todos;
 
-                if (!rejected) {
-                    switch (todo.state) {
-                        case 'to_be_reviewed':
-                            new_state = 'completed';
-                            break;
+                var counter = {
+                    incomplete: 0,
+                    completed: 0,
+                    to_review: 0
+                };
+
+                for (var i = 0; i < todos.length; ++i) {
+                    switch (todos[i].state) {
                         case 'completed':
-                            new_state = 'incomplete';
+                            counter.completed++;
+                            break;
+                        case 'to_be_reviewed':
+                            counter.to_review++;
                             break;
                         default:
-                            new_state = 'incomplete';
+                            counter.incomplete++;
                             break;
-                    }
-                } else {
-                    new_state = 'incomplete';
-                }
-
-                if (todo.state != new_state) {
-                    var route_params = {
-                        '{track_id}': section.track_id,
-                        '{section_id}': section.id,
-                        '{todo_id}': todo.id
-                    };
-
-                    update_todo(route_params, {todo: {state: new_state}}, todo);
-                }
-            };
-
-            $scope.update_task = function (section, todo) {
-                var route_params = {
-                    '{track_id}': section.track_id,
-                    '{section_id}': section.id,
-                    '{todo_id}': todo.id
-                };
-
-                todo.state = "incomplete";
-                BoardServices.update_todo(route_params, {todo: todo})
-                    .success(function (response) {
-                        todo.edit = false;
-                        todo.state = 'incomplete';
-                    })
-                    .error(function (error) {
-                        console.log(error);
-                    });
-            };
-
-            $scope.delete_task = function (section, todo) {
-                var route_params = {
-                    '{track_id}': section.track_id,
-                    '{section_id}': section.id,
-                    '{todo_id}': todo.id
-                };
-
-                BoardServices.delete_todo(route_params, {todo: todo.id})
-                    .success(function (response) {
-                        var index = section.todos.indexOf(todo);
-                        section.todos.splice(index, 1);
-
-                        if (section.todos.length > 0) {
-                            section.state = "tasks_pending";
-                        } else {
-                            section.state = "review_pending";
-                        }
-                    })
-                    .error(function (error) {
-                        console.log(error);
-                    });
-            };
-
-            var todoStatusHelper = function (exercise) {
-                var todos = exercise.todos;
-
-                var counter = 0;
-                for (var i = 0; i < todos.length; ++i) {
-                    if (todos[i].state == 'completed') {
-                        counter++;
                     }
                 }
 
                 return counter;
             };
 
-            $scope.checkMenteeTodosStatus = function (exercise) {
-                return todoStatusHelper(exercise) == exercise.todos.length;
+            $scope.checkMenteeTodosStatus = function (sectionInteraction) {
+                if (sectionInteraction !== undefined) {
+                    return todoStatusHelper(sectionInteraction).completed == sectionInteraction.todos.length;
+                }
             };
 
-            $scope.checkMyTodosStatus = function (exercise) {
-                $scope.status = {};
-                var completed_tasks = todoStatusHelper(exercise);
-                $scope.status.mytodo = "You have " + (exercise.todos.length - completed_tasks) + " task(s) left to do.";
+            $scope.checkMyTodosStatus = function (sectionInteraction) {
+                if (sectionInteraction !== undefined) {
+                    $scope.status = {};
+                    var status = todoStatusHelper(sectionInteraction);
 
-                return true;
+                    switch (status.incomplete) {
+                        case 0:
+                            if (!status.to_review) {
+                                $scope.status.mytodo = "You have completed all the tasks.";
+                            } else {
+                                $scope.status.mytodo = "There " +
+                                    (status.to_review > 1 ? 'are ' + status.to_review + ' tasks' : 'is ' + status.to_review + ' task') +
+                                    " pending to be reviewed by your mentor";
+                            }
+                            break;
+                        default:
+                            $scope.status.mytodo = "You have " +
+                                (status.incomplete > 1 ? status.incomplete + ' tasks' : status.incomplete + ' task') +
+                                " left to do.";
+                            break;
+                    }
+
+                    return true;
+                }
             };
 
-            $scope.sectionStatus = function (id, track, exercise) {
-                if (exercise.state != "new" && todoStatusHelper(exercise) == exercise.todos.length) {
-                    updateSectionInteractionState(exercise, 'section_completed');
+            $scope.sectionStatus = function (id, track, sectionInteraction) {
+                if (sectionInteraction.state != "new" && todoStatusHelper(sectionInteraction).completed == sectionInteraction.todos.length) {
+                    SectionInteractionServices.updateSectionInteractionState(sectionInteraction, 'section_completed');
                 }
             };
 

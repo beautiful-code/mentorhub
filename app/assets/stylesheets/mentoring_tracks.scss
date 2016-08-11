@@ -4,6 +4,8 @@ $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
 $green: #598d09;
+$red: #F28379;
+$yellow: #F0AD4E;
 
 #add_mentee_track, .show_track_instance{
       width: 60%;
@@ -14,6 +16,12 @@ $green: #598d09;
       margin-top: 6px;
       padding: 16px;
       box-sizing: border-box;
+      #add_exercise_form{
+        width: 100%;
+      }
+      .add_exercise_btn{
+        width: 100%;
+      }
       h4{
         font-size: 1em;
         font-weight: 600;
@@ -253,6 +261,12 @@ $green: #598d09;
               color: $primary;
             }
           }
+        }
+      }
+      .exercise_name{
+        i{
+          position: relative;
+          top: 7px;
         }
       }
     }

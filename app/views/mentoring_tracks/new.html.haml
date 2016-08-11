@@ -1,8 +1,46 @@
 - breadcrumb :add_mentoring_track, @add_mtrack
 
-#add_mentee_track
-  = render 'sections/templates'
-  = render 'templates'
+:plain
+  <div id="add_mentee_track" ng-controller="MentoringTrackNew">
+    <form class="assign_form" >
+      <h4>
+        Add a Mentee Track
+      </h4>
+      <div id="select_box">
+        <div class="select_a_mentee">
+          <label>Select a mentee</label>
+          <select id="exerciseSuperCategory" data-role="listview" ng-options="user as user.first_name for user in users" ng-model="selectMentee" ng-change="update_mentee()">
+            <option value="" selected="selected">Select Mentee</option>
+          </select>
+        </div>
+        <div class="select_a_track">
+          <label>Select a track</label>
+          <select data-role="listview" ng-options="track.name for track in tracks" ng-model="selectTrack" ng-change="update_mentee_track();showButtons = true;">
+            <option value="" selected="selected">Select Track</option>
+          </select>
+        </div>
+        <div>
+          <label>Deadline</label>
+          <input type="date" ng-model="deadline" ng-change="update_mentee_track_deadline()">
+        </div>
+      </div>
+      <div section-interactions-new ng-repeat="section in selectTrack.sections track by $index">
+      </div>
+    </form>
+    <div ng-show="showButtons">
+      <div class="add_exercise add_exercise_btn">
+        <a class="add_exercise_link" ng-click="add_section()">
+          <span>+</span>
+          Add an exercise
+        </a>
+      </div>
+      <div class="buttons">
+        <input type="button" value="Cancel" class="btn btn-primary assign_next" ng-click="reset()">
+        <input type="submit" value="Confirm" class="btn btn-primary assign_next" ng-click="confirm_mentee_track()">
+      </div>
+    </div>
+  </div>
+
 
 :javascript
   var MentoringTrackConfig = {

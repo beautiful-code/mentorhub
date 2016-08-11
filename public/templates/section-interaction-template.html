@@ -1,0 +1,140 @@
+<div ng-hide="section.editable">
+  <div id="customise_exercises">
+    <div class="exercise" data-section-id="{{section.id}}">
+      <header>
+        <div class="crud_elements">
+          <a class="edit-section" ng-click="edit_section(section)">
+            <i class="fa fa-pencil-square-o"></i>
+          </a>
+          <div class="toggle">
+            <input class="tgl" type="checkbox" id="cb{{section.id}}" ng-checked="section.enabled" ng-click="checkBox($event, section)">
+            <label class="tgl-btn" for="cb{{section.id}}"></label>
+          </div>
+        </div>
+      </header>
+      <h5>Exercise</h5>
+      <div class="exercise_name">
+        <a class="section-state-event" ng-if="!section.newTrackSI">
+          <span class="section_state" ng-click="sectionStatus(track, section)" ng-class="section.state">
+            <i class="material-icons">check_circle</i>
+          </span>
+        </a>
+        <h3>{{section.title}}</h3>
+      </div>
+      <p class="exercise_description">
+        {{section.content}}
+      </p>
+      <div class="resources">
+        <h5>Resources</h5>
+        <div ng-repeat="resource in section.resources">
+          <div class="container-fluid">
+            <div class="row">
+              <div ng-if="resource.url">
+                <a target="_blank" href="{{ resource.url }}">{{ resource.text }}</a>
+              </div>
+              <div ng-if="!(resource.url)">
+                <p>{{ resource.text }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div ng-hide = "section.resources.length">
+          <div class="container-fluid">
+            <div class="row">
+              <p>No Resources</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div ng-if="!section.newTrackSI">
+
+        <div ng-if="section.state != 'new'" class="exercise-tasks_to_do" style="margin-bottom: 10px;">
+          <h4>Tasks Todo</h4>
+          <ul>
+            <div class="row" ng-repeat="todo in section.todos">
+              <div class="col-xs-10">
+                <div ng-if="!todo.edit">
+                <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(section, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
+                  <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(section, todo, true)"  ng-if="todo.state == 'to_be_reviewed'">cancel</i>
+                  {{ todo.content }}
+                </div>
+                <input ng-if="todo.edit" class="form-control input-sm" ng-model="todo.content" value="{{ todo.content }}">
+              </div>
+              <div class="col-xs-2 edit-icons" ng-if="section.state != 'section_completed'">
+                <div ng-if="!todo.edit">
+                  <i class="material-icons " ng-click="todo.edit = true;">mode_edit</i>
+                  <i class="material-icons edit-icons" ng-click="sectionInteractionServices.delete_task(section, todo)">delete</i>
+                </div>
+                <div ng-if="todo.edit">
+                  <i class="material-icons edit-icons" ng-click="todo.edit = false;">clear</i>
+                  <i class="material-icons edit-icons" ng-click="sectionInteractionServices.update_task(section, todo)">done</i>
+                </div>
+              </div>
+            </div>
+            <div class="input-group input-group-sm col-xs-12" ng-if="section.state != 'section_completed'">
+              <input type="text" class="form-control" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(section, todo) : 0">
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-show="section.editable">
+  <div class="add_exercise" id="add_exercise_form">
+    <form class="new_section">
+      <div class="input-box">
+        <input id="title"  type="text" name="title" class="form-control" ng-model="section.title">
+        <label for="title">Exercise Name</label>
+        <span class="help-block"></span>
+      </div>
+      <div class="input-box">
+        <textarea  rows="5" name="content" class="form-control" id="content" ng-model="section.content">{{ section.content }}</textarea>
+        <label for="content">Exercise Description</label>
+        <span class="help-block"></span>
+      </div>
+      <div class="resources">
+        <h4>Resources</h4>
+        <div id="resources">
+          <div class="form-inline" ng-repeat="resource in section.resources track by $index">
+            <input placeholder="Text" type="text" class="text res_field" ng-model="resource.text" >
+            <input placeholder="URL" type="text" class="url res_field" ng-model="resource.url">
+
+            <button class="remove add_resource_btn" type="button" ng-click="track.sections[$parent.$index].resources.splice($index,1);">
+              <i class="glyphicon glyphicon-trash"></i>
+            </button>
+          </div>
+        </div>
+
+        <button class="add_resource_btn" id="add_field" type="button" ng-click="addResource($index)">
+          <span>+</span>
+          Add A Resource
+        </button>
+      </div>
+      <div ng-if="!section.newTrackSI">
+        <div class="btn_save" id="btn_save">
+          <div ng-if="section.newRecord" style="display: inline;">
+            <input type="button" class="track-post btn-primary_action" value="Create" ng-click="create_section(track, section)">
+          </div>
+          <div ng-if="section.newRecord == false" style="display: inline;">
+            <input type="button" class="track-post btn-primary_action" value="Update" ng-click="update_section(track, section)">
+          </div>
+          <input type="button" class="cancel-edit btn-secondary_action" value="Cancel" ng-click="cancel_section(section,$index)">
+        </div>
+      </div>
+
+      <div ng-if="section.newTrackSI">
+        <div class="btn_save" id="btn_save">
+          <div ng-if="section.newRecord" style="display: inline;">
+            <input type="button" class="track-post btn-primary_action" value="Create" ng-click="create_section(section)">
+          </div>
+          <div ng-if="section.newRecord == false" style="display: inline;">
+            <input type="button" class="track-post btn-primary_action" value="Update" ng-click="update_section(section)">
+          </div>
+          <input type="button" class="cancel-edit btn-secondary_action" value="Cancel" ng-click="cancel_section(section,$index)">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -29,7 +29,6 @@ class Track < ApplicationRecord
   def recent_incomplete_section_interactions
     return [] if incomplete_section_interactions.blank?
     ret = []
-
     incomplete_section_interactions.each_with_index do |section_interaction, i|
       if i.zero?
         ret = [section_interaction]
@@ -38,7 +37,6 @@ class Track < ApplicationRecord
 
       ret.last.new? ? break : (ret << section_interaction)
     end
-
     ret
   end
 
@@ -54,7 +52,10 @@ class Track < ApplicationRecord
   end
 
   def expected_progress
-    # TODO
-    80
+    deadline = created_at + 10.days
+    no_of_days = ((deadline.to_date) - (created_at.to_date)).to_i
+    remaining_days = ((deadline.to_date) - (Time.now.to_date)).to_i
+    res = ((100 / no_of_days.to_f) * (remaining_days - 1)).round(2)
+    !res.nan? && res.finite? ? res : 0
   end
 end

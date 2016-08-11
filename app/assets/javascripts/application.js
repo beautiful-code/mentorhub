@@ -24,10 +24,6 @@
 //require_tree ./channels
 //
 // Custom
-//= require handlebars_helpers
-//= require tracks
-//= require mentoring_tracks
-//= require mentoring_track_show
 //= require_tree ./angular
 //
 

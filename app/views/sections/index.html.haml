@@ -1,32 +1,30 @@
-- if @track_template.new_record?
-  - breadcrumb :new_track_template
-- else
-  - breadcrumb :track_template, @track_template
+:plain
+  <div id="section_index" ng-controller="TrackController">
+    <div class="track_info">
+      <div track></div>
+    </div>
 
-#section_index
-  .track_info
-    .loading-track
-      %i.fa.fa-spinner.fa-pulse
-    = render "sections/track_template"
+    <div class="sub_nav">
+      <h4 class="selected">Exercises</h4>
+    </div>
 
-  .sub_nav
-    %h4.selected Exercises
+    <div id="section">
+      <div new-exercise ng-repeat="section in track.sections track by $index"></div>
+    </div>
 
-  #section
-    .loading-sections
-      %i.fa.fa-spinner.fa-pulse
-    = render 'sections/templates'
+    <div class="add_exercise add_exercise_btn">
+      <a class="add_exercise_link" ng-click="track.sections.push({ editable: true,newRecord: true });">
+        <span>+ Add an Exercise</span>
+      </a>
+    </div>
+  </div>
 
-  .add_exercise.add_exercise_btn
-    %a.add_exercise_link
-      %span +
-      Add an exercise
-
-  :javascript
-    var PageConfig = {
-      track: #{@track_template.to_json}
-    };
-
-    PageConfig.track.sections = #{@sections.to_json};
-    PageConfig.track.editable = #{@track_template.new_record?};
-    PageConfig.track.newRecord = #{@track_template.new_record?};
+:javascript
+  PageConfig.track = #{@track_template.to_json};
+  PageConfig.track.sections = #{@sections.to_json};
+  $.each(PageConfig.track.sections, function(k, v){
+    v.editable = false;
+    v.newRecord = false;
+  })
+  PageConfig.track.editable = #{@track_template.new_record?};
+  PageConfig.track.newRecord = #{@track_template.new_record?};
