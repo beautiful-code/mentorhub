@@ -8,6 +8,11 @@ $red: #F28379;
 $green: #598D09;
 $yellow: #F0AD4E;
 #board{
+  display: block;
+  margin: 10px auto;
+  max-width: 895px;
+  min-width: 760px;
+
   .nav-tabs{
     border-bottom: 1px solid $border;
 
@@ -32,9 +37,7 @@ $yellow: #F0AD4E;
     }
 
   }
-  width: 60%;
-  display: block;
-  margin: 10px auto;
+
   .user_exercise_style{
     background-color: white;
     border: 1px solid $border;

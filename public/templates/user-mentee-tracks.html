@@ -51,7 +51,7 @@
         <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.state != 'new'">
             <small>No tasks assigned to {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</small>
         </div>
-
+        <br>
         <h5>Exercise</h5>
         <div class="exercise_name">
             <div class="board_sections">
@@ -82,7 +82,7 @@
             <ul>
                 <li ng-repeat="todo in sectionInteraction.todos" style="margin-bottom: 5px;">
                     <div class="row">
-                        <div class="col-lg-10 col-sm-10">
+                        <div class="col-xs-10">
                             <div ng-if="!todo.edit">
                                 <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
                                 <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo, true)"  ng-if="todo.state == 'to_be_reviewed'">cancel</i>
@@ -90,7 +90,7 @@
                             </div>
                             <input ng-if="todo.edit" class="form-control input-sm" ng-model="todo.content" value="{{ todo.content }}">
                         </div>
-                        <div class="col-lg-2 col-sm-2 edit-icons" ng-if="sectionInteraction.state != 'section_completed'">
+                        <div class="col-xs-2 edit-icons" ng-if="sectionInteraction.state != 'section_completed'">
                             <div ng-if="!todo.edit">
 
                                 <i class="material-icons " ng-click="todo.edit = true;">mode_edit</i>
@@ -108,13 +108,11 @@
                     </div>
                 </li>
                 <li ng-if="sectionInteraction.state != 'section_completed'">
-                    <div class="input-group input-group-sm col-lg-12 col-sm-12">
+                    <div class="input-group input-group-sm col-xs-12">
                         <input type="text" class="form-control" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(sectionInteraction, todo) : 0">
-                        <!--
-                           -<span class="input-group-btn">
-                           -  <button class="btn btn-primary" type="button" ng-click="sectionInteractionServices.add_task(exercise, todo)">Add task</button>
-                           -</span>
-                           -->
+                        <span class="input-group-btn">
+                          <button class="btn btn-primary" type="button" ng-click="sectionInteractionServices.add_task(sectionInteraction, todo)">Add task</button>
+                        </span>
                     </div>
                 </li>
             </ul>

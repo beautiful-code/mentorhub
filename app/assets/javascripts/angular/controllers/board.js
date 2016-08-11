@@ -195,7 +195,6 @@ angular.module('mentorhub.board', [])
                         sectionInteraction.mentee_notes = note.mentee_notes;
                         note.edit = false;
                         note.mentee_notes = null;
-                        SectionInteractionServices.updateSectionInteractionState(sectionInteraction, "review_pending");
                     })
                     .error(function (error) {
                         console.log(error);
@@ -258,7 +257,7 @@ angular.module('mentorhub.board', [])
                             if (!status.to_review) {
                                 $scope.status.mytodo = "You have completed all the tasks.";
                             } else {
-                                $scope.status.mytodo = "There are " +
+                                $scope.status.mytodo = "There " +
                                     (status.to_review > 1 ? 'are ' + status.to_review + ' tasks' : 'is ' + status.to_review + ' task') +
                                     " pending to be reviewed by your mentor";
                             }
