@@ -22,5 +22,5 @@
         %li= link_to "My Learning Tracks", "#"
         %li= link_to "Mentees Tracks", mentoring_tracks_path, class: active_class(c:  ['mentoring_tracks'])
         %li= link_to "Tracks", track_templates_path, class: active_class(c: ['sections','tracks'])
-        %hr
+        %li.divider{:role => "separator"}
         %li= link_to "Log out", destroy_user_session_path, method: :delete

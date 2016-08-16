@@ -18,7 +18,7 @@ class Track < ApplicationRecord
         :image_url, :recent_incomplete_section_interactions,
         :progress, :expected_progress
       ],
-      include: :mentee
+      include: [:mentee, :section_interactions]
     }.merge(options))
   end
 

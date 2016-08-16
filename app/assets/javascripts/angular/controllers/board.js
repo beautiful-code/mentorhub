@@ -145,7 +145,6 @@ angular.module('mentorhub.board', [])
                 if (typeof PageConfig !== "undefined" && typeof PageConfig.boardJson !== "undefined") {
                     $scope.user_mentee_tracks = parse_mentee_tracks(PageConfig.boardJson.mentoring_tracks);
                     $scope.user_tracks = PageConfig.boardJson.learning_tracks;
-
                     SectionInteractionServices.updatable_interactions = PubSubServices.getAllSectionInteractions(PageConfig.boardJson);
                     SectionInteractionServices.updatable_interactions.all_tracks.forEach(function (track) {
                         SectionInteractionServices.subscribeToTrack(track, 'BoardController');
