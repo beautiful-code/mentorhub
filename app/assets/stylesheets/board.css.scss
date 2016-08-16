@@ -7,6 +7,7 @@ $secondary: #888888;
 $red: #F28379;
 $green: #598D09;
 $yellow: #F0AD4E;
+
 #board{
   display: block;
   margin: 10px auto;
@@ -46,6 +47,8 @@ $yellow: #F0AD4E;
     padding: 16px;
     padding-top: 4px;
     .user_tracks-subnav{
+      background-color: #fafafa;
+      height: 42px;
       margin-bottom: 4px;
       li{
         height: 20px;
@@ -64,6 +67,17 @@ $yellow: #F0AD4E;
           width: 12px;
           height: 12px;
         }
+      }
+      .tracks,.mentees{
+        width: 800px;
+        margin: auto;
+      }
+      .tracks__name, .mentee__name{
+        display: inline-block;
+        color: #888888;
+        text-decoration: none;
+        line-height: 22px;
+        padding: 10px 20px;
       }
       .active{
         opacity: 1;
@@ -145,28 +159,32 @@ $yellow: #F0AD4E;
       }
     }
     .exercise_purpose{
-      width: 100%;
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      text-align: center;
-      height: 20px;
+      background-color: #f7f7f7;
+      height: 32px;
+      font-size: 16px; 
+      vertical-align: middle;
+      line-height: 22px;
+      padding: 5px 0 5px 12px;
 
       &.section_completed {
-        background-color: $green;
+        border-left: 8px solid $green;
+        // background-color: $green;
       }
 
       &.section_submitted,
       &.review_pending {
-        background-color: $yellow;
+        border-left: 8px solid $yellow;
+        // background-color: $yellow;
       }
 
       &.tasks_pending {
-        background-color: $red;
+        border-left: 8px solid $red;
+        // background-color: $red;
       }
 
       &.new {
-        background-color: $border;
+        border-left: 8px solid $border;
+        // background-color: $border;
       }
 
       p{
@@ -174,20 +192,44 @@ $yellow: #F0AD4E;
         line-height: 20px;
       }
     }
+
+
     .user_answers{
       p{
         margin-top: 10px;
         margin-bottom: 10px;
       }
-      input[type="text"]{
-        height: 30px;
-        border: 1px solid $border;
-        border-radius: 3px;
-        width: 80%;
+
+      .section__answer__input{
+        border: none;
+        border-bottom: 1px solid #d8d8d8;
+        width: calc(100% - 70px);
+      } 
+      .section__answer__input:focus{
+        outline: none;
+        border-bottom: 2px solid #25A6F7;
       }
-      .btn-primary_action{
-        margin-left: -2px;
+      .section__answer__submit{
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 600;
+        color: #25A6F7;
+        background-color: white;
+        border: none;
+        width: 60px;
+        line-height: 22px;
+        padding: 2px 6px;
       }
+
+      // input[type="text"]{
+      //   height: 30px;
+      //   border: 1px solid $border;
+      //   border-radius: 3px;
+      //   width: 80%;
+      // }
+      // .btn-primary_action{
+      //   margin-left: -2px;
+      // }
 
     }
     .exercise-tasks_to_do{

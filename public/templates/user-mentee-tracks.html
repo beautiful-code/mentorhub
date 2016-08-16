@@ -1,6 +1,6 @@
 <ul class="user_tracks-subnav" ng-if="Helper.keys(user_mentee_tracks).length != 0">
-    <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''">
-        <a style="cursor: pointer">
+    <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''" class="mentees">
+        <a style="cursor: pointer" class="mentee__name">
             <img ng-src="{{ track.image_url }}">
             {{ user_mentee_tracks[track.mentee_id].name | capitalize }}
         </a>

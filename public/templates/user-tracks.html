@@ -1,18 +1,20 @@
 <ul class="user_tracks-subnav" ng-if="Helper.keys(user_tracks).length != 0">
-    <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''">
-        <a style="cursor: pointer">
+    <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''" class="tracks">
+        <a style="cursor: pointer" class="tracks__name">
             <img ng-src="{{ track_info.image_url }}"/>
             {{ track | capitalize }}
         </a>
     </li>
 </ul>
+<div class="subnav">
+</div>
 
 <div ng-if="Helper.keys(user_tracks).length == 0" style="padding: 20px;" class="text-center">
     <p>You are not assigned any task.</p>
 </div>
 
 <div ng-repeat="(track, track_info) in sections.data" style="margin-bottom: 20px">
-    <div class="track_header">
+    <!-- <div class="track_header">
         <div class="track_details">
             <div class="logo_n_name item">
                 <img ng-src="{{ track_info.image_url }}"/>
@@ -31,23 +33,24 @@
             <div class="progress_bar" style="width: {{track_info.progress}}%;"></div>
             <div class="expected_progress" style="left: {{100 - track_info.expected_progress}}%;"></div>
         </div>
-    </div>
+    </div> -->
     <div class="section_each" ng-repeat="sectionInteraction in track_info.recent_incomplete_section_interactions">
         <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.mentee_notes === null">
-            <small>Go through the resources and submit your progress.</small>
+            Go through the resources and submit your progress.
         </div>
         <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null">
-            <small>You do not have any tasks assigned to you.</small>
+            You do not have any tasks assigned to you.
         </div>
         <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMyTodosStatus(sectionInteraction)">
-            <small>{{ status.mytodo }}</small>
+            {{ status.mytodo }}
         </div>
+
         <br>
         <h5>Exercise</h5>
         <div class="exercise_name">
             <div class="board_sections">
                           <span ng-class="sectionInteraction.state">
-                            <i class="material-icons">check_circle</i>
+                            <!-- <i class="material-icons">check_circle</i> -->
                           </span>
                 <h3>{{ sectionInteraction.title }}</h3>
             </div>
@@ -72,11 +75,15 @@
                     <i ng-click="note.edit = !note.edit; note.mentee_notes = sectionInteraction.mentee_notes;" class="material-icons ">mode_edit</i>
                 </div>
             </div>
-            <div ng-if="sectionInteraction.mentee_notes === null || note.edit == true" class="row" style="margin-bottom: 10px">
-                <div class="col-xs-12">
+            <div ng-if="sectionInteraction.mentee_notes === null || note.edit == true" style="margin-bottom: 10px">
+                <!-- <div class="col-xs-12">
                     <input type="text" ng-model="note.mentee_notes" class="form-control col-xs-6 pull-left" placeholder="Answer">
                     <button class="btn btn-sm btn-primary col-xs-1" ng-click="add_mentee_notes(sectionInteraction, note)" type="button">Submit</button>
-                </div>
+                </div> -->
+                <form >
+                    <input class="section__answer__input" type="text" placeholder="Answer" ng-model="note.mentee_notes">
+                    <button class="section__answer__submit" ng-click="add_mentee_notes(sectionInteraction, note)">submit</button>
+                </form> 
             </div>
         </div>
         <div class="exercise-tasks_to_do" ng-if="sectionInteraction.todos.length != 0">

@@ -8,7 +8,8 @@
         %button= link_to "Sign Up", new_user_registration_path
   - else
     %ul.primary_nav
-      %li= link_to "Your Board", board_path, class: active_class(c: ['board'])
+      %li= link_to "Your Tracks", board_path, class: active_class(c: ['board'])
+      %li= link_to "Your Mentees Tracks", board_path, class: active_class(c:  ['mentoring_tracks'])
     %ul.profile
       -if current_user.image.present?
         %li= image_tag current_user.image
