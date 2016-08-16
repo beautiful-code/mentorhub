@@ -41,10 +41,19 @@ angular.module('mentorhub.board', [])
         this.getAllSectionInteractions = function (data) {
             var all_sections = [];
             var all_tracks = [];
+            var notification_tree = {
+                user_tracks: {
+                    has_notifications: false
+                },
+                user_mentee_tracks: {
+                    has_notifications: false
+                }
+            };
 
             for (var key in data.mentoring_tracks) {
                 data.mentoring_tracks[key].learning_tracks.forEach(function (track) {
                     all_tracks.push(track);
+                    notification_tree.user_mentee_tracks[track.id] = false;
                     all_sections = all_sections.concat(track.recent_incomplete_section_interactions);
                 });
             }
@@ -52,12 +61,14 @@ angular.module('mentorhub.board', [])
             for (var key in data.learning_tracks) {
                 var track = data.learning_tracks[key];
                 all_tracks.push(track);
+                notification_tree.user_tracks[track.id] = false;
                 all_sections = all_sections.concat(track.recent_incomplete_section_interactions);
             }
 
             return {
                 all_sections: all_sections,
-                all_tracks: all_tracks
+                all_tracks: all_tracks,
+                notification_tree: notification_tree
             };
         };
 
@@ -126,8 +137,6 @@ angular.module('mentorhub.board', [])
             $scope.sections = {data: {}};
             $scope.sectionInteractionServices = SectionInteractionServices;
 
-            var updatable_interactions = {};
-
             var parse_mentee_tracks = function (data) {
                 $scope.combined_mentee_tracks = [];
                 angular.forEach(data, function (value, key) {
@@ -139,16 +148,19 @@ angular.module('mentorhub.board', [])
 
             $scope.$on('BoardController', function (event, data) {
                 $scope.$apply();
-            })
+            });
 
             var init = function () {
                 if (typeof PageConfig !== "undefined" && typeof PageConfig.boardJson !== "undefined") {
                     $scope.user_mentee_tracks = parse_mentee_tracks(PageConfig.boardJson.mentoring_tracks);
                     $scope.user_tracks = PageConfig.boardJson.learning_tracks;
+
                     SectionInteractionServices.updatable_interactions = PubSubServices.getAllSectionInteractions(PageConfig.boardJson);
                     SectionInteractionServices.updatable_interactions.all_tracks.forEach(function (track) {
                         SectionInteractionServices.subscribeToTrack(track, 'BoardController');
                     });
+
+                    $scope.notification_tree = SectionInteractionServices.updatable_interactions.notification_tree;
                 }
 
                 if (Object.keys($scope.user_tracks).length != 0) {
