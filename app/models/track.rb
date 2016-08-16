@@ -15,9 +15,9 @@ class Track < ApplicationRecord
     super({
       except: [:created_at, :updated_at, :type, :image],
       methods: [
-        :image_url, :recent_incomplete_section_interactions,
-        :progress, :expected_progress
-      ]
+        :image_url, :progress, :expected_progress
+      ],
+      include: [:mentee, :section_interactions]
     }.merge(options))
   end
 
@@ -26,18 +26,9 @@ class Track < ApplicationRecord
                         .order('created_at ASC')
   end
 
-  def recent_incomplete_section_interactions
-    return [] if incomplete_section_interactions.blank?
-    ret = []
-    incomplete_section_interactions.each_with_index do |section_interaction, i|
-      if i.zero?
-        ret = [section_interaction]
-        next
-      end
-
-      ret.last.new? ? break : (ret << section_interaction)
-    end
-    ret
+  def recent_incomplete_section_interaction_id
+    section_interactions.where('state != ?', 'section_completed')
+                        .order('created_at ASC').limit(1).pluck(:id)[0]
   end
 
   def image_url
@@ -52,10 +43,25 @@ class Track < ApplicationRecord
   end
 
   def expected_progress
-    deadline = created_at + 10.days
-    no_of_days = ((deadline.to_date) - (created_at.to_date)).to_i
-    remaining_days = ((deadline.to_date) - (Time.now.to_date)).to_i
-    res = ((100 / no_of_days.to_f) * (remaining_days - 1)).round(2)
-    !res.nan? && res.finite? ? res : 0
+    return 0 if deadline.blank?
+
+    res =
+      (section_interactions_count.to_f / total_no_of_days) * no_of_days_since
+    !res.nan? && res.finite? ? res.ceil : 0
+  end
+
+  private
+
+  def section_interactions_count
+    self.section_interactions.count
+  end
+
+  def total_no_of_days
+    (deadline.to_date - created_at.to_date).to_f
+  end
+
+  def no_of_days_since
+    days_over = (Time.current.to_date - created_at.to_date).to_i
+    days_over.zero? ? 1 : days_over
   end
 end

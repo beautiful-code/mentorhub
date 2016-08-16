@@ -1,39 +1,26 @@
-:plain
-  <div ng-controller="MentoringTracksController">
-    <a href="/mentoring_tracks/new" type="button" class="track_list_btn btn btn-primary">New Mentee Track</a>
-    <div class="track_list">
-      <div ng-show="tracks.length>0">
-        <div ng-repeat="track in tracks track by $index">
+%div{"ng-controller" => "MentoringTracksController"}
+  %a.track_list_btn.btn.btn-primary{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(false)" } New Mentee Track
+  %a.track_list_btn.btn.btn-primary{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(true)"} Self Track
+  .track_list
+    %div{"ng-show" => "tracks.length>0"}
+      %div{"ng-repeat" => "track in tracks track by $index"}
+        .track_card
+          .logo_track
+            %img{:alt => "{{track.name}}", "ng-src" => "{{track.image_url}}"}/
+          .content_track
+            %h3
+              %a{:href => "/mentoring_tracks/{{track.id}}"} {{track.name}}
+            .details
+              .mentee_deadline
+                %h4 to be completed by
+                %p
+                  {{track.deadline | date:'dd/MM/yyyy'}}
+              .mentee_name
+                %h4 Mentee
+                %p
+                  {{ track.mentee.first_name }}
+            .progress_bar
 
-          <div class="track_card">
-            <div class="logo_track">
-              <img ng-src="{{track.image_url}}" alt={{track.name}}>
-            </div>
-            <div class="content_track">
-              <h3>
-                <a href="/mentoring_tracks/{{track.id}}">{{track.name}}</a>
-              </h3>
-              <div class="details">
-                <div class="mentee_deadline">
-                  <h4>to be completed by</h4>
-                  <p>
-                    {{track.deadline | date:'dd/MM/yyyy'}}
-                  </p>
-                </div>
-                <div class="mentee_name">
-                  <h4>Mentee</h4>
-                  <p>
-                    {{ track.mentee.first_name }}
-                  </p>
-                </div>
-              </div>
-              <div class="progress_bar"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
 :javascript
   var MentoringTracksConfig = {

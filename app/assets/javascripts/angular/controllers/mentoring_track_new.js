@@ -21,21 +21,23 @@ angular.module("mentorhub.mentoring_track_new", [])
     }])
 
 
-    .controller('MentoringTrackNew', ['$scope', '$window', 'MentoringTrackNewServices', function ($scope, $window, MentoringTrackNewServices) {
+    .controller('MentoringTrackNew', ['$rootScope','$scope', '$window', 'MentoringTrackNewServices', function ($rootScope, $scope, $window, MentoringTrackNewServices ) {
         var count = 1;
 
         var defaultSectionAttributes = function (section) {
             $scope.temp_sections.push(angular.copy(section));
             section.id = count++;
             section.newRecord = section.editable = false;
-            section.newTrackSI = true;
+            section.newSectionInteraction = true;
         };
 
         var init = function () {
+            $scope.self_track = JSON.parse($window.sessionStorage.getItem('self_track'));
             $scope.temp_sections = [];
             $scope.deadline = new Date();
             $scope.users = MentoringTrackConfig.users;
             $scope.tracks = MentoringTrackConfig.tracks;
+            
             if ($window.localStorage.getItem('SelectedTrack')) {
                 $scope.selectTrack = JSON.parse($window.localStorage.getItem('SelectedTrack'));
                 $scope.showButtons = true;
@@ -65,7 +67,12 @@ angular.module("mentorhub.mentoring_track_new", [])
                     angular.forEach($scope.selectTrack.sections, function (section, index) {
                         defaultSectionAttributes(section);
                     });
-                    $scope.selectTrack.mentee = $scope.selectMentee;
+                    if ($scope.self_track) {
+                        $scope.selectTrack.mentee = $scope.selectMentee = MentoringTrackConfig.current_user;
+                    }
+                    else{
+                        $scope.selectTrack.mentee = $scope.selectMentee;
+                    }
                     updateLocalStorage($scope.selectTrack);
                 });
         };
@@ -77,7 +84,7 @@ angular.module("mentorhub.mentoring_track_new", [])
 
         $scope.add_section = function () {
             $scope.selectTrack.sections.push({
-                id: count, editable: true, newRecord: true, enabled: true, newTrackSI: true
+                id: count, editable: true, newRecord: true, enabled: true, newSectionInteraction: true
             });
         };
 
