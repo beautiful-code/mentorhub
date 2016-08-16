@@ -1,23 +1,14 @@
-:plain
-  <div id="section_index" ng-controller="TrackController">
-    <div class="track_info">
-      <div track></div>
-    </div>
+#section_index{"ng-controller" => "TrackController"}
+  .track_info
+    %div{:track => ""}
+  .sub_nav
+    %h4.selected Exercises
+  #section
+    %div{"new-exercise" => "", "ng-repeat" => "section in track.sections track by $index"}
+  .add_exercise.add_exercise_btn
+    %a.add_exercise_link{"ng-click" => "track.sections.push({ editable: true,newRecord: true });"}
+      %span + Add an Exercise
 
-    <div class="sub_nav">
-      <h4 class="selected">Exercises</h4>
-    </div>
-
-    <div id="section">
-      <div new-exercise ng-repeat="section in track.sections track by $index"></div>
-    </div>
-
-    <div class="add_exercise add_exercise_btn">
-      <a class="add_exercise_link" ng-click="track.sections.push({ editable: true,newRecord: true });">
-        <span>+ Add an Exercise</span>
-      </a>
-    </div>
-  </div>
 
 :javascript
   PageConfig.track = #{@track_template.to_json};

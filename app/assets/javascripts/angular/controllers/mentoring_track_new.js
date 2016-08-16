@@ -28,7 +28,7 @@ angular.module("mentorhub.mentoring_track_new", [])
             $scope.temp_sections.push(angular.copy(section));
             section.id = count++;
             section.newRecord = section.editable = false;
-            section.newTrackSI = true;
+            section.newSectionInteraction = true;
         };
 
         var init = function () {
@@ -77,7 +77,7 @@ angular.module("mentorhub.mentoring_track_new", [])
 
         $scope.add_section = function () {
             $scope.selectTrack.sections.push({
-                id: count, editable: true, newRecord: true, enabled: true, newTrackSI: true
+                id: count, editable: true, newRecord: true, enabled: true, newSectionInteraction: true
             });
         };
 

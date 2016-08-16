@@ -14,7 +14,7 @@
       </header>
       <h5>Exercise</h5>
       <div class="exercise_name">
-        <a class="section-state-event" ng-if="!section.newTrackSI">
+        <a class="section-state-event" ng-if="!section.newSectionInteraction">
           <span class="section_state" ng-click="sectionStatus(track, section)" ng-class="section.state">
             <i class="material-icons">check_circle</i>
           </span>
@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div ng-if="!section.newTrackSI">
+      <div ng-if="!section.newSectionInteraction">
 
         <div ng-if="section.state != 'new'" class="exercise-tasks_to_do" style="margin-bottom: 10px;">
           <h4>Tasks Todo</h4>
@@ -112,7 +112,7 @@
           Add A Resource
         </button>
       </div>
-      <div ng-if="!section.newTrackSI">
+      <div ng-if="!section.newSectionInteraction">
         <div class="btn_save" id="btn_save">
           <div ng-if="section.newRecord" style="display: inline;">
             <input type="button" class="track-post btn-primary_action" value="Create" ng-click="create_section(track, section)">
@@ -124,7 +124,7 @@
         </div>
       </div>
 
-      <div ng-if="section.newTrackSI">
+      <div ng-if="section.newSectionInteraction">
         <div class="btn_save" id="btn_save">
           <div ng-if="section.newRecord" style="display: inline;">
             <input type="button" class="track-post btn-primary_action" value="Create" ng-click="create_section(section)">

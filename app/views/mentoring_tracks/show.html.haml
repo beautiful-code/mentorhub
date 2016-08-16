@@ -1,27 +1,17 @@
 - breadcrumb :mentoring_tracks, @track
 
-:plain
-  <div ng-controller="MentoringTrackShowController">
-    <div id="section_index">
-      <div class="track_info">
-        <div track></div>
-      </div>
-      <div class="sub_nav">
-        <h4 class="selected">Exercises</h4>
-      </div>
-      <div id="show_track_sections" class="show_track_instance">
-        <div section-interactions ng-repeat="section in track.sections track by $index">
-        </div>
-      </div>
-      <div class="add_exercise add_exercise_btn">
-        <a class="add_exercise_link" ng-click="add_exercise()">
-          <span>+</span>
-          Add an exercise
-        </a>
-      </div>
-    </div>
-  </div>
-
+%div{"ng-controller" => "MentoringTrackShowController"}
+  #section_index
+    .track_info
+      %div{:track => ""}
+    .sub_nav
+      %h4.selected Exercises
+    #show_track_sections.show_track_instance
+      %div{"ng-repeat" => "section in track.sections track by $index", "section-interactions" => ""}
+    .add_exercise.add_exercise_btn
+      %a.add_exercise_link{"ng-click" => "add_exercise()"}
+        %span +
+        Add an exercise
 
 :javascript
   var MentoringTrackShowConfig = {
