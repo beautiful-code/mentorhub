@@ -3,6 +3,6 @@
   "dependencies": {
     "angular": "latest",
     "angular-animate": "latest",
-    "animate.css": "latest"
+    "animate.css": "*"
   }
 }

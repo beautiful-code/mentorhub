@@ -7,7 +7,9 @@ angular.module('mentorhub', [
     'mentorhub.track',
     'mentorhub.mentoring_tracks',
     'mentorhub.mentoring_track_show',
-    'mentorhub.mentoring_track_new'
+    'mentorhub.mentoring_track_new',
+    'mentorhub.learning_tracks',
+    'mentorhub.learning_track_show'
 ])
 
     .run(['$rootScope', function ($rootScope) {

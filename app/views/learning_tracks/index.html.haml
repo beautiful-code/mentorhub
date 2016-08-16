@@ -1,0 +1,42 @@
+:plain
+  <div ng-controller="LearningTracksController">
+    <div class="track_list">
+      <div ng-show="tracks.length>0">
+        <div ng-repeat="track in tracks track by $index">
+
+          <div class="track_card">
+            <div class="logo_track">
+              <img ng-src="{{track.image_url}}" alt={{track.name}}>
+            </div>
+            <div class="content_track">
+              <h3>
+                <a href="/learning_tracks/{{track.id}}">{{track.name}}</a>
+              </h3>
+              <div class="details">
+                <div class="mentee_deadline">
+                  <h4>to be completed by</h4>
+                  <p>
+                    {{track.deadline | date:'dd/MM/yyyy'}}
+                  </p>
+                </div>
+                <div class="mentee_name">
+                  <h4>Mentor</h4>
+                  <p>
+                    {{ track.mentor.first_name }}
+                  </p>
+                </div>
+              </div>
+              <div class="progress_bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+:javascript
+  var LearningTracksConfig = {
+    tracks: #{@learning_tracks.to_json}
+  };
+
+
