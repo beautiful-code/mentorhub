@@ -12,22 +12,22 @@
 
 <div ng-repeat="(track, track_info) in sections.data" style="margin-bottom: 20px">
     <div class="track__nav">
-				<span class="track__nav__circle complete">
+				<span class="track__nav__circle section__complete">
 					<i class="material-icons">check</i>
 				</span>
-				<span class="track__nav__circle complete">
+				<span class="track__nav__circle section__complete">
 					<i class="material-icons">check</i>
 				</span>
-				<span class="track__nav__circle complete">
+				<span class="track__nav__circle section__complete">
 					<i class="material-icons">check</i>
 				</span>
-				<span class="track__nav__circle complete">
+				<span class="track__nav__circle section__complete">
 					<i class="material-icons">check</i>
 				</span>
-				<span class="track__nav__circle toReview">
+				<span class="track__nav__circle section__toReview">
 					<i class="material-icons">check</i>
 				</span>
-				<span class="track__nav__circle incomplete">
+				<span class="track__nav__circle section__incomplete">
 					<i class="material-icons">remove</i>
 				</span>
         <span class="track__nav__circle toStart"></span>
@@ -70,8 +70,8 @@
             </div>
             <div ng-if="sectionInteraction.mentee_notes === null || note.edit == true" style="margin-bottom: 10px">
                 <form >
-                    <input class="section__answer__input" type="text" placeholder="Answer" ng-model="note.mentee_notes">
-                    <button class="section__answer__submit" ng-click="add_mentee_notes(sectionInteraction, note)">submit</button>
+                    <input class="section__input" type="text" placeholder="Answer" ng-model="note.mentee_notes">
+                    <button class="section__submit" ng-click="add_mentee_notes(sectionInteraction, note)">submit</button>
                 </form>
             </div>
         </div>

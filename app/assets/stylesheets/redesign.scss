@@ -94,15 +94,15 @@ header{
   vertical-align: top;
   align-self: center;
 }
-.complete{
+.section__complete{
   border: 1px solid #598D09;
   color: #598d09;
 }
-.toReview{
+.section__toReview{
   border: 1px solid #F0AD4E;
   color: #F0AD4E;
 }
-.incomplete{
+.section__incomplete{
   border: 1px solid #F14133;
   color: #F14133;
 }
@@ -117,6 +117,9 @@ header{
   position: relative;
   p{
     margin-bottom: 4px;
+  }
+  .material-icons{
+    font-size: 16px;
   }
 }
 .heading{
@@ -157,16 +160,16 @@ header{
   padding: 10px 20px;
   border-bottom: 1px solid #ececec;
 }
-.section__answer__input{
+.section__input{
   border: none;
   border-bottom: 1px solid #d8d8d8;
   width: calc(100% - 70px);
 }
-.section__answer__input:focus{
+.section__input:focus{
   outline: none;
   border-bottom: 2px solid #25A6F7;
 }
-.section__answer__submit{
+.section__submit{
   text-transform: uppercase;
   font-size: 12px;
   font-weight: 600;
@@ -182,12 +185,22 @@ header{
 .section__todos{
   padding: 10px 20px 20px 20px;
   border-bottom: 1px solid #ececec;
+
 }
 .section__todos input{
   margin-right: 4px;
 }
+.checkbox{
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  border: 1px solid #9b9b9b;
+}
 
-
+.section__todos .section__input{
+  margin-left: 6px;
+  width: calc(100% - 90px);
+}
 
 
 

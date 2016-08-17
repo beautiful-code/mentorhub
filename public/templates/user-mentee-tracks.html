@@ -8,7 +8,28 @@
 </div>
 
 <div ng-repeat="track in sections.data" style="margin-bottom: 20px;">
-
+    <div class="track__nav">
+				<span class="track__nav__circle section__complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__toReview">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__incomplete">
+					<i class="material-icons">remove</i>
+				</span>
+        <span class="track__nav__circle toStart"></span>
+        <span class="track__nav__circle toStart"></span>
+    </div>
 
     <div class="section" ng-repeat="sectionInteraction in track.recent_incomplete_section_interactions">
         <div class="section__mentor">
@@ -50,10 +71,10 @@
                  {{ sectionInteraction.mentee_notes }}
             </p>
         </div>
-        <div ng-if="sectionInteraction.state != 'new'" class="exercise-tasks_to_do" style="margin-bottom: 10px;">
-            <h4>Tasks Todo</h4>
+        <div ng-if="sectionInteraction.state != 'new'" class="section__todos" style="margin-bottom: 10px;">
+            <h3 class="heading">Tasks to do</h3>
             <ul>
-                <li ng-repeat="todo in sectionInteraction.todos" style="margin-bottom: 5px;">
+                <li ng-repeat="todo in sectionInteraction.todos" style="margin-bottom: 5px; list-style: none;">
                     <div class="row">
                         <div class="col-xs-10">
                             <div ng-if="!todo.edit">
@@ -80,12 +101,11 @@
                         </div>
                     </div>
                 </li>
-                <li ng-if="sectionInteraction.state != 'section_completed'">
+                <li ng-if="sectionInteraction.state != 'section_completed'" style="list-style: none;">
                     <div class="input-group input-group-sm col-xs-12">
-                        <input type="text" class="form-control" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(sectionInteraction, todo) : 0">
-                        <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button" ng-click="sectionInteractionServices.add_task(sectionInteraction, todo)">Add task</button>
-                        </span>
+                        <i class="material-icons">add</i>
+                        <input placeholder="Add task" class="section__input" type="text" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(sectionInteraction, todo) : 0" >
+                        <button class="section__submit" ng-click="sectionInteractionServices.add_task(sectionInteraction, todo)">Add</button>
                     </div>
                 </li>
             </ul>
