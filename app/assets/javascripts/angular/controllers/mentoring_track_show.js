@@ -37,7 +37,6 @@ angular.module("mentorhub.mentoring_track_show", [])
             $scope.create_section = function (track, section) {
                 MentoringTrackServices.postSectionData({'{track_id}': track.id}, section)
                     .success(function (response) {
-                        console.log(response);
                         angular.merge(section, response.section_interaction);
                         section.editable = section.newRecord = false;
                     })

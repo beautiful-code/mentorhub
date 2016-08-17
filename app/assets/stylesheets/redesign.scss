@@ -94,17 +94,19 @@ header{
   vertical-align: top;
   align-self: center;
 }
-.section__complete{
-  border: 1px solid #598D09;
-  color: #598d09;
-}
-.section__toReview{
-  border: 1px solid #F0AD4E;
-  color: #F0AD4E;
-}
-.section__incomplete{
-  border: 1px solid #F14133;
-  color: #F14133;
+.track__nav{
+  .section__complete{
+    border: 1px solid #598D09;
+    color: #598d09;
+  }
+  .review_pending, .section_submitted{
+    border: 1px solid #F0AD4E;
+    color: #F0AD4E;
+  }
+  .section__incomplete{
+    border: 1px solid #F14133;
+    color: #F14133;
+  }
 }
 
 /* section */
@@ -204,7 +206,11 @@ header{
   width: calc(100% - 90px);
 }
 
-
+.mentees_list{
+  float: left;
+  list-style-type: none;
+  cursor: pointer;
+}
 
 
 

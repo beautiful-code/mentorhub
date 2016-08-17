@@ -61,16 +61,18 @@ angular.module("mentorhub.mentoring_track_new", [])
 
         $scope.update_mentee_track = function () {
             count = 1;
-            if ($scope.self_track) {
-                $scope.selectTrack.mentee = $scope.selectMentee = MentoringTrackConfig.current_user;
-            }
             MentoringTrackNewServices.getSectionsData({'{track_id}': $scope.selectTrack.id})
                 .success(function (response) {
                     $scope.selectTrack.sections = angular.copy(response.sections);
                     angular.forEach($scope.selectTrack.sections, function (section, index) {
                         defaultSectionAttributes(section);
                     });
-                    $scope.selectTrack.mentee = $scope.selectMentee;
+                    if ($scope.self_track) {
+                        $scope.selectTrack.mentee = $scope.selectMentee = MentoringTrackConfig.current_user;
+                    }
+                    else{
+                        $scope.selectTrack.mentee = $scope.selectMentee;
+                    }
                     updateLocalStorage($scope.selectTrack);
                 });
         };

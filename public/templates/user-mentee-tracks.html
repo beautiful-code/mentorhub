@@ -1,14 +1,14 @@
-<div class="subnav" ng-if="Helper.keys(user_mentee_tracks).length != 0">
-    <div ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''" class="tracks">
+<ul class="subnav" ng-if="Helper.keys(user_mentee_tracks).length != 0">
+    <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''" class=" mentees_list">
         <a class="tracks__name">    {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</a>
-    </div>
-</div>
+    </li>
+</ul>
 <div ng-if="Helper.keys(user_mentee_tracks).length == 0" style="padding: 20px;" class="text-center">
     <p>You do not have any mentees.</p>
 </div>
 
 <div ng-repeat="track in sections.data" style="margin-bottom: 20px;">
-    <div class="track__nav">
+    <!-- <div class="track__nav">
 				<span class="track__nav__circle section__complete">
 					<i class="material-icons">check</i>
 				</span>
@@ -29,9 +29,17 @@
 				</span>
         <span class="track__nav__circle toStart"></span>
         <span class="track__nav__circle toStart"></span>
+    </div> -->
+
+    <div class="track__nav">
+        <span class="track__nav__circle" ng-class="sectionInteraction.state" ng-repeat="sectionInteraction in track.section_interactions">
+            <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
+                {{ sectionInteraction.state == "new" ? "" : sectionInteraction.state == "tasks_pending" ? "check" : "remove" }}
+            </i>
+        </span>
     </div>
 
-    <div class="section" ng-repeat="sectionInteraction in track.recent_incomplete_section_interactions">
+    <div class="section" ng-model="sectionInteraction">
         <div class="section__mentor">
             <p><span class="heading">track:</span>{{ track.name }}</p>
         </div>

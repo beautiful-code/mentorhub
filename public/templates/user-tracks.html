@@ -1,10 +1,10 @@
-<div class="subnav" ng-if="Helper.keys(user_tracks).length != 0">
-    <div ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''" class="tracks">
+<ul class="subnav" ng-if="Helper.keys(user_tracks).length != 0">
+    <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''" class="tracks">
         <a style="cursor: pointer" class="tracks__name">
             {{ track | capitalize }}
         </a>
-    </div>
-</div>
+    </li>
+</ul>
 
 <div ng-if="Helper.keys(user_tracks).length == 0" style="padding: 20px;" class="text-center">
     <p>You are not assigned any task.</p>
@@ -34,8 +34,10 @@
         <span class="track__nav__circle toStart"></span>
     </div> -->
     <div class="track__nav">
-        <span class="track__nav__circle section__complete" ng-repeat="sectionInteraction in track_info.section_interactions">
-            <i class="material-icons" ng-click="changeSectionInteraction(sectionInteraction)">check</i>
+        <span class="track__nav__circle" ng-class="sectionInteraction.state" ng-repeat="sectionInteraction in track_info.section_interactions">
+            <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
+            {{ sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" ? "check" : "remove" }}
+            </i>
         </span>
     </div>
     <div class="section" ng-model="sectionInteraction">
