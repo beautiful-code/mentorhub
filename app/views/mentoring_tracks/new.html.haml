@@ -5,7 +5,7 @@
     %h4
       Add a Mentee Track
     #select_box
-      .select_a_mentee
+      .select_a_mentee{"ng-if" => "!self_track"}
         %label Select a mentee
         %select#exerciseSuperCategory{"data-role" => "listview", "ng-change" => "update_mentee()", "ng-model" => "selectMentee", "ng-options" => "user as user.first_name for user in users"}
           %option{:selected => "selected", :value => ""} Select Mentee
@@ -30,6 +30,7 @@
   var MentoringTrackConfig = {
     tracks: #{@tracks.to_json},
     sections: #{@sections.to_json},
+    current_user: #{@current_user.to_json},
     users: #{@users.to_json},
     index: #{@index.to_json}
   };

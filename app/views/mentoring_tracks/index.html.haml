@@ -1,5 +1,6 @@
 %div{"ng-controller" => "MentoringTracksController"}
-  %a.track_list_btn.btn.btn-primary{:href => "/mentoring_tracks/new", :type => "button"} New Mentee Track
+  %a.track_list_btn.btn.btn-primary{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(false)" } New Mentee Track
+  %a.track_list_btn.btn.btn-primary{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(true)"} Self Track
   .track_list
     %div{"ng-show" => "tracks.length>0"}
       %div{"ng-repeat" => "track in tracks track by $index"}

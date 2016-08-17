@@ -21,7 +21,7 @@ angular.module("mentorhub.mentoring_track_new", [])
     }])
 
 
-    .controller('MentoringTrackNew', ['$scope', '$window', 'MentoringTrackNewServices', function ($scope, $window, MentoringTrackNewServices) {
+    .controller('MentoringTrackNew', ['$rootScope','$scope', '$window', 'MentoringTrackNewServices', function ($rootScope, $scope, $window, MentoringTrackNewServices ) {
         var count = 1;
 
         var defaultSectionAttributes = function (section) {
@@ -32,10 +32,12 @@ angular.module("mentorhub.mentoring_track_new", [])
         };
 
         var init = function () {
+            $scope.self_track = JSON.parse($window.sessionStorage.getItem('self_track'));
             $scope.temp_sections = [];
             $scope.deadline = new Date();
             $scope.users = MentoringTrackConfig.users;
             $scope.tracks = MentoringTrackConfig.tracks;
+            
             if ($window.localStorage.getItem('SelectedTrack')) {
                 $scope.selectTrack = JSON.parse($window.localStorage.getItem('SelectedTrack'));
                 $scope.showButtons = true;
@@ -59,6 +61,9 @@ angular.module("mentorhub.mentoring_track_new", [])
 
         $scope.update_mentee_track = function () {
             count = 1;
+            if ($scope.self_track) {
+                $scope.selectTrack.mentee = $scope.selectMentee = MentoringTrackConfig.current_user;
+            }
             MentoringTrackNewServices.getSectionsData({'{track_id}': $scope.selectTrack.id})
                 .success(function (response) {
                     $scope.selectTrack.sections = angular.copy(response.sections);

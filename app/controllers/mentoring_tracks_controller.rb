@@ -8,6 +8,7 @@ class MentoringTracksController < ApplicationController
 
   def new
     @tracks = TrackTemplate.all
+    @current_user = current_user
     @users = User.all - [current_user]
   end
 
@@ -16,6 +17,7 @@ class MentoringTracksController < ApplicationController
 
     ActiveRecord::Base.transaction do
       options = track_template.dup.attributes.except('type', 'id')
+      byebug
       options.merge!(
         mentor_id: current_user.id,
         remote_image_url: track_template.image_url,
