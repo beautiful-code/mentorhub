@@ -60,7 +60,7 @@
         <div class="section__answer" ng-init="note.edit = false">
 
             <h3 class="heading">Your Answer</h3>
-            <div class="row" ng-if="sectionInteraction.mentee_notes !== null" style="margin-bottom: 10px;">
+            <div class="row" ng-if="sectionInteraction.mentee_notes !== null">
                 <div class="col-xs-9">
                     {{ sectionInteraction.mentee_notes }}
                 </div>
@@ -75,14 +75,12 @@
                 </form>
             </div>
         </div>
-        <div class="exercise-tasks_to_do" ng-if="sectionInteraction.todos.length != 0">
-            <h4>Tasks Todo</h4>
-            <ul>
-                <li ng-repeat="todo in sectionInteraction.todos">
+        <div class="section__todos" ng-if="sectionInteraction.todos.length != 0">
+            <h3 class="heading">Tasks to do</h3>
+                <p ng-repeat="todo in sectionInteraction.todos">
                     <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
                     {{ todo.content }}
-                </li>
-            </ul>
+                </p>
         </div>
     </div>
 </div>
