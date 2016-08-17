@@ -278,5 +278,9 @@ angular.module('mentorhub.board', [])
                 }
             };
 
+            $scope.changeSectionInteraction = function(sectionInteraction){
+                $scope.sectionInteraction = sectionInteraction;
+            }
+
             init();
         }]);
