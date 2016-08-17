@@ -10,20 +10,10 @@ angular.module("mentorhub.learning_track_show", [])
     }
     })
 
-    .factory('LearningTrackServices', ["$http", "ApiUrls", "Utils", function ($http, ApiUrls, Utils) {
-        return {
-          update_section: function (route_params, payload) {
-                return $http.put(
-                    Utils.multi_replace(ApiUrls.update_section_interaction, route_params),
-                    payload
-                )
-            }
-
-        }
-    }])
-    .controller('LearningTrackShowController', ["$scope","$location", "LearningTrackServices", "SectionInteractionServices",
-        function ($scope,$location, LearningTrackServices, SectionInteractionServices) {
+    .controller('LearningTrackShowController', ["$scope","$location","BoardServices", "SectionInteractionServices",
+        function ($scope,$location, BoardServices, SectionInteractionServices) {
             $scope.sectionInteractionServices = SectionInteractionServices;
+            $scope.boardServices = BoardServices;
 
             var init = function () {
                 $scope.track = LearningTrackShowConfig.track;
@@ -37,12 +27,13 @@ angular.module("mentorhub.learning_track_show", [])
                     '{section_id}': sectionInteraction.id
                 };
 
-                LearningTrackServices.update_section(route_params, {section_interaction: {mentee_notes: note.mentee_notes}})
+                BoardServices.update_section(route_params, {section_interaction: {mentee_notes: note.mentee_notes}})
                     .success(function (response) {
                         sectionInteraction.mentee_notes = note.mentee_notes;
                         note.edit = false;
                         note.mentee_notes = null;
                         window.location = $location.absUrl();
+
                     })
                     .error(function (error) {
                         console.log(error);
