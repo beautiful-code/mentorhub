@@ -1,0 +1,40 @@
+<form class="edit_track" enctype="multipart/form-data" ng-show="track.editable">
+  <div class="cover_photo">
+    <div class="logo_track">
+      <input file-model="myFile" type="file" id="image" class="form-control">
+    </div>
+    <div class="content_cover">
+      <div ng-show="track.newRecord">
+        <input type="button" class="create-track btn-primary_action" value="create" ng-click="create_track(track)">
+      </div>
+      <div ng-hide="track.newRecord">
+        <input type="button" class="update-track btn-primary_action" value="Update" ng-click="update_track(track)">
+      </div>
+      <input type="button" class="cancel-edit btn-secondary_action" value="Cancel"  ng-click="cancel_track(track)">
+      <div>
+        <input placeholder="Track Name" class="form-control" type="text" id="name" ng-model="track.name">
+        <span class="help-block"></span>
+        <input placeholder="Track description" class="form-control" type="text" id="desc" ng-model="track.desc">
+        <span class="help-block"></span>
+      </div>
+      <div class="progress">
+        <div class="progress_bar" style="width: {{track.progress}}%;"></div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="cover_photo" ng-hide="track.editable">
+  <div class="logo_track">
+    <img ng-show="track.image_url" src="{{track.image_url}}" alt="{{ track.name }} logo">
+    <img ng-hide="track.image_url" src="{{ track.image.image.url }}" alt="{{ track.name }} logo">
+  </div>
+  <div class="content_cover">
+    <h3>{{ track.name }}</h3>
+    {{ track.desc }}
+    <div class="progress">
+      <div class="progress_bar" style="width: {{track.progress}}%;"></div>
+    </div>
+  </div>
+</div>
+

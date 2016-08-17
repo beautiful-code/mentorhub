@@ -2,13 +2,13 @@
   <div ng-controller="LearningTrackShowController">
     <div id="section_index">
       <div class="track_info">
-        <div track></div>
+        <div learning-track></div>
       </div>
       <div class="sub_nav">
         <h4 class="selected">Exercises</h4>
       </div>
       <div id="show_track_sections" class="show_track_instance">
-        <div section-interactions ng-repeat="section in track.sections track by $index">
+        <div learning-section-interactions ng-repeat="sectionInteraction in track.sections | orderBy: 'sectionInteraction.id'">
         </div>
       </div>
     </div>

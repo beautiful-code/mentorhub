@@ -9,6 +9,6 @@ class LearningTracksController < ApplicationController
 
   def show
     @track =  Track.find(params[:id])
-    @section_interactions = @track.exercise_section_interactions.order(:id).preload(:todos)
+    @section_interactions = @track.section_interactions.order(:id).preload(:todos)
   end
 end
