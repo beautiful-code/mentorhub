@@ -1,0 +1,197 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+}
+body{
+  font-size: 14px;
+  font-family: "Open Sans";
+  background-color: #f2f2f2;
+}
+header{
+  background-color: #354051;
+  position: relative;
+  color: white;
+  height: 52px;
+
+}
+.mhlogo{
+  position: absolute;
+  height: 30px;
+  margin: 11px 80px;
+}
+.navbar{
+  width:800px;
+  margin: auto;
+  display: flex;
+  justify-content:space-between;
+
+}
+.userProfile__image{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid white;
+  margin: 11px 0px;
+  box-sizing:border-box;
+}
+.userProfile__name{
+  vertical-align: top;
+  display: inline-block;
+  line-height: 22px;
+  padding: 15px 10px;
+}
+.menu__item{
+  display: inline-block;
+  color: white;
+  line-height: 22px;
+  padding: 14px 20px;
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+.subnav{
+  background-color: #fafafa;
+  height: 42px;
+
+  box-shadow:0 0 2px rgba(0,0,0,.2)
+}
+.tracks{
+  width: 800px;
+  margin: auto;
+}
+.tracks__name{
+  display: inline-block;
+  color: #888888;
+  text-decoration: none;
+  line-height: 22px;
+  padding: 10px 20px;
+
+}
+/* track nav */
+.track{
+  width: 880px;
+  margin: auto;
+  position: relative;
+}
+.track__nav{
+  position: absolute;
+  display: flex;
+  flex-direction:column;
+}
+.track__nav__circle{
+  width: 16px;
+  height: 16px;
+  border: 1px solid #9b9b9b;
+  border-radius: 50%;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-sizing:border-box;
+  padding: 1px;
+}
+.track__nav__circle i{
+  font-size: 12px;
+  vertical-align: top;
+  align-self: center;
+}
+.complete{
+  border: 1px solid #598D09;
+  color: #598d09;
+}
+.toReview{
+  border: 1px solid #F0AD4E;
+  color: #F0AD4E;
+}
+.incomplete{
+  border: 1px solid #F14133;
+  color: #F14133;
+}
+
+/* section */
+.section{
+  width: 800px;
+  margin: 24px auto;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  position: relative;
+  p{
+    margin-bottom: 4px;
+  }
+}
+.heading{
+  font-size:12px;
+  font-weight: 600;
+  color: #757575;
+  padding-bottom: 6px;
+  margin-right: 6px;
+}
+.section__mentor{
+  position: absolute;
+  right: 0;
+  top: -20px;
+}
+.section__notify{
+  background-color: #f7f7f7;
+  border-left: 8px solid #F26D61;
+  height: 32px;
+  font-size: 16px;
+  vertical-align: middle;
+  line-height: 22px;
+  padding: 5px 0 5px 12px;
+}
+.section__exercise{
+  padding: 10px 20px;
+  border-bottom: 1px solid #ececec;
+  h2{
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+}
+.section__resources{
+  padding: 10px 20px;
+  border-bottom: 1px solid #ececec;
+}
+.section__answer{
+  padding: 10px 20px;
+  border-bottom: 1px solid #ececec;
+}
+.section__answer__input{
+  border: none;
+  border-bottom: 1px solid #d8d8d8;
+  width: calc(100% - 70px);
+}
+.section__answer__input:focus{
+  outline: none;
+  border-bottom: 2px solid #25A6F7;
+}
+.section__answer__submit{
+  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 600;
+  color: #25A6F7;
+  background-color: white;
+  border: none;
+  width: 60px;
+  line-height: 22px;
+  padding: 2px 6px;
+
+
+}
+.section__todos{
+  padding: 10px 20px 20px 20px;
+  border-bottom: 1px solid #ececec;
+}
+.section__todos input{
+  margin-right: 4px;
+}
+
+
+
+
+
+
+
+
+

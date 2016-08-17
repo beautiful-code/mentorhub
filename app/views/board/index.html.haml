@@ -1,4 +1,4 @@
-#board{"ng-controller" => "BoardController"}
+.track{"ng-controller" => "BoardController"}
   %ul.board_subnav.nav.nav-tabs{"ng-init" => "active_tab = 'user_tracks'", "ng-model" => "active_tab"}
     %li{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
       %a{:href => ""} Your Tracks

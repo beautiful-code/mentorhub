@@ -1,12 +1,9 @@
-<ul class="user_tracks-subnav" ng-if="Helper.keys(user_tracks).length != 0">
-    <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''" class="tracks">
+<div class="subnav" ng-if="Helper.keys(user_tracks).length != 0">
+    <div ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''" class="tracks">
         <a style="cursor: pointer" class="tracks__name">
-            <img ng-src="{{ track_info.image_url }}"/>
             {{ track | capitalize }}
         </a>
-    </li>
-</ul>
-<div class="subnav">
+    </div>
 </div>
 
 <div ng-if="Helper.keys(user_tracks).length == 0" style="padding: 20px;" class="text-center">
@@ -14,59 +11,55 @@
 </div>
 
 <div ng-repeat="(track, track_info) in sections.data" style="margin-bottom: 20px">
-    <!-- <div class="track_header">
-        <div class="track_details">
-            <div class="logo_n_name item">
-                <img ng-src="{{ track_info.image_url }}"/>
-                <h3>{{ track | capitalize }}</h3>
-            </div>
-            <div class="track_deadline item">
-                <h5>to be completed by</h5>
-                <p>{{ track_info.deadline | date_filter | date: 'MMM dd' }}</p>
-            </div>
-            <div class="track_mentor item">
-                <h5>mentor</h5>
-                <p>{{ track_info.mentor.name }}</p>
-            </div>
+    <div class="track__nav">
+				<span class="track__nav__circle complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle toReview">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle incomplete">
+					<i class="material-icons">remove</i>
+				</span>
+        <span class="track__nav__circle toStart"></span>
+        <span class="track__nav__circle toStart"></span>
+    </div>
+    <div class="section" ng-repeat="sectionInteraction in track_info.recent_incomplete_section_interactions">
+        <div class="section__mentor">
+            <p><span class="heading">mentor:</span>{{ track_info.mentor.name }}</p>
         </div>
-        <div class="progress">
-            <div class="progress_bar" style="width: {{track_info.progress}}%;"></div>
-            <div class="expected_progress" style="left: {{100 - track_info.expected_progress}}%;"></div>
-        </div>
-    </div> -->
-    <div class="section_each" ng-repeat="sectionInteraction in track_info.recent_incomplete_section_interactions">
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.mentee_notes === null">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.mentee_notes === null">
             Go through the resources and submit your progress.
         </div>
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null">
             You do not have any tasks assigned to you.
         </div>
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMyTodosStatus(sectionInteraction)">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMyTodosStatus(sectionInteraction)">
             {{ status.mytodo }}
         </div>
+        <div class="section__exercise">
+            <h3 class="heading"> Exercise</h3>
+            <h2>{{ sectionInteraction.title }}</h2>
+            <p>{{ sectionInteraction.content }}</p>
+        </div>
+        <div class="section__resources">
+            <h3 class="heading">Resources</h3>
+            <p ng-repeat="resource in sectionInteraction.resources">
+                <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
+            </p>
+        </div>
+        <div class="section__answer" ng-init="note.edit = false">
 
-        <br>
-        <h5>Exercise</h5>
-        <div class="exercise_name">
-            <div class="board_sections">
-                          <span ng-class="sectionInteraction.state">
-                            <!-- <i class="material-icons">check_circle</i> -->
-                          </span>
-                <h3>{{ sectionInteraction.title }}</h3>
-            </div>
-        </div>
-        <p class="exercise_description">
-            {{ sectionInteraction.content }}
-        </p>
-        <div class="section_resources">
-            <h5>Resources</h5>
-            <ul style="list-style-type: none;">
-                <li ng-repeat="resource in sectionInteraction.resources">
-                    <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
-                </li>
-            </ul>
-        </div>
-        <div class="user_answers" ng-init="note.edit = false">
+            <h3 class="heading">Your Answer</h3>
             <div class="row" ng-if="sectionInteraction.mentee_notes !== null" style="margin-bottom: 10px;">
                 <div class="col-xs-9">
                     {{ sectionInteraction.mentee_notes }}
@@ -76,14 +69,10 @@
                 </div>
             </div>
             <div ng-if="sectionInteraction.mentee_notes === null || note.edit == true" style="margin-bottom: 10px">
-                <!-- <div class="col-xs-12">
-                    <input type="text" ng-model="note.mentee_notes" class="form-control col-xs-6 pull-left" placeholder="Answer">
-                    <button class="btn btn-sm btn-primary col-xs-1" ng-click="add_mentee_notes(sectionInteraction, note)" type="button">Submit</button>
-                </div> -->
                 <form >
                     <input class="section__answer__input" type="text" placeholder="Answer" ng-model="note.mentee_notes">
                     <button class="section__answer__submit" ng-click="add_mentee_notes(sectionInteraction, note)">submit</button>
-                </form> 
+                </form>
             </div>
         </div>
         <div class="exercise-tasks_to_do" ng-if="sectionInteraction.todos.length != 0">
