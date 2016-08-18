@@ -1,5 +1,6 @@
 class SectionInteractionsController < ApplicationController
   before_action :authenticate_user!
+  include SectionInteractionsHelper
 
   def create
     track_instance = Track.find(params[:track_id])
@@ -17,7 +18,9 @@ class SectionInteractionsController < ApplicationController
 
   def update
     @section_interaction = SectionInteraction.find(params[:id])
+
     if @section_interaction.update(section_interaction_params)
+      create_notification_for(@section_interaction)
       render json: { msg: 'success',
                      section_interaction: @section_interaction }, status: 200
     else

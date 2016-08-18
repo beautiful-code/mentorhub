@@ -1,5 +1,6 @@
 class SectionInteraction < ApplicationRecord
   has_many :todos
+  has_many :notifications
   belongs_to :track
 
   validates :title, presence: true
@@ -23,6 +24,9 @@ class SectionInteraction < ApplicationRecord
     inclusion: { in: STATES, if: -> { state.present? } }
 
   default_scope { order('id') }
+
+  delegate :mentor_id, to: :track
+  delegate :mentee_id, to: :track
 
   state_machine :state, initial: :new do
     event :submit_section do
@@ -53,7 +57,11 @@ class SectionInteraction < ApplicationRecord
 
     super({
       except: [:goal, :created_at, :updated_at],
-      include: [:todos]
+      include: [:todos],
+      methods: [
+        :notifications_for_mentee,
+        :notifications_for_mentor
+      ]
     }.merge(options))
   end
 
@@ -65,6 +73,14 @@ class SectionInteraction < ApplicationRecord
 
       res
     end
+  end
+
+  def notifications_for_mentor
+    self.notifications.where(read: false, subscriber_id: self.mentor_id).count
+  end
+
+  def notifications_for_mentee
+    self.notifications.where(read: false, subscriber_id: self.mentee_id).count
   end
 
   private

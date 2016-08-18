@@ -294,5 +294,27 @@ angular.module('mentorhub.board', [])
                 }, 0);
             }
 
+            $scope.notificationsForMyMenteeTracks = function() {
+              var ret = 0;
+
+              for (var key in $scope.user_mentee_tracks) {
+                $.each($scope.user_mentee_tracks[key].learning_tracks, function(i,track) {
+                  ret += track.notifications_for_mentor;
+                })
+              };
+
+              return (ret > 0);
+            };
+
+            $scope.notificationsForMyTracks = function() {
+              var ret = 0;
+
+              for (var key in $scope.user_tracks) {
+                ret += $scope.user_tracks[key].notifications_for_mentor;
+              };
+
+              return (ret > 0);
+            };
+
             init();
         }]);
