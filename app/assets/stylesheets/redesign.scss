@@ -95,7 +95,7 @@ header{
   align-self: center;
 }
 .track__nav{
-  .section__complete{
+  .section_completed{
     border: 1px solid #598D09;
     color: #598d09;
   }
@@ -139,7 +139,7 @@ header{
 }
 .section__notify{
   background-color: #f7f7f7;
-  border-left: 8px solid #F26D61;
+  // border-left: 8px solid #F26D61;
   height: 32px;
   font-size: 16px;
   vertical-align: middle;
@@ -211,7 +211,13 @@ header{
   list-style-type: none;
   cursor: pointer;
 }
-
+.mark_complete{
+  float: right;
+  margin-right: 10px;
+  cursor: pointer;
+  color: green;
+  font-weight: bold;
+}
 
 
 

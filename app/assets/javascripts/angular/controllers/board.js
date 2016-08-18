@@ -45,14 +45,14 @@ angular.module('mentorhub.board', [])
             for (var key in data.mentoring_tracks) {
                 data.mentoring_tracks[key].learning_tracks.forEach(function (track) {
                     all_tracks.push(track);
-                    all_sections = all_sections.concat(track.recent_incomplete_section_interactions);
+                    all_sections = all_sections.concat(track.section_interactions);
                 });
             }
 
             for (var key in data.learning_tracks) {
                 var track = data.learning_tracks[key];
                 all_tracks.push(track);
-                all_sections = all_sections.concat(track.recent_incomplete_section_interactions);
+                all_sections = all_sections.concat(track.section_interactions);
             }
 
             return {

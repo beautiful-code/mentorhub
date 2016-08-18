@@ -34,7 +34,7 @@
     <div class="track__nav">
         <span class="track__nav__circle" ng-class="sectionInteraction.state" ng-repeat="sectionInteraction in track.section_interactions">
             <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
-                {{ sectionInteraction.state == "new" ? "" : sectionInteraction.state == "tasks_pending" ? "check" : "remove" }}
+                {{ sectionInteraction.state == "new" ? "" : sectionInteraction.state == "tasks_pending" || sectionInteraction.state == "section_completed"  ? "check" : "remove" }}
             </i>
         </span>
     </div>
@@ -43,23 +43,24 @@
         <div class="section__mentor">
             <p><span class="heading">track:</span>{{ track.name }}</p>
         </div>
-        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'new'">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'new'" style="border-left: 8px solid grey;">
             <small>{{ user_mentee_tracks[track.mentee_id].name | capitalize }} is yet to submit this exercise.</small>
         </div>
 
-        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMenteeTodosStatus(sectionInteraction) && sectionInteraction.state != 'section_completed'">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMenteeTodosStatus(sectionInteraction) && sectionInteraction.state != 'section_completed'" style="border-left: 8px solid grey;">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed all the tasks</small>
         </div>
 
-        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'section_completed'">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'section_completed'" style="border-left: 8px solid #598d09;">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed this exercise</small>
         </div>
 
-        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="!checkMenteeTodosStatus(sectionInteraction)">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="!checkMenteeTodosStatus(sectionInteraction)" style="border-left: 8px solid grey;">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has incomplete tasks in this exercise</small>
         </div>
-        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.state != 'new'">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.state != 'new' && sectionInteraction.state != 'section_completed'" style="border-left: 8px solid #F0AD4E;">
             <small>No tasks assigned to {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</small>
+            <span class="mark_complete" ng-click="sectionStatus(id, track, sectionInteraction)">MARK AS COMPLETE</span>
         </div>
         <div class="section__exercise">
             <h3 class="heading"> Exercise</h3>

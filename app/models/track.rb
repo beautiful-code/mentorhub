@@ -15,8 +15,7 @@ class Track < ApplicationRecord
     super({
       except: [:created_at, :updated_at, :type, :image],
       methods: [
-        :image_url, :recent_incomplete_section_interactions,
-        :progress, :expected_progress
+        :image_url, :progress, :expected_progress
       ],
       include: [:mentee, :section_interactions]
     }.merge(options))
@@ -27,19 +26,19 @@ class Track < ApplicationRecord
                         .order('created_at ASC')
   end
 
-  def recent_incomplete_section_interactions
-    return [] if incomplete_section_interactions.blank?
-    ret = []
-    incomplete_section_interactions.each_with_index do |section_interaction, i|
-      if i.zero?
-        ret = [section_interaction]
-        next
-      end
+  # def recent_incomplete_section_interactions
+  #   return [] if incomplete_section_interactions.blank?
+  #   ret = []
+  #   incomplete_section_interactions.each_with_index do |section_interaction, i|
+  #     if i.zero?
+  #       ret = [section_interaction]
+  #       next
+  #     end
 
-      ret.last.new? ? break : (ret << section_interaction)
-    end
-    ret
-  end
+  #     ret.last.new? ? break : (ret << section_interaction)
+  #   end
+  #   ret
+  # end
 
   def image_url
     image.try(:url) || image.try(:image).try(:url)
