@@ -20,6 +20,7 @@ angular.module("mentorhub.mentoring_track_show", [])
 
             var init = function () {
                 $scope.track = MentoringTrackShowConfig.track;
+                $scope.track.show_track = true;
                 $scope.track.sections = MentoringTrackShowConfig.sections;
                 $scope.section_new = MentoringTrackShowConfig.section_new;
                 angular.forEach($scope.track.sections, function (section, index) {

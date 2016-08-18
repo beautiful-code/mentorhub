@@ -156,6 +156,14 @@ angular.module('mentorhub.commons', [])
 
                         });
 
+                        if(updatable_interactions.notification_tree.user_mentee_tracks[updated_track.id] !== undefined) {
+                            updatable_interactions.notification_tree.user_mentee_tracks.has_notifications = true;
+                            updatable_interactions.notification_tree.user_mentee_tracks[updated_track.id] = true;
+                        } else {
+                            updatable_interactions.notification_tree.user_tracks.has_notifications = true;
+                            updatable_interactions.notification_tree.user_tracks[updated_track.id] = true;
+                        }
+
                         $rootScope.$broadcast(name);
                     }
                 }

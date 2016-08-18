@@ -86,7 +86,6 @@ angular.module('mentorhub.track', [])
         };
 
         $scope.cancel_track = function (track) {
-            debugger;
             if ($scope.temp_track) {
                 angular.merge(track, $scope.temp_track);
                 track.editable = false;

@@ -4,6 +4,8 @@
             <img ng-src="{{ track.image_url }}">
             {{ user_mentee_tracks[track.mentee_id].name | capitalize }}
         </a>
+
+        <!--<span class="badge" ng-if="notification_tree[active_tab][track.id] === true">20</span>-->
     </li>
 </ul>
 <div ng-if="Helper.keys(user_mentee_tracks).length == 0" style="padding: 20px;" class="text-center">

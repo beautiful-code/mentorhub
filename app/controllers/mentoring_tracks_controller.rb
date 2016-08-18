@@ -4,9 +4,6 @@ class MentoringTracksController < ApplicationController
 
   def index
     @mentoring_tracks = JSON.parse(current_user.mentoring_tracks.to_json)
-    @mentoring_tracks.each do |track|
-      track['mentee'] = User.find_by_id(track['mentee_id'])
-    end
   end
 
   def new
@@ -35,7 +32,7 @@ class MentoringTracksController < ApplicationController
   def show
     @section_interactions = @track.section_interactions.order(:id)
                                   .preload(:todos)
-    @section_interaction_new = SectionInteraction.new
+    @section_interaction = SectionInteraction.new
   end
 
   private
@@ -48,16 +45,12 @@ class MentoringTracksController < ApplicationController
              end
   end
 
-  def sections_params
-    params[:sections]
-  end
-
   def create_section_interactions(track)
-    sections_params.each do |section|
+    params[:sections].each do |section|
       options = section.except(
         'track_template_id', 'id',
         'editable', 'newRecord',
-        'newTrackSI'
+        'newSectionInteraction'
       )
       options[:type] = "#{track.type.gsub('Track', '')}SectionInteraction"
       track.section_interactions.create(options.permit!)

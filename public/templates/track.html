@@ -30,7 +30,7 @@
     <img ng-hide="track.image_url" src="{{ track.image.image.url }}" alt="{{ track.name }} logo">
   </div>
   <div class="content_cover">
-    <div class="edit-track">
+    <div class="edit-track" ng-if="!track.show_track">
       <input type="button" class="edit-track-btn btn-primary_action" value="Edit Track" ng-click="edit_track(track)">
     </div>
     <h3>{{ track.name }}</h3>

@@ -22,6 +22,8 @@ class SectionInteraction < ApplicationRecord
   validates :state, presence: true,
     inclusion: { in: STATES, if: -> { state.present? } }
 
+  default_scope { order('id') }
+
   state_machine :state, initial: :new do
     event :submit_section do
       transition new: :section_submitted

@@ -54,8 +54,10 @@ nav{
       top:0;
       right: 0;
       margin: 1em 2em;
-      li{
+      >li{
         display: inline-block;
+      }
+      li{
         img{
           border-radius:50% ;
           width: 30px;
