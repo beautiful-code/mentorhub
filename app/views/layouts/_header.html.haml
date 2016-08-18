@@ -1,3 +1,4 @@
+- board_view ||= false
 %nav
   =link_to root_path do
     =image_tag "mentorhub_logo.png",class:"logo"
@@ -7,9 +8,12 @@
       %li
         %button= link_to "Sign Up", new_user_registration_path
   - else
-    / %ul.primary_nav
-    /   %li= link_to "Your Tracks", board_path, class: active_class(c: ['board'])
-    /   %li= link_to "Your Mentees Tracks", board_path, class: active_class(c:  ['mentoring_tracks'])
+    - if board_view
+      %ul.board_subnav.primary_nav.nav.nav-tabs{"ng-init" => "active_tab = 'user_tracks'", "ng-model" => "active_tab"}
+        %li{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
+          %a{:href => ""} Your Tracks
+        %li{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks')"}
+          %a{:href => ""} Your Mentee Tracks
     %ul.profile
       -if current_user.image.present?
         %li= image_tag current_user.image

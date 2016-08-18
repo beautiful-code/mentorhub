@@ -1,17 +1,38 @@
-.track{"ng-controller" => "BoardController"}
-  %ul.board_subnav.nav.nav-tabs{"ng-init" => "active_tab = 'user_tracks'", "ng-model" => "active_tab"}
-    %li{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
-      %a{:href => ""} Your Tracks
-    %li{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks')"}
-      %a{:href => ""} Your Mentee Tracks
-  .tab-content
-    .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_tracks'}"}
-      %div{"user-tracks" => ""}
-    .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_mentee_tracks'}"}
-      %div{"user-mentee-tracks" => ""}
+!!!
+%html{:lang => 'en', 'ng-app' => 'mentorhub', :class => 'no-js'}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title MentorHub
+    = stylesheet_link_tag    'application', media: 'all'
+    = javascript_include_tag 'application'
+    = action_cable_meta_tag
+    = csrf_meta_tags
+    %link{:href => "//fonts.googleapis.com/css?family=Open+Sans", :rel => "stylesheet", :type => "text/css"}/
+  %body{"ng-controller" => "BoardController"}
+    = render 'layouts/header', board_view: true
 
-#todos
+    - if breadcrumbs.present?
+      .bread_crumbs
+        = breadcrumbs style: :bootstrap,class:""
 
-:javascript
-    PageConfig.currentUser = #{current_user.to_json};
-    PageConfig.boardJson = #{@board_data.to_json};
+    - flash.each do |message_type, message|
+      %div{:class => "flash_message alert alert-#{message_type}"}= message
+
+    .track
+      .tab-content
+        .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_tracks'}"}
+          %div{"user-tracks" => ""}
+        .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_mentee_tracks'}"}
+          %div{"user-mentee-tracks" => ""}
+
+    :javascript
+      var PageConfig = {};
+
+      $(document).ready(function(){
+        setTimeout(function(){
+          $(".flash_message" ).fadeOut("slow");
+        }, 5000);
+      });
+
+      PageConfig.currentUser = #{current_user.to_json};
+      PageConfig.boardJson = #{@board_data.to_json};

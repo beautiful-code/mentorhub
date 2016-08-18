@@ -11,6 +11,8 @@ class BoardController < ApplicationController
       format.html
       format.json { render json: @board_data }
     end
+
+    render layout: false
   end
 
   private
