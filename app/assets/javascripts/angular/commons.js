@@ -90,6 +90,7 @@ angular.module('mentorhub.commons', [])
             todo.state = "incomplete";
             BoardServices.update_todo(route_params, {todo: todo})
                 .success(function (response) {
+                    debugger;
                     todo.edit = false;
                     todo.state = 'incomplete';
                 })
@@ -155,7 +156,6 @@ angular.module('mentorhub.commons', [])
                             }
 
                         });
-
                         $rootScope.$broadcast(name);
                     }
                 }

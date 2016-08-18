@@ -11,28 +11,6 @@
 </div>
 
 <div ng-repeat="(track, track_info) in sections.data" style="margin-bottom: 20px">
-    <!-- <div class="track__nav">
-				<span class="track__nav__circle section__complete">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__complete">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__complete">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__complete">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__toReview">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__incomplete">
-					<i class="material-icons">remove</i>
-				</span>
-        <span class="track__nav__circle toStart"></span>
-        <span class="track__nav__circle toStart"></span>
-    </div> -->
     <div class="track__nav">
         <span class="section_deadline"> to be completed by {{track_info.deadline | date}}</span>
         <span class="track__nav__circle " ng-class="[ sectionInteraction.state ,{ 'section--presentArrow' : sectionInteraction.clicked }]" ng-repeat="sectionInteraction in track_info.section_interactions">

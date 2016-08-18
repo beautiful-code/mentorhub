@@ -6,36 +6,15 @@
 <div ng-if="Helper.keys(user_mentee_tracks).length == 0" style="padding: 20px;" class="text-center">
     <p>You do not have any mentees.</p>
 </div>
-
 <div ng-repeat="track in sections.data" style="margin-bottom: 20px;">
-    <!-- <div class="track__nav">
-				<span class="track__nav__circle section__complete">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__complete">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__complete">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__complete">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__toReview">
-					<i class="material-icons">check</i>
-				</span>
-				<span class="track__nav__circle section__incomplete">
-					<i class="material-icons">remove</i>
-				</span>
-        <span class="track__nav__circle toStart"></span>
-        <span class="track__nav__circle toStart"></span>
-    </div> -->
+<!-- <pre>{{track.section_interactions[0] | json}}</pre> -->
     <div class="track__nav">
         <span class="section_deadline"> to be completed by {{track.deadline | date}}</span>
-        <span class="track__nav__circle " ng-class="[ sectionInteraction.state ,{ 'section--presentArrow' : sectionInteraction.clicked }]" ng-repeat="sectionInteraction in track.section_interactions">
+        <span class="track__nav__circle " ng-class="[ sectionInteraction.state ,{ 'section--presentArrow' : sectionInteraction.selected }]" ng-repeat="sectionInteraction in track.section_interactions">
             <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
                 {{track.expected_progress == ($index+1) ? "fiber_manual_record" : sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" ? "check" : "remove"}}
             </i>
+
         </span>
     </div>
 
@@ -49,6 +28,7 @@
 
         <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMenteeTodosStatus(sectionInteraction) && sectionInteraction.state != 'section_completed'" style="border-left: 8px solid grey;">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed all the tasks</small>
+            <span class="mark_complete" ng-click="sectionStatus(id, track, sectionInteraction)">MARK AS COMPLETE</span>
         </div>
 
         <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'section_completed'" style="border-left: 8px solid #598d09;">
