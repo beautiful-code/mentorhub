@@ -284,7 +284,7 @@ angular.module('mentorhub.board', [])
                     $scope.sectionInteraction.selected = false;
                 }
                 $scope.sectionInteraction = sectionInteraction;
-                $scope.sectionInteraction.selected = true;
+                $scope.selected = sectionInteraction.id;
             }
 
             $scope.reloadSectionInteractions = function(){
