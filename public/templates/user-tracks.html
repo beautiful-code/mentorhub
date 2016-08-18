@@ -1,6 +1,6 @@
 <ul class="subnav" ng-if="Helper.keys(user_tracks).length != 0">
-    <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''" class="tracks">
-        <a style="cursor: pointer" class="tracks__name">
+    <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''" class="tracks_list">
+        <a style="cursor: pointer" class="tracks__name" ng-click="reloadSectionInteractions()">
             {{ track | capitalize }}
         </a>
     </li>
@@ -34,9 +34,10 @@
         <span class="track__nav__circle toStart"></span>
     </div> -->
     <div class="track__nav">
-        <span class="track__nav__circle" ng-class="sectionInteraction.state" ng-repeat="sectionInteraction in track_info.section_interactions">
+        <span class="section_deadline"> to be completed by {{track_info.deadline | date}}</span>
+        <span class="track__nav__circle " ng-class="[ sectionInteraction.state ,{ 'section--presentArrow' : sectionInteraction.clicked }]" ng-repeat="sectionInteraction in track_info.section_interactions">
             <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
-            {{ sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" ? "check" : "remove" }}
+            {{ track_info.expected_progress == ($index+1) ? "fiber_manual_record" : sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" ? "check" : "remove" }}
             </i>
         </span>
     </div>
@@ -44,13 +45,16 @@
         <div class="section__mentor">
             <p><span class="heading">mentor:</span>{{ track_info.mentor.name }}</p>
         </div>
-        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.mentee_notes === null">
-            Go through the resources and submit your progress.
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.mentee_notes === null" style="border-left: 8px solid grey;">
+            Work on the exercise and submit it.
         </div>
-        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null">
-            You do not have any tasks assigned to you.
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null && sectionInteraction.state == 'review_pending'">
+            Your submission is currently being reviewed by {{ track_info.mentor.name | capitalize }}.
         </div>
-        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMyTodosStatus(sectionInteraction)">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null && sectionInteraction.state == 'section_completed'" style="border-left: 8px solid #598d09;">
+            Exercise Completed
+        </div>
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMyTodosStatus(sectionInteraction)" style="border-left: 8px solid #F0AD4E;">
             {{ status.mytodo }}
         </div>
         <div class="section__exercise">

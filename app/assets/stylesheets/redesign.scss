@@ -217,7 +217,7 @@ header{
   width: calc(100% - 90px);
 }
 
-.mentees_list{
+.mentees_list, .tracks_list{
   float: left;
   list-style-type: none;
   cursor: pointer;
@@ -229,7 +229,11 @@ header{
   color: green;
   font-weight: bold;
 }
-
-
-
-
+.section_deadline{
+      position: absolute;
+    width: 110px;
+    left: -120px;
+    top: -2px;
+    font-size: 12px;
+    text-align: right;
+}

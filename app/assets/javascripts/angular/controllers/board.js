@@ -155,10 +155,7 @@ angular.module('mentorhub.board', [])
                     $scope.subnav = {active: Object.keys($scope.user_tracks)[0]};
                     $scope.sections.data[$scope.subnav.active] = $scope[$scope.active_tab][$scope.subnav.active];
                 }
-                $timeout(function() {
-                    var el = document.getElementById('sec0');
-                    angular.element(el).triggerHandler('click');
-                }, 0);
+                $scope.reloadSectionInteractions();
             };
 
             $scope.change_tab = function (tab) {
@@ -181,10 +178,7 @@ angular.module('mentorhub.board', [])
                         }
                         break;
                 }
-                $timeout(function() {
-                    var el = document.getElementById('sec0');
-                    angular.element(el).triggerHandler('click');
-                }, 0);
+                $scope.reloadSectionInteractions();
                 var subnav_element = $(".user_tracks-subnav");
                 subnav_element.children().removeClass('active');
                 subnav_element.children(":first-child").addClass('active');
@@ -286,7 +280,16 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.changeSectionInteraction = function(sectionInteraction){
+                $scope.sectionInteraction ? $scope.sectionInteraction.clicked = false : '';
                 $scope.sectionInteraction = sectionInteraction;
+                $scope.sectionInteraction.clicked = true;
+            }
+
+            $scope.reloadSectionInteractions = function(){
+                $timeout(function() {
+                    var el = document.getElementById('sec0');
+                    angular.element(el).triggerHandler('click');
+                }, 0);
             }
 
             init();
