@@ -1,22 +1,15 @@
-:plain
-  <div ng-controller="TracksController">
-    <a class="track_list_btn btn btn-primary" href="/track_templates/new">New Track Template</a>
-    <div class="container-fluid">
-      <div class="track_list">
-        <div ng-repeat="trackTemplate in trackTemplates">
-          <div class="track_card">
-            <div class="logo_track">
-              <img ng-src="{{ trackTemplate.image.image.url }}" />
-            </div>
-            <div class="content_track">
-              <h3><a href="/track_templates/{{ trackTemplate.id }}">{{ trackTemplate.name }}</a></h3>
-              <p>{{ trackTemplate.desc }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+%div{"ng-controller" => "TracksController"}
+  %a.track_list_btn.btn.btn-primary{:href => "/track_templates/new"} New Track Template
+  .container-fluid
+    .track_list
+      %div{"ng-repeat" => "trackTemplate in trackTemplates"}
+        .track_card
+          .logo_track
+            %img{"ng-src" => "{{ trackTemplate.image.image.url }}"}/
+          .content_track
+            %h3
+              %a{:href => "/track_templates/{{ trackTemplate.id }}"} {{ trackTemplate.name }}
+            %p {{ trackTemplate.desc }}
 
 :javascript
     PageConfig.trackTemplates = #{@track_templates.to_json};

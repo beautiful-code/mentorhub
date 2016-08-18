@@ -1,26 +1,14 @@
-:plain
-  <div id="board" ng-controller="BoardController">
-      <ul class="board_subnav nav nav-tabs" ng-model="active_tab" ng-init="active_tab = 'user_tracks'">
-          <li ng-class="active_tab == 'user_tracks' ? 'active': 'inactive' "
-              ng-click="change_tab('user_tracks')">
-              <a href="">Your Tracks</a>
-          </li>
-          <li ng-class="active_tab == 'user_mentee_tracks' ? 'active': 'inactive' "
-              ng-click="change_tab('user_mentee_tracks')">
-              <a href="">Your Mentee Tracks</a>
-          </li>
-      </ul>
-
-      <div class="tab-content">
-          <div class="tab-pane user_exercise_style" ng-class="{active: active_tab === 'user_tracks'}">
-            <div user-tracks></div>
-          </div>
-
-          <div class="tab-pane user_exercise_style" ng-class="{active: active_tab === 'user_mentee_tracks'}">
-            <div user-mentee-tracks></div>
-          </div>
-      </div>
-  </div>
+.track{"ng-controller" => "BoardController"}
+  %ul.board_subnav.nav.nav-tabs{"ng-init" => "active_tab = 'user_tracks'", "ng-model" => "active_tab"}
+    %li{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
+      %a{:href => ""} Your Tracks
+    %li{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks')"}
+      %a{:href => ""} Your Mentee Tracks
+  .tab-content
+    .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_tracks'}"}
+      %div{"user-tracks" => ""}
+    .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_mentee_tracks'}"}
+      %div{"user-mentee-tracks" => ""}
 
 #todos
 

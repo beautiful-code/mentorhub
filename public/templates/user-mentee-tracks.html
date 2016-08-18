@@ -1,9 +1,6 @@
-<ul class="user_tracks-subnav" ng-if="Helper.keys(user_mentee_tracks).length != 0">
-    <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''">
-        <a style="cursor: pointer">
-            <img ng-src="{{ track.image_url }}">
-            {{ user_mentee_tracks[track.mentee_id].name | capitalize }}
-        </a>
+<ul class="subnav" ng-if="Helper.keys(user_mentee_tracks).length != 0">
+    <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''" class=" mentees_list">
+        <a class="tracks__name">    {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</a>
     </li>
 </ul>
 <div ng-if="Helper.keys(user_mentee_tracks).length == 0" style="padding: 20px;" class="text-center">
@@ -11,76 +8,82 @@
 </div>
 
 <div ng-repeat="track in sections.data" style="margin-bottom: 20px;">
-    <div class="track_header">
-        <div class="track_details">
-            <div class="logo_n_name item">
-                <img ng-src="{{ track.image_url }}"/>
-                <h3>{{ track.name }}</h3>
-            </div>
-            <div class="track_deadline item">
-                <h5 >to be completed by</h5>
-                <p id="date">{{ track.deadline | date_filter | date: 'MMM dd' }}</p>
-            </div>
-            <div class="track_mentor item">
-                <h5>mentee</h5>
-                <p>{{ user_mentee_tracks[track.mentee_id].name }}</p>
-            </div>
-        </div>
-        <div class="progress">
-            <div class="progress_bar" style="width: {{track.progress}}%;"></div>
-            <div class="expected_progress" style="left: {{100 - track.expected_progress}}%;"></div>
-        </div>
+    <!-- <div class="track__nav">
+				<span class="track__nav__circle section__complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__complete">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__toReview">
+					<i class="material-icons">check</i>
+				</span>
+				<span class="track__nav__circle section__incomplete">
+					<i class="material-icons">remove</i>
+				</span>
+        <span class="track__nav__circle toStart"></span>
+        <span class="track__nav__circle toStart"></span>
+    </div> -->
+
+    <div class="track__nav">
+        <span class="track__nav__circle section--presentArrow" ng-class="sectionInteraction.state" ng-repeat="sectionInteraction in track.section_interactions">
+            <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
+                {{ sectionInteraction.state == "new" ? "" : sectionInteraction.state == "tasks_pending" || sectionInteraction.state == "section_completed"  ? "check" : "remove" }}
+            </i>
+        </span>
     </div>
 
-    <div class="section_each" ng-repeat="sectionInteraction in track.recent_incomplete_section_interactions">
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'new'">
+    <div class="section" ng-model="sectionInteraction">
+        <div class="section__mentor">
+            <p><span class="heading">track:</span>{{ track.name }}</p>
+        </div>
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'new'" style="border-left: 8px solid grey;">
             <small>{{ user_mentee_tracks[track.mentee_id].name | capitalize }} is yet to submit this exercise.</small>
         </div>
 
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMenteeTodosStatus(sectionInteraction) && sectionInteraction.state != 'section_completed'">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMenteeTodosStatus(sectionInteraction) && sectionInteraction.state != 'section_completed'" style="border-left: 8px solid grey;">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed all the tasks</small>
         </div>
 
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'section_completed'">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'section_completed'" style="border-left: 8px solid #598d09;">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed this exercise</small>
         </div>
 
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="!checkMenteeTodosStatus(sectionInteraction)">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="!checkMenteeTodosStatus(sectionInteraction)" style="border-left: 8px solid grey;">
             <small>Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has incomplete tasks in this exercise</small>
         </div>
-        <div class="exercise_purpose" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.state != 'new'">
+        <div class="section__notify" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.state != 'new' && sectionInteraction.state != 'section_completed'" style="border-left: 8px solid #F0AD4E;">
             <small>No tasks assigned to {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</small>
+            <span class="mark_complete" ng-click="sectionStatus(id, track, sectionInteraction)">MARK AS COMPLETE</span>
         </div>
-        <br>
-        <h5>Exercise</h5>
-        <div class="exercise_name">
-            <div class="board_sections">
-                          <span class="section_state" ng-click="sectionStatus(id, track, sectionInteraction)" ng-class="sectionInteraction.state">
-                            <i class="material-icons">check_circle</i>
-                          </span>
-                <h3>{{ sectionInteraction.title }}</h3>
-            </div>
+        <div class="section__exercise">
+            <h3 class="heading"> Exercise</h3>
+            <h2>{{ sectionInteraction.title }}</h2>
+            <p> {{ sectionInteraction.content }}</p>
         </div>
-        <p class="exercise_description">
-            {{ sectionInteraction.content }}
-        </p>
-        <div class="section_resources">
-            <h5>Resources</h5>
-            <ul style="list-style-type: none;">
-                <li ng-repeat="resource in sectionInteraction.resources">
-                    <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
-                </li>
-            </ul>
-        </div>
-        <div class="user_answers" ng-if="sectionInteraction.mentee_notes != null">
-            <p>
-                {{ sectionInteraction.mentee_notes }}
+        <div class="section__resources">
+            <h3 class="heading">Resources</h3>
+            <p ng-repeat="resource in sectionInteraction.resources">
+                <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
             </p>
         </div>
-        <div ng-if="sectionInteraction.state != 'new'" class="exercise-tasks_to_do" style="margin-bottom: 10px;">
-            <h4>Tasks Todo</h4>
+        <div class="section__answer" ng-if="sectionInteraction.mentee_notes != null">
+
+            <h3 class="heading">{{ user_mentee_tracks[track.mentee_id].name | capitalize }}'s Answer</h3>
+            <p>
+                 {{ sectionInteraction.mentee_notes }}
+            </p>
+        </div>
+        <div ng-if="sectionInteraction.state != 'new'" class="section__todos" style="margin-bottom: 10px;">
+            <h3 class="heading">Tasks to do</h3>
             <ul>
-                <li ng-repeat="todo in sectionInteraction.todos" style="margin-bottom: 5px;">
+                <li ng-repeat="todo in sectionInteraction.todos" style="margin-bottom: 5px; list-style: none;">
                     <div class="row">
                         <div class="col-xs-10">
                             <div ng-if="!todo.edit">
@@ -107,12 +110,11 @@
                         </div>
                     </div>
                 </li>
-                <li ng-if="sectionInteraction.state != 'section_completed'">
+                <li ng-if="sectionInteraction.state != 'section_completed'" style="list-style: none;">
                     <div class="input-group input-group-sm col-xs-12">
-                        <input type="text" class="form-control" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(sectionInteraction, todo) : 0">
-                        <span class="input-group-btn">
-                          <button class="btn btn-primary" type="button" ng-click="sectionInteractionServices.add_task(sectionInteraction, todo)">Add task</button>
-                        </span>
+                        <i class="material-icons">add</i>
+                        <input placeholder="Add task" class="section__input" type="text" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(sectionInteraction, todo) : 0" >
+                        <button class="section__submit" ng-click="sectionInteractionServices.add_task(sectionInteraction, todo)">Add</button>
                     </div>
                 </li>
             </ul>
