@@ -16,15 +16,7 @@ class MentoringTracksController < ApplicationController
     track_template = TrackTemplate.find(params[:id])
 
     ActiveRecord::Base.transaction do
-      options = track_template.dup.attributes.except('type', 'id')
-      options.merge!(
-        mentor_id: current_user.id,
-        remote_image_url: track_template.image_url,
-        mentee_id: params[:mentee][:id],
-        deadline: params[:deadline],
-        type: track_template.type.gsub('Template', '')
-      )
-      track = Track.create(options)
+      track = Track.create(options_for_track(track_template))
       create_section_interactions(track)
     end
     render json: { msg: 'success' }, status: 200
@@ -44,6 +36,17 @@ class MentoringTracksController < ApplicationController
              else
                Track.new(track_params)
              end
+  end
+
+  def options_for_track(track_template)
+    options = track_template.dup.attributes.except('type', 'id')
+    options.merge!(
+      mentor_id: current_user.id,
+      remote_image_url: track_template.image_url,
+      mentee_id: params[:mentee][:id],
+      deadline: params[:deadline],
+      type: track_template.type.gsub('Template', '')
+    )
   end
 
   def create_section_interactions(track)

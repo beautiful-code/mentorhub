@@ -1,4 +1,4 @@
 class Notification < ApplicationRecord
-  validates_presence_of :subscriber_id, :notified_by_id, :section_interaction
+  validates :subscriber_id, :notified_by_id, presence: true
   belongs_to :section_interaction
 end

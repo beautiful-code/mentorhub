@@ -1,5 +1,5 @@
 module SectionInteractionsHelper
-  def create_notification_for section_interaction
+  def create_notification_for(section_interaction)
     subscriber_id = if section_interaction.mentee_id == current_user.id
                       section_interaction.mentor_id
                     else
