@@ -26,20 +26,6 @@ class Track < ApplicationRecord
                         .order('created_at ASC')
   end
 
-  # def recent_incomplete_section_interactions
-  #   return [] if incomplete_section_interactions.blank?
-  #   ret = []
-  #   incomplete_section_interactions.each_with_index do |section_interaction, i|
-  #     if i.zero?
-  #       ret = [section_interaction]
-  #       next
-  #     end
-
-  #     ret.last.new? ? break : (ret << section_interaction)
-  #   end
-  #   ret
-  # end
-
   def image_url
     image.try(:url) || image.try(:image).try(:url)
   end
@@ -52,13 +38,11 @@ class Track < ApplicationRecord
   end
 
   def expected_progress
-    no_of_days = ((deadline.to_date) - (created_at.to_date)).to_i
-    remaining_days = ((deadline.to_date) - (Time.now.to_date)).to_i
-    days_over = ((Time.now.to_date) - (created_at.to_date)).to_i
-    days_over = (days_over == 0 ? 1 : days_over)
+    no_of_days = (deadline.to_date - created_at.to_date).to_i
+    # remaining_days = ( deadline.to_date - Time.now.to_date ).to_i
+    days_over = (Time.zone.now.to_date - created_at.to_date).to_i
+    days_over = (days_over.zero? ? 1 : days_over)
     res = ((section_interactions.count.to_f / no_of_days.to_f)) * days_over
-    # res = ((10 / no_of_days) * (remaining_days - 1)).round(1)
-    # res = ((10 / no_of_days.to_f) * (remaining_days - 1)).round(2)
     !res.nan? && res.finite? ? res.ceil : 0
   end
 end

@@ -14,7 +14,6 @@ class MentoringTracksController < ApplicationController
 
   def create
     track_template = TrackTemplate.find(params[:id])
-
     ActiveRecord::Base.transaction do
       options = track_template.dup.attributes.except('type', 'id')
       options.merge!(
