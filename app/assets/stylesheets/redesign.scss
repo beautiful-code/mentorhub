@@ -88,6 +88,7 @@ header{
   cursor: pointer;
   box-sizing:border-box;
   padding: 1px;
+  position: relative;
 }
 .track__nav__circle i{
   font-size: 12px;
@@ -108,6 +109,17 @@ header{
     color: #F14133;
   }
 }
+.section--presentArrow:after{
+  content: "";
+  display: inline-block;
+  border-right: 14px solid #056ab2;
+  border-bottom: 6px solid transparent;
+  border-top: 6px solid transparent;
+  position: absolute;
+  top: 1px;
+  left: 22px;
+}
+
 
 /* section */
 .section{
@@ -139,7 +151,6 @@ header{
 }
 .section__notify{
   background-color: #f7f7f7;
-  // border-left: 8px solid #F26D61;
   height: 32px;
   font-size: 16px;
   vertical-align: middle;

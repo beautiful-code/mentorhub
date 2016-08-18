@@ -32,7 +32,7 @@
     </div> -->
 
     <div class="track__nav">
-        <span class="track__nav__circle" ng-class="sectionInteraction.state" ng-repeat="sectionInteraction in track.section_interactions">
+        <span class="track__nav__circle section--presentArrow" ng-class="sectionInteraction.state" ng-repeat="sectionInteraction in track.section_interactions">
             <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
                 {{ sectionInteraction.state == "new" ? "" : sectionInteraction.state == "tasks_pending" || sectionInteraction.state == "section_completed"  ? "check" : "remove" }}
             </i>
