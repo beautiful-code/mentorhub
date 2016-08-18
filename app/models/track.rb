@@ -40,7 +40,7 @@ class Track < ApplicationRecord
   def expected_progress
     no_of_days = (deadline.to_date - created_at.to_date).to_i
     # remaining_days = ( deadline.to_date - Time.now.to_date ).to_i
-    days_over = (Time.zone.now.to_date - created_at.to_date).to_i
+    days_over = (Time.now.getlocal.to_date - created_at.to_date).to_i
     days_over = (days_over.zero? ? 1 : days_over)
     res = ((section_interactions.count.to_f / no_of_days.to_f)) * days_over
     !res.nan? && res.finite? ? res.ceil : 0
