@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe TodosController, type: :controller do
   before(:each) do
-    user = double('user')
+    user = instance_double('User', id: 70)
     allow(request.env['warden']).to receive(:authenticate!).and_return(user)
     allow(controller).to receive(:current_user).and_return(user)
   end
