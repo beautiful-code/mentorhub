@@ -137,7 +137,7 @@ angular.module('mentorhub.board', [])
                 return data;
             };
 
-            $scope.$on('BoardController', function (event, data) {
+            $scope.$on('updateScope', function (event, data) {
                 $scope.$apply();
             })
 
@@ -146,9 +146,10 @@ angular.module('mentorhub.board', [])
                     $scope.user_mentee_tracks = parse_mentee_tracks(PageConfig.boardJson.mentoring_tracks);
                     $scope.user_tracks = PageConfig.boardJson.learning_tracks;
 
+
                     SectionInteractionServices.updatable_interactions = PubSubServices.getAllSectionInteractions(PageConfig.boardJson);
                     SectionInteractionServices.updatable_interactions.all_tracks.forEach(function (track) {
-                        SectionInteractionServices.subscribeToTrack(track, 'BoardController');
+                        SectionInteractionServices.subscribeToTrack(track, 'updateScope');
                     });
                 }
 

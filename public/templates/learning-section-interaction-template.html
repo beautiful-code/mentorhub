@@ -1,0 +1,58 @@
+<div class="section_each" >
+   <h5>Exercise</h5>
+
+        <div class="exercise_name">
+            <div class="board_sections">
+                          <span ng-class="sectionInteraction.state">
+                            <i class="material-icons">check_circle</i>
+                          </span>
+                <h3>{{ sectionInteraction.title }}</h3>
+            </div>
+        </div>
+
+        <p class="exercise_description">
+            {{ sectionInteraction.content }}
+        </p>
+
+        <div class="section_resources">
+            <h5>Resources</h5>
+            <ul style="list-style-type: none;">
+                <li ng-repeat="resource in sectionInteraction.resources">
+                    <a href="{{ resource.url }}" target="_blank">{{ resource.text }}</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="user_answers" ng-init="note.edit = false">
+
+            <div class="row" ng-if="sectionInteraction.mentee_notes !== null" style="margin-bottom: 10px;">
+                <div class="col-xs-9">
+                    {{ sectionInteraction.mentee_notes }}
+                </div>
+                <div class="col-xs-2">
+                    <i ng-click="note.edit = !note.edit; note.mentee_notes = sectionInteraction.mentee_notes;" class="material-icons ">mode_edit</i>
+                </div>
+            </div>
+
+            <div ng-if="sectionInteraction.mentee_notes === null || note.edit == true" class="row" style="margin-bottom: 10px">
+                <div class="col-xs-12">
+                    <input type="text" ng-model="note.mentee_notes" class="form-control col-xs-6 pull-left" placeholder="Answer">
+                    <button class="btn btn-sm btn-primary col-xs-1" ng-click="add_mentee_notes(sectionInteraction, note)" type="button">Submit</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="exercise-tasks_to_do" ng-if="sectionInteraction.todos.length != 0">
+            <h4>Tasks Todo</h4>
+            <ul>
+                <li ng-repeat="todo in sectionInteraction.todos">
+                    <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
+                    {{ todo.content }}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    </div>
+

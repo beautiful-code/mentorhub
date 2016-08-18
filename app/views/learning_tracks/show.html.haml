@@ -1,0 +1,25 @@
+:plain
+  <div ng-controller="LearningTrackShowController">
+    <div id="section_index">
+      <div class="track_info">
+        <div learning-track></div>
+      </div>
+      <div class="sub_nav">
+        <h4 class="selected">Exercises</h4>
+      </div>
+      <div id="show_track_sections" class="show_track_instance">
+        <div learning-section-interactions ng-repeat="sectionInteraction in track.sections">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+:javascript
+  var PageConfig = {
+    track: #{@track.to_json},
+    sections: #{@section_interactions.to_json},
+    learningtrackJson : #{@learning_track_data.to_json}
+  };
+
+
