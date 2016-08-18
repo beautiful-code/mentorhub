@@ -280,9 +280,11 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.changeSectionInteraction = function(sectionInteraction){
-                $scope.sectionInteraction ? $scope.sectionInteraction.clicked = false : '';
+                if($scope.sectionInteraction){
+                    $scope.sectionInteraction.selected = false;
+                }
                 $scope.sectionInteraction = sectionInteraction;
-                $scope.sectionInteraction.clicked = true;
+                $scope.sectionInteraction.selected = true;
             }
 
             $scope.reloadSectionInteractions = function(){

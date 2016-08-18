@@ -132,7 +132,6 @@ angular.module('mentorhub.commons', [])
                     received: function (data) {
                         var updated_track = JSON.parse(data);
                         var updatable_interactions = _scope.updatable_interactions;
-
                         var track_index = updatable_interactions.all_tracks.map(function (e) {
                             return e.id
                         }).indexOf(updated_track.id);
@@ -142,6 +141,7 @@ angular.module('mentorhub.commons', [])
                         }
 
                         updated_track.section_interactions.forEach(function (updated_section) {
+
                             var section_index = updatable_interactions.all_sections.map(function (e) {
                                 return e.id
                             }).indexOf(updated_section.id);
@@ -153,7 +153,6 @@ angular.module('mentorhub.commons', [])
                                     updatable_interactions.all_sections[section_index][k] = updated_section[k];
                                 }
                             }
-
                         });
 
                         $rootScope.$broadcast(name);

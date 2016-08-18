@@ -16,7 +16,7 @@
   <div ng-repeat="(track, track_info) in sections.data" style="margin-bottom: 20px">
       <div class="track-nav">
           <span class="track-deadline"> to be completed by {{track_info.deadline | date}}</span>
-          <span class="track-nav-circle " ng-class="[ sectionInteraction.state ,{ 'selected' : sectionInteraction.clicked }]" ng-repeat="sectionInteraction in track_info.section_interactions">
+          <span class="track-nav-circle" ng-class="[ sectionInteraction.state ,{ 'selected' : sectionInteraction.selected }]" ng-repeat="sectionInteraction in track_info.section_interactions">
               <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
               {{ track_info.expected_progress == ($index+1) ? "fiber_manual_record" : sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" ? "check" : "remove" }}
               </i>
@@ -26,16 +26,16 @@
           <div class="track-mentor">
               <p><span class="heading">mentor:</span>{{ track_info.mentor.name }}</p>
           </div>
-          <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.mentee_notes === null" style="border-left: 8px solid grey;">
+          <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.mentee_notes === null">
               Work on the exercise and submit it.
           </div>
           <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null && sectionInteraction.state == 'review_pending'">
               Your submission is currently being reviewed by {{ track_info.mentor.name | capitalize }}.
           </div>
-          <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null && sectionInteraction.state == 'section_completed'" style="border-left: 8px solid #598d09;">
+          <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null && sectionInteraction.state == 'section_completed'">
               Exercise Completed
           </div>
-          <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMyTodosStatus(sectionInteraction)" style="border-left: 8px solid #F0AD4E;">
+          <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMyTodosStatus(sectionInteraction)">
               {{ status.mytodo }}
           </div>
           <div class="section-exercise">
@@ -50,7 +50,6 @@
               </p>
           </div>
           <div class="section-answer" ng-init="note.edit = false">
-
               <h3 class="heading">Your Answer</h3>
               <div class="row" ng-if="sectionInteraction.mentee_notes !== null">
                   <div class="col-xs-9">
@@ -77,4 +76,3 @@
       </div>
   </div>
 </div>
-
