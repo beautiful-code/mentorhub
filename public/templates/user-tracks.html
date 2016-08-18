@@ -13,13 +13,13 @@
 <div ng-repeat="(track, track_info) in sections.data" style="margin-bottom: 20px">
     <div class="track__nav">
         <span class="section_deadline"> to be completed by {{track_info.deadline | date}}</span>
-        <span class="track__nav__circle " ng-class="[ sectionInteraction.state ,{ 'section--presentArrow' : sectionInteraction.clicked }]" ng-repeat="sectionInteraction in track_info.section_interactions">
-            <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
+        <span class="track__nav__circle " ng-class="[ sectionInteraction.state ,{ 'section--presentArrow' : sectionInteraction.selected }]" ng-repeat="sectionInteraction in track_info.section_interactions">
+            <i class="material-icons" id="{{sectionInteraction.xid}}" ng-click="changeSectionInteraction(sectionInteraction)">
             {{ track_info.expected_progress == ($index+1) ? "fiber_manual_record" : sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" ? "check" : "remove" }}
             </i>
         </span>
     </div>
-    <div class="section" ng-model="sectionInteraction">
+    <div class="section" >
         <div class="section__mentor">
             <p><span class="heading">mentor:</span>{{ track_info.mentor.name }}</p>
         </div>

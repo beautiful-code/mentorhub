@@ -7,18 +7,16 @@
     <p>You do not have any mentees.</p>
 </div>
 <div ng-repeat="track in sections.data" style="margin-bottom: 20px;">
-<!-- <pre>{{track.section_interactions[0] | json}}</pre> -->
     <div class="track__nav">
         <span class="section_deadline"> to be completed by {{track.deadline | date}}</span>
         <span class="track__nav__circle " ng-class="[ sectionInteraction.state ,{ 'section--presentArrow' : sectionInteraction.selected }]" ng-repeat="sectionInteraction in track.section_interactions">
             <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
                 {{track.expected_progress == ($index+1) ? "fiber_manual_record" : sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" ? "check" : "remove"}}
             </i>
-
         </span>
     </div>
 
-    <div class="section" ng-model="sectionInteraction">
+    <div class="section">
         <div class="section__mentor">
             <p><span class="heading">track:</span>{{ track.name }}</p>
         </div>

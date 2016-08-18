@@ -45,9 +45,6 @@ angular.module('mentorhub.board', [])
             for (var key in data.mentoring_tracks) {
                 data.mentoring_tracks[key].learning_tracks.forEach(function (track) {
                     all_tracks.push(track);
-                    angular.forEach(track.section_interactions, function (section, index) {
-                        section.selected = false;
-                    });
                     all_sections = all_sections.concat(track.section_interactions);
                 });
             }
@@ -55,9 +52,6 @@ angular.module('mentorhub.board', [])
             for (var key in data.learning_tracks) {
                 var track = data.learning_tracks[key];
                 all_tracks.push(track);
-                angular.forEach(track.section_interactions, function (section, index) {
-                    section.selected = false;
-                });
                 all_sections = all_sections.concat(track.section_interactions);
             }
 
@@ -286,13 +280,11 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.changeSectionInteraction = function(sectionInteraction){
-                if(!$scope.sectionInteraction){
-                    $scope.sectionInteraction = sectionInteraction;
+                if($scope.sectionInteraction){
+                    $scope.sectionInteraction.selected = false;
                 }
-                else{
-                    angular.extend($scope.sectionInteraction, sectionInteraction);
-                }
-
+                $scope.sectionInteraction = sectionInteraction;
+                $scope.sectionInteraction.selected = true;
             }
 
             $scope.reloadSectionInteractions = function(){
