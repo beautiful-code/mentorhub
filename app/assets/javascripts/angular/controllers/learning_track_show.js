@@ -1,5 +1,10 @@
 angular.module("mentorhub.learning_track_show", [])
 
+  .run(['$http', function ($http) {
+        $http.defaults.headers.common['Accept'] = 'application/json';
+        $http.defaults.headers.common['Content-Type'] = 'application/json';
+    }])
+
     .directive('learningSectionInteractions', function () {
         return {
             templateUrl: '/templates/learning-section-interaction-template.html'
@@ -12,12 +17,23 @@ angular.module("mentorhub.learning_track_show", [])
         }
     })
 
-    .controller('LearningTrackShowController', ['$scope', '$location', 'BoardServices', 'SectionInteractionServices',
-        function ($scope, $location, BoardServices, SectionInteractionServices) {
+
+    .controller('LearningTrackShowController', ['$scope', '$location', 'BoardServices', 'PubSubServices', 'SectionInteractionServices',
+        function ($scope, $location, BoardServices, PubSubServices, SectionInteractionServices) {
+
+            var updatable_interactions = {};
+            $scope.$on('updateScope', function (event, data) {
+                $scope.$apply();
+            })
 
             var init = function () {
-                $scope.track = LearningTrackShowConfig.track;
-                $scope.track.sections = LearningTrackShowConfig.sections;
+                $scope.track = PageConfig.track;
+                $scope.track.sections = PageConfig.sections;
+
+                SectionInteractionServices.updatable_interactions = PubSubServices.getAllSectionInteractions(PageConfig.learningtrackJson);
+                SectionInteractionServices.updatable_interactions.all_tracks.forEach(function (track) {
+                        SectionInteractionServices.subscribeToTrack(track, 'updateScope');
+                    });
             };
 
             $scope.add_mentee_notes = function (sectionInteraction, note) {
@@ -31,7 +47,6 @@ angular.module("mentorhub.learning_track_show", [])
                         sectionInteraction.mentee_notes = note.mentee_notes;
                         note.edit = false;
                         note.mentee_notes = null;
-                        window.location = $location.absUrl();
                     })
                     .error(function (error) {
                         console.log(error);

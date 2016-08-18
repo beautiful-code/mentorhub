@@ -17,7 +17,8 @@ class Track < ApplicationRecord
       methods: [
         :image_url, :recent_incomplete_section_interactions,
         :progress, :expected_progress
-      ]
+      ],
+      include: [:mentor]
     }.merge(options))
   end
 
