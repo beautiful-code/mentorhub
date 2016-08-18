@@ -1,6 +1,6 @@
 <ul class="subnav" ng-if="Helper.keys(user_mentee_tracks).length != 0">
     <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''" class=" mentees_list">
-        <a class="tracks__name">    {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</a>
+        <a class="tracks__name" ng-click="reloadSectionInteractions()">    {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</a>
     </li>
 </ul>
 <div ng-if="Helper.keys(user_mentee_tracks).length == 0" style="padding: 20px;" class="text-center">

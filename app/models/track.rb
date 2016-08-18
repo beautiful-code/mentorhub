@@ -57,9 +57,8 @@ class Track < ApplicationRecord
     days_over = ((Time.now.to_date) - (created_at.to_date)).to_i
     days_over = (days_over == 0 ? 1 : days_over)
     res = ((section_interactions.count.to_f / no_of_days.to_f)) * days_over
-
     # res = ((10 / no_of_days) * (remaining_days - 1)).round(1)
     # res = ((10 / no_of_days.to_f) * (remaining_days - 1)).round(2)
-    !res.nan? && res.finite? ? res.round : 0
+    !res.nan? && res.finite? ? res.ceil : 0
   end
 end

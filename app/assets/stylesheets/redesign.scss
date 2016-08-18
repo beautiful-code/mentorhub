@@ -8,13 +8,13 @@ body{
   font-family: "Open Sans";
   background-color: #f2f2f2;
 }
-header{
-  background-color: #354051;
-  position: relative;
-  color: white;
-  height: 52px;
+// header{
+//   background-color: #354051;
+//   position: relative;
+//   color: white;
+//   height: 52px;
 
-}
+// }
 .mhlogo{
   position: absolute;
   height: 30px;
@@ -108,6 +108,7 @@ header{
     border: 1px solid #F14133;
     color: #F14133;
   }
+  
 }
 .section--presentArrow:after{
   content: "";
