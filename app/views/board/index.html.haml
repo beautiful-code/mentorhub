@@ -18,12 +18,11 @@
     - flash.each do |message_type, message|
       %div{:class => "flash_message alert alert-#{message_type}"}= message
 
-    .track
-      .tab-content
-        .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_tracks'}"}
-          %div{"user-tracks" => ""}
-        .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_mentee_tracks'}"}
-          %div{"user-mentee-tracks" => ""}
+    .tab-content
+      .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_tracks'}"}
+        %div{"user-tracks" => ""}
+      .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_mentee_tracks'}"}
+        %div{"user-mentee-tracks" => ""}
 
     :javascript
       var PageConfig = {};
