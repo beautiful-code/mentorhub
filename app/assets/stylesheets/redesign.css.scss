@@ -81,6 +81,11 @@ body{
     float: left;
     list-style-type: none;
     cursor: pointer;
+    position: relative;
+
+    .notification-dot {
+      top: 25%;
+    }
   }
 }
 
@@ -149,13 +154,15 @@ body{
     border-color: #598d09;
     color: #598d09;
   }
+
   .review_pending,
   .section_submitted {
     border-color: #f0ad4e;
     color: #f0ad4e;
   }
 
-  .section__incomplete {
+  .section_incomplete,
+  .tasks_pending {
     border-color: #f14133;
     color: #f14133;
   }
@@ -206,7 +213,8 @@ body{
       border-color: #f0ad4e;
     }
 
-    &.section_incomplete {
+    &.section_incomplete,
+    &.tasks_pending {
       border-color: #f14133;
     }
   }
@@ -298,4 +306,25 @@ body{
   border: 1px solid #9b9b9b;
 }
 
+@keyframes blink {
+  0% { background: red; }
+  100% { background: #337ab7; }
+}
 
+@-webkit-keyframes blink {
+  0% { background: red; }
+  100% { background: #337ab7; }
+}
+
+.notification-dot {
+  width: 10px;
+  height: 10px;
+  background: #337ab7;
+  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+  right: -4px;
+  -webkit-animation: blink 1s linear infinite;
+  -moz-animation: blink 1s linear infinite;
+  animation: blink 1s linear infinite;
+}

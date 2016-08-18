@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713130429) do
+ActiveRecord::Schema.define(version: 20160818175746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "notifications", force: :cascade do |t|
+    t.boolean  "read",                   default: false
+    t.integer  "subscriber_id"
+    t.integer  "notified_by_id"
+    t.integer  "section_interaction_id"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.index ["section_interaction_id"], name: "index_notifications_on_section_interaction_id", using: :btree
+  end
 
   create_table "section_interactions", force: :cascade do |t|
     t.string   "title"
