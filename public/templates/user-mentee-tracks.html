@@ -14,9 +14,9 @@
   <div ng-repeat="track in sections.data" style="margin-bottom: 20px;">
     <div class="track-nav">
       <span class="track-deadline"> to be completed by {{track.deadline | date}}</span>
-      <span class="track-nav-circle" ng-class="[ sectionInteraction.state ,{ 'selected' : selected == sectionInteraction.id }]" ng-repeat="sectionInteraction in track.section_interactions">
+      <span class="track-nav-circle" ng-class="[ sectionInteraction.state ,{ 'selected' : selected == sectionInteraction.id }, {'expected-progress' : $index+1 == track.expected_progress}]" ng-repeat="sectionInteraction in track.section_interactions">
         <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
-          {{track.expected_progress == ($index+1) ? "fiber_manual_record" : sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" ? "check" : "remove"}}
+          {{sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" ? "check" : "remove"}}
         </i>
         <span ng-if="sectionInteractionActionTodoForMentor(sectionInteraction)" class="notification-dot"></span>
       </span>

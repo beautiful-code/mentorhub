@@ -14,7 +14,6 @@ class MentoringTracksController < ApplicationController
 
   def create
     track_template = TrackTemplate.find(params[:id])
-
     ActiveRecord::Base.transaction do
       track = Track.create(options_for_track(track_template))
       create_section_interactions(track)

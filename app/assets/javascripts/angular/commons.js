@@ -141,7 +141,6 @@ angular.module('mentorhub.commons', [])
                         }
 
                         updated_track.section_interactions.forEach(function (updated_section) {
-
                             var section_index = updatable_interactions.all_sections.map(function (e) {
                                 return e.id
                             }).indexOf(updated_section.id);
