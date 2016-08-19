@@ -4,29 +4,18 @@ class MentoringTracksController < ApplicationController
 
   def index
     @mentoring_tracks = JSON.parse(current_user.mentoring_tracks.to_json)
-    @mentoring_tracks.each do |track|
-      track['mentee'] = User.find_by_id(track['mentee_id'])
-    end
   end
 
   def new
     @tracks = TrackTemplate.all
+    @current_user = current_user
     @users = User.all - [current_user]
   end
 
   def create
     track_template = TrackTemplate.find(params[:id])
-
     ActiveRecord::Base.transaction do
-      options = track_template.dup.attributes.except('type', 'id')
-      options.merge!(
-        mentor_id: current_user.id,
-        remote_image_url: track_template.image_url,
-        mentee_id: params[:mentee][:id],
-        deadline: params[:deadline],
-        type: track_template.type.gsub('Template', '')
-      )
-      track = Track.create(options)
+      track = Track.create(options_for_track(track_template))
       create_section_interactions(track)
     end
     render json: { msg: 'success' }, status: 200
@@ -35,7 +24,7 @@ class MentoringTracksController < ApplicationController
   def show
     @section_interactions = @track.section_interactions.order(:id)
                                   .preload(:todos)
-    @section_interaction_new = SectionInteraction.new
+    @section_interaction = SectionInteraction.new
   end
 
   private
@@ -48,16 +37,23 @@ class MentoringTracksController < ApplicationController
              end
   end
 
-  def sections_params
-    params[:sections]
+  def options_for_track(track_template)
+    options = track_template.dup.attributes.except('type', 'id')
+    options.merge!(
+      mentor_id: current_user.id,
+      remote_image_url: track_template.image_url,
+      mentee_id: params[:mentee][:id],
+      deadline: params[:deadline],
+      type: track_template.type.gsub('Template', '')
+    )
   end
 
   def create_section_interactions(track)
-    sections_params.each do |section|
+    params[:sections].each do |section|
       options = section.except(
         'track_template_id', 'id',
         'editable', 'newRecord',
-        'newTrackSI'
+        'newSectionInteraction'
       )
       options[:type] = "#{track.type.gsub('Track', '')}SectionInteraction"
       track.section_interactions.create(options.permit!)

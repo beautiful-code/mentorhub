@@ -36,5 +36,7 @@ FactoryGirl.define do
     name 'HTML'
     desc 'Track Description'
     type 'ExerciseTrack'
+    mentee_id 70
+    mentor_id 10
   end
 end

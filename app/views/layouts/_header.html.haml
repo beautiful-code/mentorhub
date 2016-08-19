@@ -1,26 +1,42 @@
-%nav
-  =link_to root_path do
-    =image_tag "mentorhub_logo.png",class:"logo"
-  - if !user_signed_in?
-    %ul#log_nav
-      %li= link_to "Login", new_user_session_path
-      %li
-        %button= link_to "Sign Up", new_user_registration_path
-  - else
-    %ul.primary_nav
-      %li= link_to "Your Board", board_path, class: active_class(c: ['board'])
-    %ul.profile
-      -if current_user.image.present?
-        %li= image_tag current_user.image
-      -else
-        %li= gravatar_for current_user
-      %li.dropdown.dropdown-toggle(data-toggle="dropdown" )
-        = current_user.first_name
-        %i.fa.fa-caret-down(aria-hidden="true")
-      %ul.dropdown-menu.pull-right
-        %i.fa.fa-caret-up
-        %li= link_to "My Learning Tracks", "#"
-        %li= link_to "Mentees Tracks", mentoring_tracks_path, class: active_class(c:  ['mentoring_tracks'])
-        %li= link_to "Tracks", track_templates_path, class: active_class(c: ['sections','tracks'])
-        %hr
-        %li= link_to "Log out", destroy_user_session_path, method: :delete
+- board_view ||= false
+
+%nav#mh_navbar
+  %div
+    .navbar-header
+      = link_to root_path, class: 'navbar-brand' do
+        = image_tag "mentorhub_logo.png", class: 'logo'
+
+    %div
+      - if user_signed_in?
+        .nav.navbar-nav.left-nav
+          - if board_view
+            %ul.board-nav-links{"ng-init" => "active_tab = 'user_tracks'", "ng-model" => "active_tab"}
+              %li{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
+                %a{:href => ""} Your Tracks
+                %span.notification-dot{"ng-if" => "actionTodoForMyTracks()"}
+              %li{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks')"}
+                %a{:href => ""} Your Mentee Tracks
+                %span.notification-dot{"ng-if" => "actionTodoForMyMenteeTracks()"}
+
+      .nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          %ul.profile
+            -if current_user.image.present?
+              %li= image_tag current_user.image
+            -else
+              %li= gravatar_for current_user
+            %li.dropdown.dropdown-toggle(data-toggle="dropdown" )
+              = current_user.first_name
+              %i.fa.fa-caret-down(aria-hidden="true")
+            %ul.dropdown-menu.pull-right
+              %i.fa.fa-caret-up
+              %li= link_to "My Learning Tracks", "#"
+              %li= link_to "Mentees Tracks", mentoring_tracks_path, class: active_class(c:  ['mentoring_tracks'])
+              %li= link_to "Tracks", track_templates_path, class: active_class(c: ['sections','tracks'])
+              %li.divider{:role => "separator"}
+              %li= link_to "Log out", destroy_user_session_path, method: :delete
+        - else
+          %ul
+            %li= link_to "Login", new_user_session_path
+            %li
+              %button= link_to "Sign Up", new_user_registration_path

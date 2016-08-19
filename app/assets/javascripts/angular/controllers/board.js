@@ -45,14 +45,14 @@ angular.module('mentorhub.board', [])
             for (var key in data.mentoring_tracks) {
                 data.mentoring_tracks[key].learning_tracks.forEach(function (track) {
                     all_tracks.push(track);
-                    all_sections = all_sections.concat(track.recent_incomplete_section_interactions);
+                    all_sections = all_sections.concat(track.section_interactions);
                 });
             }
 
             for (var key in data.learning_tracks) {
                 var track = data.learning_tracks[key];
                 all_tracks.push(track);
-                all_sections = all_sections.concat(track.recent_incomplete_section_interactions);
+                all_sections = all_sections.concat(track.section_interactions);
             }
 
             return {
@@ -138,14 +138,26 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.$on('BoardController', function (event, data) {
-                $scope.$apply();
+                $scope.$apply(function () {
+                    if (angular.isArray($scope.sections.data)) {
+                        var section_index = $scope.sections.data[0].section_interactions.map(function (e) {
+                            return e.id
+                        }).indexOf($scope.sectionInteraction.id);
+                        $scope.sectionInteraction = $scope.sections.data[0].section_interactions[section_index]
+                    }
+                    else{
+                        var section_index = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions.map(function (e) {
+                            return e.id
+                        }).indexOf($scope.sectionInteraction.id);
+                        $scope.sectionInteraction = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions[section_index]
+                    }
+                });
             })
 
             var init = function () {
                 if (typeof PageConfig !== "undefined" && typeof PageConfig.boardJson !== "undefined") {
                     $scope.user_mentee_tracks = parse_mentee_tracks(PageConfig.boardJson.mentoring_tracks);
                     $scope.user_tracks = PageConfig.boardJson.learning_tracks;
-
                     SectionInteractionServices.updatable_interactions = PubSubServices.getAllSectionInteractions(PageConfig.boardJson);
                     SectionInteractionServices.updatable_interactions.all_tracks.forEach(function (track) {
                         SectionInteractionServices.subscribeToTrack(track, 'BoardController');
@@ -156,6 +168,7 @@ angular.module('mentorhub.board', [])
                     $scope.subnav = {active: Object.keys($scope.user_tracks)[0]};
                     $scope.sections.data[$scope.subnav.active] = $scope[$scope.active_tab][$scope.subnav.active];
                 }
+                $scope.reloadSectionInteractions();
             };
 
             $scope.change_tab = function (tab) {
@@ -178,7 +191,7 @@ angular.module('mentorhub.board', [])
                         }
                         break;
                 }
-
+                $scope.reloadSectionInteractions();
                 var subnav_element = $(".user_tracks-subnav");
                 subnav_element.children().removeClass('active');
                 subnav_element.children(":first-child").addClass('active');
@@ -192,7 +205,7 @@ angular.module('mentorhub.board', [])
 
                 BoardServices.update_section(route_params, {section_interaction: {mentee_notes: note.mentee_notes}})
                     .success(function (response) {
-                        sectionInteraction.mentee_notes = note.mentee_notes;
+                        angular.merge(sectionInteraction, response.section_interaction);
                         note.edit = false;
                         note.mentee_notes = null;
                     })
@@ -278,6 +291,111 @@ angular.module('mentorhub.board', [])
                     SectionInteractionServices.updateSectionInteractionState(sectionInteraction, 'section_completed');
                 }
             };
+
+            $scope.changeSectionInteraction = function(sectionInteraction){
+                if($scope.sectionInteraction){
+                    $scope.sectionInteraction.selected = false;
+                }
+                $scope.sectionInteraction = sectionInteraction;
+                $scope.selected = sectionInteraction.id;
+            }
+
+            $scope.reloadSectionInteractions = function(){
+                $timeout(function() {
+                    var el = document.getElementById('sec0');
+                    angular.element(el).triggerHandler('click');
+                }, 0);
+            }
+
+            $scope.actionTodoForMyTracks = function(){
+              var myLearningTracks = [];
+
+              for(var key in $scope.user_tracks) {
+                myLearningTracks.push($scope.user_tracks[key]);
+              }
+
+              return actionsTodoPresent(
+                myLearningTracks,
+                'trackActionTodoForMentee'
+              );
+            };
+
+            $scope.actionTodoForMyMenteeTracks = function(){
+              var myMenteesTracks = [];
+
+              for (var key in $scope.user_mentee_tracks) {
+                $scope.user_mentee_tracks[key].learning_tracks.forEach(function(track) {
+                  myMenteesTracks.push(track);
+                });
+              }
+
+              return actionsTodoPresent(
+                myMenteesTracks,
+                'trackActionTodoForMentor'
+              );
+            };
+
+            var actionsTodoPresent = function(array, statusFunc) {
+              var ret = [];
+
+              array.forEach(function(element) {
+                ret.push($scope[statusFunc](element));
+              });
+
+              return (ret.indexOf(true) != -1);
+            }
+
+            /* Does mentor has to act on anything for a track */
+            $scope.trackActionTodoForMentor = function(track) {
+              return actionsTodoPresent(
+                track.section_interactions,
+                'sectionInteractionActionTodoForMentor'
+              );
+            };
+
+            /* Does mentee has to act on anything for a track */
+            $scope.trackActionTodoForMentee = function(track) {
+              return actionsTodoPresent(
+                track.section_interactions,
+                'sectionInteractionActionTodoForMentee'
+              );
+            }
+
+            /* Does mentor has to act on anything for a sectionInteraction */
+            $scope.sectionInteractionActionTodoForMentor = function(sectionInteraction) {
+              var ret = false;
+
+              if (sectionInteraction.state == 'section_completed' || sectionInteraction.state == 'new' ) {
+                return ret;
+              }
+
+              var todosStatus = todoStatusHelper(sectionInteraction);
+
+              if (todosStatus.to_review > 0 || todosStatus.completed == sectionInteraction.todos.length) {
+                ret = true;
+              } else if (sectionInteraction.state == 'review_pending') {
+                ret = true;
+              }
+
+              return ret;
+            }
+
+            /* Does mentee has to act on anything for a sectionInteraction */
+            $scope.sectionInteractionActionTodoForMentee = function(sectionInteraction) {
+              var ret = false;
+
+              if (sectionInteraction.state == 'section_completed' || sectionInteraction.state == 'new' ) {
+                return ret;
+              }
+
+              var todosStatus = todoStatusHelper(sectionInteraction);
+
+              if (todosStatus.incomplete > 0) {
+                ret = true;
+              }
+
+              return ret;
+            }
 
             init();
         }]);
