@@ -138,19 +138,20 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.$on('BoardController', function (event, data) {
-                if ($.isArray($scope.sections.data)) {
-                    var section_index = $scope.sections.data[0].section_interactions.map(function (e) {
-                        return e.id
-                    }).indexOf($scope.sectionInteraction.id);
-                    $scope.sectionInteraction = $scope.sections.data[0].section_interactions[section_index]
-                }
-                else{
-                    var section_index = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions.map(function (e) {
-                        return e.id
-                    }).indexOf($scope.sectionInteraction.id);
-                    $scope.sectionInteraction = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions[section_index]
-                }
-                $scope.$apply();
+                $scope.$apply(function () {
+                    if (angular.isArray($scope.sections.data)) {
+                        var section_index = $scope.sections.data[0].section_interactions.map(function (e) {
+                            return e.id
+                        }).indexOf($scope.sectionInteraction.id);
+                        $scope.sectionInteraction = $scope.sections.data[0].section_interactions[section_index]
+                    }
+                    else{
+                        var section_index = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions.map(function (e) {
+                            return e.id
+                        }).indexOf($scope.sectionInteraction.id);
+                        $scope.sectionInteraction = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions[section_index]
+                    }
+                });
             })
 
             var init = function () {
