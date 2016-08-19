@@ -2,7 +2,6 @@ class TodosController < ApplicationController
   before_action :authenticate_user!
   before_action :set_section_interaction
   before_action :set_todos, except: [:index]
-  include SectionInteractionsHelper
 
   def index
     todo_list = @section_interaction.todos.all
@@ -12,7 +11,6 @@ class TodosController < ApplicationController
 
   def create
     if @todo.save
-      create_notification_for(@section_interaction)
       @section_interaction.pending_tasks
       render json: { msg: 'Todo created', todo: @todo }, status: 201
     else
@@ -22,7 +20,6 @@ class TodosController < ApplicationController
 
   def update
     if @todo.update(todo_params)
-      create_notification_for(@section_interaction)
       render json: { msg: 'Todo updated', todo: @todo }, status: 200
     else
       render json: { msg: 'error', errors: @todo.errors }, status: 422
@@ -31,7 +28,6 @@ class TodosController < ApplicationController
 
   def destroy
     if @todo.destroy
-      create_notification_for(@section_interaction)
       render json: { msg: 'Todo deleted' }, status: 200
     else
       render json: { msg: 'error', errors: @todo.errors }, status: 422

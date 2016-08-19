@@ -15,8 +15,7 @@ class Track < ApplicationRecord
     super({
       except: [:created_at, :updated_at, :type, :image],
       methods: [
-        :image_url, :progress, :expected_progress,
-        :notifications_for_mentee, :notifications_for_mentor
+        :image_url, :progress, :expected_progress
       ],
       include: [:mentee, :section_interactions]
     }.merge(options))
@@ -49,14 +48,6 @@ class Track < ApplicationRecord
     res =
       (section_interactions_count.to_f / total_no_of_days) * no_of_days_since
     !res.nan? && res.finite? ? res.ceil : 0
-  end
-
-  def notifications_for_mentor
-    self.section_interactions.collect(&:notifications_for_mentor).sum
-  end
-
-  def notifications_for_mentee
-    self.section_interactions.collect(&:notifications_for_mentee).sum
   end
 
   private

@@ -5,7 +5,7 @@
         {{ track | capitalize }}
       </a>
 
-      <span ng-if="track_info.notifications_for_mentee > 0" class="notification-dot"></span>
+      <span ng-if="trackActionTodoForMentee(track_info)" class="notification-dot"></span>
     </li>
   </ul>
 </div>
@@ -18,11 +18,11 @@
   <div ng-repeat="(track, track_info) in sections.data" style="margin-bottom: 20px">
     <div class="track-nav">
       <span class="track-deadline"> to be completed by {{track_info.deadline | date}}</span>
-      <span class="track-nav-circle" ng-class="[ sectionInteraction.state ,{ 'selected' :  selected == sectionInteraction.id }, {'expected-progress' : $index == sectionInteraction.expected_progress}]" ng-repeat="sectionInteraction in track_info.section_interactions">
+      <span class="track-nav-circle" ng-class="[ sectionInteraction.state ,{ 'selected' :  selected == sectionInteraction.id }]" ng-repeat="sectionInteraction in track_info.section_interactions">
         <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
           {{ track_info.expected_progress == ($index+1) ? "fiber_manual_record" : sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" ? "check" : "remove" }}
         </i>
-        <span ng-if="sectionInteraction.notifications_for_mentee > 0" class="notification-dot"></span>
+        <span ng-if="sectionInteractionActionTodoForMentee(sectionInteraction)" class="notification-dot"></span>
       </span>
     </div>
 

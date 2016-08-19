@@ -1,6 +1,5 @@
 class SectionInteraction < ApplicationRecord
   has_many :todos
-  has_many :notifications
   belongs_to :track
 
   validates :title, presence: true
@@ -57,11 +56,7 @@ class SectionInteraction < ApplicationRecord
 
     super({
       except: [:goal, :created_at, :updated_at],
-      include: [:todos],
-      methods: [
-        :notifications_for_mentee,
-        :notifications_for_mentor
-      ]
+      include: [:todos]
     }.merge(options))
   end
 
@@ -73,14 +68,6 @@ class SectionInteraction < ApplicationRecord
 
       res
     end
-  end
-
-  def notifications_for_mentor
-    self.notifications.where(read: false, subscriber_id: self.mentor_id).count
-  end
-
-  def notifications_for_mentee
-    self.notifications.where(read: false, subscriber_id: self.mentee_id).count
   end
 
   private

@@ -13,10 +13,10 @@
             %ul.board-nav-links{"ng-init" => "active_tab = 'user_tracks'", "ng-model" => "active_tab"}
               %li{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
                 %a{:href => ""} Your Tracks
-                %span.notification-dot{"ng-if" => "notificationsForMyTracks()"}
+                %span.notification-dot{"ng-if" => "actionTodoForMyTracks()"}
               %li{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks')"}
                 %a{:href => ""} Your Mentee Tracks
-                %span.notification-dot{"ng-if" => "notificationsForMyMenteeTracks()"}
+                %span.notification-dot{"ng-if" => "actionTodoForMyMenteeTracks()"}
 
       .nav.navbar-nav.navbar-right
         - if user_signed_in?

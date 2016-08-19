@@ -324,7 +324,9 @@ body{
   position: absolute;
   top: 0px;
   right: -4px;
-  -webkit-animation: blink 1s linear infinite;
-  -moz-animation: blink 1s linear infinite;
-  animation: blink 1s linear infinite;
+  /*
+   *-webkit-animation: blink 1s linear infinite;
+   *-moz-animation: blink 1s linear infinite;
+   *animation: blink 1s linear infinite;
+   */
 }

@@ -2,7 +2,7 @@
   <ul class="board-subnav-links" ng-if="Helper.keys(user_mentee_tracks).length != 0">
     <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''" class="mentees-list">
       <a class="tracks-name" ng-click="reloadSectionInteractions()">    {{ user_mentee_tracks[track.mentee_id].name | capitalize }}</a>
-      <span ng-if="track.notifications_for_mentor > 0" class="notification-dot"></span>
+      <span ng-if="trackActionTodoForMentor(track)" class="notification-dot"></span>
     </li>
   </ul>
 </div>
@@ -14,15 +14,15 @@
   <div ng-repeat="track in sections.data" style="margin-bottom: 20px;">
     <div class="track-nav">
       <span class="track-deadline"> to be completed by {{track.deadline | date}}</span>
-      <span class="track-nav-circle" ng-class="[ sectionInteraction.state ,{ 'selected' : selected == sectionInteraction.id }, {'expected-progress' : $index == sectionInteraction.expected_progress}]" ng-repeat="sectionInteraction in track.section_interactions">
+      <span class="track-nav-circle" ng-class="[ sectionInteraction.state ,{ 'selected' : selected == sectionInteraction.id }]" ng-repeat="sectionInteraction in track.section_interactions">
         <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
           {{track.expected_progress == ($index+1) ? "fiber_manual_record" : sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" ? "check" : "remove"}}
         </i>
-        <span ng-if="sectionInteraction.notifications_for_mentor > 0" class="notification-dot"></span>
+        <span ng-if="sectionInteractionActionTodoForMentor(sectionInteraction)" class="notification-dot"></span>
       </span>
     </div>
 
-    <div class="section" style="min-height: {{track_info.section_interactions.length * 40}}px;">
+    <div class="section" style="min-height: {{track.section_interactions.length * 40}}px;">
       <div class="track-mentor">
         <p><span class="heading">track:</span>{{ track.name }}</p>
       </div>

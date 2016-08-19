@@ -294,27 +294,95 @@ angular.module('mentorhub.board', [])
                 }, 0);
             }
 
-            $scope.notificationsForMyMenteeTracks = function() {
-              var ret = 0;
+            $scope.actionTodoForMyTracks = function(){
+              var myLearningTracks = [];
+
+              for(var key in $scope.user_tracks) {
+                myLearningTracks.push($scope.user_tracks[key]);
+              }
+
+              return actionsTodoPresent(
+                myLearningTracks,
+                'trackActionTodoForMentee'
+              );
+            };
+
+            $scope.actionTodoForMyMenteeTracks = function(){
+              var myMenteesTracks = [];
 
               for (var key in $scope.user_mentee_tracks) {
-                $.each($scope.user_mentee_tracks[key].learning_tracks, function(i,track) {
-                  ret += track.notifications_for_mentor;
-                })
-              };
+                $scope.user_mentee_tracks[key].learning_tracks.forEach(function(track) {
+                  myMenteesTracks.push(track);
+                });
+              }
 
-              return (ret > 0);
+              return actionsTodoPresent(
+                myMenteesTracks,
+                'trackActionTodoForMentor'
+              );
             };
 
-            $scope.notificationsForMyTracks = function() {
-              var ret = 0;
+            var actionsTodoPresent = function(array, statusFunc) {
+              var ret = [];
 
-              for (var key in $scope.user_tracks) {
-                ret += $scope.user_tracks[key].notifications_for_mentor;
-              };
+              array.forEach(function(element) {
+                ret.push($scope[statusFunc](element));
+              });
 
-              return (ret > 0);
+              return (ret.indexOf(true) != -1);
+            }
+
+            /* Does mentor has to act on anything for a track */
+            $scope.trackActionTodoForMentor = function(track) {
+              return actionsTodoPresent(
+                track.section_interactions,
+                'sectionInteractionActionTodoForMentor'
+              );
             };
+
+            /* Does mentee has to act on anything for a track */
+            $scope.trackActionTodoForMentee = function(track) {
+              return actionsTodoPresent(
+                track.section_interactions,
+                'sectionInteractionActionTodoForMentee'
+              );
+            }
+
+            /* Does mentor has to act on anything for a sectionInteraction */
+            $scope.sectionInteractionActionTodoForMentor = function(sectionInteraction) {
+              var ret = false;
+
+              if (sectionInteraction.state == 'section_completed' || sectionInteraction.state == 'new' ) {
+                return ret;
+              }
+
+              var todosStatus = todoStatusHelper(sectionInteraction);
+
+              if (todosStatus.to_review > 0 || todosStatus.completed == sectionInteraction.todos.length) {
+                ret = true;
+              } else if (sectionInteraction.state == 'review_pending') {
+                ret = true;
+              }
+
+              return ret;
+            }
+
+            /* Does mentee has to act on anything for a sectionInteraction */
+            $scope.sectionInteractionActionTodoForMentee = function(sectionInteraction) {
+              var ret = false;
+
+              if (sectionInteraction.state == 'section_completed' || sectionInteraction.state == 'new' ) {
+                return ret;
+              }
+
+              var todosStatus = todoStatusHelper(sectionInteraction);
+
+              if (todosStatus.incomplete > 0) {
+                ret = true;
+              }
+
+              return ret;
+            }
 
             init();
         }]);
