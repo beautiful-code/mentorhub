@@ -1,9 +1,11 @@
 angular.module("mentorhub.mentoring_track_show", [])
+
     .directive('sectionInteractions', function () {
         return {
             templateUrl: '/templates/section-interaction-template.html'
         }
     })
+
     .factory('MentoringTrackServices', ["$http", "ApiUrls", "Utils", function ($http, ApiUrls, Utils) {
         return {
             postSectionData: function (route_params, payload) {
@@ -14,6 +16,7 @@ angular.module("mentorhub.mentoring_track_show", [])
             }
         }
     }])
+
     .controller('MentoringTrackShowController', ["$scope", "MentoringTrackServices", "SectionInteractionServices",
         function ($scope, MentoringTrackServices, SectionInteractionServices) {
             $scope.sectionInteractionServices = SectionInteractionServices;

@@ -23,7 +23,7 @@ class TrackTemplatesController < ApplicationController
 
     if @track_template.save
       render json: { msg: 'success',
-                      track_template: @track_template }, status: 200
+                     track_template: @track_template }, status: 200
     else
       render json: {
         msg: 'error',

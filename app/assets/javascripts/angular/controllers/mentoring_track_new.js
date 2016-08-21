@@ -20,7 +20,6 @@ angular.module("mentorhub.mentoring_track_new", [])
         }
     }])
 
-
     .controller('MentoringTrackNew', ['$rootScope','$scope', '$window', 'MentoringTrackNewServices', function ($rootScope, $scope, $window, MentoringTrackNewServices ) {
         var count = 1;
 
@@ -37,7 +36,7 @@ angular.module("mentorhub.mentoring_track_new", [])
             $scope.deadline = new Date();
             $scope.users = MentoringTrackConfig.users;
             $scope.tracks = MentoringTrackConfig.tracks;
-            
+
             if ($window.localStorage.getItem('SelectedTrack')) {
                 $scope.selectTrack = JSON.parse($window.localStorage.getItem('SelectedTrack'));
                 $scope.showButtons = true;
