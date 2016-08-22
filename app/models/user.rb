@@ -46,6 +46,4 @@ class User < ApplicationRecord
       ]
     }.merge(options))
   end
-
-
 end
