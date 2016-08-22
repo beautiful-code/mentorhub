@@ -5,7 +5,7 @@ angular.module('mentorhub.commons', [])
     .service('SectionInteractionServices', ["$rootScope", 'BoardServices', function ($rootScope, BoardServices) {
         var _scope = this;
 
-        _scope.updatable_interactions = {};
+        _scope.updatable_interactions = [];
 
         _scope.update_todo = function (route_params, payload, todo) {
             BoardServices.update_todo(route_params, payload)
@@ -127,10 +127,10 @@ angular.module('mentorhub.commons', [])
                     received: function (data) {
                         var updated_track = JSON.parse(data);
                         var updatable_interactions = _scope.updatable_interactions;
-                        var track_index = updatable_interactions.all_tracks.map(function (e) {
+                        var track_index = updatable_interactions.map(function (e) {
                             return e.id
                         }).indexOf(updated_track.id);
-                        angular.extend(updatable_interactions.all_tracks[track_index], updated_track);
+                        angular.extend(updatable_interactions[track_index], updated_track);
                         $rootScope.$broadcast(name);
                     }
                 }

@@ -38,41 +38,19 @@ angular.module('mentorhub.board', [])
     }])
 
     .service('PubSubServices', function () {
-        this.getAllSectionInteractions = function (data) {
+        this.getAllTracks = function (data) {
             var all_tracks = [];
-
             for (var key in data.mentoring_tracks) {
                 data.mentoring_tracks[key].learning_tracks.forEach(function (track) {
                     all_tracks.push(track);
                 });
             }
-
             for (var key in data.learning_tracks) {
                 var track = data.learning_tracks[key];
                 all_tracks.push(track);
             }
-
-            return {
-                all_tracks: all_tracks
-            };
+            return all_tracks;
         };
-
-        this.getInteractions = function (data) {
-            var interactions = [];
-
-            for (var key in data.mentoring_tracks) {
-                data.mentoring_tracks[key].learning_tracks.forEach(function (track) {
-                    interactions.push({menteeId: track.mentee_id, mentorId: track.mentor_id})
-                });
-            }
-
-            for (var key in data.learning_tracks) {
-                var track = data.learning_tracks[key];
-                interactions.push({menteeId: track.mentee_id, mentorId: track.mentor_id})
-            }
-
-            return interactions;
-        }
     })
 
     .directive('userTracks', function () {
@@ -154,8 +132,8 @@ angular.module('mentorhub.board', [])
                 if (typeof PageConfig !== "undefined" && typeof PageConfig.boardJson !== "undefined") {
                     $scope.user_mentee_tracks = parse_mentee_tracks(PageConfig.boardJson.mentoring_tracks);
                     $scope.user_tracks = PageConfig.boardJson.learning_tracks;
-                    SectionInteractionServices.updatable_interactions = PubSubServices.getAllSectionInteractions(PageConfig.boardJson);
-                    SectionInteractionServices.updatable_interactions.all_tracks.forEach(function (track) {
+                    SectionInteractionServices.updatable_interactions = PubSubServices.getAllTracks(PageConfig.boardJson);
+                    SectionInteractionServices.updatable_interactions.forEach(function (track) {
                         SectionInteractionServices.subscribeToTrack(track, 'BoardController');
                     });
                 }
@@ -191,7 +169,7 @@ angular.module('mentorhub.board', [])
                 var subnav_element = $(".user_tracks-subnav");
                 subnav_element.children().removeClass('active');
                 subnav_element.children(":first-child").addClass('active');
-            };
+            }           
 
             $scope.add_mentee_notes = function (sectionInteraction, note) {
                 var route_params = {
@@ -289,9 +267,6 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.changeSectionInteraction = function(sectionInteraction){
-                if($scope.sectionInteraction){
-                    $scope.sectionInteraction.selected = false;
-                }
                 $scope.sectionInteraction = sectionInteraction;
                 $scope.selected = sectionInteraction.id;
             }
@@ -359,38 +334,23 @@ angular.module('mentorhub.board', [])
 
             /* Does mentor has to act on anything for a sectionInteraction */
             $scope.sectionInteractionActionTodoForMentor = function(sectionInteraction) {
-                var ret = false;
-
-                if (sectionInteraction.state == 'section_completed' || sectionInteraction.state == 'new' ) {
-                    return ret;
-                }
-
+                var notify_mentor = false;
                 var todosStatus = todoStatusHelper(sectionInteraction);
-
-                if (todosStatus.to_review > 0 || todosStatus.completed == sectionInteraction.todos.length) {
-                    ret = true;
-                } else if (sectionInteraction.state == 'review_pending') {
-                    ret = true;
+                if ((todosStatus.to_review > 0 || todosStatus.completed == sectionInteraction.todos.length ) && (sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'new' )) {
+                    notify_mentor = true;
                 }
-
-                return ret;
+                return notify_mentor;
             }
 
             /* Does mentee has to act on anything for a sectionInteraction */
             $scope.sectionInteractionActionTodoForMentee = function(sectionInteraction) {
-                var ret = false;
-
-                if (sectionInteraction.state == 'section_completed' || sectionInteraction.state == 'new' ) {
-                    return ret;
-                }
-
+                var notify_mentee = false;
                 var todosStatus = todoStatusHelper(sectionInteraction);
-
-                if (todosStatus.incomplete > 0) {
-                    ret = true;
+                if (( todosStatus.incomplete > 0 ) && ( sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'new' )) {
+                    notify_mentee = true;
                 }
 
-                return ret;
+                return notify_mentee;
             }
 
             init();

@@ -68,13 +68,8 @@ angular.module('mentorhub.track', [])
             };
 
             $scope.create_track = function (track) {
-                var file = $scope.myFile;
-
-                var trackParams = new FormData();
-                trackParams.append('track_template[name]', track.name);
-                trackParams.append('track_template[desc]', track.desc);
-                trackParams.append('track_template[image]', file);
-
+                var file = $scope.imageFile;
+                var trackParams = setTrackParams(track, file);
                 TrackServices.postTrackData(trackParams)
                     .success(function (response) {
                         track.editable = track.newRecord = false;
@@ -98,18 +93,22 @@ angular.module('mentorhub.track', [])
             };
 
             $scope.update_track = function (track) {
-                var file = $scope.myFile;
-                var trackParams = new FormData();
-                trackParams.append('track_template[name]', track.name);
-                trackParams.append('track_template[desc]', track.desc);
-                trackParams.append('track_template[image]', file);
-
+                var file = $scope.imageFile;
+                var trackParams = setTrackParams(track, file);
                 TrackServices.putTrackData({'{track_id}': track.id}, trackParams)
                     .success(function (response) {
                         track.image.image.url = response.track_template.image.image.url;
                         track.editable = false;
                     })
             };
+
+            var setTrackParams = function(track, file){
+                var trackParams = new FormData();
+                trackParams.append('track_template[name]', track.name);
+                trackParams.append('track_template[desc]', track.desc);
+                trackParams.append('track_template[image]', file);
+                return trackParams;
+            }
 
             $scope.edit_section = function (section) {
                 section.editable = true;
