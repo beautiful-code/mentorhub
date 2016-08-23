@@ -1,8 +1,8 @@
 <div class="board-subnav">
   <ul class="board-subnav-links" ng-if="Helper.keys(user_tracks).length != 0">
     <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''" class="tracks-list">
-      <a style="cursor: pointer" class="tracks-name" ng-click="reloadSectionInteractions()">
-        {{ track | capitalize }}
+      <a style="cursor: pointer" class="tracks-name" ng-click="reloadSectionInteractions(track_info)">
+        {{ track | capitalize}}
       </a>
       <span ng-if="trackActionTodoForMentee(track_info)" class="notification-dot"></span>
     </li>
