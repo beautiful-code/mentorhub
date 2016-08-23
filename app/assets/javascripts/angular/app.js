@@ -32,7 +32,6 @@ angular.module('mentorhub', [
         var apiBaseUrl = '/';
         var baseUrls = {
             'board_data': apiBaseUrl + 'board',
-            'update_section_interaction': apiBaseUrl + 'tracks/{track_id}/section_interactions/{section_id}',
             'create_todo': apiBaseUrl + 'tracks/{track_id}/section_interactions/{section_id}/todos',
             'update_todo': apiBaseUrl + 'tracks/{track_id}/section_interactions/{section_id}/todos/{todo_id}',
 
@@ -41,16 +40,15 @@ angular.module('mentorhub', [
             'delete_track': apiBaseUrl + 'track_templates/{track_id}',
 
             'get_sections': apiBaseUrl + 'track_templates/{track_id}/section_templates',
-
-
             'create_section': apiBaseUrl + 'track_templates/{track_id}/section_templates',
             'update_section': apiBaseUrl + 'track_templates/{track_id}/section_templates/{section_id}',
             'delete_section': apiBaseUrl + 'track_templates/{track_id}/section_templates/{section_id}',
 
             'create_section_interaction': apiBaseUrl + 'tracks/{track_id}/section_interactions',
-            'create_mentee_track': apiBaseUrl + 'mentoring_tracks',
-        };
+            'update_section_interaction': apiBaseUrl + 'tracks/{track_id}/section_interactions/{section_id}',
 
+            'create_mentee_track': apiBaseUrl + 'mentoring_tracks'
+        };
         return angular.extend(baseUrls, {});
     })
 

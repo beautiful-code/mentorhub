@@ -5,7 +5,7 @@ angular.module('mentorhub.commons', [])
     .service('SectionInteractionServices', ["$rootScope", 'BoardServices', function ($rootScope, BoardServices) {
         var _scope = this;
 
-        _scope.updatable_interactions = {};
+        _scope.updatable_interactions = [];
 
         _scope.update_todo = function (route_params, payload, todo) {
             BoardServices.update_todo(route_params, payload)
@@ -109,12 +109,7 @@ angular.module('mentorhub.commons', [])
                 .success(function (response) {
                     var index = sectionInteraction.todos.indexOf(todo);
                     sectionInteraction.todos.splice(index, 1);
-
-                    if (sectionInteraction.todos.length > 0) {
-                        sectionInteraction.state = "tasks_pending";
-                    } else {
-                        sectionInteraction.state = "review_pending";
-                    }
+                    sectionInteraction.state = sectionInteraction.todos.length > 0 ? "tasks_pending" : "review_pending";
                 })
                 .error(function (error) {
                     console.log(error);
@@ -132,28 +127,10 @@ angular.module('mentorhub.commons', [])
                     received: function (data) {
                         var updated_track = JSON.parse(data);
                         var updatable_interactions = _scope.updatable_interactions;
-                        var track_index = updatable_interactions.all_tracks.map(function (e) {
+                        var track_index = updatable_interactions.map(function (e) {
                             return e.id
                         }).indexOf(updated_track.id);
-
-                        for (var k in updated_track) {
-                            updatable_interactions.all_tracks[track_index][k] = updated_track[k];
-                        }
-
-                        updated_track.section_interactions.forEach(function (updated_section) {
-                            var section_index = updatable_interactions.all_sections.map(function (e) {
-                                return e.id
-                            }).indexOf(updated_section.id);
-
-                            if (section_index == -1) {
-                                updatable_interactions.all_sections.push(updated_section);
-                            } else {
-                                for (var k in updated_section) {
-                                    updatable_interactions.all_sections[section_index][k] = updated_section[k];
-                                }
-                            }
-                        });
-
+                        angular.extend(updatable_interactions[track_index], updated_track);
                         $rootScope.$broadcast(name);
                     }
                 }

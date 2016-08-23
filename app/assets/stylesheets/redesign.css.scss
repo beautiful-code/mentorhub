@@ -6,51 +6,17 @@
 body{
   font-size: 14px;
   font-family: "Open Sans";
-  background-color: #f2f2f2;
+  background-color: #fafafa;
 }
 
-.mhlogo{
-  position: absolute;
-  height: 30px;
-  margin: 11px 80px;
-}
-.navbar{
-  width:800px;
-  margin: auto;
-  display: flex;
-  justify-content:space-between;
-
-}
-.userProfile__image{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid white;
-  margin: 11px 0px;
-  box-sizing:border-box;
-}
-.userProfile__name{
-  vertical-align: top;
-  display: inline-block;
-  line-height: 22px;
-  padding: 15px 10px;
-}
-.menu__item{
-  display: inline-block;
-  color: white;
-  line-height: 22px;
-  padding: 14px 20px;
-  vertical-align: middle;
-  text-decoration: none;
-}
 
 .board-subnav {
-  background-color: #fafafa;
-  height: 42px;
+  background-color: #FFFFFF;
   box-shadow: 0 0 2px rgba(0,0,0,.2);
 
   .board-subnav-links {
-    width: 880px;
+    width: 900px;
+    height: 42px;
     margin: 0 auto;
 
     li {
@@ -62,8 +28,7 @@ body{
       }
 
       a {
-        font-size: 17px;
-        font-weight: 700;
+        font-size: 14px;
       }
     }
   }
@@ -73,7 +38,11 @@ body{
     color: #888888;
     text-decoration: none;
     line-height: 22px;
-    padding: 10px 20px;
+    padding: 9px 20px;
+    box-sizing: border-box;
+    span{
+      font-size: 12px;
+    }
   }
 
   .mentees-list,
@@ -122,8 +91,8 @@ body{
   flex-direction: column;
 
   .track-nav-circle {
-    width: 26px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     border: 1px solid #9b9b9b;
     border-radius: 50%;
     margin-bottom: 12px;
@@ -141,11 +110,11 @@ body{
     &.selected:after {
       content: "";
       display: inline-block;
-      border-right: 16px solid #777777;
-      border-bottom: 8px solid transparent;
-      border-top: 8px solid transparent;
+      border-right: 14px solid #777777;
+      border-bottom: 7px solid transparent;
+      border-top: 7px solid transparent;
       position: absolute;
-      top: 3px;
+      top: 5px;
       left: 27px;
     }
 
@@ -193,12 +162,12 @@ body{
   }
 
   .helper-message {
-    background-color: #f7f7f7;
+    background-color: #ededed;
     height: 38px;
-    font-size: 18px;
+    font-size: 16px;
     vertical-align: middle;
     line-height: 22px;
-    padding: 6px 12px;
+    padding: 8px 12px;
     border-left: 8px solid grey;
 
     &.new {

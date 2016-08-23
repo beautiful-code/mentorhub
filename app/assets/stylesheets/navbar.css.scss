@@ -4,103 +4,130 @@ $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
 
-#mh_navbar {
-  background-color: #354051;
-  color: #fff;
-  height: 60px;
 
-  .navbar-brand {
-    padding: 0;
-    height: 56px;
+
+header{
+  height: 52px;
+  background-color:  #354051;
+  color: white;
+  display: flex;
+  align-items: center;
+
+}
+.header__wrapper{
+  display: flex;
+  width: 900px;
+  height: 52px;
+  margin: auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mhlogo{
+  margin: 11px 20px;
+  height: 30px;
+  top: 0;
+  left: 40px;
+  position: absolute;
+}
+.userProfile{
+  display: flex;
+  margin: 0;
+  align-items: center;
+
+}
+.userProfile__image{
+display: inline-block;
+  img{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid white;
+  box-sizing:border-box;
+  }
+}
+.userProfile__name{
+
+  vertical-align: top;
+  display: inline-block;
+  line-height: 22px;
+  padding: 15px 10px;
+  cursor: pointer;
+  i{
+    font-size: 20px;
+    vertical-align: bottom;
+  }
+}
+.menu{
+  display: flex;
+  position: relative;
+  align-items: center;
+
+}
+.menu__item{
+  display: inline-block;
+  color: white;
+  line-height: 22px;
+  vertical-align: middle;
+  text-decoration: none;
+  a{
+    text-decoration: none;
+    color:white ;
+    padding: 14px 20px;
   }
 
-  .logo {
-    height: 40px;
-    margin: 10px 50px;
-  }
-
-  .board-nav-links {
-    margin: 0;
-
-    li.active::after {
-      content: "";
-      display: inline-block;
-      border-right: 8px solid transparent;
-      border-left: 8px solid transparent;
-      border-bottom: 12px solid #fafafa;
-      position: absolute;
-      left: 48%;
-      bottom: -1px;
-    }
-
-    .notification-dot {
-      top: 20%;
-    }
-  }
-
-  .left-nav {
-    margin-left: 150px;
-
-    li {
-      line-height: 28px;
-      font-size: 16px;
-      font-weight: 600;
-      display: inline-block;
-      margin: 0 1.4em;
-      position: relative;
-
-      a {
-        padding:1em 0;
-        display:inline-block;
-        text-decoration: none;
-        color: white;
-      }
-    }
-  }
-
-  .profile {
-    cursor: pointer;
+}
+.active{
+  position: relative;
+}
+.menu .active:after{
+  content: '';
+  display: inline-block;
+  border-bottom: 10px solid white;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  position: absolute;
+  top:27px;
+  right: calc(50% - 10px);
+}
+.drop {
+  position: relative;
+  z-index: 10;
+  ul {
     position: absolute;
-    top:0;
-    right: 0;
-    margin: 1em 2em;
-
-    > li {
-      display: inline-block;
-    }
-
+    top: 42px;
+    left:10px;
+    transition: all 0.3s ease;
+    transform: scale(0);
+    transform-origin: 0 0;
+    background-color: white;
+    box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);;
     li {
-      img {
-        border-radius:50% ;
-        width: 30px;
-        height: 30px;
-        margin-right: 6px;
-        border: 1px solid white;
+      display: block;
+      width: 100%;
+      a {
+        width: 100%;
+        padding: 10px 18px;
+        display: inline-block;
+        white-space: pre;
+        color: $text;
+        box-sizing: border-box;
+        &:hover {
+          background: lighten(grey, 30%);
+        }
       }
     }
-
-    .profile-name {
-      vertical-align: top;
-      line-height: 28px;
-      font-size: 14px;
+    hr{
+      margin: 2px 10px;
+      border-top: 1px $border solid;
     }
-
-    .dropdown-menu{
-      min-width: 100px;
-      padding: 6px 10px;
-      border-radius: 3px;
-      top:47px;
-      right: -14px;
-      border:1px solid transparent;
-
-      i {
-        position: absolute;
-        color: white;
-        right: 14px;
-        top: -11px;
-        margin-left: 2px;
-        font-size: 16px;
-      }
+  }
+  &:hover {
+    a{
+      text-decoration: none;
+    }
+    ul {
+      transform: scale(1);
     }
   }
 }

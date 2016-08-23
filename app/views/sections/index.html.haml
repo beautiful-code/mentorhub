@@ -13,9 +13,8 @@
 :javascript
   PageConfig.track = #{@track_template.to_json};
   PageConfig.track.sections = #{@sections.to_json};
-  $.each(PageConfig.track.sections, function(k, v){
-    v.editable = false;
-    v.newRecord = false;
-  })
   PageConfig.track.editable = #{@track_template.new_record?};
   PageConfig.track.newRecord = #{@track_template.new_record?};
+  $.each(PageConfig.track.sections, function(k, v){
+    v.editable = v.newRecord = false;
+  })
