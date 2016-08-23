@@ -141,14 +141,14 @@ angular.module('mentorhub.board', [])
                 if (Object.keys($scope.user_tracks).length != 0) {
                     $scope.subnav = {active: Object.keys($scope.user_tracks)[0]};
                     $scope.sections.data[$scope.subnav.active] = $scope[$scope.active_tab][$scope.subnav.active];
-                    reloadSectionInteractions($scope.sections.data[$scope.subnav.active].recent_incomplete_section_interaction_id);
+                    $scope.reloadSectionInteractions($scope.sections.data[$scope.subnav.active]);
                 }
             };
 
             $scope.change_tab = function (tab) {
                 $scope.active_tab = tab;
                 $scope.sections.data = undefined;
-                var incompleteSectionId;
+                var track;
 
                 switch (tab) {
                     case 'user_tracks':
@@ -166,13 +166,8 @@ angular.module('mentorhub.board', [])
                         }
                         break;
                 }
-                if (angular.isArray($scope.sections.data)) {
-                    incompleteSectionId = $scope.sections.data[0].recent_incomplete_section_interaction_id;
-                }
-                else{
-                    incompleteSectionId = $scope.sections.data[$scope.subnav.active].recent_incomplete_section_interaction_id;
-                }
-                reloadSectionInteractions(incompleteSectionId);
+                track = angular.isArray($scope.sections.data) ? $scope.sections.data[0] : $scope.sections.data[$scope.subnav.active];
+                $scope.reloadSectionInteractions(track);
                 var subnav_element = $(".user_tracks-subnav");
                 subnav_element.children().removeClass('active');
                 subnav_element.children(":first-child").addClass('active');
@@ -278,9 +273,12 @@ angular.module('mentorhub.board', [])
                 $scope.selected = sectionInteraction.id;
             }
 
-            var reloadSectionInteractions = function(id){
+            $scope.reloadSectionInteractions = function(track){
                 $timeout(function() {
-                    var el = document.getElementById('sec'+ (id-1));
+                    var section_index = track.section_interactions.map(function (e) {
+                        return e.id
+                    }).indexOf(track.recent_incomplete_section_interaction_id);
+                    var el = document.getElementById('sec'+ (section_index));
                     angular.element(el).triggerHandler('click');
                 }, 0);
             }
@@ -356,7 +354,6 @@ angular.module('mentorhub.board', [])
                 if (( todosStatus.incomplete > 0 ) && ( sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'new' )) {
                     notify_mentee = true;
                 }
-
                 return notify_mentee;
             }
 
