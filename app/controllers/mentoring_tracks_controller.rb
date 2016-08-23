@@ -14,10 +14,12 @@ class MentoringTracksController < ApplicationController
 
   def create
     track_template = TrackTemplate.find(params[:id])
+
     ActiveRecord::Base.transaction do
-      track = Track.create(options_for_track(track_template))
+      track = Track.create!(options_for_track(track_template))
       create_section_interactions(track)
     end
+
     render json: { msg: 'success' }, status: 200
   end
 
@@ -56,7 +58,7 @@ class MentoringTracksController < ApplicationController
         'newSectionInteraction'
       )
       options[:type] = "#{track.type.gsub('Track', '')}SectionInteraction"
-      track.section_interactions.create(options.permit!)
+      track.section_interactions.create!(options.permit!)
     end
   end
 end
