@@ -95,7 +95,13 @@ angular.module('mentorhub.board', [])
 
     .controller('BoardController', ['$rootScope', '$scope', '$timeout', 'BoardServices', 'PubSubServices', 'SectionInteractionServices',
         function ($rootScope, $scope, $timeout, BoardServices, PubSubServices, SectionInteractionServices) {
-            $scope.active_tab = 'user_tracks';
+            if (sessionStorage.getItem('tab') == "user_mentee_tracks") {
+                $scope.active_tab = 'user_mentee_tracks';
+                sessionStorage.removeItem('tab');
+            }
+            else{
+                $scope.active_tab = 'user_tracks';
+            }
             $scope.subnav = {};
             $scope.sections = {data: {}};
             $scope.sectionInteractionServices = SectionInteractionServices;
@@ -113,7 +119,7 @@ angular.module('mentorhub.board', [])
 
             $scope.$on('updateScope', function (event, data) {
                 $scope.$apply(function () {
-                    if (angular.isArray($scope.sections.data)) {
+                    if ($scope.active_tab == "user_tracks") {
                         var section_index = $scope.sections.data[0].section_interactions.map(function (e) {
                             return e.id
                         }).indexOf($scope.sectionInteraction.id);
@@ -137,12 +143,7 @@ angular.module('mentorhub.board', [])
                         SectionInteractionServices.subscribeToTrack(track, 'updateScope');
                     });
                 }
-
-                if (Object.keys($scope.user_tracks).length != 0) {
-                    $scope.subnav = {active: Object.keys($scope.user_tracks)[0]};
-                    $scope.sections.data[$scope.subnav.active] = $scope[$scope.active_tab][$scope.subnav.active];
-                    $scope.reloadSectionInteractions($scope.sections.data[$scope.subnav.active]);
-                }
+                $scope.change_tab($scope.active_tab);
             };
 
             $scope.change_tab = function (tab) {
@@ -166,8 +167,10 @@ angular.module('mentorhub.board', [])
                         }
                         break;
                 }
-                track = angular.isArray($scope.sections.data) ? $scope.sections.data[0] : $scope.sections.data[$scope.subnav.active];
-                $scope.reloadSectionInteractions(track);
+                if ($scope.sections.data != undefined) {
+                    track = $scope.active_tab != "user_tracks" ?  $scope.sections.data[0] : $scope.sections.data[$scope.subnav.active];
+                    $scope.reloadSectionInteractions(track);
+                }
                 var subnav_element = $(".user_tracks-subnav");
                 subnav_element.children().removeClass('active');
                 subnav_element.children(":first-child").addClass('active');
