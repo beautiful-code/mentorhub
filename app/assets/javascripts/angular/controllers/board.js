@@ -111,7 +111,7 @@ angular.module('mentorhub.board', [])
                 return data;
             };
 
-            $scope.$on('BoardController', function (event, data) {
+            $scope.$on('updateScope', function (event, data) {
                 $scope.$apply(function () {
                     if (angular.isArray($scope.sections.data)) {
                         var section_index = $scope.sections.data[0].section_interactions.map(function (e) {
@@ -134,20 +134,21 @@ angular.module('mentorhub.board', [])
                     $scope.user_tracks = PageConfig.boardJson.learning_tracks;
                     SectionInteractionServices.updatable_interactions = PubSubServices.getAllTracks(PageConfig.boardJson);
                     SectionInteractionServices.updatable_interactions.forEach(function (track) {
-                        SectionInteractionServices.subscribeToTrack(track, 'BoardController');
+                        SectionInteractionServices.subscribeToTrack(track, 'updateScope');
                     });
                 }
 
                 if (Object.keys($scope.user_tracks).length != 0) {
                     $scope.subnav = {active: Object.keys($scope.user_tracks)[0]};
                     $scope.sections.data[$scope.subnav.active] = $scope[$scope.active_tab][$scope.subnav.active];
+                    reloadSectionInteractions($scope.sections.data[$scope.subnav.active].recent_incomplete_section_interaction_id);
                 }
-                $scope.reloadSectionInteractions();
             };
 
             $scope.change_tab = function (tab) {
                 $scope.active_tab = tab;
                 $scope.sections.data = undefined;
+                var incompleteSectionId;
 
                 switch (tab) {
                     case 'user_tracks':
@@ -165,11 +166,17 @@ angular.module('mentorhub.board', [])
                         }
                         break;
                 }
-                $scope.reloadSectionInteractions();
+                if (angular.isArray($scope.sections.data)) {
+                    incompleteSectionId = $scope.sections.data[0].recent_incomplete_section_interaction_id;
+                }
+                else{
+                    incompleteSectionId = $scope.sections.data[$scope.subnav.active].recent_incomplete_section_interaction_id;
+                }
+                reloadSectionInteractions(incompleteSectionId);
                 var subnav_element = $(".user_tracks-subnav");
                 subnav_element.children().removeClass('active');
                 subnav_element.children(":first-child").addClass('active');
-            }           
+            }
 
             $scope.add_mentee_notes = function (sectionInteraction, note) {
                 var route_params = {
@@ -271,9 +278,9 @@ angular.module('mentorhub.board', [])
                 $scope.selected = sectionInteraction.id;
             }
 
-            $scope.reloadSectionInteractions = function(){
+            var reloadSectionInteractions = function(id){
                 $timeout(function() {
-                    var el = document.getElementById('sec0');
+                    var el = document.getElementById('sec'+ (id-1));
                     angular.element(el).triggerHandler('click');
                 }, 0);
             }

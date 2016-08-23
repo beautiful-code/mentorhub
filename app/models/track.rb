@@ -15,7 +15,8 @@ class Track < ApplicationRecord
     super({
       except: [:created_at, :updated_at, :type, :image],
       methods: [
-        :image_url, :progress, :expected_progress
+        :image_url, :progress, :expected_progress,
+        :recent_incomplete_section_interaction_id
       ],
       include: [:mentee, :section_interactions]
     }.merge(options))
