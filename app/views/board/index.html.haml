@@ -33,5 +33,9 @@
         }, 5000);
       });
 
+      setTimeout(function() {
+        $(".loading-track").hide("slow");
+      }, 200);
+
       PageConfig.currentUser = #{current_user.to_json};
       PageConfig.boardJson = #{@board_data.to_json};

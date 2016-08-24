@@ -12,6 +12,10 @@
   <p>You do not have any mentees.</p>
 </div>
 
+<div class="loading-track">
+	<i class="fa fa-spinner fa-pulse"></i>
+</div>
+
 <div class="track">
   <div ng-repeat="track in sections.data" style="margin-bottom: 20px;">
     <div class="track-nav">
@@ -103,9 +107,8 @@
               <button class="section-submit" ng-click="sectionInteractionServices.add_task(sectionInteraction, todo)">Add</button>
             </div>
           </li>
-
         </ul>
       </div>
+    </div>
   </div>
-</div>
 </div>

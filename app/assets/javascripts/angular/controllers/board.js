@@ -118,19 +118,12 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.$on('updateScope', function (event, data) {
+                debugger;
                 $scope.$apply(function () {
-                    if ($scope.active_tab == "user_tracks") {
-                        var section_index = $scope.sections.data[0].section_interactions.map(function (e) {
-                            return e.id;
-                        }).indexOf($scope.sectionInteraction.id);
-                        $scope.sectionInteraction = $scope.sections.data[0].section_interactions[section_index];
-                    }
-                    else{
-                        var section_index = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions.map(function (e) {
-                            return e.id;
-                        }).indexOf($scope.sectionInteraction.id);
-                        $scope.sectionInteraction = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions[section_index];
-                    }
+                    var section_index = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions.map(function (e) {
+                        return e.id;
+                    }).indexOf($scope.sectionInteraction.id);
+                    $scope.sectionInteraction = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions[section_index];
                 });
             });
 
@@ -277,13 +270,10 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.reloadSectionInteractions = function(track){
-                $timeout(function() {
-                    var section_index = track.section_interactions.map(function (e) {
-                        return e.id;
-                    }).indexOf(track.recent_incomplete_section_interaction_id);
-                    var el = document.getElementById('sec'+ (section_index));
-                    angular.element(el).triggerHandler('click');
-                }, 0);
+                var section_index = track.section_interactions.map(function (e) {
+                    return e.id;
+                }).indexOf(track.recent_incomplete_section_interaction_id);
+                $scope.changeSectionInteraction(track.section_interactions[section_index]);
             };
 
             $scope.actionTodoForMyTracks = function(){

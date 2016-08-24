@@ -57,6 +57,7 @@ header {
     align-items: center;
 }
 .menu__item {
+    position: relative;
     display: inline-block;
     color: white;
     line-height: 22px;
@@ -67,9 +68,6 @@ header {
         color: white;
         padding: 14px 20px;
     }
-}
-.active {
-    position: relative;
 }
 .menu .active:after {
     content: '';
