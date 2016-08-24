@@ -1,7 +1,7 @@
 <div class="board-subnav">
   <ul class="board-subnav-links" ng-if="Helper.keys(user_mentee_tracks).length != 0">
     <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''" class="mentees-list">
-      <a class="tracks-name" ng-click="reloadSectionInteractions()">    {{ user_mentee_tracks[track.mentee_id].name | capitalize }} <span>({{ track.name }})</span></a>
+      <a class="tracks-name" ng-click="reloadSectionInteractions(track)">    {{ user_mentee_tracks[track.mentee_id].name | capitalize }} <span>({{ track.name }})</span></a>
 
       <span ng-if="trackActionTodoForMentor(track)" class="notification-dot"></span>
 
