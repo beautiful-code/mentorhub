@@ -41,13 +41,13 @@ angular.module('mentorhub.commons', [])
 
             BoardServices.create_todo(route_params, todo)
                 .success(function (response) {
-                    sectionInteraction.todos.push(response['todo']);
+                    sectionInteraction.todos.push(response.todo);
                     todo.content = undefined;
                     _scope.updateSectionInteractionState(sectionInteraction, "tasks_pending");
                 })
                 .error(function (error) {
-                    console.log(error)
-                })
+                    console.log(error);
+                });
         };
 
         _scope.update_mentees_todo = function (sectionInteraction, todo, rejected) {
@@ -133,7 +133,7 @@ angular.module('mentorhub.commons', [])
                         var updated_track = JSON.parse(data);
                         var updatable_interactions = _scope.updatable_interactions;
                         var track_index = updatable_interactions.map(function (e) {
-                            return e.id
+                            return e.id;
                         }).indexOf(updated_track.id);
                         angular.extend(updatable_interactions[track_index], updated_track);
                         $rootScope.$broadcast(name);

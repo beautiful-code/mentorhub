@@ -5,6 +5,6 @@ angular.module('mentorhub.tracks', [])
             $scope.trackTemplates = PageConfig.trackTemplates;
         };
 
-        init()
+        init();
     }]);
 

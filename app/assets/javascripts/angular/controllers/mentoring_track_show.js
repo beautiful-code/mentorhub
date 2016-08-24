@@ -2,17 +2,17 @@ angular.module("mentorhub.mentoring_track_show", [])
     .directive('sectionInteractions', function () {
         return {
             templateUrl: '/templates/section-interaction-template.html'
-        }
+        };
     })
     .factory('MentoringTrackServices', ["$http", "ApiUrls", "Utils", function ($http, ApiUrls, Utils) {
         return {
             postSectionData: function (route_params, payload) {
-                return $http.post(Utils.multi_replace(ApiUrls.create_section_interaction, route_params), {section_interaction: payload})
+                return $http.post(Utils.multi_replace(ApiUrls.create_section_interaction, route_params), {section_interaction: payload});
             },
             putSectionData: function (route_params, payload) {
-                return $http.put(Utils.multi_replace(ApiUrls.update_section_interaction, route_params), {section_interaction: payload})
+                return $http.put(Utils.multi_replace(ApiUrls.update_section_interaction, route_params), {section_interaction: payload});
             }
-        }
+        };
     }])
     .controller('MentoringTrackShowController', ["$scope", "MentoringTrackServices", "SectionInteractionServices",
         function ($scope, MentoringTrackServices, SectionInteractionServices) {
@@ -22,7 +22,7 @@ angular.module("mentorhub.mentoring_track_show", [])
             var defaultSectionAttributes = function (section) {
                 temp_sections.push(angular.copy(section));
                 section.newRecord = section.editable = false;
-            }
+            };
 
             var init = function () {
                 $scope.track = MentoringTrackShowConfig.track;
@@ -31,7 +31,7 @@ angular.module("mentorhub.mentoring_track_show", [])
                 new_section = MentoringTrackShowConfig.section;
                 angular.forEach($scope.track.sections, function (section, index) {
                     defaultSectionAttributes(section);
-                })
+                });
             };
 
             var setRouteParams = function(track, section){
@@ -40,7 +40,7 @@ angular.module("mentorhub.mentoring_track_show", [])
                      '{section_id}': section.id
                  };
                  return routeParams;
-             }
+             };
 
             $scope.add_exercise = function () {
                 var section = angular.extend({}, new_section, {editable: true, newRecord: true, enabled: true});
@@ -53,19 +53,19 @@ angular.module("mentorhub.mentoring_track_show", [])
                         section.editable = section.newRecord = false;
                         angular.merge(section, response.section_interaction);
                         temp_sections.push(angular.copy(section));
-                    })
+                    });
             };
 
             $scope.cancel_section = function (section, index) {
                 if (section.id) {
                     section.editable = false;
                     var section_index = temp_sections.map(function (e) {
-                        return e.id
+                        return e.id;
                     }).indexOf(section.id);
                     angular.merge(section, temp_sections[section_index]);
                 }
                 else {
-                    $scope.track.sections.splice(index, 1)
+                    $scope.track.sections.splice(index, 1);
                 }
             };
 
@@ -76,10 +76,10 @@ angular.module("mentorhub.mentoring_track_show", [])
                     .success(function (response) {
                         section.editable = false;
                         var section_index = temp_sections.map(function (e) {
-                            return e.id
+                            return e.id;
                         }).indexOf(section.id);
                         angular.merge(temp_sections[section_index], section);
-                    })
+                    });
             };
 
             $scope.addResource = function (index) {
@@ -91,8 +91,8 @@ angular.module("mentorhub.mentoring_track_show", [])
 
             $scope.checkBox = function (event, section) {
                 section.enabled = event.target.checked;
-                var routeParams = setRouteParams($scope.track, section)
-                MentoringTrackServices.putSectionData(routeParams, section)
+                var routeParams = setRouteParams($scope.track, section);
+                MentoringTrackServices.putSectionData(routeParams, section);
             };
 
             $scope.sectionStatus = function (track, section) {

@@ -13,19 +13,19 @@ angular.module('mentorhub', [
     .run(['$rootScope', function ($rootScope) {
         $rootScope.Helper = {
             keys: Object.keys
-        }
+        };
     }])
 
     .filter('capitalize', function () {
         return function (input) {
             return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
-        }
+        };
     })
 
     .filter('date_filter', function () {
         return function (input) {
-            return new Date(input)
-        }
+            return new Date(input);
+        };
     })
 
     .factory('ApiUrls', function () {
@@ -62,5 +62,5 @@ angular.module('mentorhub', [
                     return map[matched.toLowerCase()];
                 });
             }
-        }
+        };
     });

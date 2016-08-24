@@ -3,13 +3,13 @@ angular.module('mentorhub.track', [])
     .directive('track', function () {
         return {
             templateUrl: '/templates/track.html'
-        }
+        };
     })
 
     .directive('newExercise', function () {
         return {
             templateUrl: '/templates/section-template.html'
-        }
+        };
     })
 
     .directive('fileModel', ['$parse', function ($parse) {
@@ -30,27 +30,27 @@ angular.module('mentorhub.track', [])
                     return $http.post(ApiUrls.create_track, payload, {
                         transformRequest: angular.identity,
                         headers: {'Content-Type': undefined}
-                    })
+                    });
                 },
                 putTrackData: function (route_params, payload) {
                     return $http.put(Utils.multi_replace(ApiUrls.update_track, route_params), payload, {
                         transformRequest: angular.identity,
                         headers: {'Content-Type': undefined}
-                    })
+                    });
                 },
                 deleteTrackData: function (route_params, payload) {
-                    return $http.delete(Utils.multi_replace(ApiUrls.delete_track, route_params), payload)
+                    return $http.delete(Utils.multi_replace(ApiUrls.delete_track, route_params), payload);
                 },
                 postSectionData: function (route_params, payload) {
-                    return $http.post(Utils.multi_replace(ApiUrls.create_section, route_params), {section_template: payload})
+                    return $http.post(Utils.multi_replace(ApiUrls.create_section, route_params), {section_template: payload});
                 },
                 putSectionData: function (route_params, payload) {
-                    return $http.put(Utils.multi_replace(ApiUrls.update_section, route_params), {section_template: payload})
+                    return $http.put(Utils.multi_replace(ApiUrls.update_section, route_params), {section_template: payload});
                 },
                 deleteSection: function (route_params, payload) {
-                    return $http.delete(Utils.multi_replace(ApiUrls.delete_section, route_params), {section_template: payload})
+                    return $http.delete(Utils.multi_replace(ApiUrls.delete_section, route_params), {section_template: payload});
                 }
-            }
+            };
         }])
 
     .controller('TrackController', ["$window", "$scope", "TrackServices",
@@ -74,7 +74,7 @@ angular.module('mentorhub.track', [])
                     .success(function (response) {
                         track.editable = track.newRecord = false;
                         $window.location.href = '/track_templates/' + response.track_template.id;
-                    })
+                    });
             };
 
             $scope.edit_track = function (track) {
@@ -99,7 +99,7 @@ angular.module('mentorhub.track', [])
                     .success(function (response) {
                         track.image.image.url = response.track_template.image.image.url;
                         track.editable = false;
-                    })
+                    });
             };
 
             var setTrackParams = function(track, file){
@@ -108,7 +108,7 @@ angular.module('mentorhub.track', [])
                 trackParams.append('track_template[desc]', track.desc);
                 trackParams.append('track_template[image]', file);
                 return trackParams;
-            }
+            };
 
             $scope.edit_section = function (section) {
                 section.editable = true;
@@ -121,7 +121,7 @@ angular.module('mentorhub.track', [])
                     section.editable = false;
                 }
                 else {
-                    $scope.track.sections.splice(index, 1)
+                    $scope.track.sections.splice(index, 1);
                 }
             };
 
@@ -130,7 +130,7 @@ angular.module('mentorhub.track', [])
                     .success(function (response) {
                         section.id = response.section.id;
                         section.editable = section.newRecord = false;
-                    })
+                    });
             };
 
             $scope.update_section = function (track, section) {
@@ -142,7 +142,7 @@ angular.module('mentorhub.track', [])
                 TrackServices.putSectionData(routeParams, section)
                     .success(function (response) {
                         section.editable = false;
-                    })
+                    });
             };
 
             $scope.delete_section = function (index, track, section) {
@@ -152,7 +152,7 @@ angular.module('mentorhub.track', [])
                 };
                 if (confirm("Delete section")) {
                     $scope.track.sections.splice(index, 1);
-                    TrackServices.deleteSection(routeParams, section)
+                    TrackServices.deleteSection(routeParams, section);
                 }
             };
 
