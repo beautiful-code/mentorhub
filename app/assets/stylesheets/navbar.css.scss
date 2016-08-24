@@ -3,131 +3,123 @@ $border: #c5c7c9;
 $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
-
-
-
-header{
-  height: 52px;
-  background-color:  #354051;
-  color: white;
-  display: flex;
-  align-items: center;
-
+header {
+    height: 52px;
+    background-color: #354051;
+    color: white;
+    display: flex;
+    align-items: center;
 }
-.header__wrapper{
-  display: flex;
-  width: 900px;
-  height: 52px;
-  margin: auto;
-  align-items: center;
-  justify-content: space-between;
+.header__wrapper {
+    display: flex;
+    width: 900px;
+    height: 52px;
+    margin: auto;
+    align-items: center;
+    justify-content: space-between;
 }
-
-.mhlogo{
-  margin: 11px 20px;
-  height: 30px;
-  top: 0;
-  left: 40px;
-  position: absolute;
+.mhlogo {
+    margin: 11px 20px;
+    height: 30px;
+    top: 0;
+    left: 40px;
+    position: absolute;
 }
-.userProfile{
-  display: flex;
-  margin: 0;
-  align-items: center;
-
+.userProfile {
+    display: flex;
+    margin: 0;
+    align-items: center;
 }
-.userProfile__image{
-display: inline-block;
-  img{
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid white;
-  box-sizing:border-box;
-  }
+.userProfile__image {
+    display: inline-block;
+    img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid white;
+        box-sizing: border-box;
+    }
 }
-.userProfile__name{
-
-  vertical-align: top;
-  display: inline-block;
-  line-height: 22px;
-  padding: 15px 10px;
-  cursor: pointer;
-  i{
-    font-size: 20px;
-    vertical-align: bottom;
-  }
+.userProfile__name {
+    vertical-align: top;
+    display: inline-block;
+    line-height: 22px;
+    padding: 15px 10px;
+    cursor: pointer;
+    i {
+        font-size: 20px;
+        vertical-align: bottom;
+    }
 }
-.menu{
-  display: flex;
-  position: relative;
-  align-items: center;
-
+.menu {
+    display: flex;
+    position: relative;
+    align-items: center;
 }
-.menu__item{
-  display: inline-block;
-  color: white;
-  line-height: 22px;
-  vertical-align: middle;
-  text-decoration: none;
-  a{
+.menu__item {
+    display: inline-block;
+    color: white;
+    line-height: 22px;
+    vertical-align: middle;
     text-decoration: none;
-    color:white ;
-    padding: 14px 20px;
-  }
-
+    a {
+        text-decoration: none;
+        color: white;
+        padding: 14px 20px;
+    }
 }
-.active{
-  position: relative;
+.active {
+    position: relative;
 }
-.menu .active:after{
-  content: '';
-  display: inline-block;
-  border-bottom: 10px solid white;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  position: absolute;
-  top:27px;
-  right: calc(50% - 10px);
+.menu .active:after {
+    content: '';
+    display: inline-block;
+    border-bottom: 10px solid white;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    position: absolute;
+    top: 27px;
+    right: calc(50% - 10px);
 }
 .drop {
-  position: relative;
-  z-index: 10;
-  ul {
-    position: absolute;
-    top: 42px;
-    left:10px;
-    transition: all 0.3s ease;
-    transform: scale(0);
-    transform-origin: 0 0;
-    background-color: white;
-    box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);;
-    li {
-      display: block;
-      width: 100%;
-      a {
-        width: 100%;
-        padding: 10px 18px;
-        display: inline-block;
-        white-space: pre;
-        color: $text;
-        box-sizing: border-box;
-        &:hover {
-          background: lighten(grey, 30%);
-        }
-      }
-    }
-    hr{
-      margin: 2px 10px;
-      border-top: 1px $border solid;
-    }
-  }
-  &:hover {
-    a{
-      text-decoration: none;
-    }
+    position: relative;
+    z-index: 10;
     ul {
-      transform: scale(1);
+        position: absolute;
+        top: 42px;
+        left: 10px;
+        transition: all 0.3s ease;
+        transform: scale(0);
+        transform-origin: 0 0;
+        background-color: white;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
+        ;
+        li {
+            display: block;
+            width: 100%;
+            a {
+                width: 100%;
+                padding: 10px 18px;
+                display: inline-block;
+                white-space: pre;
+                color: $text;
+                box-sizing: border-box;
+                &:hover {
+                    background: lighten(grey, 30%);
+                }
+            }
+        }
+        hr {
+            margin: 2px 10px;
+            border-top: 1px $border solid;
+        }
     }
-  }
+    &:hover {
+        a {
+            text-decoration: none;
+        }
+        ul {
+            transform: scale(1);
+        }
+    }
 }
