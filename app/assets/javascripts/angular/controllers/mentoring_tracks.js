@@ -8,5 +8,5 @@ angular.module("mentorhub.mentoring_tracks", [])
 
         $scope.self_track = function(val){
           $window.sessionStorage.setItem('self_track', val);
-        }
+        };
     }]);

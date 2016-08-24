@@ -3,37 +3,35 @@ angular.module("mentorhub.mentoring_track_new", [])
     .directive('sectionInteractionsNew', function () {
         return {
             templateUrl: '/templates/section-interaction-template.html'
-        }
+        };
     })
 
     .factory('MentoringTrackNewServices', ["$http", "ApiUrls", "Utils", function ($http, ApiUrls, Utils) {
         return {
             getSectionsData: function (route_params) {
-                return $http.get(Utils.multi_replace(ApiUrls.get_sections, route_params))
+                return $http.get(Utils.multi_replace(ApiUrls.get_sections, route_params));
             },
             postTrackData: function (payload) {
-                return $http.post(ApiUrls.create_mentee_track, payload)
+                return $http.post(ApiUrls.create_mentee_track, payload);
             },
             postSectionInteractionData: function (route_params, payload) {
-                return $http.post(Utils.multi_replace(ApiUrls.create_section_interaction, route_params), payload)
+                return $http.post(Utils.multi_replace(ApiUrls.create_section_interaction, route_params), payload);
             }
-        }
+        };
     }])
 
 
     .controller('MentoringTrackNew', ['$rootScope','$scope', '$window', 'MentoringTrackNewServices', function ($rootScope, $scope, $window, MentoringTrackNewServices ) {
-        var count = 1;
+        var count = 1, temp_sections = [];
 
         var defaultSectionAttributes = function (section) {
-            $scope.temp_sections.push(angular.copy(section));
+            temp_sections.push(angular.copy(section));
             section.id = count++;
-            section.newRecord = section.editable = false;
-            section.newSectionInteraction = true;
+            section.newSectionInteraction = !(section.newRecord = section.editable = false);
         };
 
         var init = function () {
             $scope.self_track = JSON.parse($window.sessionStorage.getItem('self_track'));
-            $scope.temp_sections = [];
             $scope.deadline = new Date();
             $scope.users = MentoringTrackConfig.users;
             $scope.tracks = MentoringTrackConfig.tracks;
@@ -68,11 +66,9 @@ angular.module("mentorhub.mentoring_track_new", [])
                         defaultSectionAttributes(section);
                     });
                     if ($scope.self_track) {
-                        $scope.selectTrack.mentee = $scope.selectMentee = MentoringTrackConfig.current_user;
+                        $scope.selectMentee = MentoringTrackConfig.current_user;
                     }
-                    else{
-                        $scope.selectTrack.mentee = $scope.selectMentee;
-                    }
+                    $scope.selectTrack.mentee = $scope.selectMentee;
                     updateLocalStorage($scope.selectTrack);
                 });
         };
@@ -80,7 +76,7 @@ angular.module("mentorhub.mentoring_track_new", [])
         $scope.update_mentee_track_deadline = function () {
             $scope.selectTrack.deadline = $scope.deadline = new Date($scope.deadline);
             updateLocalStorage($scope.selectTrack);
-        }
+        };
 
         $scope.add_section = function () {
             $scope.selectTrack.sections.push({
@@ -95,30 +91,24 @@ angular.module("mentorhub.mentoring_track_new", [])
         };
 
         $scope.update_section = function (section) {
-            angular.forEach($scope.temp_sections, function (value, _) {
-                if (value.id == section.id) {
-                    angular.merge(value, section);
-                }
-            });
+            var section_index = temp_sections.map(function (e) {
+                return e.id;
+            }).indexOf(section.id);
+            angular.merge(temp_sections[section_index], section);
             section.editable = false;
-            updateLocalStorage($scope.selectTrack, $scope.sections);
-        };
-
-        $scope.edit_section = function (section) {
-            section.editable = true;
+            updateLocalStorage($scope.selectTrack);
         };
 
         $scope.cancel_section = function (section, index) {
             if (section.id) {
-                angular.forEach($scope.temp_sections, function (value, _) {
-                    if (section.id == value.id) {
-                        angular.merge(section, value);
-                    }
-                });
+                var section_index = temp_sections.map(function (e) {
+                    return e.id;
+                }).indexOf(section.id);
+                angular.merge(section, temp_sections[section_index]);
                 section.editable = false;
             }
             else {
-                $scope.selectTrack.sections.splice(index, 1)
+                $scope.selectTrack.sections.splice(index, 1);
             }
         };
 
@@ -147,7 +137,7 @@ angular.module("mentorhub.mentoring_track_new", [])
                     .success(function (response) {
                         $scope.reset();
                         $window.location.href = "/mentoring_tracks";
-                    })
+                    });
             }
         };
 
