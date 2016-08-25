@@ -103,7 +103,7 @@ body {
             left: 27px;
         }
     }
-    .section_completed {
+    .section_completed, .feedback_captured {
         border-color: #598d09;
         color: #598d09;
     }
@@ -130,12 +130,16 @@ body {
     p {
         margin-bottom: 0;
     }
-    .material-icons {
+    .tasks{
+      margin-bottom: 5px;
+      list-style: none;
+      .material-icons {
         font-size: 14px;
         &:hover, &:focus {
-            cursor: pointer;
-            font-size: 18px;
+          cursor: pointer;
+          font-size: 18px;
         }
+      }
     }
     .helper-message {
         background-color: #ededed;
@@ -148,7 +152,7 @@ body {
         &.new {
             border-color: grey;
         }
-        &.section_completed {
+        &.section_completed, &.feedback_captured {
             border-color: #598d09;
         }
         &.review_pending,

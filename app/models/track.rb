@@ -28,7 +28,8 @@ class Track < ApplicationRecord
   end
 
   def recent_incomplete_section_interaction_id
-    section_interactions.where('state != ?', 'section_completed')
+    section_interactions.where('state != ? AND state != ?',
+                               'section_completed', 'feedback_captured')
                         .order('created_at ASC').limit(1).pluck(:id)[0]
   end
 

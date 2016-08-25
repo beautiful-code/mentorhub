@@ -32,7 +32,7 @@ class SectionInteractionsController < ApplicationController
   def section_interaction_params
     params.fetch(:section_interaction, {}).permit(
       :id, :title, :content,
-      :enabled, :mentee_notes, :state,
+      :enabled, :mentee_notes, :state, :rating, :feedback,
       resources: [:text, :url]
     )
   end

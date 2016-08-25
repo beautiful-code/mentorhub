@@ -65,6 +65,51 @@ angular.module('mentorhub.board', [])
         };
     })
 
+    .directive('rating',['$http', 'BoardServices', function($http, BoardServices) {
+      return{
+        restrict: 'A',
+        scope: {
+          section:'=',
+          desc:'@'
+        },
+        template:
+          '<ul class="star-rating">' +
+          '  <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}">' +
+          '    <i class="material-icons md-48" ng-click="toggle($index, desc)">{{ star.filled ? "star" : "star_border" }}</i>' +
+          '    <small ng-if="desc">{{ $index == 0 ? "Not Good" : $index == 1 ? "Satisfied" : $index == 2 ? "Good" : "Excellent"  }}</small> ' +
+          '  </li>' +
+          '  <textarea ng-if="desc" placeholder="Add a comment (Optional)" ng-model="section.feedback"/> ' +
+          '  <input class="btn btn-primary" ng-if="desc" type="button" value="Submit Feedback" ng-click="submit() "/>' +
+          '</ul>',
+        link: function(scope, element, attr){
+          var updateStars = function(){
+            scope.stars = [];
+            for (var i = 0; i < 4; i++) {
+              scope.stars.push({ filled: i < scope.section.rating });
+            }
+          }
+          updateStars();
+          scope.toggle = function(index, check){
+            if(check){
+              scope.section.rating = index+1;
+            }
+          };
+          scope.submit = function(){
+            var route_params = {
+              '{track_id}': scope.section.track_id,
+              '{section_id}': scope.section.id
+            };
+            BoardServices.update_section(route_params, {section_interaction: {rating: scope.section.rating, feedback: scope.section.feedback, state: "feedback_captured"}})
+          }
+          scope.$watch('section.rating', function(newValue, oldValue) {
+            if (newValue != oldValue) {
+              updateStars();
+            }
+          });
+        }
+      };
+    }])
+
     .directive('selectSubnav', ['$parse', function ($parse) {
         return {
             restrict: 'A',
@@ -118,7 +163,6 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.$on('updateScope', function (event, data) {
-                debugger;
                 $scope.$apply(function () {
                     var section_index = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions.map(function (e) {
                         return e.id;
@@ -136,6 +180,7 @@ angular.module('mentorhub.board', [])
                         SectionInteractionServices.subscribeToTrack(track, 'updateScope');
                     });
                 }
+
                 $scope.change_tab($scope.active_tab);
             };
 
@@ -270,10 +315,15 @@ angular.module('mentorhub.board', [])
             };
 
             $scope.reloadSectionInteractions = function(track){
+              if (track.recent_incomplete_section_interaction_id != null) {
                 var section_index = track.section_interactions.map(function (e) {
                     return e.id;
                 }).indexOf(track.recent_incomplete_section_interaction_id);
-                $scope.changeSectionInteraction(track.section_interactions[section_index]);
+              }
+              else{
+                section_index = 0;
+              }
+              $scope.changeSectionInteraction(track.section_interactions[section_index]);
             };
 
             $scope.actionTodoForMyTracks = function(){
@@ -334,7 +384,7 @@ angular.module('mentorhub.board', [])
             $scope.sectionInteractionActionTodoForMentor = function(sectionInteraction) {
                 var notify_mentor = false;
                 var todosStatus = todoStatusHelper(sectionInteraction);
-                if ((todosStatus.to_review > 0 || todosStatus.completed == sectionInteraction.todos.length ) && (sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'new' )) {
+                if ((todosStatus.to_review > 0 || todosStatus.completed == sectionInteraction.todos.length ) && (sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'new' && sectionInteraction.state != 'feedback_captured' )) {
                     notify_mentor = true;
                 }
                 return notify_mentor;
