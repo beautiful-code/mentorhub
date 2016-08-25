@@ -21,9 +21,7 @@
         </a>
         <h3>{{section.title}}</h3>
       </div>
-      <p class="exercise_description">
-        {{section.content}}
-      </p>
+      <p class="exercise_description">{{section.content}}</p>
       <div class="resources">
         <h5>Resources</h5>
         <div ng-repeat="resource in section.resources">
@@ -47,14 +45,13 @@
         </div>
       </div>
       <div ng-if="!section.newSectionInteraction">
-
         <div ng-if="section.state != 'new'" class="exercise-tasks_to_do" style="margin-bottom: 10px;">
           <h4>Tasks Todo</h4>
           <ul>
             <div class="row" ng-repeat="todo in section.todos">
               <div class="col-xs-10">
                 <div ng-if="!todo.edit">
-                <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(section, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
+                  <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(section, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
                   <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(section, todo, true)"  ng-if="todo.state == 'to_be_reviewed'">cancel</i>
                   {{ todo.content }}
                 </div>

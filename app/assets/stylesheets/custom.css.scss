@@ -342,3 +342,18 @@ input[type="button"].btn-secondary_action {
         }
     }
 }
+
+.loading-track {
+    background: #FAFAFA;
+    height: 500px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    z-index: 1111;
+    text-align: center;
+
+    i {
+      margin: 35px;
+      font-size: 2.5em;
+    }
+  }

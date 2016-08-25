@@ -21,7 +21,7 @@
           .menu__item
             %a{:href => "", :class => "user_mentee_tracks"} Your Mentee Tracks
 
-          
+
       - if user_signed_in?
         %ul.userProfile
           -if current_user.image.present?
