@@ -7,7 +7,8 @@ angular.module('mentorhub', [
     'mentorhub.track',
     'mentorhub.mentoring_tracks',
     'mentorhub.mentoring_track_show',
-    'mentorhub.mentoring_track_new'
+    'mentorhub.mentoring_track_new',
+    'mentorhub.organization'
 ])
 
     .run(['$rootScope', function ($rootScope) {
@@ -49,6 +50,8 @@ angular.module('mentorhub', [
 
             'create_section_interaction': apiBaseUrl + 'tracks/{track_id}/section_interactions',
             'create_mentee_track': apiBaseUrl + 'mentoring_tracks',
+
+            'update_organization': apiBaseUrl + ''
         };
 
         return angular.extend(baseUrls, {});

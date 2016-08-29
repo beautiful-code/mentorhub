@@ -1,0 +1,25 @@
+%div.org-signup
+  %div.org-signup__logo
+    %img(src="/assets/mentorhub_logo.png")
+  %div{"ng-controller" => "OrganizationController"}
+    %div.org-signup__invite
+      %h2.org-signup__heading Members of the Organization
+      %div{"ng-repeat" => "user in users"}
+        %p {{user.first_name}} {{user.last_name}}
+
+      %hr
+      %h2.org-signup__heading Invite your organisation members
+      %div.invite__contact{"ng-repeat" => "contact in contacts"}
+        %p.invite__name {{contact.name.fullName}}
+        %p.invite__email {{contact.primaryEmail}}
+        %button.org-signup__invite-btn.btn--raised{"ng-click" => "send_invite(contact)", "ng-disabled" => "contact.invited"} {{contact.invited ? "Invited" : "Invite"}}
+      %a.org-signup__submit.btn--raised{:class => "btn btn-primary", :href => "/"} Done
+
+:javascript
+  var OrganizationConfig = {
+    current_user: #{@current_user.to_json},
+    organization: #{@organization.to_json},
+    contacts: #{@contacts.to_json},
+    users:    #{@users.to_json}
+  };
+

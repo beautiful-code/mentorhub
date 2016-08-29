@@ -1,12 +1,9 @@
-#section_index{"ng-controller" => "TrackController"}
-  .track_info
+.track-container{"ng-controller" => "TrackController"}
+
+  %div
     %div{:track => ""}
-  .sub_nav
-    %h4.selected Exercises
-  #section
     %div{"new-exercise" => "", "ng-repeat" => "section in track.sections track by $index"}
-  .add_exercise.add_exercise_btn
-    %a.add_exercise_link{"ng-click" => "track.sections.push({ editable: true,newRecord: true });"}
+    %a.track__section__new{"ng-click" => "track.sections.push({ editable: true,newRecord: true });"}
       %span + Add an Exercise
 
 

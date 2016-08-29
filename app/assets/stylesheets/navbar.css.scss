@@ -18,12 +18,25 @@ header {
     align-items: center;
     justify-content: space-between;
 }
-.mhlogo {
-    margin: 11px 20px;
-    height: 30px;
-    top: 0;
-    left: 40px;
-    position: absolute;
+.navbarbrand {
+  display: flex;
+  align-items: baseline;
+  text-decoration: none !important;
+  margin-left: 30px;
+  color: white;
+  &:hover{
+    color: white;
+  }
+  .mhlogo {
+      margin: 11px 0 20px;
+      height: 30px;
+      position: relative;
+  }
+  .org-name{
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 4px;
+  }
 }
 .userProfile {
     display: flex;

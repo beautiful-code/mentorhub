@@ -1,5 +1,5 @@
 class BoardController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:home_page]
 
   def index
     @board_data = {
@@ -12,13 +12,18 @@ class BoardController < ApplicationController
       format.json { render json: @board_data }
     end
 
+    # TODO: Refactor the board index
     render layout: false
+  end
+
+  def home_page
   end
 
   private
 
   def current_user_mentoring_tracks
     ret = {}
+
     current_user.mentees.each do |mentee|
       ret[mentee.id] = {
         name: mentee.name,
@@ -26,6 +31,7 @@ class BoardController < ApplicationController
         learning_tracks: mentee.learning_tracks
       }
     end
+
     ret
   end
 

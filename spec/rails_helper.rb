@@ -59,12 +59,17 @@ RSpec.configure do |config|
 end
 
 OmniAuth.config.test_mode = true
-omniauth_hash = { 'provider' => 'google_oauth2',
-                  'uid' => '12345',
-                  'info' => {
-                    'first_name' => 'Sashank',
-                    'last_name' => 'challa',
-                    'email' => 'sashank@beautifulcode.in'
-                  } }
+omniauth_hash = {
+  'provider' => 'google_oauth2',
+  'uid' => '12345',
+  'info' => {
+    'first_name' => 'Sashank',
+    'last_name' => 'challa',
+    'email' => 'sashank@beautifulcode.in'
+  },
+  'credentials' => {
+    'token' => 'thisisatoken'
+  }
+}
 
 OmniAuth.config.add_mock(:google_oauth2, omniauth_hash)

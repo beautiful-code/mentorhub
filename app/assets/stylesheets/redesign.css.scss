@@ -119,13 +119,20 @@ body {
     }
 }
 /* section */
-
+.heading {
+    font-size: 13px;
+    font-weight: 600;
+    color: #757575;
+    padding-bottom: 6px;
+    margin: 0;
+    margin-right: 6px;
+}
 .section {
     width: 790px;
     margin: 28px auto;
     background-color: white;
     border-radius: 3px;
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.23);
     position: relative;
     p {
         margin-bottom: 0;
@@ -170,14 +177,6 @@ body {
         cursor: pointer;
         color: green;
         font-weight: bold;
-    }
-    .heading {
-        font-size: 13px;
-        font-weight: 600;
-        color: #757575;
-        padding-bottom: 6px;
-        margin: 0;
-        margin-right: 6px;
     }
     .section-exercise {
         padding: 10px 20px;

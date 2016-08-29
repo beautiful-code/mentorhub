@@ -12,12 +12,19 @@ angular.module('mentorhub.track', [])
         };
     })
 
-    .directive('fileModel', ['$parse', function ($parse) {
+    .directive('fileModel', ['$parse','TrackServices', function ($parse,TrackServices) {
         return {
             restrict: 'A',
             link: function (scope, element, attrs) {
                 element.bind('change', function () {
                     $parse(attrs.fileModel).assign(scope, element[0].files[0]);
+                    var trackParams = new FormData();
+                    trackParams.append('track_template[image]', scope.imageFile);
+                    TrackServices.putTrackData({'{track_id}': scope.track.id}, trackParams)
+                        .success(function (response) {
+                            scope.track.image.image.url = response.track_template.image.image.url;
+                        });
+
                 });
             }
         };
@@ -69,7 +76,7 @@ angular.module('mentorhub.track', [])
 
             $scope.create_track = function (track) {
                 var file = $scope.imageFile;
-                var trackParams = setTrackParams(track, file);
+                var trackParams = setTrackParams(track);
                 TrackServices.postTrackData(trackParams)
                     .success(function (response) {
                         track.editable = track.newRecord = false;
@@ -102,11 +109,47 @@ angular.module('mentorhub.track', [])
                     });
             };
 
-            var setTrackParams = function(track, file){
+            $scope.edit_name = function(track){
+              $scope.temp_track = angular.copy(track);
+              track.name_editable = true;
+            }
+
+            $scope.update_name = function (track){
+              var trackParams = setTrackParams(track);
+              TrackServices.putTrackData({'{track_id}': track.id}, trackParams)
+                  .success(function (response) {
+                      track.name_editable = false;
+                  });
+            }
+
+            $scope.cancel_name = function(track){
+              track.name = $scope.temp_track.name
+              track.name_editable = false;
+            }
+
+            $scope.edit_desc = function(track){
+              $scope.temp_track = angular.copy(track);
+              track.description_editable = true;
+            }
+
+            $scope.update_desc = function (track){
+              var trackParams = setTrackParams(track);
+              TrackServices.putTrackData({'{track_id}': track.id}, trackParams)
+                  .success(function (response) {
+                      track.description_editable = false;
+                  });
+            }
+
+            $scope.cancel_desc = function(track){
+              track.desc = $scope.temp_track.desc
+              track.description_editable = false;
+            }
+
+            var setTrackParams = function(track){
                 var trackParams = new FormData();
                 trackParams.append('track_template[name]', track.name);
                 trackParams.append('track_template[desc]', track.desc);
-                trackParams.append('track_template[image]', file);
+                trackParams.append('track_template[image]', $scope.imageFile);
                 return trackParams;
             };
 
@@ -162,6 +205,10 @@ angular.module('mentorhub.track', [])
                     file = $image.files[0];
                 }
                 return file;
+            };
+
+            $scope.uploadFile = function(){
+              $('#image').trigger('click');
             };
 
             init();

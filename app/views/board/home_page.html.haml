@@ -1,0 +1,19 @@
+.home-page
+  %h1.headline Optimize mentoring culture in your organization
+  .form_style
+    =link_to user_google_oauth2_omniauth_authorize_path, class:"google_login" do
+      %i.fa.fa-google-plus-official(aria-hidden="true")
+      Start now using Google
+.work-steps
+  .step
+    = image_tag "group.png"
+    %h2 Create an account
+    %p Create an account for your organisation. Add members to it by sending invitations.
+  .step
+    = image_tag "track.png"
+    %h2 Add a learning track
+    %p Add the learning tracks for the topics
+  .step
+    = image_tag "meeting.png"
+    %h2 Start Mentoring
+    %p Connect to the mentor on topic and learn from the experiences.
