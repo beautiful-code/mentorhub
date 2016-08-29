@@ -357,3 +357,64 @@ input[type="button"].btn-secondary_action {
       font-size: 2.5em;
     }
   }
+.rating_section{
+  background-color: rgba(0,0,0,.1);
+  text-align:center;
+  .star-rating {
+    position: relative;
+    margin: 0;
+    padding: 30px;
+    display: inline-block;
+    div:first-child{
+      margin: 10px;
+      font-size: 20px;
+    }
+    .star {
+      position:relative;
+      margin: 10px 40px;
+      list-style-type: none;
+      display: inline-block;
+      i{
+        cursor: pointer;
+        font-size: 40px;
+      }
+      small{
+        display:block;
+      }
+    }
+    .text-box {
+      text-align: left;
+      width: 75%;
+      margin: 15px auto;
+      span{
+        color:grey;
+      }
+    }
+    textarea{
+      display:block;
+      width: 100%;
+      height: 100px;
+      border-radius: 2px;
+      outline: none;
+    }
+    input[type=button]{
+      margin-top: 20px;
+      float:right;
+    }
+  }
+}
+
+.rating_display{
+  float: right;
+  .star-rating {
+    .star {
+      position:relative;
+      list-style-type: none;
+      display: inline-block;
+      i{
+        font-size: 10px;
+      }
+    }
+  }
+}
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160713130429) do
+ActiveRecord::Schema.define(version: 20160825070643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20160713130429) do
     t.text     "mentee_notes"
     t.boolean  "enabled"
     t.string   "type"
+    t.integer  "rating"
+    t.text     "feedback"
   end
 
   create_table "section_templates", force: :cascade do |t|

@@ -17,7 +17,7 @@ class SectionInteraction < ApplicationRecord
 
   STATES =
     %w(new section_submitted tasks_pending
-       review_pending section_completed).freeze
+       review_pending section_completed feedback_captured).freeze
 
   validates :state, presence: true,
     inclusion: { in: STATES, if: -> { state.present? } }
@@ -43,6 +43,10 @@ class SectionInteraction < ApplicationRecord
     event :complete_section do
       transition review_pending: :section_completed,
         if: ->(si) { !si.pending_todos? }
+    end
+
+    event :capture_feedback do
+      transition section_completed: :feedback_captured
     end
   end
 
