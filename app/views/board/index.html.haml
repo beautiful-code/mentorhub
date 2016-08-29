@@ -20,8 +20,13 @@
 
     .tab-content
       .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_tracks'}"}
+        %div.loading-track
+          %i.fa.fa-spinner
         %div{"user-tracks" => ""}
+
       .tab-pane.user_exercise_style{"ng-class" => "{active: active_tab === 'user_mentee_tracks'}"}
+        %div.loading-track
+          %i.fa.fa-spinner
         %div{"user-mentee-tracks" => ""}
 
     :javascript

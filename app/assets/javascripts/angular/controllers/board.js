@@ -186,10 +186,11 @@ angular.module('mentorhub.board', [])
                 }
 
                 $scope.change_tab($scope.active_tab);
+
                 angular.element(document).ready(function () {
                   setTimeout(function() {
                     $(".loading-track").fadeOut("slow");
-                  }, 250);
+                  }, 1000);
                 });
             };
 
