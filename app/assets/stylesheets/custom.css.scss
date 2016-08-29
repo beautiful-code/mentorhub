@@ -358,12 +358,17 @@ input[type="button"].btn-secondary_action {
     }
   }
 .rating_section{
+  background-color: rgba(0,0,0,.1);
   text-align:center;
   .star-rating {
     position: relative;
     margin: 0;
     padding: 30px;
     display: inline-block;
+    div:first-child{
+      margin: 10px;
+      font-size: 20px;
+    }
     .star {
       position:relative;
       margin: 10px 40px;
@@ -375,6 +380,14 @@ input[type="button"].btn-secondary_action {
       }
       small{
         display:block;
+      }
+    }
+    .text-box {
+      text-align: left;
+      width: 75%;
+      margin: 15px auto;
+      span{
+        color:grey;
       }
     }
     textarea{
@@ -398,7 +411,6 @@ input[type="button"].btn-secondary_action {
       position:relative;
       list-style-type: none;
       display: inline-block;
-      cursor: pointer;
       i{
         font-size: 10px;
       }

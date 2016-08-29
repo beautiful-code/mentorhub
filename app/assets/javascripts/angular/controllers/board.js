@@ -74,11 +74,15 @@ angular.module('mentorhub.board', [])
         },
         template:
           '<ul class="star-rating">' +
+          '  <div ng-if="desc">How was the learning through this exercise?</div>' +
           '  <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}">' +
           '    <i class="material-icons md-48" ng-click="toggle($index, desc)">{{ star.filled ? "star" : "star_border" }}</i>' +
-          '    <small ng-if="desc">{{ $index == 0 ? "Not Good" : $index == 1 ? "Satisfied" : $index == 2 ? "Good" : "Excellent"  }}</small> ' +
+          '    <small ng-if="desc">{{ $index == 0 ? "Not helpful" : $index == 1 ? "Can be improved" : $index == 2 ? "Helpful" : "Very helpful"  }}</small> ' +
           '  </li>' +
-          '  <textarea ng-if="desc" placeholder="Add a comment (Optional)" ng-model="section.feedback"/> ' +
+          '  <div class="text-box" ng-if="desc">' +
+          '     Tell us how can we improve the experience <span>(Optional)</span>' +
+          '     <textarea placeholder="Write here" ng-model="section.feedback"/> ' +
+          '  </div>' +
           '  <input class="btn btn-primary" ng-if="desc" type="button" value="Submit Feedback" ng-click="submit() "/>' +
           '</ul>',
         link: function(scope, element, attr){

@@ -26,7 +26,6 @@
 
     :javascript
       var PageConfig = {};
-
       $(document).ready(function(){
         setTimeout(function(){
           $(".flash_message" ).fadeOut("slow");
@@ -35,7 +34,5 @@
           $(".loading-track").hide("slow");
         }, 200);
       });
-
-
       PageConfig.currentUser = #{current_user.to_json};
       PageConfig.boardJson = #{@board_data.to_json};
