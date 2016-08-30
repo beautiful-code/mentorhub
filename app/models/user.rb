@@ -14,6 +14,8 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
 
+  default_scope { order('id') }
+
   def self.from_omniauth(access_token)
     data = access_token.info
     user = User.find_by(email: data['email'])
@@ -37,14 +39,14 @@ class User < ApplicationRecord
     mentoring_tracks.collect(&:mentee)
   end
 
-  def serializable_hash(options)
-    options ||= {}
+  #def serializable_hash(options)
+    #options ||= {}
 
-    super({
-      except: [
-        :created_at, :updated_at, :oauth_expires_at,
-        :provider, :uid
-      ]
-    }.merge(options))
-  end
+    #super({
+      #except: [
+        #:created_at, :updated_at, :oauth_expires_at,
+        #:provider, :uid
+      #]
+    #}.merge(options))
+  #end
 end

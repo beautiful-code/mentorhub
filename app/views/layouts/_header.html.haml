@@ -3,6 +3,10 @@
 %header
   = link_to root_path, class: 'navbarbrand' do
     = image_tag "mentorhub_logo.png", class: 'mhlogo'
+    -if current_user
+      %small
+        for
+        = current_user.organization.name
 
   .header__wrapper
     - if user_signed_in?

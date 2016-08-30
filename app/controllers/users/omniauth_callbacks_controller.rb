@@ -17,7 +17,11 @@ module Users
     def signing_in
       flash[:notice] =
         I18n.t 'devise.omniauth_callbacks.success', kind: 'Google'
-      sign_in_and_redirect @user, event: :authentication
+      company_domain = @user.email.split(/[@,.]/)[1]
+      if company_domain != "gmail"
+        @user.organization = Organization.where(email_domain: company_domain).first_or_create(name: company_domain)
+        sign_in_and_redirect @user, event: :authentication
+      end
     end
 
     def session_store
