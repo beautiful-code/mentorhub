@@ -2,7 +2,14 @@ class OrganizationsController < ApplicationController
   before_action :set_organization
 
   def edit
-    @organization
+    if session[:token]
+      token = session[:token]
+      contacts_json = JSON.parse(open('https://www.google.com/m8/feeds/contacts/default/full?access_token=' + token + '&alt=json').read)
+      @contacts = contacts_json['feed']['entry'].collect | p | {
+        name: p['title']['$t'],
+        email: p['gd$email'][0]['address']
+      }
+    end
     @current_user = current_user
   end
 
@@ -14,6 +21,7 @@ class OrganizationsController < ApplicationController
   end
 
   private
+
   def set_organization
     @organization = current_user.organization
   end
@@ -21,5 +29,4 @@ class OrganizationsController < ApplicationController
   def organization_params
     params.fetch(:organization, {}).permit(:name, :email_domain)
   end
-
 end

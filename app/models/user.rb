@@ -39,14 +39,14 @@ class User < ApplicationRecord
     mentoring_tracks.collect(&:mentee)
   end
 
-  #def serializable_hash(options)
-    #options ||= {}
+  def serializable_hash(options)
+    options ||= {}
 
-    #super({
-      #except: [
-        #:created_at, :updated_at, :oauth_expires_at,
-        #:provider, :uid
-      #]
-    #}.merge(options))
-  #end
+    super({
+      except: [
+        :created_at, :updated_at, :oauth_expires_at,
+        :provider, :uid
+      ]
+    }.merge(options))
+  end
 end
