@@ -1,5 +1,6 @@
 class MentoringTracksController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_organization
   before_action :set_track, only: [:show]
 
   def index
@@ -7,9 +8,9 @@ class MentoringTracksController < ApplicationController
   end
 
   def new
-    @tracks = TrackTemplate.all
+    @tracks = @organization.track_templates
     @current_user = current_user
-    @users = User.all - [current_user]
+    @users = @organization.users - [current_user]
   end
 
   def create
@@ -30,6 +31,10 @@ class MentoringTracksController < ApplicationController
   end
 
   private
+
+  def set_organization
+    @organization = current_user.organization
+  end
 
   def set_track
     @track = if params[:id].present?

@@ -18,10 +18,13 @@ Rails.application.routes.draw do
   end
 
   resources :mentoring_tracks, only: [:new, :create, :index, :show]
+  resources :organizations, only: [:update]
 
   get 'users/auth/failure', to: redirect('/')
   get 'board', to: 'board#index'
   get '/user/:mentee_id', to: 'mentoring_tracks#get_user_data'
+
+  get '/organization', to: 'organizations#edit', as: 'edit_organization'
 
   root to: 'board#index'
 end

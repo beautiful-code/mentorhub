@@ -18,12 +18,20 @@ header {
     align-items: center;
     justify-content: space-between;
 }
-.mhlogo {
-    margin: 11px 20px;
-    height: 30px;
-    top: 0;
-    left: 40px;
-    position: absolute;
+.navbarbrand {
+  display: flex;
+  position: absolute;
+  left: 40px;
+  text-decoration: none !important;
+  color: white;
+  &:hover{
+    color: white;
+  }
+  .mhlogo {
+      margin: 11px 0 20px;
+      height: 30px;
+      position: relative;
+  }
 }
 .userProfile {
     display: flex;

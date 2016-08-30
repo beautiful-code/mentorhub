@@ -3,6 +3,7 @@ class TrackTemplate < ApplicationRecord
   validates :desc, presence: true
   validates :type, presence: true
 
+  belongs_to :organization
   has_many :section_templates
 
   mount_uploader :image, ImageUploader
