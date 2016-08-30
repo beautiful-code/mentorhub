@@ -1,6 +1,7 @@
 module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     def google_oauth2
+      byebug
       @user = User.from_omniauth(request.env['omniauth.auth'])
 
       if @user.email.split('@')[1] == 'beautifulcode.in'
@@ -19,8 +20,13 @@ module Users
         I18n.t 'devise.omniauth_callbacks.success', kind: 'Google'
       company_domain = @user.email.split(/[@,.]/)[1]
       if company_domain != "gmail"
-        @user.organization = Organization.where(email_domain: company_domain).first_or_create(name: company_domain)
-        sign_in_and_redirect @user, event: :authentication
+        if Organization.where(email_domain: company_domain).first
+          sign_in_and_redirect @user, event: :authentication
+        else
+          @user.organization = Organization.create(email_domain: company_domain, name: company_domain)
+          sign_in @user, event: :authentication
+          redirect_to edit_organization_path
+        end
       end
     end
 
