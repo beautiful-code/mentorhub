@@ -4,15 +4,11 @@ class OrganizationsController < ApplicationController
   before_action :set_organization
 
   def edit
-    @current_user = current_user
+    set_edit_and_invite_params
   end
 
   def invite_members
-    @current_user = current_user
-    token = current_user.token
-    domain = current_user.email.split('@')[1]
-    @contacts = get_contacts(token, domain)
-    @users = @organization.users
+    set_edit_and_invite_params
   end
 
   def update
@@ -40,5 +36,13 @@ class OrganizationsController < ApplicationController
 
   def invite_contact_params
     params.fetch(:contact).permit!
+  end
+
+  def set_edit_and_invite_params
+    @current_user = current_user
+    token = current_user.token
+    domain = current_user.email.split('@')[1]
+    @contacts = get_contacts(token, domain)
+    @users = @organization.users
   end
 end

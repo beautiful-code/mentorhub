@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   get 'users/auth/failure', to: redirect('/')
   get 'board', to: 'board#index'
-  get 'home', to: 'board#home_page'
+  get 'home', to: 'board#home_page', as: 'home_page'
   get '/user/:mentee_id', to: 'mentoring_tracks#get_user_data'
 
   get '/organization', to: 'organizations#edit', as: 'edit_organization'
