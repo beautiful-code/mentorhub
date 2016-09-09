@@ -36,7 +36,7 @@ ExerciseSectionTemplate.create!([
 ])
 
 [
-  {first_name: "Bertram", last_name: "Wooster", email: "b.wooster@gmail.com", password: "password", password_confirmation: "password", image: "https://mundabor.files.wordpress.com/2012/05/bertie-wooster.jpg"},
-  {first_name: "Reginald", last_name: "Jeeves", email: "r.jeeves@gmail.com", password: "password", password_confirmation: "password", image: "https://s-media-cache-ak0.pinimg.com/236x/48/e8/be/48e8be292e27d572dbdf783ad3196c4a.jpg"},
-  {first_name: "Roderick", last_name: "Glossop", email: "r.glossop@gmail.com", password: "password", password_confirmation: "password", image: "https://s-media-cache-ak0.pinimg.com/564x/0e/98/cd/0e98cd1192ba7f2f122c71e1654883fd.jpg"},
+  {first_name: "Bertram", last_name: "Wooster", email: "b.wooster@beautiful.com", password: "password", password_confirmation: "password", image: "https://mundabor.files.wordpress.com/2012/05/bertie-wooster.jpg"},
+  {first_name: "Reginald", last_name: "Jeeves", email: "r.jeeves@beautifulcode.com", password: "password", password_confirmation: "password", image: "https://s-media-cache-ak0.pinimg.com/236x/48/e8/be/48e8be292e27d572dbdf783ad3196c4a.jpg"},
+  {first_name: "Roderick", last_name: "Glossop", email: "r.glossop@beautifulcode.com", password: "password", password_confirmation: "password", image: "https://s-media-cache-ak0.pinimg.com/564x/0e/98/cd/0e98cd1192ba7f2f122c71e1654883fd.jpg"},
 ].each {|user_info| User.create(user_info) }

@@ -35,7 +35,7 @@ angular.module("mentorhub.mentoring_track_new", [])
             $scope.deadline = new Date();
             $scope.users = MentoringTrackConfig.users;
             $scope.tracks = MentoringTrackConfig.tracks;
-            
+
             if ($window.localStorage.getItem('SelectedTrack')) {
                 $scope.selectTrack = JSON.parse($window.localStorage.getItem('SelectedTrack'));
                 $scope.showButtons = true;

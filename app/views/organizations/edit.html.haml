@@ -1,0 +1,25 @@
+%div.org-signup
+  %div.org-signup__logo
+    %img(src="/assets/mentorhub_logo.png")
+  %div{"ng-controller" => "OrganizationController"}
+    %div.org-signup__box
+      %h2.org-signup__heading Create an Account
+      %div.org-signup__input
+        %label Name
+        %input{"ng-model" => "current_user.first_name", :disabled => "disabled"}
+      %div.org-signup__input
+        %label Company
+        %input{"ng-model" => "organization.name"}
+      %div.org-signup__input
+        %label Email
+        %input{"ng-model" => "current_user.email", :disabled => "disabled"}
+      %input.org-signup__submit.btn--raised{:type => "submit", :value=> "next", "ng-click" => "updateOrganization()"}
+      .clearfix
+
+:javascript
+  var OrganizationConfig = {
+    current_user: #{@current_user.to_json},
+    organization: #{@organization.to_json},
+    contacts: #{@contacts.to_json},
+    users:    #{@users.to_json}
+  };

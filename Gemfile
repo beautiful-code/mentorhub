@@ -23,6 +23,8 @@ gem 'bower-rails', '~> 0.10.0'
 gem 'material_design_lite-sass'
 gem 'puma'
 gem 'redis'
+gem 'google-api-client', '0.8.6'
+gem 'sendgrid'
 
 group :development, :test do
   gem 'seed_dump'

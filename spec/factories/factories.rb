@@ -1,9 +1,17 @@
 FactoryGirl.define do
+  factory :organization, class: Organization do |o|
+    o.id 1
+    o.name 'beautifulcode'
+    o.email_domain 'beautifulcode.in'
+  end
+
   factory :user, class: User do |u|
-    u.first_name 'robert'
-    u.last_name 'junior'
-    u.email 'user@example.com'
+    u.first_name 'Sashank'
+    u.last_name 'challa'
+    u.email 'sashank@beautifulcode.in'
     u.password 'password'
+    u.token nil
+    u.organization_id 1
   end
 
   factory :section_interaction, class: SectionInteraction do

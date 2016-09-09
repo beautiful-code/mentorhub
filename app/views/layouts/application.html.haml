@@ -25,6 +25,7 @@
         = breadcrumbs style: :bootstrap,class:""
 
     - flash.each do |message_type, message|
-      %div{:class => "flash_message alert alert-#{message_type}"}= message
+      - unless message_type.to_s == 'timedout'
+        %div{:class => "flash_message alert alert-#{message_type}"}= message
 
     = yield

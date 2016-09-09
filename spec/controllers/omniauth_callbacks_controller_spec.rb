@@ -10,9 +10,17 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       have_link 'Log in with Google'
     end
 
-    it 'should redirect the user to the callback url', type: :request do
-      # post :google_oauth2, provider: :google_oauth2
-      # response.should redirect_to user_google_oauth2_omniauth_callback_path
+    it 'should redirect the user to the edit_organization_url
+    while creating the organisation', type: :request do
+      url = '/users/auth/google_oauth2/callback'
+      expect(post(url)).should redirect_to edit_organization_path
+      have_link 'Log out'
+    end
+
+    it 'should redirect the user to the root_url if the user
+    is part of an existing organisation', type: :request do
+      @user = FactoryGirl.create(:user)
+      @user.organization = FactoryGirl.create(:organization)
       url = '/users/auth/google_oauth2/callback'
       expect(post(url)).should redirect_to root_path
       have_link 'Log out'

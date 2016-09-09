@@ -2,10 +2,11 @@ class TrackTemplatesController < ApplicationController
   # TODO: Ajax auth token
   before_action :authenticate_user!, except: [:create, :update,
                                               :destroy, :sections]
+  before_action :set_organization
   before_action :set_track_template, except: [:index]
 
   def index
-    @track_templates = TrackTemplate.all.order('created_at ASC')
+    @track_templates = @organization.track_templates.order('created_at ASC')
   end
 
   def new
@@ -48,15 +49,19 @@ class TrackTemplatesController < ApplicationController
 
   private
 
+  def set_organization
+    @organization = current_user.organization
+  end
+
   def track_template_params
     params.fetch(:track_template, {}).permit(:name, :image, :desc)
   end
 
   def set_track_template
     @track_template = if params[:id].present?
-                        TrackTemplate.find(params[:id])
+                        @organization.track_templates.find(params[:id])
                       else
-                        TrackTemplate.new(track_template_params)
+                        @organization.track_templates.new(track_template_params)
                       end
   end
 end

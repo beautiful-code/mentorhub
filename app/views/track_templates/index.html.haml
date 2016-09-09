@@ -1,14 +1,13 @@
 %div{"ng-controller" => "TracksController"}
-  %a.track_list_btn.btn.btn-primary{:href => "/track_templates/new"} New Track Template
-  .container-fluid
-    .track_list
-      %div{"ng-repeat" => "trackTemplate in trackTemplates"}
-        .track_card
-          .logo_track
+  %a.add-track__btn{:href => "/track_templates/new"} Add a Track
+  .tracks-index
+    %div{"ng-repeat" => "trackTemplate in trackTemplates"}
+      %a{:href => "/track_templates/{{ trackTemplate.id }}"}
+        .track-each
+          .track-each__logo
             %img{"ng-src" => "{{ trackTemplate.image.image.url }}"}/
-          .content_track
-            %h3
-              %a{:href => "/track_templates/{{ trackTemplate.id }}"} {{ trackTemplate.name }}
+          .track-each__content
+            %h3 {{ trackTemplate.name }}
             %p {{ trackTemplate.desc }}
 
 :javascript

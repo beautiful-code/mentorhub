@@ -17,26 +17,59 @@
         <input placeholder="Track description" class="form-control" type="text" id="desc" ng-model="track.desc">
         <span class="help-block"></span>
       </div>
-      <div class="progress">
-        <div class="progress_bar" style="width: {{track.progress}}%;"></div>
-      </div>
     </div>
   </div>
 </form>
 
-<div class="cover_photo" ng-hide="track.editable">
-  <div class="logo_track">
-    <img ng-show="track.image_url" src="{{track.image_url}}" alt="{{ track.name }} logo">
-    <img ng-hide="track.image_url" src="{{ track.image.image.url }}" alt="{{ track.name }} logo">
+<!--<div class="cover_photo" ng-hide="track.editable">-->
+  <!--<div class="logo_track">-->
+    <!--<img ng-show="track.image_url" src="{{track.image_url}}" alt="{{ track.name }} logo">-->
+    <!--<img ng-hide="track.image_url" src="{{ track.image.image.url }}" alt="{{ track.name }} logo">-->
+  <!--</div>-->
+  <!--<div class="content_cover">-->
+    <!--<div class="edit-track" ng-if="!track.show_track">-->
+      <!--<input type="button" class="edit-track-btn btn-primary_action" value="Edit Track" ng-click="edit_track(track)">-->
+    <!--</div>-->
+    <!--<h3>{{ track.name }}</h3>-->
+    <!--{{ track.desc }}-->
+
+  <!--</div>-->
+<!--</div>-->
+
+<div class="track__profile">
+  <div class="track__logo">
+    <a href="" ng-click="uploadFile()" >
+      <img ng-show="track.image_url" src="{{track.image_url}}" alt="{{ track.name }} logo">
+      <img ng-hide="track.image_url" src="{{ track.image.image.url }}" alt="{{ track.name }} logo">
+      <label for="image" >change</label>
+      <input file-model="imageFile" type="file" id="image" class="form-control" style="display:none;">
+    </a>
   </div>
-  <div class="content_cover">
-    <div class="edit-track" ng-if="!track.show_track">
-      <input type="button" class="edit-track-btn btn-primary_action" value="Edit Track" ng-click="edit_track(track)">
+  <div class="track__name">
+    <div ng-hide="track.name_editable">
+      <h2>{{ track.name }}<a ng-click="edit_name(track)" ><i class="material-icons">edit</i></a></h2>
     </div>
-    <h3>{{ track.name }}</h3>
-    {{ track.desc }}
-    <div class="progress">
-      <div class="progress_bar" style="width: {{track.progress}}%;"></div>
+    <div ng-show="track.name_editable">
+      <input ng-model="track.name"/>
+      <div class="btn-center">
+      <button ng-click="update_name(track)" class="btn--raised">Save</button>
+      <button ng-click="cancel_name(track)" class="btn--flat">Cancel</button>
+      </div>
     </div>
   </div>
 </div>
+<div class="track__content">
+  <div class="track__description">
+    <h3 class="heading">About the track</h3>
+    <div ng-hide="track.description_editable">
+      <p>{{ track.desc }}</p>
+      <a ng-click="edit_desc(track)"><i class="material-icons">edit</i></a>
+    </div>
+    <div ng-show="track.description_editable">
+      <textarea ng-model="track.desc"></textarea>
+      <button ng-click="update_desc(track)" class="btn--raised">Save</button>
+      <button ng-click="cancel_desc(track)" class="btn--flat">Cancel</button>
+    </div>
+  </div>
+</div>
+
