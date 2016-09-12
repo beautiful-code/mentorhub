@@ -19,8 +19,10 @@ class OrganizationsController < ApplicationController
   end
 
   def invite
-    InviteMailer.send_invite(JSON.parse(invite_contact_params.to_json), current_user)
-                .deliver_now
+    InviteMailer.send_invite(
+      JSON.parse(invite_contact_params.to_json),
+      current_user
+    ).deliver_now
     render json: { msg: 'success' }, status: 200
   end
 
