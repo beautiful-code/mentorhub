@@ -1,28 +1,40 @@
 %div{"ng-controller" => "MentoringTracksController"}
-  %a.track_list_btn.btn.btn-primary{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(false)" } New Mentee Track
-  %a.track_list_btn.btn.btn-primary{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(true)"} Self Track
-  .track_list
+  .mentoring-tracks__request-all{"ng-if" => "data.length>0" }
+    %h2 Mentee requests
+    .mentoring-tracks__request-each{"ng-repeat" => "requestData in data", "ng-if" => "requestData.mentorRequest.state == 'new'"}
+      %p
+        %span {{requestData.mentee.first_name }}
+        requested you to guide him in learning
+        %span {{requestData.track.name}}
+      .mentoring-tracks__request-each__btns
+        %button.btn--raised{"ng-click" => "request('accepted', $index)"} accept
+        %button.btn--flat{"ng-click" => "request('rejected', $index)"} cancel
+  .mentoring-tracks__btns
+    %a.btn--raised{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(false)" } start mentoring
+    %a.btn--raised{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(true)"} start learning
+  .tracks-index
     %div{"ng-show" => "tracks.length>0"}
-      %div{"ng-repeat" => "track in tracks track by $index"}
-        .track_card
-          .logo_track
-            %img{:alt => "{{track.name}}", "ng-src" => "{{track.image_url}}"}/
-          .content_track
-            %h3
-              %a{:href => "/mentoring_tracks/{{track.id}}"} {{track.name}}
-            .details
-              .mentee_deadline
-                %h4 to be completed by
-                %p
-                  {{track.deadline | date:'dd/MM/yyyy'}}
-              .mentee_name
-                %h4 Mentee
+      %div{"ng-repeat" => "track in mentoringTracks track by $index"}
+        %a{:href => "/mentoring_tracks/{{track.id}}"}
+          .track-each
+            .track-each__logo
+              %img{:alt => "{{track.name}}", "ng-src" => "{{track.image_url}}"}/
+            .track-each__content
+              %h3
+                {{track.name}}
+              .track-each__mentee
+                %h4.heading Mentee
                 %p
                   {{ track.mentee.first_name }}
-            .progress_bar
-
+              .track-each__deadline
+                %h4.heading due date
+                %p
+                  {{track.deadline | date:'dd/MM/yyyy'}}
 
 :javascript
   var MentoringTracksConfig = {
-    tracks: #{@mentoring_tracks.to_json}
+    mentoringTracks: #{@mentoring_tracks.to_json},
+    mentorRequests: #{@mentor_requests.to_json},
+    tracks: #{@tracks.to_json},
+    users: #{@users.to_json}
   };

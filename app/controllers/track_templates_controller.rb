@@ -7,6 +7,8 @@ class TrackTemplatesController < ApplicationController
 
   def index
     @track_templates = @organization.track_templates.order('created_at ASC')
+    @current_user = current_user
+    @track_ids = Track.pluck('track_template_id')
   end
 
   def new
@@ -15,12 +17,19 @@ class TrackTemplatesController < ApplicationController
 
   def show
     @sections = @track_template.section_templates.order('id')
+    @members = @organization.users.where.not(id: current_user.id)
+    @current_user = current_user
+    @mentor_request = current_user.mentor_request.where(
+      track_template_id: @track_template.id,
+      state: 'new'
+    ).first
     render 'sections/index'
   end
 
   def create
     # TODO: Capture the track type from the form
     @track_template.type = 'ExerciseTrackTemplate'
+    @track_template.user_id = current_user.id
 
     if @track_template.save
       render json: { msg: 'success',
@@ -44,6 +53,14 @@ class TrackTemplatesController < ApplicationController
         errors: @track_template.errors,
         track_template: @track_template
       }, status: 422
+    end
+  end
+
+  def destroy
+    if @track_template.destroy
+      render json: { msg: 'Track deleted' }, status: 200
+    else
+      render json: { msg: 'error', errors: @todo.errors }, status: 422
     end
   end
 

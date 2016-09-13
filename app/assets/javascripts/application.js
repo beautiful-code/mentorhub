@@ -25,6 +25,7 @@
 //
 // Custom
 //= require_tree ./angular
+//= require initial
 //
 
 (function() {
@@ -33,3 +34,9 @@
   App.cable = ActionCable.createConsumer();
 
 }).call(this);
+
+
+
+jQuery(document).ready(function(){
+    jQuery('.initialjs-avatar').initial();
+});

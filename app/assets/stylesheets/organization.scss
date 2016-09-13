@@ -1,8 +1,8 @@
-.org-signup{
-  position:fixed;
-  padding:0;
-  margin:0;
+.org-signup--first-login{
+  position: fixed;
   top:0;
+  bottom: 0;
+  right: 0;
   left:0;
   width: 100%;
   height: 100%;
@@ -45,7 +45,8 @@
   margin: 0;
   font-size: 20px;
   font-weight: 400;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eeeeee;
 }
 
 .org-signup__submit{
@@ -60,36 +61,88 @@
   width: 90px;
   float: right;
 }
+.org-list__name{
+  display: inline-block;
+  color: #888888;
+  text-decoration: none;
+  line-height: 22px;
+  padding: 9px 20px;
+  box-sizing: border-box;
+}
+.org-list__name:hover{
+  text-decoration: none;
+}
+.org__member{
+  width: 50%;
+  display: inline-block;
+  padding-left: 10px;
+  img{
+    border-radius:4px;
+  }
+  .user__name{
+    padding-left: 8px;
+  }
+  .user__email{
+    padding-left: 8px;
+  }
+  .user{
+    display: inline-block;
+    width: calc(100% - 46px);
+    vertical-align: middle;
+  }
 
+}
 .org-signup__invite{
-  max-height: 400px;
-  overflow: scroll;
   background-color: white;
-  width: 600px;
+  width: 680px;
   margin: auto;
   padding: 16px;
   margin-top: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.23);
   border-radius: 3px;
 }
-.invite__contact{
+.user__invite{
   position: relative;
-  border-bottom: 1px solid #c5c7c9;
+  width: 50%;
+  display: inline-block;
+  border-bottom: 1px solid #eeeeee;
 
 }
-p.invite__name{
+.search__name{
+  display: block;
+  background-color: #eeeeee;
+  height: 56px;
+  margin: 0 -16px;
+  padding: 18px 0;
+  input{
+    border: 1px solid #c5c7c9;
+    width: 80%;
+    display: block;
+    margin: -6px auto;
+    padding-left: 12px;
+    box-sizing: border-box;
+    height: 30px;
+    border-radius: 3px;
+  }
+}
+p.user__name{
   margin: 0;
   margin-bottom: 2px;
   font-weight: 600;
+  display: inline-block;
+  width: 60%;
   line-height: 22px;
   font-size: 14px;
   margin-top: 8px;
+  padding-left: 16px;
 }
-p.invite__email{
+p.user__email{
   margin: 0;
   line-height: 22px;
   margin-bottom: 10px;
   font-size: 12px;
   color: #9b9b9b;
+  padding-left: 16px;
 }
 .org-signup__invite-btn{
   font-size: 12px;
@@ -105,4 +158,7 @@ p.invite__email{
 }
 .clearfix{
   clear: both;
+}
+.invites .btn--raised{
+    float: right;
 }

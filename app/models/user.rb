@@ -9,6 +9,11 @@ class User < ApplicationRecord
 
   has_many :mentoring_tracks, foreign_key: :mentor_id, class_name: 'Track'
   has_many :learning_tracks, foreign_key: :mentee_id, class_name: 'Track'
+
+  has_many :mentor_request, foreign_key: :mentor_id,
+                            class_name: 'MentoringRequest'
+  has_many :mentee_request, foreign_key: :mentee_id,
+                            class_name: 'MentoringRequest'
   belongs_to :organization
 
   validates :first_name, presence: true

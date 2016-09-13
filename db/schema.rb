@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160902102952) do
+ActiveRecord::Schema.define(version: 20160921122249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "mentoring_requests", force: :cascade do |t|
+    t.integer  "mentor_id"
+    t.integer  "mentee_id"
+    t.string   "state"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "track_template_id"
+  end
 
   create_table "organizations", force: :cascade do |t|
     t.string   "name"
@@ -65,6 +74,7 @@ ActiveRecord::Schema.define(version: 20160902102952) do
     t.string   "desc"
     t.string   "type"
     t.integer  "organization_id"
+    t.integer  "user_id"
   end
 
   create_table "tracks", force: :cascade do |t|
@@ -77,6 +87,7 @@ ActiveRecord::Schema.define(version: 20160902102952) do
     t.string   "type"
     t.integer  "mentee_id"
     t.text     "desc"
+    t.integer  "track_template_id"
   end
 
   create_table "users", force: :cascade do |t|
