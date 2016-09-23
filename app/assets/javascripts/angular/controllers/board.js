@@ -183,6 +183,7 @@ angular.module('mentorhub.board', [])
                     SectionInteractionServices.updatable_interactions.forEach(function (track) {
                         SectionInteractionServices.subscribeToTrack(track, 'updateScope');
                     });
+                    $scope.mentor_requests = PageConfig.mentor_requests;
                 }
 
                 $scope.change_tab($scope.active_tab);
@@ -190,7 +191,7 @@ angular.module('mentorhub.board', [])
                 angular.element(document).ready(function () {
                   setTimeout(function() {
                     $(".loading-track").fadeOut("slow");
-                  }, 1000);
+                  }, 500);
                 });
             };
 
@@ -363,6 +364,12 @@ angular.module('mentorhub.board', [])
                     'trackActionTodoForMentor'
                 );
             };
+
+            $scope.notificationForNewMenteeRequests = function(){
+              if($scope.mentor_requests.length > 0){
+                return true;
+              }
+            }
 
             var actionsTodoPresent = function(array, statusFunc) {
                 var ret = [];

@@ -1,49 +1,3 @@
-<!--<div ng-if="section.editable">-->
-  <!--<div class="add_exercise" id="add_exercise_form">-->
-    <!--<form class="new_section">-->
-      <!--<div class="input-box">-->
-        <!--<input id="title"  type="text" name="title" class="form-control" ng-model="section.title">-->
-        <!--<label for="title">Exercise Name</label>-->
-        <!--<span class="help-block"></span>-->
-      <!--</div>-->
-      <!--<div class="input-box">-->
-        <!--<textarea  rows="5" name="content" class="form-control" id="content" ng-model="section.content">{{ section.content }}</textarea>-->
-        <!--<label for="content">Exercise Description</label>-->
-        <!--<span class="help-block"></span>-->
-      <!--</div>-->
-      <!--<div class="resources">-->
-        <!--<h4>Resources</h4>-->
-        <!--<div id="resources">-->
-          <!--<div class="form-inline" ng-repeat="resource in section.resources track by $index">-->
-            <!--<input placeholder="Text" type="text" class="text res_field" ng-model="resource.text" >-->
-            <!--<input placeholder="URL" type="text" class="url res_field" ng-model="resource.url">-->
-
-            <!--<button class="remove add_resource_btn" type="button" ng-click="track.sections[$parent.$index].resources.splice($index,1);">-->
-              <!--<i class="glyphicon glyphicon-trash"></i>-->
-            <!--</button>-->
-          <!--</div>-->
-        <!--</div>-->
-
-        <!--<button class="add_resource_btn" id="add_field" type="button" ng-click="addResource($index)">-->
-          <!--<span>+</span>-->
-          <!--Add A Resource-->
-        <!--</button>-->
-      <!--</div>-->
-      <!--<div class="btn_save" id="btn_save">-->
-        <!--<div ng-if="section.newRecord" style="display: inline;">-->
-          <!--<input type="button" class="track-post btn-primary_action" value="Create" ng-click="create_section(track, section)">-->
-        <!--</div>-->
-        <!--<div ng-if="section.newRecord == false" style="display: inline;">-->
-          <!--<input type="button" class="track-post btn-primary_action" value="Update" ng-click="update_section(track, section)">-->
-        <!--</div>-->
-        <!--<input type="button" class="cancel-edit btn-secondary_action" value="Cancel" ng-click="cancel_section(section,$index)">-->
-
-      <!--</div>-->
-    <!--</form>-->
-  <!--</div>-->
-<!--</div>-->
-
-
 <div ng-if="section.editable">
   <div class="section__edit">
     <form>
@@ -75,7 +29,7 @@
         </div>
         <div class="section__crud">
           <div ng-if="section.newRecord" style="display: inline;">
-            <input type="button" class="btn--raised" value="Create" ng-click="create_section(track, section)">
+            <input type="button" class="btn--raised" value="Create" ng-click="create_section(track, section, $event)">
           </div>
           <div ng-if="section.newRecord == false" style="display: inline;">
             <input type="button" class="btn--raised" value="Update" ng-click="update_section(track, section)">
@@ -86,48 +40,7 @@
   </div>
 </div>
 
-
-
-<!--<div ng-if="section.editable == false">-->
-  <!--<div class="section_each">-->
-    <!--<div class="crud_elements">-->
-      <!--<a class="edit-section" ng-click="edit_section(section)">-->
-        <!--<i class="glyphicon glyphicon-pencil"></i>-->
-      <!--</a>-->
-      <!--<a class="delete-section" ng-click="delete_section($index, track, section)">-->
-        <!--<i class="glyphicon glyphicon-trash"></i>-->
-      <!--</a>-->
-    <!--</div>-->
-    <!--<h5>Exercise</h5>-->
-    <!--<div class="exercise_name">-->
-      <!--<h3>{{section.title}}</h3>-->
-    <!--</div>-->
-    <!--<p class="exercise_description">{{ section.content }}</p>-->
-    <!--<div class="section_resources">-->
-      <!--<h5>Resources</h5>-->
-      <!--<div ng-repeat="resource in section.resources">-->
-        <!--<div class="container-fluid">-->
-          <!--<div class="row">-->
-            <!--<div ng-if="resource.url">-->
-              <!--<a target="_blank" href="//{{ resource.url }}">{{ resource.text }}</a>-->
-            <!--</div>-->
-            <!--<div ng-if="!(resource.url)">-->
-              <!--<p>{{ resource.text }}</p>-->
-            <!--</div>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <!--<div ng-hide = "section.resources.length">-->
-        <!--<div class="container-fluid">-->
-          <!--<div class="row">-->
-            <!--<p>No Resources</p>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-<div class="track__content">
+<div class="track__content" ng-click="$parent.$parent.selectedIndex = ( $parent.$parent.selectedIndex == $index ? null : $index )">
   <div ng-if="section.editable == false">
       <div class="track__section">
         <div class="track__section__crud">

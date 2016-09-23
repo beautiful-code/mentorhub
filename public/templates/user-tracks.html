@@ -2,7 +2,7 @@
   <ul class="board-subnav-links" ng-if="Helper.keys(user_tracks).length != 0">
     <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index == 0 ? 'active':''" class="tracks-list">
       <a style="cursor: pointer" class="tracks-name" ng-click="reloadSectionInteractions(track_info)">
-        {{ track | capitalize }}
+        {{ track_info.name | capitalize }}
       </a>
       <span ng-if="trackActionTodoForMentee(track_info)" class="notification-dot"></span>
     </li>
@@ -81,7 +81,7 @@
         <div class="section-todos tasks" ng-if="sectionInteraction.todos.length != 0" ng-if="sectionInteraction.rating != null">
           <h3 class="heading">Tasks to do</h3>
           <p ng-repeat="todo in sectionInteraction.todos">
-          <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true">check_circle</i>
+          <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true">check_box_outline_blank</i>
           {{ todo.content }}
           </p>
         </div>

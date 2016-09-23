@@ -1,9 +1,13 @@
 %div{"ng-controller" => "TracksController"}
-  %a.add-track__btn{:href => "/track_templates/new"} Add a Track
+  %div.page-right
+    %a.btn--raised{:href => "/track_templates/new"} Add a Track
   .tracks-index
     %div{"ng-repeat" => "trackTemplate in trackTemplates"}
-      %a{:href => "/track_templates/{{ trackTemplate.id }}"}
+      %a{:href => "", "ng-click" => "selectTrack(trackTemplate)"}
         .track-each
+          .track-each__delete{"ng-click"=>"deleteTrack($index, trackTemplate, $event);", "ng-if" => "show_delete(trackTemplate)"}
+            %span Delete
+            %i(class="material-icons")more_vert
           .track-each__logo
             %img{"ng-src" => "{{ trackTemplate.image.image.url }}"}/
           .track-each__content
@@ -12,3 +16,5 @@
 
 :javascript
     PageConfig.trackTemplates = #{@track_templates.to_json};
+    PageConfig.current_user = #{@current_user.to_json};
+    PageConfig.track_ids = #{@track_ids.to_json};
