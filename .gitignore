@@ -41,6 +41,7 @@ config/app_config.yml.example
 # Ignore precompiled assets
 public/assets*
 public/system*
+public/uploads
 *.DS_Store
 
 # Ctags

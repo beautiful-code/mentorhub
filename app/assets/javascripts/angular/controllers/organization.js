@@ -18,7 +18,7 @@ angular.module("mentorhub.organization", [])
       $scope.organization = OrganizationConfig.organization;
       $scope.users = OrganizationConfig.users;
       $scope.contacts = OrganizationConfig.contacts;
-      $scope.update = true;
+      $scope.invite = false;
       angular.forEach($scope.contacts, function(contact, index){
          for (var i = 0; i < $scope.users.length; i++){
            if (contact.primaryEmail == $scope.users[i].email) {

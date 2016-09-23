@@ -25,6 +25,7 @@ gem 'puma'
 gem 'redis'
 gem 'google-api-client', '0.8.6'
 gem 'sendgrid'
+gem 'initialjs-rails'
 
 group :development, :test do
   gem 'seed_dump'

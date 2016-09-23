@@ -37,4 +37,5 @@
         }, 5000);
       });
       PageConfig.currentUser = #{current_user.to_json};
+      PageConfig.mentor_requests = #{@mentor_requests.to_json};
       PageConfig.boardJson = #{@board_data.to_json};

@@ -141,6 +141,8 @@ GEM
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
     i18n (0.7.0)
+    initialjs-rails (0.2.0.3)
+      railties (>= 3.1, < 6.0)
     ipaddress (0.8.3)
     jbuilder (2.6.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -335,6 +337,7 @@ DEPENDENCIES
   gretel
   haml
   html2haml
+  initialjs-rails
   jbuilder
   jquery-rails
   material_design_lite-sass

@@ -2,14 +2,19 @@
 
   %div
     %div{:track => ""}
-    %div{"new-exercise" => "", "ng-repeat" => "section in track.sections track by $index"}
-    %a.track__section__new{"ng-click" => "track.sections.push({ editable: true,newRecord: true });"}
-      %span + Add an Exercise
+    %div{"ng-show" => "!track.editable"}
+      %div{"new-exercise" => "", "ng-repeat" => "section in track.sections track by $index"}
+      %a.track__section__new{"ng-click" => "track.sections.push({ editable: true,newRecord: true });"}
+        %span + Add an Exercise
 
 
 :javascript
   PageConfig.track = #{@track_template.to_json};
+  PageConfig.members = #{@members.to_json};
   PageConfig.track.sections = #{@sections.to_json};
+  PageConfig.current_user = #{@current_user.to_json};
+  PageConfig.mentor_request = #{@mentor_request.to_json};
+
   $.each(PageConfig.track.sections, function(k, v){
     v.editable = false;
     v.newRecord = false;

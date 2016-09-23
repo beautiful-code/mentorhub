@@ -1,17 +1,12 @@
 - breadcrumb :mentoring_tracks, @track
 
-%div{"ng-controller" => "MentoringTrackShowController"}
-  #section_index
-    .track_info
-      %div{:track => ""}
-    .sub_nav
-      %h4.selected Exercises
-    #show_track_sections.show_track_instance
-      %div{"ng-repeat" => "section in track.sections track by $index", "section-interactions" => ""}
-    .add_exercise.add_exercise_btn
-      %a.add_exercise_link{"ng-click" => "add_exercise()"}
-        %span +
-        Add an exercise
+%div.track-container{"ng-controller" => "MentoringTrackShowController"}
+  .track_info
+    %div{:track => ""}
+    %div{"ng-repeat" => "section in track.sections track by $index", "section-interactions" => ""}
+    %a.track__section__new{"ng-click" => "add_exercise()"}
+      %span +
+      Add an exercise
 
 :javascript
   var MentoringTrackShowConfig = {

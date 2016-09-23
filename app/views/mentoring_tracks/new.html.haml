@@ -1,30 +1,30 @@
 - breadcrumb :add_mentoring_track, @add_mtrack
 
-#add_mentee_track{"ng-controller" => "MentoringTrackNew"}
-  %form.assign_form
-    %h4
-      Add a Mentee Track
-    #select_box
-      .select_a_mentee{"ng-show" => "!self_track"}
-        %label Select a mentee
-        %select#exerciseSuperCategory{"data-role" => "listview", "ng-change" => "update_mentee()", "ng-model" => "selectMentee", "ng-options" => "user as user.first_name for user in users"}
+.mentoring-tracks__container{"ng-controller" => "MentoringTrackNew"}
+  %form
+    .mentoring-tracks__selection
+      -#%h4
+      -#  Add a Mentee Track
+      .mentoring-tracks__selection__mentee{"ng-show" => "!self_track"}
+        %label Select a Mentee
+        %select{"data-role" => "listview", "ng-change" => "update_mentee()", "ng-model" => "selectMentee", "ng-options" => "user as user.first_name for user in users"}
           %option{:selected => "selected", :value => ""} Select Mentee
-      .select_a_track
-        %label Select a track
+      .mentoring-tracks__selection__track
+        %label Select a Track
         %select{"data-role" => "listview", "ng-change" => "update_mentee_track();showButtons = true;", "ng-model" => "selectTrack", "ng-options" => "track.name for track in tracks"}
           %option{:selected => "selected", :value => ""} Select Track
-      %div
+      .mentoring-tracks__selection__deadline
         %label Deadline
         %input{"ng-change" => "update_mentee_track_deadline()", "ng-model" => "deadline", :type => "date"}/
-    %div{"ng-repeat" => "section in selectTrack.sections track by $index", "section-interactions-new" => ""}
+    .mentoring-tracks__track__sections
+      %div{"ng-repeat" => "section in selectTrack.sections track by $index", "section-interactions-new" => ""}
   %div{"ng-show" => "showButtons"}
-    .add_exercise.add_exercise_btn
-      %a.add_exercise_link{"ng-click" => "add_section()"}
-        %span +
-        Add an exercise
-    .buttons
-      %input.btn.btn-primary.assign_next{"ng-click" => "reset()", :type => "button", :value => "Cancel"}/
-      %input.btn.btn-primary.assign_next{"ng-click" => "confirm_mentee_track()", :type => "submit", :value => "Confirm"}/
+    %a.track__section__new{"ng-click" => "add_section()"}
+      %span +
+      Add an exercise
+    .confirm-track__btns
+      %input.btn--raised{"ng-click" => "confirm_mentee_track()", :type => "submit", :value => "Confirm"}/
+      %input.btn--flat{"ng-click" => "reset()", :type => "button", :value => "Cancel"}/
 
 :javascript
   var MentoringTrackConfig = {
@@ -32,5 +32,6 @@
     sections: #{@sections.to_json},
     current_user: #{@current_user.to_json},
     users: #{@users.to_json},
-    index: #{@index.to_json}
+    index: #{@index.to_json},
+    mentor_requests: #{@mentor_requests.to_json}
   };

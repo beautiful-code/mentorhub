@@ -26,8 +26,12 @@ Rails.application.routes.draw do
   get '/user/:mentee_id', to: 'mentoring_tracks#get_user_data'
 
   get '/organization', to: 'organizations#edit', as: 'edit_organization'
-  get '/organization/invites', to: 'organizations#invite_members', as: 'invite_organization_members'
+  get '/organization/invites', to: 'organizations#invite_members',
+                               as: 'invite_organization_members'
+
   post '/organization/invite', to: 'organizations#invite', as: 'send_invitation'
+  post '/requests', to: 'mentoring_requests#create'
+  put '/requests/:id', to: 'mentoring_requests#update'
 
   root to: 'board#index'
 end

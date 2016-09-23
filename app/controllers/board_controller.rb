@@ -6,7 +6,9 @@ class BoardController < ApplicationController
       mentoring_tracks: current_user_mentoring_tracks,
       learning_tracks: current_user_learning_tracks
     }
-
+    @mentor_requests = current_user.mentor_request.where(
+      state: 'new'
+    )
     respond_to do |format|
       format.html
       format.json { render json: @board_data }
@@ -28,7 +30,9 @@ class BoardController < ApplicationController
       ret[mentee.id] = {
         name: mentee.name,
         avatar_url: mentee.image,
-        learning_tracks: mentee.learning_tracks
+        learning_tracks: mentee.learning_tracks.where(
+          mentor_id: current_user.id
+        )
       }
     end
 
@@ -39,8 +43,8 @@ class BoardController < ApplicationController
     ret = {}
 
     current_user.learning_tracks.each do |l_track|
-      ret[l_track.name] = l_track.as_json
-      ret[l_track.name]['mentor'] = {
+      ret[l_track.id] = l_track.as_json
+      ret[l_track.id]['mentor'] = {
         name: l_track.mentor.name,
         id: l_track.mentor_id,
         avatar_url: l_track.mentor.image

@@ -1,75 +1,106 @@
 <form class="edit_track" enctype="multipart/form-data" ng-show="track.editable">
-  <div class="cover_photo">
-    <div class="logo_track">
-      <input file-model="imageFile" type="file" id="image" class="form-control">
+    <div class="track__profile">
+        <div class="track__logo">
+            <a href="" ng-click="newFileUpload()">
+                <img id="preview_image">
+            </a>
+            <label for="track__logo">change</label>
+            <input file-model="imageFile" type="file" id="track__logo" class="form-control" style="display:none;">
+        </div>
+        <div class="track__name">
+            <input placeholder="Track Name" class="form-control" type="text" id="name" ng-model="track.name">
+            <span class="help-block"></span>
+        </div>
     </div>
-    <div class="content_cover">
-      <div ng-show="track.newRecord">
-        <input type="button" class="create-track btn-primary_action" value="create" ng-click="create_track(track)">
-      </div>
-      <div ng-hide="track.newRecord">
-        <input type="button" class="update-track btn-primary_action" value="Update" ng-click="update_track(track)">
-      </div>
-      <input type="button" class="cancel-edit btn-secondary_action" value="Cancel"  ng-click="cancel_track(track)">
-      <div>
-        <input placeholder="Track Name" class="form-control" type="text" id="name" ng-model="track.name">
-        <span class="help-block"></span>
-        <input placeholder="Track description" class="form-control" type="text" id="desc" ng-model="track.desc">
-        <span class="help-block"></span>
-      </div>
+    <div class="track__content">
+        <div class="track__description">
+            <textarea placeholder="Track description" ng-model="track.desc"></textarea>
+            <span class="help-block"></span>
+        </div>
+        <div>
+            <div ng-show="track.newRecord" class="track__new__create--btn">
+                <input type="button" class="btn--raised" value="create" ng-click="create_track(track)">
+            </div>
+            <input type="button" class="btn--flat" value="Cancel" ng-click="cancel_track(track)">
+        </div>
     </div>
-  </div>
+
 </form>
 
-<!--<div class="cover_photo" ng-hide="track.editable">-->
-  <!--<div class="logo_track">-->
-    <!--<img ng-show="track.image_url" src="{{track.image_url}}" alt="{{ track.name }} logo">-->
-    <!--<img ng-hide="track.image_url" src="{{ track.image.image.url }}" alt="{{ track.name }} logo">-->
-  <!--</div>-->
-  <!--<div class="content_cover">-->
-    <!--<div class="edit-track" ng-if="!track.show_track">-->
-      <!--<input type="button" class="edit-track-btn btn-primary_action" value="Edit Track" ng-click="edit_track(track)">-->
-    <!--</div>-->
-    <!--<h3>{{ track.name }}</h3>-->
-    <!--{{ track.desc }}-->
-
-  <!--</div>-->
-<!--</div>-->
-
-<div class="track__profile">
-  <div class="track__logo">
-    <a href="" ng-click="uploadFile()" >
-      <img ng-show="track.image_url" src="{{track.image_url}}" alt="{{ track.name }} logo">
-      <img ng-hide="track.image_url" src="{{ track.image.image.url }}" alt="{{ track.name }} logo">
-      <label for="image" >change</label>
-      <input file-model="imageFile" type="file" id="image" class="form-control" style="display:none;">
-    </a>
-  </div>
-  <div class="track__name">
-    <div ng-hide="track.name_editable">
-      <h2>{{ track.name }}<a ng-click="edit_name(track)" ><i class="material-icons">edit</i></a></h2>
+<div ng-hide="track.editable">
+    <div class="track__profile">
+        <div class="track__logo">
+            <a href="" ng-click="uploadFile()">
+                <img ng-show="track.image_url" src="{{track.image_url}}" alt="{{ track.name }} logo">
+                <img ng-hide="track.image_url" src="{{ track.image.image.url }}" alt="{{ track.name }} logo">
+            </a>
+            <label for="imageUpload">change</label>
+            <input file-model="imageFile" type="file" id="imageUpload" class="form-control" style="display:none;">
+        </div>
+        <div class="track__name">
+            <div ng-hide="track.name_editable">
+                <h2>{{ track.name }}<a ng-click="edit_name(track)" ><i class="material-icons">edit</i></a></h2>
+            </div>
+            <div ng-show="track.name_editable">
+                <input ng-model="track.name" />
+                <div class="btn-center">
+                    <button ng-click="update_name(track)" class="btn--raised">Save</button>
+                    <button ng-click="cancel_name(track)" class="btn--flat">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="btn--center" ng-if="mentor_request.state == 'new'" ng-repeat="member in members | filter:{id: mentor_request.mentee_id}">
+          <p>Mentor {{member.first_name}}</p>
+          <button class="btn--raised" ng-click="request('accepted')">accept</button>
+          <button class="btn--flat" ng-click="request('rejected')">cancel</button>
+        </div> -->
+        <div class="btn--center" ng-if="current_user">
+            <button class="btn--raised" data-toggle="modal" data-target="#myModal">Enroll</button>
+        </div>
     </div>
-    <div ng-show="track.name_editable">
-      <input ng-model="track.name"/>
-      <div class="btn-center">
-      <button ng-click="update_name(track)" class="btn--raised">Save</button>
-      <button ng-click="cancel_name(track)" class="btn--flat">Cancel</button>
-      </div>
+
+    <div class="track__content">
+        <div class="track__description">
+            <h3 class="heading">About the track</h3>
+            <div ng-hide="track.description_editable">
+                <p>{{ track.desc }}</p>
+                <a ng-click="edit_desc(track)"><i class="material-icons">edit</i></a>
+            </div>
+            <div ng-show="track.description_editable">
+                <textarea ng-model="track.desc"></textarea>
+                <button ng-click="update_desc(track)" class="btn--raised">Save</button>
+                <button ng-click="cancel_desc(track)" class="btn--flat">Cancel</button>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="enroll-as">
+                        <h3 class="heading">Enroll as</h3>
+                        <input type="radio" name="enroll-as" value="mentor" id="enroll-as--mentor" ng-model="type"><label for="enroll-as--mentor">Mentor</label>
+                        <input type="radio" name="enroll-as" value="mentee" id="enroll-as--mentee" ng-model="type"><label for="enroll-as--mentee">Mentee</label>
+                        <input type="radio" name="enroll-as" value="self-track" id="enroll-as--self" ng-model="type"><label for="enroll-as--self">Self-track</label>
+                    </div>
+                    <div class="selection__board" ng-if="type && type != 'self-track'">
+                      <h3 class="heading">Select your {{type == 'mentor' ? 'Mentee' : 'Mentor'}}</h3>
+                      <div for="" class="selection__board__usr" ng-repeat="member in members">
+                        <input type="radio" ng-model="$parent.$parent.person" name="name" id="{{member}}" value="{{member}}"/>
+                        <label for="{{member}}">{{member.first_name}}</label>
+                      </div>
+                    </div>
+                    <div class="track__deadline--date" ng-if="type && type != 'mentee'">
+                        <h3 class="heading">Deadline to complete</h3>
+                        <input type="date" ng-model="$parent.deadline">
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn--flat" ng-click="onSubmit(type, track.id, deadline, person)">Submit</button>
+                    <button type="button" class="btn--flat" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="track__content">
-  <div class="track__description">
-    <h3 class="heading">About the track</h3>
-    <div ng-hide="track.description_editable">
-      <p>{{ track.desc }}</p>
-      <a ng-click="edit_desc(track)"><i class="material-icons">edit</i></a>
-    </div>
-    <div ng-show="track.description_editable">
-      <textarea ng-model="track.desc"></textarea>
-      <button ng-click="update_desc(track)" class="btn--raised">Save</button>
-      <button ng-click="cancel_desc(track)" class="btn--flat">Cancel</button>
-    </div>
-  </div>
-</div>
-
