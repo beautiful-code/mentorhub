@@ -28,7 +28,7 @@ angular.module("mentorhub.mentoring_tracks", [])
             }).indexOf(mentorRequest.track_template_id);
             var track = $scope.tracks[track_index];
 
-            $scope.data.push({mentorRequest, mentee, track});
+            $scope.data.push({mentorRequest: mentorRequest, mentee: mentee, track: track});
           });
         };
 
