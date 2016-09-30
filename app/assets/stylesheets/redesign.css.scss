@@ -15,7 +15,7 @@ body {
     box-shadow: 0 0 2px rgba(0, 0, 0, .2);
 
     .board-subnav-links {
-        width: 800px;
+        width: 790px;
         height: 42px;
         margin: 0 auto;
 
@@ -304,7 +304,13 @@ body {
         }
     }
 }
-
+#section__to-dos__redo-icon{
+  font-size: 15px ;
+  font-size: 600;
+  
+  vertical-align: middle;
+  cursor: pointer;
+}
 .checkbox {
     width: 14px;
     height: 14px;
@@ -345,12 +351,12 @@ body {
 }
 .mentoring-tracks__container{
   position: relative;
+  margin: auto;
   margin-top: 16px;
-
 }
 .mentoring-tracks__selection{
-  width: 680px;
   display: block;
+  width: 680px;
   margin: auto;
   padding: 16px;
   margin-bottom: 4px;
@@ -396,11 +402,22 @@ body {
     border-radius: 2px;
   }
 }
-.mentoring-tracks__btns{
+.dashboard__heading{
+  font-size: 20px;
+  color: #888888;
+  width: 680px;
+  display: block;
+  margin: auto;
+  margin-top: 16px;
+  margin-bottom: 6px;
+
+}
+.dashboard__heading__line{
+  margin: 0;
+  border-bottom: 1px solid #c5c7c9;
   width: 680px;
   margin: auto;
-  display: block;
-  margin-top: 16px;
+  margin-bottom: 4px;
 }
 .mentoring-tracks__track__sections{
   max-width: 720px;
@@ -420,8 +437,8 @@ body {
   background-color: white;
   border-radius: 3px;
   margin: auto;
-  padding: 16px;
-  margin-top: 16px;
+  padding: 0 16px;
+
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.23);
   h2{
     text-align: center;
@@ -432,7 +449,7 @@ body {
     border-bottom: 1px solid #eeeeee;
   }
   .mentoring-tracks__request-each{
-
+    width: 680px;
   display: block;
   margin: auto;
   border-bottom: 1px solid #eeeeee;

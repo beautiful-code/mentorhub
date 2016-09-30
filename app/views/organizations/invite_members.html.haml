@@ -10,10 +10,13 @@
       %div.members{"ng-show" => "!invite"}
         %h2.org-signup__heading Members of the Organization
         %div.org__member{"ng-repeat" => "user in users"}
-          %img{"data-name" => "{{user.first_name}}", "data-height" => "42","data-width" => "42","data-font-size" => "20", "data-char-count" => "2","data-font-weight" => "400" , "class" => "profile initialjs-avatar"}
+          %img{"data-name" => "{{user.first_name}}", "data-height" => "30","data-width" => "30","data-font-size" => "12", "data-char-count" => "2","data-font-weight" => "400" , "class" => "profile initialjs-avatar"}
           %div.user
             %p.user__name {{user.first_name}} {{user.last_name}}
-            %p.user__email {{user.email}}
+            -#%p.user__email {{user.email}}
+        %a.org__invite-members{"ng-click" => "invite = true"}
+          %i.material-icons add_circle
+          %label Invite members
       %div.invites{"ng-show" => "invite"}
         %h2.org-signup__heading{"ng-if" => "invite"}  Invite your organisation members
         .search__name
@@ -31,4 +34,3 @@
     contacts: #{@contacts.to_json},
     users:    #{@users.to_json}
   };
-
