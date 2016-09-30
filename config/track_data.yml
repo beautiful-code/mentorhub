@@ -1,21 +1,41 @@
 ---
 track_data:
-  name: Default Track
-  type: ExerciseTrackTemplate
-  desc: Guide to mentorhub
+  name: "Internet 101"
+  type: "ExerciseTrackTemplate"
+  desc: "Learn how the internet works - everything from WiFI and IP addresses to cybersecurity and crime."
 sections_data:
-- title: Section 1
-  content: section content 1
+- title: "What is internet?"
+  content: "Internet!!??"
   resources:
-  - text: Video (3:33 to 8:35)
-    url: www.youtube.com/watch?v=Y9XZQO1n_7c
-  - text: Exercise files
-    url: 'drive.google.com/folderview?id=0B1PtuCWpbEdodnV1M3pTZUhHUWM&usp=sharing '
-- title: Section 1
-  content: section content 1
+  - text: "What is internet?"
+    url: www.youtube.com/watch?v=Dxcc6ycZ73M
+- title: "Wires, cables and WiFi"
+  content: "Go through the resources to learn how the physical infrastructure of the internet moves information and answer which is better of all."
   resources:
-  - text: Video (3:33 to 8:35)
-    url: www.youtube.com/watch?v=Y9XZQO1n_7c
-  - text: Exercise files
-    url: 'drive.google.com/folderview?id=0B1PtuCWpbEdodnV1M3pTZUhHUWM&usp=sharing '
-
+  - text: "The Internet: Wires, Cables & Wifi"
+    url: www.youtube.com/watch?v=ZhEf7e4kopM
+- title: "IP addresses and DNS"
+  content: "Learn how networks talk to each other using resources.Are ip addresses permanent for a machine? Why ? Submit your answer."
+  resources:
+  - text: "The Internet: IP Addresses and DNS"
+    url: www.youtube.com/watch?v=5o8CwafCxnU
+- title: "Packet, routers and reliability"
+  content: "Learn how networks talk to each other using resources. Are ip addresses permanent for a machine? Why ? Submit your answer."
+  resources:
+  - text: "The Internet: Packets, Routing and Reliability"
+    url: www.youtube.com/watch?v=AYdF7b3nMto
+- title: "HTTP and HTML"
+  content: "Learn how webpages are sent and recieved. And answer how does this work?"
+  resources:
+  - text: "The Internet: HTTP and HTML"
+    url: www.youtube.com/watch?v=kBXQZMmiA4s
+- title: "Encryption and public keys"
+  content: "Learn how cryptography allows for a secure transfer of data online. Answer how banks use cryptography."
+  resources:
+  - text: "The Internet: Encryption & Public Keys"
+    url: www.youtube.com/watch?v=ZghMPWGXexs
+- title: "Cybersecurity and Crime."
+  content: "Know the common types of crimes in the internet world. Explain the various crimes that can happen in internet."
+  resources:
+  - text: "The Internet: Cybersecurity & Crime"
+    url: www.youtube.com/watch?v=AuYNXgO_f3Y

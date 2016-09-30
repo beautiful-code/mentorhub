@@ -32,7 +32,7 @@
 
             <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && checkMenteeTodosStatus(sectionInteraction) && sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'feedback_captured'">
                 Your mentee {{ user_mentee_tracks[track.mentee_id].name | capitalize }} has completed all the tasks
-                <span class="mark-complete" ng-click="sectionStatus(id, track, sectionInteraction)">MARK AS COMPLETE</span>
+                <span class="mark-complete btn--raised" ng-click="sectionStatus(id, track, sectionInteraction)">MARK AS COMPLETE</span>
             </div>
 
             <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'section_completed' || sectionInteraction.state == 'feedback_captured'">
@@ -46,7 +46,7 @@
 
             <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.state != 'new' && sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'feedback_captured'">
                 Please review the submitted exercise.
-                <span class="mark-complete" ng-click="sectionStatus(id, track, sectionInteraction)">MARK AS COMPLETE</span>
+                <span class="mark-complete btn--raised" ng-click="sectionStatus(id, track, sectionInteraction)">MARK AS COMPLETE</span>
             </div>
 
             <div class="section-exercise">

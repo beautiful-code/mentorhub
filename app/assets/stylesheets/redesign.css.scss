@@ -226,11 +226,12 @@ body {
     }
 
     .mark-complete {
-        float: right;
-        margin-right: 10px;
-        cursor: pointer;
-        color: green;
-        font-weight: bold;
+      position: relative;
+      float: right;
+      top: -4px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 10px;
     }
 
     .section-exercise {
@@ -307,7 +308,7 @@ body {
 #section__to-dos__redo-icon{
   font-size: 15px ;
   font-size: 600;
-  
+
   vertical-align: middle;
   cursor: pointer;
 }
