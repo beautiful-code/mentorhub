@@ -3,13 +3,13 @@
     =image_tag "mentorhub_logo.png"
   %div{"ng-controller" => "OrganizationController"}
     %div.org-signup__box
-      %h2.org-signup__heading Create an Account
+      %h2.org-signup__heading Setting up organization
       %div.org-signup__input
         %label Name
         %input{"ng-model" => "current_user.first_name", :disabled => "disabled"}
       %div.org-signup__input
         %label Company
-        %input{"ng-model" => "organization.name"}
+        %input{"ng-model" => "organization.name", "autofocus" => "autofocus"}
       %div.org-signup__input
         %label Email
         %input{"ng-model" => "current_user.email", :disabled => "disabled"}

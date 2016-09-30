@@ -12,6 +12,7 @@ class SectionInteraction < ApplicationRecord
   }
 
   serialize :resources, Array
+  after_commit :section_interaction_bot, on: [:update]
 
   after_update_commit { TrackBroadcastJob.perform_later(self.track) }
 
@@ -78,5 +79,16 @@ class SectionInteraction < ApplicationRecord
 
   def set_state_to_review_pending
     self.state = 'review_pending'
+  end
+
+  def section_interaction_bot
+    if self.track.mentor.email.split("@")[0] == "bot"
+      if self.todos.length == 0
+        options = YAML.load(File.open('config/todo_data.yml'))
+        options['section_one'].each do |todo|
+          self.todos.create!(content: todo['content'])
+        end
+      end
+    end
   end
 end

@@ -11,6 +11,7 @@ class Todo < ApplicationRecord
 
   after_commit :broadcast_track, on: [:create, :update, :destroy]
   after_commit :update_section_interaction_state, on: [:update, :destroy]
+  after_commit :todo_bot, on: [:update]
 
   delegate :track, to: :section_interaction, allow_nil: true
 
@@ -51,4 +52,12 @@ class Todo < ApplicationRecord
       section_interaction.pending_review
     end
   end
+
+  def todo_bot
+    if self.section_interaction.track.mentor.email.split("@")[0] == "bot"
+      sleep(1.seconds)
+      self.update(state: "completed") if self.state == "to_be_reviewed"
+    end
+  end
+
 end

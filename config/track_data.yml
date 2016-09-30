@@ -11,8 +11,8 @@ sections_data:
     url: www.youtube.com/watch?v=Y9XZQO1n_7c
   - text: Exercise files
     url: 'drive.google.com/folderview?id=0B1PtuCWpbEdodnV1M3pTZUhHUWM&usp=sharing '
-- title: Section 1
-  content: section content 1
+- title: Section 2
+  content: section content 2
   resources:
   - text: Video (3:33 to 8:35)
     url: www.youtube.com/watch?v=Y9XZQO1n_7c

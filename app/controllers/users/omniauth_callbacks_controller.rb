@@ -24,7 +24,11 @@ module Users
         create_organization_and_track(@user, company_domain)
         sign_in @user, event: :authentication
         flash[:notice] = 'Successfully created your organization.'
-        redirect_to edit_organization_path
+        if @user.organization.users.count != 2
+          redirect_to invite_organization_members_path
+        else
+          redirect_to edit_organization_path
+        end
       end
     end
 
