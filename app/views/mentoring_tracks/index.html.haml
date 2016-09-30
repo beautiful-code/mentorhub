@@ -1,6 +1,7 @@
 %div{"ng-controller" => "MentoringTracksController"}
+  %h2.dashboard__heading Mentee requests
+  %hr.dashboard__heading__line
   .mentoring-tracks__request-all{"ng-if" => "data.length>0" }
-    %h2 Mentee requests
     .mentoring-tracks__request-each{"ng-repeat" => "requestData in data", "ng-if" => "requestData.mentorRequest.state == 'new'"}
       %p
         %span {{requestData.mentee.first_name }}
@@ -9,10 +10,14 @@
       .mentoring-tracks__request-each__btns
         %button.btn--raised{"ng-click" => "request('accepted', $index)"} accept
         %button.btn--flat{"ng-click" => "request('rejected', $index)"} cancel
-  .mentoring-tracks__btns
-    %a.btn--raised{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(false)" } start mentoring
-    %a.btn--raised{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(true)"} start learning
   .tracks-index
+    %h2.dashboard__heading Learning tracks
+    %hr.dashboard__heading__line
+    %a.btn--raised{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(true)"} Self learn
+  .tracks-index
+    %h2.dashboard__heading Mentoring tracks
+    %hr.dashboard__heading__line
+    %a.btn--raised{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(false)" } start mentoring
     %div{"ng-show" => "tracks.length>0"}
       %div{"ng-repeat" => "track in mentoringTracks track by $index"}
         %a{:href => "/mentoring_tracks/{{track.id}}"}

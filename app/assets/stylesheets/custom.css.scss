@@ -6,11 +6,8 @@ $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
 $green: #598D09;
-* {
-    margin: 0;
-    padding: 0;
-}
-html,
+
+
 body {
     font-size: 14px;
     font-family: "Open Sans";
@@ -27,16 +24,6 @@ body {
     background: rgba(5, 106, 178, 0.51);
     font-size: 11px;
 }
-/*
- *h5{
- *  text-transform:uppercase;
- *  margin:0;
- *  margin-bottom:10px;
- *  font-size:10px;
- *  color:$secondary;
- *}
- */
-
 .mentoring_tracks {
     border: 1px solid #D5D6D9;
     padding: 20px;
@@ -44,31 +31,10 @@ body {
     border-radius: 3px;
     margin: 30px;
 }
-.tracks,
-.add_button {
-    display: inline-block;
-}
-.add_button {
-    margin: 30px;
-}
-.tracks {
-    width: 90%;
-}
-.track_name {
-    color: #495056;
-    font-size: 25px;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-.adding_track {
-    padding: 8px;
-    border: 1px solid #D5D6D9;
-    background: #056AB2;
-    color: white;
-}
+
 .bread_crumbs {
     padding-top: 8px;
-    width: 60%;
+    width: 680px;
     display: block;
     margin: 0 auto;
     height: 30px;
@@ -129,152 +95,8 @@ body {
 }
 /* error-alert style ends here */
 
-.track_list {
-    .track_card {
-        position: relative;
-        width: 60%;
-        margin: 0 20%;
-        border: 1px solid $border;
-        border-radius: 3px;
-        background-color: white;
-        height: 180px;
-        margin-top: 10px;
-        .logo_track {
-            background-color: rgba(5, 106, 176, 0.1);
-            display: inline-block;
-            width: 180px;
-            height: 180px;
-            img {
-                width: 90px;
-                height: 90px;
-                margin: 45px;
-            }
-        }
-        .content_track {
-            position: relative;
-            vertical-align: top;
-            padding: 16px;
-            display: inline-block;
-            width: calc( 100% - 181px);
-            height: 180px;
-            margin-left: -4px;
-            color: $text;
-            box-sizing: border-box;
-            h3 {
-                margin: 0;
-                font-size: 30px;
-            }
-            p {
-                margin-top: 10px;
-                font-size: 14px;
-            }
-            h4 {
-                margin: 0;
-                text-transform: uppercase;
-                font-size: 10px;
-                color: $secondary;
-            }
-            .exercise_bottom {
-                position: absolute;
-                bottom: 16px;
-                left: 16px;
-            }
-            .details {
-                margin-top: 24px;
-                display: block;
-                margin-bottom: 24px;
-                .mentee_name, .mentee_deadline {
-                    display: inline-block;
-                    p {
-                        margin-top: 2px;
-                    }
-                }
-                .mentee_name {
-                    float: right;
-                }
-            }
-        }
-    }
-}
-.track_list_btn {
-    // float: right;
-    margin-top: 10px;
-    margin-right: 52px;
-}
-.progress,
-.progress_bar {
-    height: 12px;
-}
-.progress_bar {
-    background-color: $green;
-    border-radius: 3px;
-}
-input[type="button"].btn-primary_action {
-    vertical-align: top;
-    height: 30px;
-    border: none;
-    line-height: 15px;
-    padding: 6px 10px;
-    border-radius: 3px;
-    color: white;
-    font-size: 14px;
-    background-color: $primary;
-    a {
-        color: white;
-        font-size: 14px;
-    }
-}
-input[type="button"].btn-secondary_action {
-    vertical-align: top;
-    height: 30px;
-    line-height: 15px;
-    padding: 6px 10px;
-    border: 1px solid $primary;
-    border-radius: 3px;
-    color: $primary;
-    font-size: 14px;
-    background-color: white;
-}
-.section_each {
-    display: block;
-    margin: 0 auto;
-    margin-top: 10px;
-    background-color: white;
-    border: 1px solid $border;
-    border-radius: 3px;
-    padding: 16px;
-    .exercise_name {
-        margin: 0;
-        font-size: 24px;
-        margin-bottom: 10px;
-        i {
-            display: inline-block;
-            color: $secondary;
-        }
-        h3 {
-            margin: 0;
-            display: inline-block;
-        }
-        a {
-            color: $text;
-        }
-    }
-    .exercise_description {
-        font-size: 14px;
-        margin: 0;
-        margin-bottom: 10px;
-    }
-    .section_resources {
-        border: 1px solid $border;
-        border-radius: 3px;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-left: 4px solid $primary;
-        a {
-            color: $primary;
-        }
-    }
-}
+
+
 .alert {
     text-align: center;
     width: 400px;
@@ -420,4 +242,52 @@ input[type="button"].btn-secondary_action {
 
 .error{
  border:1px solid red !important;
+}
+.btn--raised {
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    text-decoration: none;
+    color: #fff !important;
+    font-size: 12px;
+    background-color: #1B68C5;
+    text-align: center;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 2px;
+    height: 28px;
+    line-height: 28px;
+    font-weight: 500;
+    padding: 0 14px;
+    text-transform: uppercase;
+    margin-right: 4px;
+    margin-left: 0;
+}
+.btn--raised:focus{
+  outline: none;
+}
+
+.btn--flat {
+    color: #1B68C5;
+    background-color: transparent;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    display: inline-block;
+    height: 28px;
+    padding: 0 14px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 28px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+    margin-right: 4px;
+    margin-left: 4px;
+}
+
+.btn--raised:hover {
+    text-decoration: none;
+    color: white;
 }

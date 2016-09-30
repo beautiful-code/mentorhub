@@ -1,31 +1,34 @@
 - board_view ||= false
 
 %header
-  = link_to root_path, class: 'navbarbrand' do
-    = image_tag "mentorhub_logo.png", class: 'mhlogo'
+  = link_to root_path, class: 'navbar__org' do
     -if current_user
-      %label.org-name for #{current_user.organization.name}
+      %label.org-name  #{current_user.organization.name}
+    -else
+      = image_tag "mentorhub_logo.png", class: 'mhlogo'  
+
+
 
   .header__wrapper
     - if user_signed_in?
       - if board_view
         .menu{"ng-model" => "active_tab"}
           .menu__item{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
-            %a{:href => ""} Your Tracks
+            %a{:href => ""} Learning tracks
             %span.notification-dot{"ng-if" => "actionTodoForMyTracks()"}
           .menu__item{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks')"}
-            %a{:href => ""} Your Mentee Tracks
+            %a{:href => ""} Mentoring tracks
             %span.notification-dot{"ng-if" => "actionTodoForMyMenteeTracks()"}
           .menu__item{class: active_class(c: ['tracks'])}
-            %a{:href => "/track_templates"} Library
+            %a{:href => "/track_templates"} All tracks
       - else
         .menu
           .menu__item
-            %a{:href => "", :class => "user_tracks"} Your Tracks
+            %a{:href => "", :class => "user_tracks"} Learning tracks
           .menu__item
-            %a{:href => "", :class => "user_mentee_tracks"} Your Mentee Tracks
+            %a{:href => "", :class => "user_mentee_tracks"} Mentoring tracks
           .menu__item
-            %a{:href => "/track_templates", :class => "tracks", :style => "display: inline;", class: track_template_active_class(c: ['track_templates'])} Library
+            %a{:href => "/track_templates", :class => "tracks", :style => "display: inline;", class: track_template_active_class(c: ['track_templates'])} All tracks
 
 
       - if user_signed_in?
@@ -39,7 +42,7 @@
             %i.material-icons arrow_drop_down
             %ul
               %li
-                =link_to "Mentees Tracks", mentoring_tracks_path, class: active_class(c:  ['mentoring_tracks'])
+                =link_to "Dashboard", mentoring_tracks_path, class: active_class(c:  ['mentoring_tracks'])
                 %span.notification-dot{"ng-if" => "notificationForNewMenteeRequests()"}
               %li= link_to current_user.email.split('@')[1].split('.')[0], invite_organization_members_path
               %hr

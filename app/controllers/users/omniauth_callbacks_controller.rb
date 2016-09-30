@@ -22,13 +22,18 @@ module Users
         sign_in_and_redirect @user, event: :authentication
       else
         create_organization_and_track(@user, company_domain)
-        sign_in @user, event: :authentication
-        flash[:notice] = 'Successfully created your organization.'
-        if @user.organization.users.count != 2
-          redirect_to invite_organization_members_path
-        else
-          redirect_to edit_organization_path
-        end
+
+        log_user_and_redirect @user
+      end
+    end
+
+    def log_user_and_redirect(user)
+      sign_in user, event: :authentication
+      flash[:notice] = 'Successfully created your organization.'
+      if user.organization.users.count != 2
+        redirect_to invite_organization_members_path
+      else
+        redirect_to edit_organization_path
       end
     end
 
@@ -61,7 +66,7 @@ module Users
         image: track_template.image,
         mentee_id: user.id,
         track_template_id: track_template.id,
-        deadline: Time.now + 2.days,
+        deadline: Time.now.getlocal + 2.days,
         type: track_template.type.gsub('Template', '')
       )
     end

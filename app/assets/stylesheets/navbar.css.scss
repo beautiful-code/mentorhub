@@ -3,6 +3,7 @@ $border: #c5c7c9;
 $primary: #056ab2;
 $text: #333333;
 $secondary: #888888;
+
 header {
     height: 52px;
     background-color: #354051;
@@ -10,15 +11,17 @@ header {
     display: flex;
     align-items: center;
 }
+
 .header__wrapper {
     display: flex;
-    width: 900px;
+    width: 790px;
     height: 52px;
     margin: auto;
     align-items: center;
     justify-content: space-between;
 }
-.navbarbrand {
+.navbar__org{
+  position: absolute;
   display: flex;
   align-items: baseline;
   text-decoration: none !important;
@@ -33,9 +36,11 @@ header {
       position: relative;
   }
   .org-name{
-    font-size: 12px;
-    font-weight: 400;
-    margin-left: 4px;
+    width: 120px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 22px;
+    margin: 15px 0;
   }
 }
 .userProfile {
