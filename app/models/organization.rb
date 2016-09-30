@@ -1,8 +1,8 @@
 class Organization < ApplicationRecord
   after_create :create_bot
 
-  has_many :users
-  has_many :track_templates
+  has_many :users, :dependent => :destroy
+  has_many :track_templates, :dependent => :destroy
 
   validates :name, presence: true
   validates :email_domain, presence: true

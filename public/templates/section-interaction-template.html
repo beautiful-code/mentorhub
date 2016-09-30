@@ -1,129 +1,129 @@
 <div class="track__content section">
-    <div ng-if="section.editable == false">
-        <div class="track__section" data-section-id="{{section.id}}">
-            <div class="track__section__crud">
-                <a ng-click="section.editable = true;" class="edit-icon">
-                    <i class="material-icons">mode_edit</i>
-                </a>
-                <span ng-if="$parent.$parent.selectedIndex == $index">
-                  <a class="edit-section" ng-click="edit_section(section)">
-                    <i class="material-icons">edit</i>
-                  </a>
-                  <a class="delete-section" ng-click="delete_section($index, track, section)">
-                    <i class="material-icons">delete</i>
-                  </a>
-                </span>
-                <div class="toggle__btn">
-                    <input class="toggle--input hidden" type="checkbox" id="cb{{section.id}}" ng-checked="section.enabled" ng-click="checkBox($event, section)" />
-                    <label for="cb{{section.id}}" class="toggle--label"></label>
-                </div>
-            </div>
-            <div class="track__section__exercise">
-                <h3 class="heading">Exercise</h3>
-                <h2>{{section.title}}</h2>
-                <p>{{ section.content }}</p>
-            </div>
-            <div class="track__section__resources">
-                <h3 class="heading">Resources</h3>
-                <div ng-repeat="resource in section.resources">
-                    <div ng-if="resource.url">
-                        <a target="_blank" href="//{{ resource.url }}">{{ resource.text }}</a>
-                    </div>
-                    <div ng-if="!(resource.url)">
-                        <p>{{ resource.text }}</p>
-                    </div>
-                </div>
-                <div ng-hide="section.resources.length">
-                    <p>No Resources</p>
-                </div>
-            </div>
-            <div ng-if="!section.newSectionInteraction">
-                <div ng-if="section.state != 'new'" class="section-todos ">
-                    <h3 class="heading">Tasks Todo</h4>
-                    <ul>
-                        <li class="tasks" ng-repeat="todo in section.todos">
-                            <div class="tasks__each">
-                                <div class="tasks__each__content" ng-if="!todo.edit">
-                                  <div>
-                                    <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(section, todo)" ng-class="todo.state" aria-hidden="true">check_box_outline_blank</i>
-                                    <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(section, todo, true)" ng-if="todo.state == 'to_be_reviewed'">cancel</i> {{ todo.content }}
-                                </div>
-                                <input ng-if="todo.edit" class="section-input" ng-model="todo.content" value="{{ todo.content }}">
-                            </div>
-                            <div class="tasks__each__edit-icons" ng-if="section.state != 'section_completed'">
-                                <div ng-if="!todo.edit">
-                                    <i class="material-icons " ng-click="todo.edit = true;">mode_edit</i>
-                                    <i class="material-icons edit-icons" ng-click="sectionInteractionServices.delete_task(section, todo)">delete</i>
-                                </div>
-                                <div ng-if="todo.edit">
-                                    <i class="material-icons edit-icons" ng-click="todo.edit = false;">clear</i>
-                                    <i class="material-icons edit-icons" ng-click="sectionInteractionServices.update_task(section, todo)">done</i>
-                                </div>
-                            </div>
-                          </div>
-                        </li>
-                        <li  ng-if="section.state != 'section_completed'">
-                            <div class="section-todos-add">
-                                <i class="material-icons">add</i>
-                                <input placeholder="Add task" class="section-input" type="text" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(sectionInteraction, todo) : 0">
-                                <div class="btn--flat" ng-click="sectionInteractionServices.add_task(sectionInteraction, todo)">Add</button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+  <div ng-if="section.editable == false">
+    <div class="track__section" data-section-id="{{section.id}}">
+      <div class="track__section__crud">
+        <a ng-click="section.editable = true;" class="edit-icon">
+          <i class="material-icons">mode_edit</i>
+        </a>
+        <span ng-if="$parent.$parent.selectedIndex == $index">
+          <a class="edit-section" ng-click="edit_section(section)">
+            <i class="material-icons">edit</i>
+          </a>
+          <a class="delete-section" ng-click="delete_section($index, track, section)">
+            <i class="material-icons">delete</i>
+          </a>
+        </span>
+        <div class="toggle__btn">
+          <input class="toggle--input hidden" type="checkbox" id="cb{{section.id}}" ng-checked="section.enabled" ng-click="checkBox($event, section)" />
+          <label for="cb{{section.id}}" class="toggle--label"></label>
         </div>
+      </div>
+      <div class="track__section__exercise">
+        <h3 class="heading">Exercise</h3>
+        <h2>{{section.title}}</h2>
+        <p>{{ section.content }}</p>
+      </div>
+      <div class="track__section__resources">
+        <h3 class="heading">Resources</h3>
+        <div ng-repeat="resource in section.resources">
+          <div ng-if="resource.url">
+            <a target="_blank" href="//{{ resource.url }}">{{ resource.text }}</a>
+          </div>
+          <div ng-if="!(resource.url)">
+            <p>{{ resource.text }}</p>
+          </div>
+        </div>
+        <div ng-hide="section.resources.length">
+          <p>No Resources</p>
+        </div>
+      </div>
+      <div ng-if="!section.newSectionInteraction">
+        <div ng-if="section.state != 'new'" class="section-todos ">
+          <h3 class="heading">Tasks Todo</h4>
+          <ul>
+            <li class="tasks" ng-repeat="todo in section.todos">
+              <div class="tasks__each">
+                <div class="tasks__each__content" ng-if="!todo.edit">
+                  <div>
+                    <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(section, todo)" ng-class="todo.state" aria-hidden="true">check_box_outline_blank</i>
+                    <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(section, todo, true)" ng-if="todo.state == 'to_be_reviewed'">cancel</i> {{ todo.content }}
+                  </div>
+                  <input ng-if="todo.edit" class="section-input" ng-model="todo.content" value="{{ todo.content }}">
+                </div>
+                <div class="tasks__each__edit-icons" ng-if="section.state != 'section_completed'">
+                  <div ng-if="!todo.edit">
+                    <i class="material-icons " ng-click="todo.edit = true;">mode_edit</i>
+                    <i class="material-icons edit-icons" ng-click="sectionInteractionServices.delete_task(section, todo)">delete</i>
+                  </div>
+                  <div ng-if="todo.edit">
+                    <i class="material-icons edit-icons" ng-click="todo.edit = false;">clear</i>
+                    <i class="material-icons edit-icons" ng-click="sectionInteractionServices.update_task(section, todo)">done</i>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li  ng-if="section.state != 'section_completed'">
+              <div class="section-todos-add">
+                <i class="material-icons">add</i>
+                <input placeholder="Add task" class="section-input" type="text" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(sectionInteraction, todo) : 0">
+                <div class="btn--flat" ng-click="sectionInteractionServices.add_task(sectionInteraction, todo)">Add</button>
+                </div>
+            </li>
+          </ul>
+              </div>
+        </div>
+      </div>
     </div>
 
-</div>
+  </div>
 
-<div ng-show="section.editable">
+  <div ng-show="section.editable">
     <div class="section__edit">
-        <form>
-            <div class="section__edit__exercise">
-                <h3 class="heading">Exercise</h3>
-                <div class="exercise__name">
-                    <label for="title">Name</label>
-                    <input id="title" type="text" name="title" ng-model="section.title">
-                    <span class="help-block"></span>
-                </div>
-                <div class="exercise__description">
-                    <label for="content">Description</label>
-                    <textarea rows="5" name="content" class="form-control" id="content" ng-model="section.content">{{ section.content }}</textarea>
-                    <span class="help-block"></span>
-                </div>
-            </div>
-            <div class="section__edit__resources">
-                <h3 class="heading">Resources</h3>
-                <div class="form-inline" ng-repeat="resource in section.resources track by $index">
-                    <input placeholder="Text" type="text" class="text res_field" ng-model="resource.text">
-                    <input placeholder="URL" type="text" class="url res_field" ng-model="resource.url">
-                    <button type="button" class="btn--remove" ng-click="track.sections[$parent.$index].resources.splice($index,1);">
-                        <i class="material-icons">delete</i>
-                    </button>
-                </div>
-                <button class="btn--add" id="add_field" type="button" ng-click="addResource($index)">
-                    + Add A Resource
-                </button>
-            </div>
-            <div class="section__crud" ng-if="track">
-                <div ng-if="section.newRecord" style="display: inline;">
-                    <input type="button" class="btn--raised" value="Create" ng-click="create_section(track, section, $event)">
-                </div>
-                <div ng-if="section.newRecord == false" style="display: inline;">
-                    <input type="button" class="btn--raised" value="Update" ng-click="update_section(track, section)">
-                </div>
-                <input type="button" class="btn--flat" value="Cancel" ng-click="cancel_section(section,$index)">
-            </div>
-            <div class="section__crud" ng-if="!track">
-                <div ng-if="section.newRecord" style="display: inline;">
-                    <input type="button" class="btn--raised" value="Create" ng-click="create_section(section)">
-                </div>
-                <div ng-if="section.newRecord == false" style="display: inline;">
-                    <input type="button" class="btn--raised" value="Update" ng-click="update_section(section)">
-                </div>
-                <input type="button" class="btn--flat" value="Cancel" ng-click="cancel_section(section,$index)">
-            </div>
-        </form>
+      <form>
+        <div class="section__edit__exercise">
+          <h3 class="heading">Exercise</h3>
+          <div class="exercise__name">
+            <label for="title">Name</label>
+            <input id="title" type="text" name="title" ng-model="section.title">
+            <span class="help-block"></span>
+          </div>
+          <div class="exercise__description">
+            <label for="content">Description</label>
+            <textarea rows="5" name="content" class="form-control" id="content" ng-model="section.content">{{ section.content }}</textarea>
+            <span class="help-block"></span>
+          </div>
+        </div>
+        <div class="section__edit__resources">
+          <h3 class="heading">Resources</h3>
+          <div class="form-inline" ng-repeat="resource in section.resources track by $index">
+            <input placeholder="Text" type="text" class="text res_field" ng-model="resource.text">
+            <input placeholder="URL" type="text" class="url res_field" ng-model="resource.url">
+            <button type="button" class="btn--remove" ng-click="track.sections[$parent.$index].resources.splice($index,1);">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+          <button class="btn--add" id="add_field" type="button" ng-click="addResource($index)">
+            + Add A Resource
+          </button>
+        </div>
+        <div class="section__crud" ng-if="track">
+          <div ng-if="section.newRecord" style="display: inline;">
+            <input type="button" class="btn--raised" value="Create" ng-click="create_section(track, section, $event)">
+          </div>
+          <div ng-if="section.newRecord == false" style="display: inline;">
+            <input type="button" class="btn--raised" value="Update" ng-click="update_section(track, section)">
+          </div>
+          <input type="button" class="btn--flat" value="Cancel" ng-click="cancel_section(section,$index)">
+        </div>
+        <div class="section__crud" ng-if="!track">
+          <div ng-if="section.newRecord" style="display: inline;">
+            <input type="button" class="btn--raised" value="Create" ng-click="create_section(section)">
+          </div>
+          <div ng-if="section.newRecord == false" style="display: inline;">
+            <input type="button" class="btn--raised" value="Update" ng-click="update_section(section)">
+          </div>
+          <input type="button" class="btn--flat" value="Cancel" ng-click="cancel_section(section,$index)">
+        </div>
+      </form>
     </div>
-</div>
+  </div>
