@@ -14,6 +14,24 @@
     %h2.dashboard__heading Learning tracks
     %hr.dashboard__heading__line
     %a.btn--raised{:href => "/mentoring_tracks/new", :type => "button", "ng-click" => "self_track(true)"} Self learn
+    %div{"ng-show" => "tracks.length>0"}
+      %div{"ng-repeat" => "track in learningTracks track by $index"}
+        %a{:href => "/mentoring_tracks/{{track.id}}"}
+          .track-each
+            .track-each__logo
+              %img{:alt => "{{track.name}}", "ng-src" => "{{track.image_url}}"}/
+            .track-each__content
+              %h3
+                {{track.name}}
+              .track-each__mentee
+                %h4.heading Mentor
+                %p
+                  {{ track.mentee.first_name }}
+              .track-each__deadline
+                %h4.heading due date
+                %p
+                  {{track.deadline | date:'dd/MM/yyyy'}}
+
   .tracks-index
     %h2.dashboard__heading Mentoring tracks
     %hr.dashboard__heading__line
@@ -39,6 +57,7 @@
 :javascript
   var MentoringTracksConfig = {
     mentoringTracks: #{@mentoring_tracks.to_json},
+    learningTracks: #{@learning_tracks.to_json},
     mentorRequests: #{@mentor_requests.to_json},
     tracks: #{@tracks.to_json},
     users: #{@users.to_json}

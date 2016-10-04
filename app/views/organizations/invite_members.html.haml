@@ -1,10 +1,8 @@
 %div{"ng-controller" => "OrganizationController"}
   .board-subnav
     %ul.board-subnav-links
-      %li.org-list{"ng-class" => "{active: !invite}"}
-        %a.org-list__name{"ng-click" => "invite = false"} Members
-      %li.org-list{"ng-class" => "{active: invite}"}
-        %a.org-list__name{"ng-click" => "invite = true"} Invites
+      %li.org-list.active
+        %a.org-list__name {{organization.name}}
   %div.org-signup
     %div.org-signup__invite
       %div.members{"ng-show" => "!invite"}
@@ -13,19 +11,23 @@
           %img{"data-name" => "{{user.first_name}}", "data-height" => "30","data-width" => "30","data-font-size" => "12", "data-char-count" => "2","data-font-weight" => "400" , "class" => "profile initialjs-avatar"}
           %div.user
             %p.user__name {{user.first_name}} {{user.last_name}}
-            -#%p.user__email {{user.email}}
-        %a.org__invite-members{"ng-click" => "invite = true"}
+        %a.org__invite-members{"data-target" => "#myModal", "data-toggle" => "modal"}
           %i.material-icons add_circle
           %label Invite members
-      %div.invites{"ng-show" => "invite"}
-        %h2.org-signup__heading{"ng-if" => "invite"}  Invite your organisation members
-        .search__name
-          %input{"ng-model" => "search", :placeholder => "Search", :type => "text"}/
-        %div.user__invite{"ng-repeat" => "contact in contacts | filter:search"}
-          %p.user__name {{contact.name.fullName}}
-          .btn--flat{"ng-click" => "send_invite(contact)", "ng-disabled" => "contact.invited"} {{contact.invited ? "Invited" : "Invite"}}
-          %p.user__email {{contact.primaryEmail}}
-
+  #myModal.modal.fade{:role => "dialog"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"data-dismiss" => "modal", :type => "button"} ×
+          %h4.modal-title Invite Members
+        .modal-body
+          %div.invites
+            .search__name
+              %input{"ng-model" => "search", :placeholder => "Search", :type => "text"}/
+            %div.user__invite{"ng-repeat" => "contact in contacts | filter:search"}
+              %p.user__name {{contact.name.fullName}}
+              .btn--flat{"ng-click" => "send_invite(contact)", "ng-disabled" => "contact.invited"} {{contact.invited ? "Invited" : "Invite"}}
+              %p.user__email {{contact.primaryEmail}}
 
 :javascript
   var OrganizationConfig = {

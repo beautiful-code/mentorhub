@@ -73,10 +73,10 @@
                     <li class="tasks" ng-repeat="todo in sectionInteraction.todos">
                         <div class="tasks__each">
                             <div class="tasks__each__content">
-                                <div ng-if="!todo.edit">
-                                    <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true">check_box_outline_blank</i>{{ todo.content }}
-                                    <i class="material-icons" id="section__to-dos__redo-icon" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo, true)" ng-if="todo.state == 'to_be_reviewed'" title="redo">replay</i>
-                                </div>
+                              <div ng-if="!todo.edit" ng-class="{'todo--strike':todo.state == 'completed'}">
+                                <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo)" aria-hidden="true" style="cursor:pointer">{{todo.state == 'completed' ? 'check_box' : 'check_box_outline_blank'}}</i>{{ todo.content }}
+                                <i class="material-icons" id="section__to-dos__redo-icon" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo, true)" ng-if="todo.state == 'to_be_reviewed'" title="redo">replay</i>
+                              </div>
                                 <input ng-if="todo.edit" class="section-input" ng-model="todo.content" value="{{ todo.content }}">
                             </div>
 
