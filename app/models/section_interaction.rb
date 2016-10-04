@@ -15,7 +15,6 @@ class SectionInteraction < ApplicationRecord
 
   after_commit :bot_or_self_section_interaction, on: [:update]
 
-
   after_update_commit { TrackBroadcastJob.perform_later(self.track) }
 
   STATES =
@@ -83,7 +82,6 @@ class SectionInteraction < ApplicationRecord
     self.state = 'review_pending'
   end
 
-
   def bot_or_self_section_interaction
     if self.track.mentor.email.split('@')[0] == 'bot' && self.todos.length.zero?
       options = YAML.load(File.open('config/todo_data.yml'))
@@ -91,7 +89,7 @@ class SectionInteraction < ApplicationRecord
         self.todos.create!(content: todo['content'])
       end
     elsif self.track.mentor_id == self.track.mentee_id
-      self.update(state: 'section_completed') if self.state == 'review_pending' 
+      self.update(state: 'section_completed') if self.state == 'review_pending'
     end
   end
 end

@@ -2,6 +2,11 @@ class MentoringRequestsController < ApplicationController
   before_action :set_mentoring_request
   def create
     if @mentoring_request.save
+      InviteMailer.send_request_to_mentor(
+        current_user,
+        User.where(id: @mentoring_request.mentor_id).first,
+        TrackTemplate.where(id: @mentoring_request.track_template_id).first
+      ).deliver_now
       render json: { msg: 'success' }, status: 200
     else
       render json: { msg: 'error' }, status: 422

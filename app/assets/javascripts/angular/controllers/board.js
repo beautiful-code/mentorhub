@@ -104,6 +104,9 @@ angular.module('mentorhub.board', [])
               '{section_id}': scope.section.id
             };
             BoardServices.update_section(route_params, {section_interaction: {rating: scope.section.rating, feedback: scope.section.feedback, state: "feedback_captured"}})
+              .success(function (response) {
+                scope.section.state = response.section_interaction.state;
+              })
           }
           scope.$watch('section.rating', function(newValue, oldValue) {
             if (newValue != oldValue) {
