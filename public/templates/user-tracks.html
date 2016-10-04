@@ -81,7 +81,7 @@
         <div class="section-todos tasks" ng-if="sectionInteraction.todos.length != 0" ng-if="sectionInteraction.rating != null">
           <h3 class="heading">Tasks to do</h3>
           <p ng-repeat="todo in sectionInteraction.todos">
-          <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true">check_box_outline_blank</i>
+          <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true" style="cursor:pointer">check_box_outline_blank</i>
           {{ todo.content }}
           </p>
         </div>

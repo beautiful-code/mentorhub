@@ -13,6 +13,7 @@ angular.module("mentorhub.mentoring_tracks", [])
         var init = function () {
           $scope.data = [];
           $scope.mentoringTracks = MentoringTracksConfig.mentoringTracks;
+          $scope.learningTracks = MentoringTracksConfig.learningTracks;
           $scope.mentorRequests = MentoringTracksConfig.mentorRequests;
           $scope.tracks = MentoringTracksConfig.tracks;
           $scope.users = MentoringTracksConfig.users;
