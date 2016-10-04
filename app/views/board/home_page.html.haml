@@ -1,19 +1,29 @@
+
+= image_tag "mentorhub_logo.png", class: 'mhlogo'
 .home-page
-  %h1.headline Optimize mentoring culture in your organization
+  %h1.headline Move Learning Forward
+  %p.sub-headline Engage and inspire learning in your organization by creating a mentoring culture.
   .form_style
-    =link_to user_google_oauth2_omniauth_authorize_path, class:"google_login" do
-      %i.fa.fa-google-plus-official(aria-hidden="true")
-      Start now using Google
-.work-steps
-  .step
-    = image_tag "group.png"
-    %h2 Create an account
-    %p Create an account for your organisation. Add members to it by sending invitations.
-  .step
-    = image_tag "track.png"
-    %h2 Add a learning track
-    %p Add the learning tracks for the topics
-  .step
-    = image_tag "meeting.png"
-    %h2 Start Mentoring
-    %p Connect to the mentor on topic and learn from the experiences.
+    =link_to user_google_oauth2_omniauth_authorize_path, class:"login--google" do
+      = image_tag "google--logo.png"
+      Get started using Google
+
+.getting-started
+  %h2.getting-started__headline Getting started with mentorhub
+  .getting-started__steps
+    .step
+      = image_tag "join_org.svg"
+      %h2 Join your organisation
+      -#%p Create an account for your organisation. Add members to it by sending invitations.
+    .step
+      = image_tag "enroll_track.svg"
+      %h2 Enroll for a track to engage or inspire
+      -#%p Add the learning tracks for the topics
+    .step
+      = image_tag "connect_to.svg"
+      %h2 Connect to your mentor or mentee
+      -#%p Connect to the mentor on topic and learn from the experiences.
+    .step
+      = image_tag "accelerate_growth.svg"
+      %h2 Accelerate the learning.
+      -#%p Connect to the mentor on topic and learn from the experiences.

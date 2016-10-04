@@ -1,54 +1,53 @@
 - board_view ||= false
 
-%header
-  = link_to root_path, class: 'navbarbrand' do
-    = image_tag "mentorhub_logo.png", class: 'mhlogo'
-    -if current_user
-      %label.org-name for #{current_user.organization.name}
-
-  .header__wrapper
-    - if user_signed_in?
-      - if board_view
-        .menu{"ng-model" => "active_tab"}
-          .menu__item{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
-            %a{:href => ""} Your Tracks
-            %span.notification-dot{"ng-if" => "actionTodoForMyTracks()"}
-          .menu__item{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks')"}
-            %a{:href => ""} Your Mentee Tracks
-            %span.notification-dot{"ng-if" => "actionTodoForMyMenteeTracks()"}
-          .menu__item{class: active_class(c: ['tracks'])}
-            %a{:href => "/track_templates"} Library
-      - else
-        .menu
-          .menu__item
-            %a{:href => "", :class => "user_tracks"} Your Tracks
-          .menu__item
-            %a{:href => "", :class => "user_mentee_tracks"} Your Mentee Tracks
-          .menu__item
-            %a{:href => "/track_templates", :class => "tracks", :style => "display: inline;", class: track_template_active_class(c: ['track_templates'])} Library
-
-
+- if user_signed_in?
+  %header
+    = link_to root_path, class: 'navbar__org' do
+      -if current_user
+        %label.org-name  #{current_user.organization.name}
+    .header__wrapper
       - if user_signed_in?
-        %ul.userProfile
-          -if current_user.image.present?
-            %li.userProfile__image= image_tag current_user.image
-          -else
-            %li.userProfile__image= gravatar_for current_user
-          %li.userProfile__name.drop
-            = current_user.first_name
-            %i.material-icons arrow_drop_down
-            %ul
-              %li
-                =link_to "Mentees Tracks", mentoring_tracks_path, class: active_class(c:  ['mentoring_tracks'])
-                %span.notification-dot{"ng-if" => "notificationForNewMenteeRequests()"}
-              %li= link_to current_user.email.split('@')[1].split('.')[0], invite_organization_members_path
-              %hr
-              %li= link_to "Log out", destroy_user_session_path, method: :delete
-      - else
-        %ul
-          %li= link_to "Login", new_user_session_path
-          %li
-            %button= link_to "Sign Up", new_user_registration_path
+        - if board_view
+          .menu{"ng-model" => "active_tab"}
+            .menu__item{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
+              %a{:href => ""} Learning tracks
+              %span.notification-dot{"ng-if" => "actionTodoForMyTracks()"}
+            .menu__item{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks')"}
+              %a{:href => ""} Mentoring tracks
+              %span.notification-dot{"ng-if" => "actionTodoForMyMenteeTracks()"}
+            .menu__item{class: active_class(c: ['tracks'])}
+              %a{:href => "/track_templates"} All tracks
+        - else
+          .menu
+            .menu__item
+              %a{:href => "", :class => "user_tracks"} Learning tracks
+            .menu__item
+              %a{:href => "", :class => "user_mentee_tracks"} Mentoring tracks
+            .menu__item
+              %a{:href => "/track_templates", :class => "tracks", :style => "display: inline;", class: track_template_active_class(c: ['track_templates'])} All tracks
+
+
+        - if user_signed_in?
+          %ul.userProfile
+            -if current_user.image.present?
+              %li.userProfile__image= image_tag current_user.image
+            -else
+              %li.userProfile__image= gravatar_for current_user
+            %li.userProfile__name.drop
+              = current_user.first_name
+              %i.material-icons arrow_drop_down
+              %ul
+                %li
+                  =link_to "Dashboard", mentoring_tracks_path, class: active_class(c:  ['mentoring_tracks'])
+                  %span.notification-dot{"ng-if" => "notificationForNewMenteeRequests()"}
+                %li= link_to current_user.email.split('@')[1].split('.')[0], invite_organization_members_path
+                %hr
+                %li= link_to "Log out", destroy_user_session_path, method: :delete
+        - else
+          %ul
+            %li= link_to "Login", new_user_session_path
+            %li
+              %button= link_to "Sign Up", new_user_registration_path
 
 :javascript
     $(function() {

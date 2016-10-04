@@ -80,8 +80,8 @@
         </div>
         <div class="section-todos tasks" ng-if="sectionInteraction.todos.length != 0" ng-if="sectionInteraction.rating != null">
           <h3 class="heading">Tasks to do</h3>
-          <p ng-repeat="todo in sectionInteraction.todos">
-          <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" ng-class="todo.state" aria-hidden="true">check_box_outline_blank</i>
+          <p ng-repeat="todo in sectionInteraction.todos" ng-class="{'todo--strike':todo.state == 'completed'}">
+          <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" aria-hidden="true" style="cursor:pointer">{{todo.state == 'new' || todo.state == 'incomplete' ? 'check_box_outline_blank' : 'check_box'}} </i>
           {{ todo.content }}
           </p>
         </div>

@@ -17,19 +17,30 @@
     display: block;
   }
 }
-.org-signup__box{
-  background-color: white;
-  width: 600px;
+.user__welcome{
+  background-color: transparent;
+  width: 720px;
   margin: auto;
   padding: 16px;
-  margin-top: 20px;
+  margin-top: 30px;
   border-radius: 3px;
+  h1{
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  p{
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 16px;
+  }
 }
-.org-signup__input {
+.user__org {
   label {
     display: block;
     margin: 14px 0 2px 2px;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
   }
   input{
@@ -38,6 +49,7 @@
     border-radius: 3px;
     padding-left: 10px;
     border: 1px solid gainsboro;
+    margin-bottom: 20px;
   }
 }
 .org-signup__heading{
@@ -76,8 +88,9 @@
   width: 50%;
   display: inline-block;
   padding-left: 10px;
+  margin-top: 10px;
   img{
-    border-radius:4px;
+    border-radius:50%;
   }
   .user__name{
     padding-left: 8px;
@@ -108,6 +121,32 @@
   border-bottom: 1px solid #eeeeee;
 
 }
+.org__invite-members{
+  width: 49%;
+  display: inline-block;
+  padding-left: 10px;
+  margin-top: 10px;
+  color: #1B68C5;
+  cursor: pointer;
+  i{
+    vertical-align: middle;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  label{
+    cursor: pointer;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bolder;
+    font-size: 15px;
+    padding-left: 8px;
+  }
+
+}
+.org__invite-members:hover{
+  text-decoration: none;
+}
 .search__name{
   display: block;
   background-color: #eeeeee;
@@ -127,13 +166,11 @@
 }
 p.user__name{
   margin: 0;
-  margin-bottom: 2px;
   font-weight: 600;
   display: inline-block;
   width: 60%;
   line-height: 22px;
   font-size: 14px;
-  margin-top: 8px;
   padding-left: 16px;
 }
 p.user__email{
