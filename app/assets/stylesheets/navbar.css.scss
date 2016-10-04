@@ -6,8 +6,8 @@ $secondary: #888888;
 
 header {
     height: 52px;
-    background-color: #354051;
     color: white;
+    background-color: #354051;
     display: flex;
     align-items: center;
 }
@@ -20,6 +20,11 @@ header {
     align-items: center;
     justify-content: space-between;
 }
+.mhlogo {
+  margin: 30px 0 0 30px;
+  height: 50px;
+  position: absolute;
+}
 .navbar__org{
   position: absolute;
   display: flex;
@@ -30,11 +35,7 @@ header {
   &:hover{
     color: white;
   }
-  .mhlogo {
-      margin: 11px 0 20px;
-      height: 30px;
-      position: relative;
-  }
+
   .org-name{
     width: 120px;
     font-size: 17px;

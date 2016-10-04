@@ -1,26 +1,14 @@
 %div
   %div{"ng-controller" => "OrganizationController"}
-    %div.org-signup__box
-
+    %div.user__welcome
       %h1 Welcome {{current_user.first_name}}!
       %h4 You are about to set up a new organisation
-      %div.org-signup__input
+      %div.user__org
         %label Organisation name
         %input{"ng-model" => "organization.name"}
-      %p Learn more about mentorhub in five steps.
-      %input.btn--raised{:type => "submit", :value=> "Start the tour", "ng-click" => "updateOrganization()"}
-      -#%h2.org-signup__heading Setting up organization
-      -#%div.org-signup__input
-        -#%label Name
-        -#%input{"ng-model" => "current_user.first_name", :disabled => "disabled"}
-      -#%div.org-signup__input
-        -#%label Company
-        -#%input{"ng-model" => "organization.name", "autofocus" => "autofocus"}
-      -#%div.org-signup__input
-        -#%label Email
-        -#%input{"ng-model" => "current_user.email", :disabled => "disabled"}
-      -#%input.org-signup__submit.btn--raised{:type => "submit", :value=> "next", "ng-click" => "updateOrganization()"}
-      .clearfix
+      -#%p Learn more about mentorhub in five steps.
+      %input.btn--raised{:type => "submit", :value=> "Continue", "ng-click" => "updateOrganization()"}
+
 
 :javascript
   var OrganizationConfig = {

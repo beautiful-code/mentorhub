@@ -17,20 +17,26 @@
     display: block;
   }
 }
-.org-signup__box{
+.user__welcome{
   background-color: transparent;
-  width: 600px;
+  width: 720px;
   margin: auto;
   padding: 16px;
-  margin-top: 20px;
+  margin-top: 30px;
   border-radius: 3px;
+  h1{
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
   p{
     margin: 0;
     font-size: 12px;
+    font-weight: 600;
     margin-top: 16px;
   }
 }
-.org-signup__input {
+.user__org {
   label {
     display: block;
     margin: 14px 0 2px 2px;
@@ -43,6 +49,7 @@
     border-radius: 3px;
     padding-left: 10px;
     border: 1px solid gainsboro;
+    margin-bottom: 20px;
   }
 }
 .org-signup__heading{
