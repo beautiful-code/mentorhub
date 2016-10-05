@@ -1,5 +1,5 @@
 <div class="board-subnav">
-    <ul class="board-subnav-links" ng-if="Helper.keys(user_mentee_tracks).length != 0">
+    <ul class="board-subnav-links responsive" ng-if="Helper.keys(user_mentee_tracks).length != 0">
         <li ng-repeat="(id, track) in combined_mentee_tracks" select-subnav="{{ id }}" ng-class="$index == 0 ? 'active':''" class="mentees-list">
             <a class="tracks-name" ng-click="reloadSectionInteractions(track)">    {{ user_mentee_tracks[track.mentee_id].learning_tracks[$index].mentee.first_name | capitalize }} <span>({{ track.name }})</span></a>
             <span ng-if="trackActionTodoForMentor(track)" class="notification-dot"></span>
@@ -73,10 +73,11 @@
                     <li class="tasks" ng-repeat="todo in sectionInteraction.todos">
                         <div class="tasks__each">
                             <div class="tasks__each__content">
-                              <div ng-if="!todo.edit" ng-class="{'todo--strike':todo.state == 'completed'}">
-                                <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo)" aria-hidden="true" style="cursor:pointer">{{todo.state == 'completed' ? 'check_box' : 'check_box_outline_blank'}}</i>{{ todo.content }}
-                                <i class="material-icons" id="section__to-dos__redo-icon" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo, true)" ng-if="todo.state == 'to_be_reviewed'" title="redo">replay</i>
-                              </div>
+                                <div ng-if="!todo.edit" ng-class="{'todo--strike':todo.state == 'completed'}">
+                                    <i class="material-icons" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo)" aria-hidden="true" style="cursor:pointer">{{todo.state == 'completed' ? 'check_box' : 'check_box_outline_blank'}}</i>{{
+                                    todo.content }}
+                                    <i class="material-icons" id="section__to-dos__redo-icon" ng-click="sectionInteractionServices.update_mentees_todo(sectionInteraction, todo, true)" ng-if="todo.state == 'to_be_reviewed'" title="redo">replay</i>
+                                </div>
                                 <input ng-if="todo.edit" class="section-input" ng-model="todo.content" value="{{ todo.content }}">
                             </div>
 
@@ -93,12 +94,12 @@
 
                         </div>
                     </li>
-                    <li ng-if="sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'feedback_captured'" >
+                    <li ng-if="sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'feedback_captured'">
                         <div class="section-todos-add">
                             <i class="material-icons">add</i>
                             <input placeholder="Add task" class="section-input" type="text" ng-model="todo.content" ng-keypress="($event.which === 13)? sectionInteractionServices.add_task(sectionInteraction, todo) : 0">
                             <div class="btn--flat" ng-click="sectionInteractionServices.add_task(sectionInteraction, todo)">Add</button>
-                        </div>
+                            </div>
                     </li>
                 </ul>
                 </div>

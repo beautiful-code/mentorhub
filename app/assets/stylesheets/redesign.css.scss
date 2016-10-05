@@ -108,7 +108,7 @@ body {
             align-self: center;
         }
 
-        &.selected:after {
+        &.selected:before {
             content: "";
             display: inline-block;
             border-right: 14px solid #777777;
@@ -136,6 +136,20 @@ body {
     .tasks_pending {
         border-color: #f14133;
         color: #f14133;
+    }
+
+    .track-nav-circle::after {
+        content: "";
+        display: block;
+        position: relative;
+        width: 1px;
+        height: 14px;
+        background-color: #9b9b9b;
+        left: 8.5px;
+    }
+
+    .track-nav-circle:last-child::after {
+        display: none;
     }
 }
 /* section */
@@ -226,12 +240,12 @@ body {
     }
 
     .mark-complete {
-      position: relative;
-      float: right;
-      top: -4px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-bottom: 10px;
+        position: relative;
+        float: right;
+        top: -4px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-bottom: 10px;
     }
 
     .section-exercise {
@@ -282,9 +296,11 @@ body {
     .section-todos {
         padding: 10px 20px 20px;
         border-bottom: 1px solid #ececec;
-        li{
-          list-style: none;
+
+        li {
+            list-style: none;
         }
+
         input {
             margin-right: 4px;
         }
@@ -305,13 +321,14 @@ body {
         }
     }
 }
-#section__to-dos__redo-icon{
-  font-size: 15px ;
-  font-size: 600;
 
-  vertical-align: middle;
-  cursor: pointer;
+#section__to-dos__redo-icon {
+    font-size: 15px;
+    font-size: 600;
+    vertical-align: middle;
+    cursor: pointer;
 }
+
 .checkbox {
     width: 14px;
     height: 14px;
@@ -350,121 +367,126 @@ body {
 .expected-progress {
     box-shadow: 0 0 0 2px #337ab7;
 }
-.mentoring-tracks__container{
-  position: relative;
-  margin: auto;
-  margin-top: 16px;
-}
-.mentoring-tracks__selection{
-  display: block;
-  width: 680px;
-  margin: auto;
-  padding: 16px;
-  margin-bottom: 4px;
-  h4{
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-  }
-  label{
-    font-size: 16px;
-    margin: 0;
-    margin-bottom: 4px;
-    color: #888888;
-    font-weight: 400;
-    width: 125px;
 
+.mentoring-tracks__container {
+    position: relative;
+    margin: 16px auto auto;
+}
 
-  }
-  select{
-    -webkit-appearance: button;
-     -webkit-user-select: none;
-     background-image: url(arrow-down.png);
-     background-position: 97% center;
-     background-repeat: no-repeat;
-     background-size: contain;
-     background-color: white;
-     border-radius: 2px;
-     border: 1px solid #ddd;
-     color: inherit;
-     font-size: inherit;
-     margin-bottom: 8px;
-     overflow: hidden;
-     padding: 5px 10px;
-     text-overflow: ellipsis;
-     white-space: nowrap;
-     width: 240px;
-  }
-  input[type="date"]{
-    padding: 5px 10px;
-    width: 170px;
-    font-size: inherit;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-  }
-}
-.dashboard__heading{
-  font-size: 20px;
-  color: #888888;
-  width: 680px;
-  display: block;
-  margin: auto;
-  margin-top: 16px;
-  margin-bottom: 6px;
-
-}
-.dashboard__heading__line{
-  margin: 0;
-  border-bottom: 1px solid #c5c7c9;
-  width: 680px;
-  margin: auto;
-  margin-bottom: 4px;
-}
-.mentoring-tracks__track__sections{
-  max-width: 720px;
-  margin: auto;
-  display: block;
-}
-.confirm-track__btns{
-  display: inline-block;
-  position: absolute;
-  top: 40px;
-  text-align: center;
-  right: 0;
-  width: calc(50% - 340px);
-}
-.mentoring-tracks__request-all{
-  width: 680px;
-  background-color: white;
-  border-radius: 3px;
-  margin: auto;
-  padding: 0 16px;
-
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.23);
-  h2{
-    text-align: center;
-    margin: 0;
-    font-size: 20px;
-    font-weight: 400;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #eeeeee;
-  }
-  .mentoring-tracks__request-each{
-    width: 680px;
-  display: block;
-  margin: auto;
-  border-bottom: 1px solid #eeeeee;
-  padding: 12px 0;
-
-  p{
-    margin: 0;
-    margin-bottom: 4px;
-    span{
-      font-weight: bolder;
-    }
-  }
-  .mentoring-tracks__request-each__btns{
+.mentoring-tracks__selection {
     display: block;
-  }
+    width: 680px;
+    margin: auto;
+    padding: 16px;
+    margin-bottom: 4px;
+
+    h4 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    label {
+        font-size: 16px;
+        margin: 0 0 4px;
+        color: #888888;
+        font-weight: 400;
+        width: 125px;
+    }
+
+    select {
+        -webkit-appearance: button;
+        -webkit-user-select: none;
+        background-image: url("arrow-down.png");
+        background-position: 97% center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-color: white;
+        border-radius: 2px;
+        border: 1px solid #ddd;
+        color: inherit;
+        font-size: inherit;
+        margin-bottom: 8px;
+        overflow: hidden;
+        padding: 5px 10px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 240px;
+    }
+
+    input[type="date"] {
+        padding: 5px 10px;
+        width: 170px;
+        font-size: inherit;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+    }
 }
+
+.dashboard__heading {
+    font-size: 20px;
+    color: #888888;
+    width: 680px;
+    display: block;
+    margin: 16px auto 6px;
+}
+
+.dashboard__heading__line {
+    margin: 0;
+    border-bottom: 1px solid #c5c7c9;
+    width: 680px;
+    margin: auto auto 4px;
+}
+
+.mentoring-tracks__track__sections {
+    max-width: 720px;
+    margin: auto;
+    display: block;
+}
+
+.confirm-track__btns {
+    display: inline-block;
+    position: absolute;
+    top: 40px;
+    text-align: center;
+    right: 0;
+    width: calc(50% - 340px);
+}
+
+.mentoring-tracks__request-all {
+    width: 680px;
+    background-color: white;
+    border-radius: 3px;
+    margin: auto;
+    padding: 0 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.23);
+
+    h2 {
+        text-align: center;
+        margin: 0;
+        font-size: 20px;
+        font-weight: 400;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .mentoring-tracks__request-each {
+        width: 680px;
+        display: block;
+        margin: auto;
+        border-bottom: 1px solid #eeeeee;
+        padding: 12px 0;
+
+        p {
+            margin: 0 0 4px;
+
+            span {
+                font-weight: bolder;
+            }
+        }
+
+        .mentoring-tracks__request-each__btns {
+            display: block;
+        }
+    }
 }

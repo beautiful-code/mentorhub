@@ -13,4 +13,6 @@
  *= require font-awesome
  *= require_tree .
  *= require animate.css/animate.min
+ *= require slick
+ *= require slick-theme
  */

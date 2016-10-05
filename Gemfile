@@ -26,6 +26,8 @@ gem 'redis'
 gem 'google-api-client', '0.8.6'
 gem 'sendgrid'
 gem 'initialjs-rails'
+gem "jquery-slick-rails"
+
 
 group :development, :test do
   gem 'seed_dump'
