@@ -31,6 +31,24 @@ angular.module('mentorhub.board', [])
                 payload
             );
         },
+        create_question: function(route_params, payload) {
+            return $http.post(
+                Utils.multi_replace(ApiUrls.create_question, route_params),
+                payload
+            );
+        },
+        update_question: function(route_params, payload) {
+            return $http.put(
+                Utils.multi_replace(ApiUrls.update_question, route_params),
+                payload
+            );
+        },
+        delete_question: function(route_params, payload) {
+            return $http.delete(
+                Utils.multi_replace(ApiUrls.update_question, route_params),
+                payload
+            );
+        },
         board_data: function() {
             return $http.get(ApiUrls.board_data);
         }
@@ -72,18 +90,7 @@ angular.module('mentorhub.board', [])
             section: '=',
             desc: '@'
         },
-        template: '<ul class="star-rating">' +
-            '  <div ng-if="desc">How was the learning through this exercise?</div>' +
-            '  <li ng-repeat="star in stars" class="star" ng-class="{filled: star.filled}">' +
-            '    <i class="material-icons md-48" ng-click="toggle($index, desc)">{{ star.filled ? "star" : "star_border" }}</i>' +
-            '    <small ng-if="desc">{{ $index == 0 ? "Not helpful" : $index == 1 ? "Can be improved" : $index == 2 ? "Helpful" : "Very helpful"  }}</small> ' +
-            '  </li>' +
-            '  <div class="text-box" ng-if="desc">' +
-            '     Tell us how can we improve the experience <span>(Optional)</span>' +
-            '     <textarea placeholder="Write here" ng-model="section.feedback"/> ' +
-            '  </div>' +
-            '  <input class="btn btn-primary" ng-if="desc" type="button" value="Submit Feedback" ng-click="submit() "/>' +
-            '</ul>',
+        templateUrl: 'templates/rating-template.html',
         link: function(scope, element, attr) {
             var updateStars = function() {
                 scope.stars = [];
@@ -149,6 +156,15 @@ angular.module('mentorhub.board', [])
     };
 }])
 
+.directive('horizontalScroll', ['$timeout', function($timeout) {
+    return {
+        restrict: 'AE',
+        link: function(scope, element, attr) {
+            scope.subnav_scroll(element);
+        }
+    };
+}])
+
 .controller('BoardController', ['$rootScope', '$scope', '$timeout', 'BoardServices', 'PubSubServices', 'SectionInteractionServices',
     function($rootScope, $scope, $timeout, BoardServices, PubSubServices, SectionInteractionServices) {
         if (sessionStorage.getItem('tab') == "user_mentee_tracks") {
@@ -173,6 +189,42 @@ angular.module('mentorhub.board', [])
 
             return data;
         };
+
+        $scope.subnav_scroll = function(element) {
+            $timeout(function() {
+                $(element).slick({
+                    infinite: false,
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    // responsive: [
+                    //   {
+                    //     breakpoint: 1024,
+                    //     settings: {
+                    //       slidesToShow: 3,
+                    //       slidesToScroll: 3,
+                    //       infinite: true,
+                    //       dots: true
+                    //     }
+                    //   },
+                    //   {
+                    //     breakpoint: 600,
+                    //     settings: {
+                    //       slidesToShow: 2,
+                    //       slidesToScroll: 2
+                    //     }
+                    //   },
+                    //   {
+                    //     breakpoint: 480,
+                    //     settings: {
+                    //       slidesToShow: 1,
+                    //       slidesToScroll: 1
+                    //     }
+                    //   }
+                    // ]
+                });
+            });
+        }
+
 
         $scope.$on('updateScope', function(event, data) {
             $scope.$apply(function() {
@@ -199,39 +251,7 @@ angular.module('mentorhub.board', [])
             angular.element(document).ready(function() {
                 setTimeout(function() {
                     $(".loading-track").fadeOut("slow");
-                }, 500);
-                $('.responsive').slick({
-                    dots: true,
-                    infinite: false,
-                    speed: 300,
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
-                    responsive: [{
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 3,
-                                infinite: true,
-                                dots: true
-                            }
-                        }, {
-                            breakpoint: 600,
-                            settings: {
-                                slidesToShow: 2,
-                                slidesToScroll: 2
-                            }
-                        }, {
-                            breakpoint: 480,
-                            settings: {
-                                slidesToShow: 1,
-                                slidesToScroll: 1
-                            }
-                        }
-                        // You can unslick at a given breakpoint now by adding:
-                        // settings: "unslick"
-                        // instead of a settings object
-                    ]
-                });
+                },0);
             });
         };
 
@@ -256,6 +276,8 @@ angular.module('mentorhub.board', [])
                     }
                     break;
             }
+            $('.slick-initialized').slick('unslick');
+            $scope.subnav_scroll($('.board-subnav-links'));
             if ($scope.sections.data !== undefined) {
                 track = $scope.active_tab != "user_tracks" ? $scope.sections.data[0] : $scope.sections.data[$scope.subnav.active];
                 $scope.reloadSectionInteractions(track);
@@ -266,24 +288,26 @@ angular.module('mentorhub.board', [])
         };
 
         $scope.add_mentee_notes = function(sectionInteraction, note) {
+          if (note.mentee_notes != null){
             var route_params = {
-                '{track_id}': sectionInteraction.track_id,
-                '{section_id}': sectionInteraction.id
+              '{track_id}': sectionInteraction.track_id,
+              '{section_id}': sectionInteraction.id
             };
 
             BoardServices.update_section(route_params, {
-                    section_interaction: {
-                        mentee_notes: note.mentee_notes
-                    }
-                })
-                .success(function(response) {
-                    angular.merge(sectionInteraction, response.section_interaction);
-                    note.edit = false;
-                    note.mentee_notes = null;
-                })
-                .error(function(error) {
-                    console.log(error);
-                });
+              section_interaction: {
+                mentee_notes: note.mentee_notes
+              }
+            })
+              .success(function(response) {
+                angular.merge(sectionInteraction, response.section_interaction);
+                note.edit = false;
+                note.mentee_notes = null;
+              })
+              .error(function(error) {
+                console.log(error);
+              });
+          }
         };
 
         $scope.update_my_todo = function(section, todo) {
@@ -369,6 +393,14 @@ angular.module('mentorhub.board', [])
         };
 
         $scope.changeSectionInteraction = function(sectionInteraction) {
+          angular.forEach(sectionInteraction.questions, function(question, key) {
+            if($scope.active_tab == "user_tracks"){
+              question.edit = (question.answer == null) ? true : false;
+            }
+            else{
+              question.edit = false;
+            }
+          });
             $scope.sectionInteraction = sectionInteraction;
             $scope.selected = sectionInteraction.id;
         };
@@ -465,5 +497,6 @@ angular.module('mentorhub.board', [])
         };
 
         init();
+
     }
 ]);

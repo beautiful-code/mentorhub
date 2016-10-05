@@ -3,8 +3,6 @@
 .mentoring-tracks__container{"ng-controller" => "MentoringTrackNew"}
   %form
     .mentoring-tracks__selection
-      -#%h4
-      -#  Add a Mentee Track
       .mentoring-tracks__selection__mentee{"ng-show" => "!self_track"}
         %label Select a Mentee
         %select{"data-role" => "listview", "ng-change" => "update_mentee()", "ng-model" => "selectMentee", "ng-options" => "user as user.first_name for user in users"}
@@ -18,13 +16,12 @@
         %input{"ng-change" => "update_mentee_track_deadline()", "ng-model" => "deadline", :type => "date"}/
     .mentoring-tracks__track__sections
       %div{"ng-repeat" => "section in selectTrack.sections track by $index", "section-interactions-new" => ""}
-  %div{"ng-show" => "showButtons"}
-    %a.track__section__new{"ng-click" => "add_section()"}
-      %span +
-      Add an exercise
-    .confirm-track__btns
-      %input.btn--raised{"ng-click" => "confirm_mentee_track()", :type => "submit", :value => "Confirm"}/
-      %input.btn--flat{"ng-click" => "reset()", :type => "button", :value => "Cancel"}/
+      %a.track__section__new{"ng-click" => "add_section()"}
+        %span +
+        Add an exercise
+      .confirm-track__btns
+        %button.btn--raised{"ng-click" => "confirm_mentee_track($event)", :type => "submit", 'data-loading-text' => "<i class='fa fa-spinner fa-pulse'></i> Submitting..."} Confirm
+        %button.btn--flat{"ng-click" => "reset()"} Cancel
 
 :javascript
   var MentoringTrackConfig = {

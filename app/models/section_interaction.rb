@@ -1,5 +1,6 @@
 class SectionInteraction < ApplicationRecord
   has_many :todos
+  has_many :questions
   belongs_to :track
 
   validates :title, presence: true
@@ -62,7 +63,7 @@ class SectionInteraction < ApplicationRecord
 
     super({
       except: [:goal, :created_at, :updated_at],
-      include: [:todos]
+      include: [:todos, :questions]
     }.merge(options))
   end
 
@@ -83,12 +84,12 @@ class SectionInteraction < ApplicationRecord
   end
 
   def bot_or_self_section_interaction
-    if self.track.mentor.email.split('@')[0] == 'bot' && self.todos.length.zero?
+    if self.track.mentor_bot? && self.todos.length.zero?
       options = YAML.load(File.open('config/todo_data.yml'))
       options['section_one'].each do |todo|
         self.todos.create!(content: todo['content'])
       end
-    elsif self.track.mentor_id == self.track.mentee_id
+    elsif self.track.self_paced?
       self.update(state: 'section_completed') if self.state == 'review_pending'
     end
   end

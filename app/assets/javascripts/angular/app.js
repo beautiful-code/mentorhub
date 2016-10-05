@@ -34,8 +34,12 @@ angular.module('mentorhub', [
         var baseUrls = {
             'board_data': apiBaseUrl + 'board',
             'update_section_interaction': apiBaseUrl + 'tracks/{track_id}/section_interactions/{section_id}',
+
             'create_todo': apiBaseUrl + 'tracks/{track_id}/section_interactions/{section_id}/todos',
             'update_todo': apiBaseUrl + 'tracks/{track_id}/section_interactions/{section_id}/todos/{todo_id}',
+
+            'create_question': apiBaseUrl + 'tracks/{track_id}/section_interactions/{section_id}/questions',
+            'update_question': apiBaseUrl + 'tracks/{track_id}/section_interactions/{section_id}/questions/{question_id}',
 
             'create_track': apiBaseUrl + 'track_templates',
             'update_track': apiBaseUrl + 'track_templates/{track_id}',

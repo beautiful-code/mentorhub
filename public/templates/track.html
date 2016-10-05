@@ -1,4 +1,6 @@
-<form class="edit_track" enctype="multipart/form-data" ng-show="track.editable"> <div class="track__profile"> <div class="track__logo">
+<form class="edit_track" enctype="multipart/form-data" ng-show="track.editable">
+    <div class="track__profile">
+        <div class="track__logo">
             <a href="" ng-click="newFileUpload()">
                 <img id="preview_image">
             </a>
@@ -16,10 +18,8 @@
             <span class="help-block"></span>
         </div>
         <div>
-            <div ng-show="track.newRecord" class="track__new__create--btn">
-                <input type="button" class="btn--raised" value="create" ng-click="create_track(track)">
-            </div>
-            <input type="button" class="btn--flat" value="Cancel" ng-click="cancel_track(track)">
+            <button class="btn--raised" ng-click="create_track(track, $event)" data-loading-text="<i class='fa fa-spinner fa-pulse'></i> Creating Track...">Create</button>
+            <button class="btn--flat" ng-click="cancel_track(track)"> Cancel </button>
         </div>
     </div>
 
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="btn--center" ng-if="current_user">
+        <div class="btn--center" ng-if="current_user" ng-hide="track.name_editable">
             <button class="btn--raised" data-toggle="modal" data-target="#myModal">Enroll</button>
         </div>
     </div>
@@ -78,11 +78,11 @@
                         <input type="radio" name="enroll-as" value="self-track" id="enroll-as--self" ng-model="type"><label for="enroll-as--self">Self-track</label>
                     </div>
                     <div class="selection__board" ng-if="type && type != 'self-track'">
-                      <h3 class="heading">Select your {{type == 'mentor' ? 'Mentee' : 'Mentor'}}</h3>
-                      <div for="" class="selection__board__usr" ng-repeat="member in members">
-                        <input type="radio" ng-model="$parent.$parent.person" name="name" id="{{member}}" value="{{member}}"/>
-                        <label for="{{member}}">{{member.first_name}}</label>
-                      </div>
+                        <h3 class="heading">Select your {{type == 'mentor' ? 'Mentee' : 'Mentor'}}</h3>
+                        <div for="" class="selection__board__usr" ng-repeat="member in members">
+                            <input type="radio" ng-model="$parent.$parent.person" name="name" id="{{member}}" value="{{member}}" />
+                            <label for="{{member}}">{{member.first_name}}</label>
+                        </div>
                     </div>
                     <div class="track__deadline--date" ng-if="type && type != 'mentee'">
                         <h3 class="heading">Deadline to complete</h3>
@@ -90,7 +90,7 @@
                     </div>
                 </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn--flat" ng-click="onSubmit(type, track.id, deadline, person)">Submit</button>
+                    <button type="button" class="btn--flat" ng-click="onSubmit(type, track.id, deadline, person, $event)">Submit</button>
                     <button type="button" class="btn--flat" data-dismiss="modal">Close</button>
                 </div>
             </div>

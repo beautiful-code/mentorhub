@@ -5,6 +5,10 @@ class Organization < ApplicationRecord
   validates :name, presence: true
   validates :email_domain, presence: true
 
+  def find_bot_id
+    self.users.find_by_email("bot@#{self.email_domain}").id
+  end
+
   private
 
   def create_bot

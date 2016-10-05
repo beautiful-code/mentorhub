@@ -26,31 +26,51 @@ class MentoringTracksController < ApplicationController
 
   def create
     track_template = TrackTemplate.find(params[:id])
+    @track = Track.new(options_for_track(track_template))
     ActiveRecord::Base.transaction do
-      @track = Track.create!(options_for_track(track_template))
-      create_section_interactions(@track)
+      if valid_track?
+        if @track.save
+          create_section_interactions(@track)
+          render json: { msg: 'success', track: @track }, status: 200
+        else
+          render json: { msg: 'error', errors: @track.errors }, status: 422
+        end
+      else
+        render json: { msg: 'track present' }, status: 422
+      end
     end
-    render json: { msg: 'success', track: @track }, status: 200
   end
 
   def show
     @section_interactions = @track.section_interactions.order(:id)
-                                  .preload(:todos)
+                                  .preload(:todos, :questions)
     @section_interaction = SectionInteraction.new
   end
 
   private
+
+  def valid_track?
+    ret = true
+
+    current_track_attributes = @track.attributes.extract!(
+      'mentee_id', 'track_template_id'
+    )
+
+    current_user.mentoring_tracks.each do |mentoring_track|
+      ret = false if mentoring_track.attributes.extract!(
+        'mentee_id', 'track_template_id'
+      ).eql? current_track_attributes
+    end
+
+    ret
+  end
 
   def set_organization
     @organization = current_user.organization
   end
 
   def set_track
-    @track = if params[:id].present?
-               Track.find(params[:id])
-             else
-               Track.new(track_params)
-             end
+    @track = Track.find(params[:id]) if params[:id].present?
   end
 
   def options_for_track(track_template)
@@ -75,10 +95,13 @@ class MentoringTracksController < ApplicationController
       options = section.except(
         'track_template_id', 'id',
         'editable', 'newRecord',
-        'newSectionInteraction'
+        'newSectionInteraction', 'questions'
       )
       options[:type] = "#{track.type.gsub('Track', '')}SectionInteraction"
-      track.section_interactions.create!(options.permit!)
+      si = track.section_interactions.create!(options.permit!)
+      section['questions'].each do |question|
+        si.questions.create(question: question['question'])
+      end
     end
   end
 end

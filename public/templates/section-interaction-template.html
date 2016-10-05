@@ -19,9 +19,10 @@
         </div>
       </div>
       <div class="track__section__exercise">
-        <h3 class="heading">Exercise</h3>
         <h2>{{section.title}}</h2>
-        <p>{{ section.content }}</p>
+        <h3 class="heading">Learning Objectives</h3>
+        <p>After doing this, you should be able to</p>
+        <p class="learning-objectives">{{ section.content }}</p>
       </div>
       <div class="track__section__resources">
         <h3 class="heading">Resources</h3>
@@ -37,6 +38,20 @@
           <p>No Resources</p>
         </div>
       </div>
+      <div class="track__section__exercise--challenge">
+        <h3 class="heading">Exercise</h3>
+        <p>{{section.exercise}}</p>
+      </div>
+      <div class="track__section__resources">
+        <h3 class="heading">Questions</h3>
+        <div ng-repeat="question in section.questions">
+          <p>{{ question.question }}</p>
+        </div>
+        <div ng-hide="section.questions.length">
+          <p>No Questions</p>
+        </div>
+      </div>
+
       <div ng-if="!section.newSectionInteraction">
         <div ng-if="section.state != 'new'" class="section-todos ">
           <h3 class="heading">Tasks Todo</h4>
@@ -93,6 +108,13 @@
             <span class="help-block"></span>
           </div>
         </div>
+        <div>
+            <div class="exercise__description">
+                <label for="content">Exercise</label>
+                <textarea rows="5" name="exercise" class="form-control" id="exercise" ng-model="section.exercise">{{ section.exercise }}</textarea>
+                <span class="help-block"></span>
+            </div>
+        </div>
         <div class="section__edit__resources">
           <h3 class="heading">Resources</h3>
           <div class="form-inline" ng-repeat="resource in section.resources track by $index">
@@ -106,6 +128,20 @@
             + Add A Resource
           </button>
         </div>
+
+        <div class="section__edit__resources">
+          <h3 class="heading">Questions</h3>
+          <div class="form-inline" ng-repeat="question in section.questions track by $index">
+            <input placeholder="Text" type="text" class="text res_field" ng-model="question.question">
+            <button type="button" class="btn--remove" ng-click="track.sections[$parent.$index].questions.splice($index,1);">
+              <i class="material-icons">delete</i>
+            </button>
+          </div>
+          <button class="btn--add" id="add_field" type="button" ng-click="addQuestion($index)">
+            + Add A Question
+          </button>
+        </div>
+
         <div class="section__crud" ng-if="track">
           <div ng-if="section.newRecord" style="display: inline;">
             <input type="button" class="btn--raised" value="Create" ng-click="create_section(track, section, $event)">

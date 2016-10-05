@@ -1,15 +1,20 @@
 class MentoringRequestsController < ApplicationController
   before_action :set_mentoring_request
+
   def create
-    if @mentoring_request.save
-      InviteMailer.send_request_to_mentor(
-        current_user,
-        User.where(id: @mentoring_request.mentor_id).first,
-        TrackTemplate.where(id: @mentoring_request.track_template_id).first
-      ).deliver_now
-      render json: { msg: 'success' }, status: 200
+    if valid_request?
+      if @mentoring_request.save
+        InviteMailer.send_request_to_mentor(
+          current_user,
+          User.where(id: @mentoring_request.mentor_id).first,
+          TrackTemplate.where(id: @mentoring_request.track_template_id).first
+        ).deliver_now
+        render json: { msg: 'success' }, status: 200
+      else
+        render json: { msg: 'error' }, status: 422
+      end
     else
-      render json: { msg: 'error' }, status: 422
+      render json: { msg: 'request already sent' }, status: 422
     end
   end
 
@@ -27,6 +32,22 @@ class MentoringRequestsController < ApplicationController
   end
 
   private
+
+  def valid_request?
+    ret = true
+
+    current_request_attributes = @mentoring_request.attributes.extract!(
+      'state', 'mentee_id', 'mentor_id'
+    )
+
+    current_user.mentee_request.each do |request|
+      ret = false if request.attributes.extract!(
+        'state', 'mentee_id', 'mentor_id'
+      ).eql? current_request_attributes
+    end
+
+    ret
+  end
 
   def mentoring_request_params
     params.fetch(:mentoring_request, {}).permit(

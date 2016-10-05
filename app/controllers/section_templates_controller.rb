@@ -42,7 +42,8 @@ class SectionTemplatesController < ApplicationController
 
   def section_params
     params.fetch(:section_template, {}).permit(
-      :id, :title, :content, resources: [:text, :url]
+      :id, :title, :content, :exercise,
+      questions: [:question], resources: [:text, :url]
     )
   end
 

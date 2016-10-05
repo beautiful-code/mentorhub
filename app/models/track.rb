@@ -8,6 +8,7 @@ class Track < ApplicationRecord
   validates :type, presence: true
 
   mount_uploader :image, ImageUploader
+  delegate :email, to: :mentor, allow_nil: true
 
   def serializable_hash(options)
     options ||= {}
@@ -16,7 +17,8 @@ class Track < ApplicationRecord
       except: [:created_at, :updated_at, :type, :image],
       methods: [
         :image_url, :progress, :expected_progress,
-        :recent_incomplete_section_interaction_id
+        :recent_incomplete_section_interaction_id,
+        :mentor_bot?
       ],
       include: [:mentee, :section_interactions]
     }.merge(options))
@@ -50,6 +52,14 @@ class Track < ApplicationRecord
     res =
       (section_interactions_count.to_f / total_no_of_days) * no_of_days_since
     !res.nan? && res.finite? ? res.ceil : 0
+  end
+
+  def mentor_bot?
+    return true if self.email.split('@')[0] == 'bot'
+  end
+
+  def self_paced?
+    return true if self.mentor_id == self.mentee_id
   end
 
   private

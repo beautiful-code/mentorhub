@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921122249) do
+ActiveRecord::Schema.define(version: 20161013070612) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,14 @@ ActiveRecord::Schema.define(version: 20160921122249) do
     t.datetime "updated_at",   null: false
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.string   "question"
+    t.string   "answer"
+    t.integer  "section_interaction_id"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "section_interactions", force: :cascade do |t|
     t.string   "title"
     t.string   "goal"
@@ -45,6 +53,7 @@ ActiveRecord::Schema.define(version: 20160921122249) do
     t.string   "type"
     t.integer  "rating"
     t.text     "feedback"
+    t.text     "exercise"
   end
 
   create_table "section_templates", force: :cascade do |t|
@@ -56,6 +65,8 @@ ActiveRecord::Schema.define(version: 20160921122249) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
+    t.string   "questions"
+    t.text     "exercise"
   end
 
   create_table "todos", force: :cascade do |t|

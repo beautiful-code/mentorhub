@@ -27,6 +27,7 @@
 //= require_tree ./angular
 //= require initial
 //= require jquery.slick
+//= require sweetalert
 //
 
 (function() {

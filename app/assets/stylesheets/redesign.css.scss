@@ -20,16 +20,36 @@ body {
         margin: 0 auto;
 
         li {
+            text-align: center;
+
             &.active {
                 a {
                     color: #375165;
                     border-bottom: 2px solid #375165;
+                    font-weight: 600;
+                    font-size: 15px;
+                }
+
+                ::selection {
+                    background: white;
                 }
             }
 
             a {
                 font-size: 14px;
             }
+        }
+
+        .slick-next:before,
+        .slick-prev:before {
+            color: #9b9b9b;
+        }
+
+        a:active,
+        a:focus {
+            background-image: none;
+            outline: 0;
+            box-shadow: none;
         }
     }
 
@@ -244,7 +264,7 @@ body {
         float: right;
         top: -4px;
         cursor: pointer;
-        font-weight: bold;
+        font-weight: 500;
         margin-bottom: 10px;
     }
 
@@ -254,8 +274,15 @@ body {
 
         h2 {
             font-weight: 500;
-            font-size: 20px;
-            margin: 0 0 6px;
+            font-size: 22px;
+            margin: 0 0 12px;
+        }
+
+        p {
+            white-space: pre-wrap;
+        }
+        .learning-objectives{
+          padding-left: 12px;
         }
     }
 
@@ -267,6 +294,9 @@ body {
     .section-answer {
         padding: 10px 20px;
         border-bottom: 1px solid #ececec;
+        .section-exercise-challenge{
+          font-weight: 600;
+        }
     }
 
     .section-input {
@@ -320,7 +350,52 @@ body {
             }
         }
     }
+    .section-questions{
+      padding: 10px 20px;
+    }
+    .section-questions-add, .section-answer-input{
+      input{
+        width:80%;
+        border: 1px solid #9b9b9b;
+        height: 30px;
+        border-radius: 3px;
+        padding: 8px;
+        margin-top: 4px;
+        display: block;
+      }
+      .btn--raised{
+        display: inline-block;
+        text-align: none;
+        margin-top: 4px;
+        font-size: 10px;
+        padding: 0 8px;
+        height: 24px;
+        line-height: 24px;
+        margin-bottom: 8px;
+      }
+    }
+    .section-answer-input{
+        position: relative;
+        right: -20%;
+
+    }
+    .section-questions-asked{
+      background-color: #EDEDF5;
+      padding: 6px 12px;
+      width: 80%;
+      margin-bottom: 4px;
+    }
+    .section-questions-answered{
+      padding: 6px 12px;
+      width: 80%;
+      border: 1px solid #ededf5;
+      margin-bottom: 8px;
+      position: relative;
+      border-radius: 3px;
+      right: -20%;
+    }
 }
+
 
 #section__to-dos__redo-icon {
     font-size: 15px;
@@ -365,7 +440,7 @@ body {
 }
 
 .expected-progress {
-    box-shadow: 0 0 0 2px #337ab7;
+    box-shadow: inset 0 0 0 5px white , inset 0 0 0 6px #337ab7;
 }
 
 .mentoring-tracks__container {
@@ -446,8 +521,8 @@ body {
 
 .confirm-track__btns {
     display: inline-block;
-    position: absolute;
-    top: 40px;
+    position: fixed;
+    top: 260px;
     text-align: center;
     right: 0;
     width: calc(50% - 340px);
