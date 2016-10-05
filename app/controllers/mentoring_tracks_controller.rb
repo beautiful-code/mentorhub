@@ -4,8 +4,10 @@ class MentoringTracksController < ApplicationController
   before_action :set_track, only: [:show]
 
   def index
-    @mentoring_tracks = JSON.parse(current_user.mentoring_tracks.to_json)
-    @learning_tracks = JSON.parse(current_user.learning_tracks.to_json)
+    @mentoring_tracks = current_user.mentoring_tracks.where.not(
+      'mentor_id = ? AND mentee_id = ?', current_user.id, current_user.id
+    )
+    @learning_tracks = current_user.learning_tracks
     @tracks = @organization.track_templates
     @users = @organization.users - [current_user]
     @mentor_requests = current_user.mentor_request.where(
