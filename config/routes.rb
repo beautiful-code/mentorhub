@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :tracks, only: [] do
     resources :section_interactions, only: [:create, :edit, :update] do
       resources :todos
+      resources :questions
     end
   end
 

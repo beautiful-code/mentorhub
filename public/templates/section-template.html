@@ -1,80 +1,109 @@
 <div ng-if="section.editable">
-  <div class="section__edit">
-    <form>
-        <div class="section__edit__exercise">
-          <h3 class="heading">Exercise</h3>
-          <div class="exercise__name">
-            <label for="title">Name</label>
-            <input id="title" type="text" name="title" ng-model="section.title">
-            <span class="help-block"></span>
-          </div>
-          <div class="exercise__description">
-              <label for="content">Description</label>
-              <textarea  rows="5" name="content" class="form-control" id="content" ng-model="section.content">{{ section.content }}</textarea>
-              <span class="help-block"></span>
-          </div>
-        </div>
-        <div class="section__edit__resources">
-          <h3 class="heading">Resources</h3>
-          <div class="form-inline" ng-repeat="resource in section.resources track by $index">
-            <input placeholder="Text" type="text" class="text res_field" ng-model="resource.text" >
-            <input placeholder="URL" type="text" class="url res_field" ng-model="resource.url">
-            <button type="button" class="btn--remove" ng-click="track.sections[$parent.$index].resources.splice($index,1);">
-              <i class="material-icons">delete</i>
-            </button>
-          </div>
-          <button class="btn--add" id="add_field" type="button" ng-click="addResource($index)">
-            + Add A Resource
-          </button>
-        </div>
-        <div class="section__crud">
-          <div ng-if="section.newRecord" style="display: inline;">
-            <input type="button" class="btn--raised" value="Create" ng-click="create_section(track, section, $event)">
-          </div>
-          <div ng-if="section.newRecord == false" style="display: inline;">
-            <input type="button" class="btn--raised" value="Update" ng-click="update_section(track, section)">
-          </div>
-          <input type="button" class="btn--flat" value="Cancel" ng-click="cancel_section(section,$index)">
-        </div>
-    </form>
-  </div>
+    <div class="section__edit">
+        <form>
+            <div class="section__edit__exercise">
+                <!-- <h3 class="heading">Exercise</h3> -->
+                <div class="exercise__name">
+                    <label for="title" class="heading">Name of the section</label>
+                    <input id="title" type="text" name="title" ng-model="section.title">
+                    <span class="help-block"></span>
+                </div>
+                <div class="exercise__description">
+                    <label for="content" class="heading">Learning Objectives</label>
+                    <p>After doing this, you should be able to</p>
+                    <textarea rows="5" name="content" id="content" ng-model="section.content">{{ section.content }}</textarea>
+                    <span class="help-block"></span>
+                </div>
+            </div>
+
+            <div class="section__edit__resources">
+                <h3 class="heading">Resources</h3>
+                <div class="form-inline" ng-repeat="resource in section.resources track by $index">
+                    <input placeholder="Text" type="text" class="text res_field" ng-model="resource.text">
+                    <input placeholder="URL" type="text" class="url res_field" ng-model="resource.url">
+                    <button type="button" class="btn--remove" ng-click="track.sections[$parent.$index].resources.splice($index,1);">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </div>
+                <button class="btn--add" id="add_field" type="button" ng-click="addResource($index)">
+                    + Add A Resource
+                </button>
+            </div>
+            <div class="section__edit__exercise--challenge">
+                <label for="exercise" class="heading">Exercise</label>
+                <textarea rows="3" name="exercise" id="exercise" ng-model="section.exercise">{{ section.exercise }}</textarea>
+            </div>
+            <div class="section__edit__resources">
+                <h3 class="heading">Questions</h3>
+                <div class="form-inline" ng-repeat="question in section.questions track by $index">
+                    <input placeholder="Text" type="text" class="text res_field" ng-model="question.question">
+                    <button type="button" class="btn--remove" ng-click="track.sections[$parent.$index].questions.splice($index,1);">
+                        <i class="material-icons">delete</i>
+                    </button>
+                </div>
+                <button class="btn--add" id="add_field" type="button" ng-click="addQuestion($index)">
+                    + Add A Question
+                </button>
+            </div>
+            <div class="section__crud">
+                <div ng-if="section.newRecord" style="display: inline;">
+                    <input type="button" class="btn--raised" value="Create" ng-click="create_section(track, section, $event)">
+                </div>
+                <div ng-if="section.newRecord == false" style="display: inline;">
+                    <input type="button" class="btn--raised" value="Update" ng-click="update_section(track, section)">
+                </div>
+                <input type="button" class="btn--flat" value="Cancel" ng-click="cancel_section(section,$index)">
+            </div>
+        </form>
+    </div>
 </div>
 
-<div class="track__content" ng-click="$parent.$parent.selectedIndex = ( $parent.$parent.selectedIndex == $index ? null : $index )">
-  <div ng-if="section.editable == false">
-      <div class="track__section">
-        <div class="track__section__crud">
-          <a ng-click="$parent.$parent.selectedIndex = ( $parent.$parent.selectedIndex == $index ? null : $index )">
-            <i class="material-icons">{{ $parent.$parent.selectedIndex != $index ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
-          </a>
-          <span ng-if="$parent.$parent.selectedIndex == $index">
-            <a class="edit-section" ng-click="edit_section(section)">
-              <i class="material-icons">edit</i>
-            </a>
-            <a class="delete-section" ng-click="delete_section($index, track, section)">
-              <i class="material-icons">delete</i>
-            </a>
-          </span>
-        </div>
-        <div class="track__section__exercise">
-          <h3 class="heading">Exercise</h3>
-          <h2>{{section.title}}</h2>
-          <p>{{ section.content }}</p>
-        </div>
-        <div class="track__section__resources" ng-if="$parent.$parent.selectedIndex == $index">
-          <h3 class="heading">Resources</h3>
-          <div ng-repeat="resource in section.resources">
-            <div ng-if="resource.url">
-              <a target="_blank" href="//{{ resource.url }}">{{ resource.text }}</a>
+<div class="track__content" ng-click="$parent.selectedIndex = ( $parent.selectedIndex == $index ? null : $index )">
+    <div ng-if="section.editable == false">
+        <div class="track__section">
+            <div class="track__section__crud">
+                <i class="material-icons" ng-click="$parent.selectedIndex = ( $parent.selectedIndex == $index ? null : $index )">{{ $parent.selectedIndex != $index ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</i>
+                <span ng-if="$parent.selectedIndex == $index">
+                    <i class="material-icons" ng-click="edit_section(section); $event.stopPropagation();">edit</i>
+                    <i class="material-icons" ng-click="delete_section($index, track, section)">delete</i>
+                </span>
             </div>
-            <div ng-if="!(resource.url)">
-              <p>{{ resource.text }}</p>
+            <div class="track__section__exercise">
+                <h2>{{section.title}}</h2>
+                <h3 class="heading" ng-if="$parent.selectedIndex == $index">Learning Objectives</h3>
+                <p ng-if="$parent.selectedIndex == $index">After doing this, you should be able to</p>
+                <p ng-if="$parent.selectedIndex == $index" class="learning-objectives">{{ section.content }}</p>
             </div>
-          </div>
-          <div ng-hide = "section.resources.length">
-            <p>No Resources</p>
-          </div>
+            <div ng-if="$parent.selectedIndex == $index">
+
+                <div class="track__section__resources" >
+                    <h3 class="heading">Resources</h3>
+                    <div ng-repeat="resource in section.resources">
+                        <div ng-if="resource.url">
+                            <a target="_blank" href="//{{ resource.url }}" ng-click="$event.stopPropagation();">{{ resource.text }}</a>
+                        </div>
+                        <div ng-if="!(resource.url)">
+                            <p>{{ resource.text }}</p>
+                        </div>
+                    </div>
+                    <div ng-hide="section.resources.length">
+                        <p>No Resources</p>
+                    </div>
+                </div>
+                <div class="track__section__exercise--challenge" ng-if="section.exercise">
+                    <h3 class="heading">Exercise</h3>
+                    <p>{{section.exercise}}</p>
+                </div>
+                <div class="track__section__resources" >
+                    <h3 class="heading">Questions</h3>
+                    <div ng-repeat="question in section.questions">
+                        <p>{{ question.question }}</p>
+                    </div>
+                    <div ng-hide="section.questions.length">
+                        <p>No Questions</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-  </div>
+    </div>
 </div>

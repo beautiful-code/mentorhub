@@ -1,15 +1,16 @@
 %div{"ng-controller" => "MentoringTracksController"}
-  %h2.dashboard__heading Mentee requests
-  %hr.dashboard__heading__line
-  .mentoring-tracks__request-all{"ng-if" => "data.length>0" }
-    .mentoring-tracks__request-each{"ng-repeat" => "requestData in data", "ng-if" => "requestData.mentorRequest.state == 'new'"}
-      %p
-        %span {{requestData.mentee.first_name }}
-        requested you to guide him in learning
-        %span {{requestData.track.name}}
-      .mentoring-tracks__request-each__btns
-        %button.btn--raised{"ng-click" => "request('accepted', $index)"} accept
-        %button.btn--flat{"ng-click" => "request('rejected', $index)"} cancel
+  .mentee-requests
+    %h2.dashboard__heading Mentee requests
+    %hr.dashboard__heading__line
+    .mentoring-tracks__request-all{"ng-if" => "data.length>0" }
+      .mentoring-tracks__request-each{"ng-repeat" => "requestData in data", "ng-if" => "requestData.mentorRequest.state == 'new'"}
+        %p
+          %span {{requestData.mentee.first_name }}
+          requested you to guide him in learning
+          %span {{requestData.track.name}}
+        .mentoring-tracks__request-each__btns
+          %button.btn--raised{"ng-click" => "request('accepted', $index)"} accept
+          %button.btn--flat{"ng-click" => "request('rejected', $index)"} cancel
   .tracks-index
     %h2.dashboard__heading Learning tracks
     %hr.dashboard__heading__line

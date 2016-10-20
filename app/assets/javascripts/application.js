@@ -26,17 +26,19 @@
 // Custom
 //= require_tree ./angular
 //= require initial
+//= require jquery.slick
+//= require sweetalert
 //
 
 (function() {
-  this.App || (this.App = {});
+    this.App || (this.App = {});
 
-  App.cable = ActionCable.createConsumer();
+    App.cable = ActionCable.createConsumer();
 
 }).call(this);
 
 
 
-jQuery(document).ready(function(){
+jQuery(document).ready(function() {
     jQuery('.initialjs-avatar').initial();
 });

@@ -50,24 +50,26 @@ angular.module('mentorhub.commons', [])
                 });
         };
 
+        _scope.add_question = function (sectionInteraction, question) {
+            var route_params = {
+                '{track_id}': sectionInteraction.track_id,
+                '{section_id}': sectionInteraction.id
+            };
+
+            BoardServices.create_question(route_params, {question: question})
+                .success(function (response) {
+                    sectionInteraction.questions.push(response.question);
+                    question.question = undefined;
+                    //_scope.updateSectionInteractionState(sectionInteraction, "tasks_pending");
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+        };
+
         _scope.update_mentees_todo = function (sectionInteraction, todo, rejected) {
             var new_state;
-
-            if (!rejected) {
-                switch (todo.state) {
-                    case 'to_be_reviewed':
-                        new_state = 'completed';
-                        break;
-                    case 'completed':
-                        new_state = 'incomplete';
-                        break;
-                    default:
-                        new_state = 'incomplete';
-                        break;
-                }
-            } else {
-                new_state = 'incomplete';
-            }
+            new_state = (!rejected && todo.state == 'to_be_reviewed') ? 'completed' : 'incomplete';
 
             if (todo.state != new_state) {
                 var route_params = {
@@ -115,6 +117,39 @@ angular.module('mentorhub.commons', [])
                     } else {
                         sectionInteraction.state = "review_pending";
                     }
+                })
+                .error(function (error) {
+                    console.log(error);
+                });
+        };
+
+        _scope.update_question = function (sectionInteraction, question) {
+          debugger;
+          var route_params = {
+            '{track_id}': sectionInteraction.track_id,
+            '{section_id}': sectionInteraction.id,
+            '{question_id}': question.id
+          };
+          BoardServices.update_question(route_params, {question: question})
+            .success(function (response) {
+              question.edit = false;
+            })
+            .error(function (error) {
+              console.log(error);
+            });
+        };
+
+        _scope.delete_question = function (sectionInteraction, question) {
+            var route_params = {
+                '{track_id}': sectionInteraction.track_id,
+                '{section_id}': sectionInteraction.id,
+                '{question_id}': question.id
+            };
+
+            BoardServices.delete_question(route_params, {question: question.id})
+                .success(function (response) {
+                    var index = sectionInteraction.questions.indexOf(question);
+                    sectionInteraction.questions.splice(index, 1);
                 })
                 .error(function (error) {
                     console.log(error);

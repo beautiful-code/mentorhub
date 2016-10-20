@@ -33,7 +33,7 @@ class SectionInteractionsController < ApplicationController
     params.fetch(:section_interaction, {}).permit(
       :id, :title, :content,
       :enabled, :mentee_notes, :state, :rating, :feedback,
-      resources: [:text, :url]
+      :exercise, resources: [:text, :url]
     )
   end
 end

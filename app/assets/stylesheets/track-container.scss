@@ -125,7 +125,7 @@
     top: 10px;
     right: 20px;
 
-    a {
+    i {
         color: #9b9b9b;
         cursor: pointer;
     }
@@ -141,7 +141,7 @@
 }
 
 .track__section__exercise {
-    padding: 16px 16px 10px;
+    padding: 10px 20px;
     border-bottom: 1px solid #ececec;
 
     h2 {
@@ -149,13 +149,27 @@
         font-size: 20px;
         margin: 0 0 6px;
     }
+
+    p {
+        white-space: pre-wrap;
+        margin: 0;
+    }
+    .learning-objectives{
+      padding-left: 10px;
+    }
 }
 
 .track__section__resources {
     padding: 10px 20px;
     border-bottom: 1px solid #ececec;
 }
-
+.track__section__exercise--challenge{
+  padding: 10px 20px;
+  border-bottom: 1px solid #ececec;
+  p{
+      white-space: pre-wrap;
+  }
+}
 .track__section__new {
     width: 680px;
     display: block;
@@ -165,6 +179,7 @@
     margin: auto auto 4px;
     cursor: pointer;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.23);
+    margin-bottom: 30px;
 }
 
 .track__section__new:hover {
@@ -178,17 +193,18 @@
     padding: 16px 0;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.12), 0 3px 3px rgba(0, 0, 0, 0.23);
     border-radius: 3px;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
 }
 
 .section__edit__exercise {
     padding: 0 16px 16px;
-    border-bottom: 1px solid #c5c7c9;
+    border-bottom: 1px solid #eeeeee;
 
     label {
         display: block;
         font-size: 14px;
         margin: 4px 0 0;
+        padding-bottom: 2px;
     }
 
     input {
@@ -197,17 +213,20 @@
         border: 1px solid #c5c7c9;
         border-radius: 2px;
     }
-
+    p{
+      margin: 0;
+    }
     textarea {
         padding: 4px 10px;
         border: 1px solid #c5c7c9;
         border-radius: 3px;
+        width: 100%;
     }
 }
 
 .section__edit__resources {
     padding: 16px 16px 0;
-    border-bottom: 1px solid #c5c7c9;
+    border-bottom: 1px solid #eeeeee;
 
     input {
         margin-top: 0;
@@ -254,44 +273,64 @@
     }
 }
 
+.section__edit__exercise--challenge {
+    padding: 0 16px 16px;
+    border-bottom: 1px solid #eeeeee;
+
+    label {
+        display: block;
+        font-size: 14px;
+        margin: 4px 0 0;
+        padding-bottom: 2px;
+    }
+    textarea {
+        padding: 4px 10px;
+        border: 1px solid #c5c7c9;
+        border-radius: 3px;
+        width: 100%;
+    }
+}
+
 .section__crud {
     padding: 8px 16px 0;
     text-align: right;
 }
 
-
-.modal-footer{
-  border-top: none;
+.modal-footer {
+    border-top: none;
 }
-.btn--center {
 
+.btn--center {
     text-align: center;
     margin-bottom: 8px;
 }
-.modal-content{
-  input[type="radio"] {
-      padding: 4px 6px;
-      margin-right: 4px;
-      cursor: pointer;
-  }
 
-  label {
-      margin-right: 10px;
-      cursor: pointer;
-  }
-  input[type="date"]{
-    padding: 5px 10px;
-    width: 170px;
-    font-size: inherit;
-    border: 1px solid #ddd;
-    border-radius: 2px;
-  }
+.modal-content {
+    input[type="radio"] {
+        padding: 4px 6px;
+        margin-right: 4px;
+        cursor: pointer;
+    }
+
+    label {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    input[type="date"] {
+        padding: 5px 10px;
+        width: 170px;
+        font-size: inherit;
+        border: 1px solid #ddd;
+        border-radius: 2px;
+    }
 }
-.enroll-as, .track__deadline--date {
+
+.enroll-as,
+.track__deadline--date {
     padding: 20px;
     border-bottom: 1px solid #eeeeee;
 }
-
 
 .selection__board {
     padding: 20px;

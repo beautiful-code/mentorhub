@@ -9,10 +9,10 @@
       - if user_signed_in?
         - if board_view
           .menu{"ng-model" => "active_tab"}
-            .menu__item{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks')"}
+            .menu__item{"ng-class" => "active_tab == 'user_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_tracks', $event)"}
               %a{:href => ""} Learning tracks
               %span.notification-dot{"ng-if" => "actionTodoForMyTracks()"}
-            .menu__item{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks')"}
+            .menu__item{"ng-class" => "active_tab == 'user_mentee_tracks' ? 'active': 'inactive' ", "ng-click" => "change_tab('user_mentee_tracks', $event)"}
               %a{:href => ""} Mentoring tracks
               %span.notification-dot{"ng-if" => "actionTodoForMyMenteeTracks()"}
             .menu__item{class: active_class(c: ['tracks'])}

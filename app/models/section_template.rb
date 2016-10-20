@@ -7,6 +7,8 @@ class SectionTemplate < ApplicationRecord
   validates :type, presence: true
 
   serialize :resources, Array
+  serialize :questions, Array
+  default_scope { order('id') }
 
   def enabled
     true

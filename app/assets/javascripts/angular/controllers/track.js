@@ -100,11 +100,18 @@ angular.module('mentorhub.track', [])
                 $scope.track.sections[index].resources.push({});
             };
 
-            $scope.create_track = function (track) {
+            $scope.addQuestion = function (index) {
+                if (!($scope.track.sections[index].questions)) {
+                    $scope.track.sections[index].questions = [];
+                }
+                $scope.track.sections[index].questions.push({});
+            };
+
+            $scope.create_track = function (track, event) {
+                $(event.target).button('loading')
                 var trackParams = setTrackParams(track);
                 TrackServices.postTrackData(trackParams)
                     .success(function (response) {
-                        track.editable = track.newRecord = false;
                         $window.location.href = '/track_templates/' + response.track_template.id;
                     });
             };
@@ -251,7 +258,7 @@ angular.module('mentorhub.track', [])
               $('#track__logo').trigger('click');
             };
 
-            $scope.onSubmit = function(type, track_template_id, deadline, person){
+            $scope.onSubmit = function(type, track_template_id, deadline, person, event){
               if(type == 'self-track'){
                 mentoring_request = {
                   track_template_id: track_template_id,
@@ -286,7 +293,10 @@ angular.module('mentorhub.track', [])
                 }
                 TrackServices.postRequest(mentoring_request)
                       .success(function (response) {
-                        $('.modal').modal('hide');
+                        $(event.target).parents().eq(3).modal('hide');
+                      })
+                      .error(function (response) {
+                        alert(response.msg);
                       });
               }
             }
@@ -296,7 +306,6 @@ angular.module('mentorhub.track', [])
                       .success(function (response) {
                         $('.modal').modal('hide');
                       });
-              debugger;
             }
 
             $scope.request = function(result){

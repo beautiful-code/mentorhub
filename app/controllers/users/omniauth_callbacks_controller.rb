@@ -62,7 +62,7 @@ module Users
       options.merge!(
         mentor_id: Organization.where(
           email_domain: user.email.split('@')[1]
-        ).first.users.where('email LIKE ?', 'bot@%').first.id,
+        ).first.find_user_id,
         image: track_template.image,
         mentee_id: user.id,
         track_template_id: track_template.id,

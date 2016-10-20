@@ -54,7 +54,7 @@ class Todo < ApplicationRecord
   end
 
   def todo_bot
-    if self.section_interaction.track.mentor.email.split('@')[0] == 'bot'
+    if self.track.mentor_bot?
       self.update(state: 'completed') if self.state == 'to_be_reviewed'
       self.section_interaction.complete_section
     end
