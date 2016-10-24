@@ -43,4 +43,8 @@ class User < ApplicationRecord
   def mentees
     mentoring_tracks.collect(&:mentee)
   end
+
+  def all_mentoring_tracks
+    mentoring_tracks.where('mentor_id != mentee_id')
+  end
 end

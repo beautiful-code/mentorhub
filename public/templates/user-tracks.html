@@ -1,10 +1,10 @@
 <div class="board-subnav">
     <ul horizontal-scroll class="board-subnav-links" ng-if="Helper.keys(user_tracks).length != 0">
-        <li ng-repeat="(track, track_info) in user_tracks" select-subnav="{{ track }}" ng-class="$index+1 == subnav.active ? 'active':''" class="tracks-list" ng-click="reloadSectionInteractions(track_info)">
+        <li ng-repeat="(id, track) in user_tracks" select-subnav="{{ id }}" ng-class="{'active' : $index == subnav.active}" class="tracks-list" ng-click="reloadSectionInteractions(track)">
             <a class="tracks-name">
-        {{ track_info.name | capitalize }}
-      </a>
-            <span ng-if="trackActionTodoForMentee(track_info)" class="notification-dot"></span>
+                {{ track.name | capitalize }}
+            </a>
+            <span ng-if="trackActionTodoForMentee(track)" class="notification-dot"></span>
         </li>
     </ul>
 </div>
@@ -14,93 +14,90 @@
 </div>
 
 <div class="track">
-    <div ng-repeat="(track, track_info) in sections.data">
-        <div class="track-nav">
-            <span class="track-deadline"> to be completed by {{track_info.deadline | date}}</span>
-            <span class="track-nav-circle" ng-class="[ sectionInteraction.state ,{ 'selected' :  selected == sectionInteraction.id }, {'expected-progress' : $index+1 == track_info.expected_progress}]" ng-repeat="sectionInteraction in track_info.section_interactions">
-        <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
-          {{ sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" || sectionInteraction.state == "feedback_captured" ? "check" : "remove" }}
-        </i>
-        <span ng-if="sectionInteractionActionTodoForMentee(sectionInteraction)" class="notification-dot"></span>
-            </span>
+    <div class="track-nav">
+        <span class="track-deadline"> to be completed by {{active_track.deadline | date}}</span>
+        <span class="track-nav-circle" ng-class="[ sectionInteraction.state ,{ 'selected' :  selected == sectionInteraction.id }, {'expected-progress' : $index+1 == active_track.expected_progress}]" ng-repeat="sectionInteraction in active_track.section_interactions">
+            <i class="material-icons" id="sec{{$index}}" ng-click="changeSectionInteraction(sectionInteraction)">
+                {{ sectionInteraction.state == "new" ? "" : sectionInteraction.state == "review_pending" || sectionInteraction.state == "section_completed" || sectionInteraction.state == "feedback_captured" ? "check" : "remove" }}
+            </i>
+            <span ng-if="sectionInteractionActionTodoForMentee(sectionInteraction)" class="notification-dot"></span>
+        </span>
+    </div>
+
+    <div class="section" ng-model="sectionInteraction" style="min-height: {{active_track.section_interactions.length * 38}}px;">
+        <div class="track-mentor">
+            <p><span class="heading">mentor:</span>{{ active_track.mentor.first_name }}</p>
         </div>
 
-        <div class="section" ng-model="sectionInteraction" style="min-height: {{track_info.section_interactions.length * 38}}px;">
-            <div class="track-mentor">
-                <p><span class="heading">mentor:</span>{{ track_info.mentor.name }}</p>
+        <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.mentee_notes === null">
+            Work on the exercise and submit it.
+        </div>
+
+        <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null && sectionInteraction.state == 'review_pending'">
+            Your submission is currently being reviewed by {{ active_track.mentor.name | capitalize }}.
+        </div>
+
+        <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'section_completed' || sectionInteraction.state == 'feedback_captured'">
+            Exercise Completed
+            <span rating section="sectionInteraction" class="rating_display" ng-if="sectionInteraction.state == 'feedback_captured'"></span>
+        </div>
+
+        <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'feedback_captured' && checkMyTodosStatus(sectionInteraction)">
+            {{ status.mytodo }}
+        </div>
+
+        <div class="section-exercise">
+            <h2>{{ sectionInteraction.title }}</h2>
+            <h3 class="heading">Learning Objectives</h3>
+            <p>After doing this, you should be able to</p>
+            <p class="learning-objectives">{{ sectionInteraction.content }}</p>
+        </div>
+        <div ng-if="!(sectionInteraction.state == 'section_completed')">
+            <div class="section-resources">
+                <h3 class="heading">Resources</h3>
+                <p ng-repeat="resource in sectionInteraction.resources">
+                <a href="{{ resource.url }}" target="_blank" ng-click="$event.stopPropagation();">{{ resource.text }}</a>
+                </p>
             </div>
 
-            <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.mentee_notes === null">
-                Work on the exercise and submit it.
-            </div>
-
-            <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length == 0 && sectionInteraction.mentee_notes !== null && sectionInteraction.state == 'review_pending'">
-                Your submission is currently being reviewed by {{ track_info.mentor.name | capitalize }}.
-            </div>
-
-            <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.state == 'section_completed' || sectionInteraction.state == 'feedback_captured'">
-                Exercise Completed
-                <span rating section="sectionInteraction" class="rating_display" ng-if="sectionInteraction.state == 'feedback_captured'"></span>
-            </div>
-
-            <div class="helper-message" ng-class="sectionInteraction.state" ng-if="sectionInteraction.todos.length != 0 && sectionInteraction.state != 'section_completed' && sectionInteraction.state != 'feedback_captured' && checkMyTodosStatus(sectionInteraction)">
-                {{ status.mytodo }}
-            </div>
-
-            <div class="section-exercise">
-                <h2>{{ sectionInteraction.title }}</h2>
-                <h3 class="heading">Learning Objectives</h3>
-                <p>After doing this, you should be able to</p>
-                <p class="learning-objectives">{{ sectionInteraction.content }}</p>
-            </div>
-            <div ng-if="!(sectionInteraction.state == 'section_completed')">
-                <div class="section-resources">
-                    <h3 class="heading">Resources</h3>
-                    <p ng-repeat="resource in sectionInteraction.resources">
-                        <a href="{{ resource.url }}" target="_blank" ng-click="$event.stopPropagation();">{{ resource.text }}</a>
-                    </p>
-                </div>
-
-                <div class="section-answer" ng-init="note.edit = false">
-                    <h3 class="heading">Exercise</h3>
-                    <p>{{sectionInteraction.exercise}}</p>
-                    <div class="row" ng-if="sectionInteraction.mentee_notes !== null">
-                        <div class="col-xs-9">
-                            {{ sectionInteraction.mentee_notes }}
-                        </div>
-                        <div class="col-xs-2" ng-if="note.edit">
-                            <i ng-click="note.edit = !note.edit; note.mentee_notes = sectionInteraction.mentee_notes;" class="material-icons ">mode_edit</i>
-                        </div>
+            <div class="section-answer" ng-init="note.edit = false">
+                <h3 class="heading">Exercise</h3>
+                <p>{{sectionInteraction.exercise}}</p>
+                <div class="row" ng-if="sectionInteraction.mentee_notes !== null">
+                    <div class="col-xs-9">
+                        {{ sectionInteraction.mentee_notes }}
                     </div>
-                    <div ng-if="sectionInteraction.mentee_notes === null || note.edit == true" style="margin-bottom: 10px">
-                        <form>
-                            <input class="section-input" type="text" placeholder="Answer" ng-model="note.mentee_notes">
-                            <button class="section-submit" ng-click="add_mentee_notes(sectionInteraction, note)">submit</button>
-                        </form>
+                    <div class="col-xs-2" ng-if="note.edit">
+                        <i ng-click="note.edit = !note.edit; note.mentee_notes = sectionInteraction.mentee_notes;" class="material-icons ">mode_edit</i>
                     </div>
                 </div>
+                <div ng-if="sectionInteraction.mentee_notes === null || note.edit == true" style="margin-bottom: 10px">
+                    <form>
+                        <input class="section-input" type="text" placeholder="Answer" ng-model="note.mentee_notes">
+                        <button class="section-submit" ng-click="add_mentee_notes(sectionInteraction, note)">submit</button>
+                    </form>
+                </div>
+            </div>
 
-                <div class="section-questions" ng-if="sectionInteraction.mentee_notes != null">
-                  <h3 class="heading">Questions</h3>
-                  <div ng-repeat="question in sectionInteraction.questions">
+            <div class="section-questions" ng-if="sectionInteraction.mentee_notes != null">
+                <h3 class="heading">Questions</h3>
+                <div ng-repeat="question in sectionInteraction.questions">
                     <p class="section-questions-asked">{{ question.question }}</p>
                     <form class="section-answer-input" ng-if="question.edit == true">
-                      <input  type="text" placeholder="Answer" ng-model="question.answer">
-                      <button class="btn--raised" ng-click="sectionInteractionServices.update_question(sectionInteraction, question)">submit</button>
+                        <input  type="text" placeholder="Answer" ng-model="question.answer">
+                        <button class="btn--raised" ng-click="sectionInteractionServices.update_question(sectionInteraction, question)">submit</button>
                     </form>
                     <p ng-if="question.edit != true" class="section-questions-answered">{{ question.answer }}<i class="material-icons" style="font-size: 10px;" ng-click="question.edit=true;">edit</i></p>
-                  </div>
-                </div>
-
-                <div class="section-todos tasks" ng-if="sectionInteraction.todos.length != 0" ng-if="sectionInteraction.rating != null">
-                    <h3 class="heading">Tasks to do</h3>
-                    <p ng-repeat="todo in sectionInteraction.todos" ng-class="{'todo--strike':todo.state == 'completed'}">
-                        <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" aria-hidden="true" style="cursor:pointer">{{todo.state == 'new' || todo.state == 'incomplete' ? 'check_box_outline_blank' : 'check_box'}} </i> {{ todo.content
-                        }}
-                    </p>
                 </div>
             </div>
-            <div rating class="rating_section" section="sectionInteraction" desc="true" ng-if="sectionInteraction.state == 'section_completed'"></div>
+
+            <div class="section-todos tasks" ng-if="sectionInteraction.todos.length != 0" ng-if="sectionInteraction.rating != null">
+                <h3 class="heading">Tasks to do</h3>
+                <p ng-repeat="todo in sectionInteraction.todos" ng-class="{'todo--strike':todo.state == 'completed'}">
+                <i class="material-icons" ng-click="update_my_todo(sectionInteraction, todo)" aria-hidden="true" style="cursor:pointer">{{todo.state == 'new' || todo.state == 'incomplete' ? 'check_box_outline_blank' : 'check_box'}} </i> {{ todo.content }}
+                </p>
+            </div>
         </div>
+        <div rating class="rating_section" section="sectionInteraction" desc="true" ng-if="sectionInteraction.state == 'section_completed'"></div>
     </div>
 </div>
