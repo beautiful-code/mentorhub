@@ -58,15 +58,7 @@ angular.module('mentorhub.board', [])
 .service('PubSubServices', function() {
     this.getAllTracks = function(data) {
         var all_tracks = [];
-        for (var key in data.mentoring_tracks) {
-            data.mentoring_tracks[key].learning_tracks.forEach(function(track) {
-                all_tracks.push(track);
-            });
-        }
-        for (var key in data.learning_tracks) {
-            var track = data.learning_tracks[key];
-            all_tracks.push(track);
-        }
+        all_tracks = data.mentoring_tracks.concat(data.learning_tracks);
         return all_tracks;
     };
 })
@@ -136,19 +128,8 @@ angular.module('mentorhub.board', [])
                 $(element).parent().children().removeClass('active');
                 $(element).addClass('active');
 
-                var sections = {};
-                switch (scope.active_tab) {
-                    case 'user_tracks':
-                        sections[attr.selectSubnav] = scope[scope.active_tab][attr.selectSubnav];
-                        break;
-
-                    case 'user_mentee_tracks':
-                        sections = [scope.combined_mentee_tracks[attr.selectSubnav]];
-                        break;
-                }
-
-                scope.$apply(function() {
-                    $parse('sections.data').assign(scope, sections);
+                scope.$apply(function(){
+                    $parse('active_track').assign(scope.$parent.$parent, scope[scope.active_tab][attr.selectSubnav]);
                     $parse('subnav.active').assign(scope, attr.selectSubnav);
                 });
             });
@@ -163,6 +144,17 @@ angular.module('mentorhub.board', [])
             scope.subnav_scroll(element);
         }
     };
+}])
+
+.directive('loader', ['$timeout', function($timeout){
+    return{
+        restrict: 'AE',
+        link: function(scope, element, attr){
+            setTimeout(function() {
+                    $(element).fadeOut("slow");
+                },0);
+        }
+    }
 }])
 
 .controller('BoardController', ['$rootScope', '$scope', '$timeout', 'BoardServices', 'PubSubServices', 'SectionInteractionServices',
@@ -181,63 +173,29 @@ angular.module('mentorhub.board', [])
 
         var updatable_interactions = {};
 
-        var parse_mentee_tracks = function(data) {
-            $scope.combined_mentee_tracks = [];
-            angular.forEach(data, function(value, key) {
-                $scope.combined_mentee_tracks = $scope.combined_mentee_tracks.concat(value.learning_tracks);
-            });
-
-            return data;
-        };
-
         $scope.subnav_scroll = function(element) {
             $timeout(function() {
                 $(element).slick({
                     infinite: false,
                     slidesToShow: 3,
                     slidesToScroll: 3,
-                    // responsive: [
-                    //   {
-                    //     breakpoint: 1024,
-                    //     settings: {
-                    //       slidesToShow: 3,
-                    //       slidesToScroll: 3,
-                    //       infinite: true,
-                    //       dots: true
-                    //     }
-                    //   },
-                    //   {
-                    //     breakpoint: 600,
-                    //     settings: {
-                    //       slidesToShow: 2,
-                    //       slidesToScroll: 2
-                    //     }
-                    //   },
-                    //   {
-                    //     breakpoint: 480,
-                    //     settings: {
-                    //       slidesToShow: 1,
-                    //       slidesToScroll: 1
-                    //     }
-                    //   }
-                    // ]
                 });
             });
         }
 
 
         $scope.$on('updateScope', function(event, data) {
-            $scope.$apply(function() {
-                var section_index = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions.map(function(e) {
+          $scope.$apply(function() {
+                var section_index = $scope.active_track.section_interactions.map(function(e) {
                     return e.id;
                 }).indexOf($scope.sectionInteraction.id);
-                $scope.sectionInteraction = $scope.sections.data[Object.keys($scope.sections.data)].section_interactions[section_index];
+                $scope.sectionInteraction = $scope.active_track.section_interactions[section_index];
             });
         });
 
         var init = function() {
             if (typeof PageConfig !== "undefined" && typeof PageConfig.boardJson !== "undefined") {
-                $scope.user_mentee_tracks = parse_mentee_tracks(PageConfig.boardJson.mentoring_tracks);
+                $scope.user_mentee_tracks = PageConfig.boardJson.mentoring_tracks;
                 $scope.user_tracks = PageConfig.boardJson.learning_tracks;
                 SectionInteractionServices.updatable_interactions = PubSubServices.getAllTracks(PageConfig.boardJson);
                 SectionInteractionServices.updatable_interactions.forEach(function(track) {
@@ -248,39 +206,24 @@ angular.module('mentorhub.board', [])
 
             $scope.change_tab($scope.active_tab);
 
-            angular.element(document).ready(function() {
-                setTimeout(function() {
-                    $(".loading-track").fadeOut("slow");
-                },0);
-            });
+            //angular.element(document).ready(function() {
+                //setTimeout(function() {
+                    //$(".loading-track").fadeOut("slow");
+                //},0);
+            //});
         };
 
         $scope.change_tab = function(tab) {
             $scope.active_tab = tab;
-            $scope.sections.data = undefined;
-            var track;
-
-            switch (tab) {
-                case 'user_tracks':
-                    if (Object.keys($scope[tab]).length != 0) {
-                        $scope.subnav.active = Object.keys($scope[tab])[0];
-
-                        $scope.sections.data = {};
-                        $scope.sections.data[$scope.subnav.active] = $scope[tab][$scope.subnav.active];
-                    }
-                    break;
-
-                case 'user_mentee_tracks':
-                    if ($scope.combined_mentee_tracks.length != 0) {
-                        $scope.sections.data = [$scope.combined_mentee_tracks[0]];
-                    }
-                    break;
+            $scope.active_track = $scope.sectionInteraction = undefined;
+            if (Object.keys($scope[tab]).length != 0) {
+              $scope.subnav.active = Object.keys($scope[tab])[0];
+              $scope.active_track = $scope[tab][$scope.subnav.active];
             }
             $('.slick-initialized').slick('unslick');
             $scope.subnav_scroll($('.board-subnav-links'));
-            if ($scope.sections.data !== undefined) {
-                track = $scope.active_tab != "user_tracks" ? $scope.sections.data[0] : $scope.sections.data[$scope.subnav.active];
-                $scope.reloadSectionInteractions(track);
+            if ($scope.active_track !== undefined) {
+                $scope.reloadSectionInteractions($scope.active_track);
             }
             var subnav_element = $(".user_tracks-subnav");
             subnav_element.children().removeClass('active');
@@ -393,21 +336,22 @@ angular.module('mentorhub.board', [])
         };
 
         $scope.changeSectionInteraction = function(sectionInteraction) {
-          angular.forEach(sectionInteraction.questions, function(question, key) {
-            if($scope.active_tab == "user_tracks"){
-              question.edit = (question.answer == null) ? true : false;
-            }
-            else{
-              question.edit = false;
-            }
-          });
+            angular.forEach(sectionInteraction.questions, function(question, key) {
+                if($scope.active_tab == "user_tracks"){
+                    question.edit = (question.answer == null) ? true : false;
+                }
+                else{
+                    question.edit = false;
+                }
+            });
             $scope.sectionInteraction = sectionInteraction;
             $scope.selected = sectionInteraction.id;
         };
 
         $scope.reloadSectionInteractions = function(track) {
+            var section_index
             if (track.recent_incomplete_section_interaction_id != null) {
-                var section_index = track.section_interactions.map(function(e) {
+                section_index = track.section_interactions.map(function(e) {
                     return e.id;
                 }).indexOf(track.recent_incomplete_section_interaction_id);
             } else {
@@ -418,10 +362,7 @@ angular.module('mentorhub.board', [])
 
         $scope.actionTodoForMyTracks = function() {
             var myLearningTracks = [];
-
-            for (var key in $scope.user_tracks) {
-                myLearningTracks.push($scope.user_tracks[key]);
-            }
+            myLearningTracks =  $scope.user_tracks.slice();
 
             return actionsTodoPresent(
                 myLearningTracks,
@@ -431,12 +372,7 @@ angular.module('mentorhub.board', [])
 
         $scope.actionTodoForMyMenteeTracks = function() {
             var myMenteesTracks = [];
-
-            for (var key in $scope.user_mentee_tracks) {
-                $scope.user_mentee_tracks[key].learning_tracks.forEach(function(track) {
-                    myMenteesTracks.push(track);
-                });
-            }
+            myMenteesTracks =  $scope.user_mentee_tracks.slice()
 
             return actionsTodoPresent(
                 myMenteesTracks,

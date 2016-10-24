@@ -20,13 +20,8 @@ class Track < ApplicationRecord
         :recent_incomplete_section_interaction_id,
         :mentor_bot?
       ],
-      include: [:mentee, :section_interactions]
+      include: [:mentee, :mentor, :section_interactions]
     }.merge(options))
-  end
-
-  def incomplete_section_interactions
-    section_interactions.where('state != ?', 'section_completed')
-                        .order('created_at ASC')
   end
 
   def recent_incomplete_section_interaction_id

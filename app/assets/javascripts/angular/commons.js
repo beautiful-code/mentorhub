@@ -124,7 +124,6 @@ angular.module('mentorhub.commons', [])
         };
 
         _scope.update_question = function (sectionInteraction, question) {
-          debugger;
           var route_params = {
             '{track_id}': sectionInteraction.track_id,
             '{section_id}': sectionInteraction.id,
