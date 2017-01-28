@@ -15,8 +15,10 @@ module Users
 
     def sign_in_user
       company_domain = @user.email.split('@').last
-      redirect_with_flash if company_domain == 'gmail.com'
-      if @user.organization.present?
+
+      if company_domain == 'gmail.com'
+        redirect_with_flash
+      elsif @user.organization.present?
         flash[:notice] =
           I18n.t 'devise.omniauth_callbacks.success', kind: 'Google'
         sign_in_and_redirect @user, event: :authentication
@@ -30,16 +32,16 @@ module Users
     def log_user_and_redirect(user)
       sign_in user, event: :authentication
       flash[:notice] = 'Successfully created your organization.'
-      if user.organization.users.count != 2
-        redirect_to invite_organization_members_path
-      else
-        redirect_to edit_organization_path
-      end
+
+      organization = user.organization
+
+      redirect_to (organization.users.count != 2)?
+           invite_organization_members_path : edit_organization_path
     end
 
     def redirect_with_flash
       flash[:danger] = 'Please Log In with your organization\'s Google Account.'
-      redirect_to new_user_session_path
+      redirect_to home_page_path
     end
 
     def create_organization_and_track(user, company_domain)
