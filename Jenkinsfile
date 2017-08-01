@@ -3,7 +3,9 @@ pipeline {
   stages {
     stage('Bundler') {
       steps {
-        sh 'bundle install'
+        sh '''/bin/bash --login
+/usr/local/rvm/bin/rvm use 2.3.1
+bundle install'''
       }
     }
     stage('Rubocop') {
